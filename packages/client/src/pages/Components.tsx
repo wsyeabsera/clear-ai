@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Card, Input, ThemeSwitcher } from '../components';
+import { useTheme } from '@/themes';
 
 const Components: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,22 +18,32 @@ const Components: React.FC = () => {
     alert('Form submitted! Check console for data.');
   };
 
+  const { theme } = useTheme();
+
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Component Library</h1>
-        <p className="text-lg text-gray-600 mb-6">
+        <h1 className="text-4xl font-bold mb-4"
+        style={{ color: theme.colors.text.primary }}
+        >Component Library</h1>
+        <p className="text-lg text-gray-600 mb-6"
+        style={{ color: theme.colors.text.secondary }}
+        >
           A showcase of all available components in the Clear AI design system.
         </p>
         <div className="flex items-center gap-4">
-          <span className="text-sm font-medium text-gray-700">Theme:</span>
+          <span className="text-sm font-medium text-gray-700"
+          style={{ color: theme.colors.text.primary }}
+          >Theme:</span>
           <ThemeSwitcher />
         </div>
       </div>
 
       {/* Buttons Section */}
       <section>
-        <h2 className="text-2xl font-semibold text-gray-900 mb-6">Buttons</h2>
+        <h2 className="text-2xl font-semibold mb-6"
+        style={{ color: theme.colors.text.primary }}
+        >Buttons</h2>
         <div className="space-y-4">
           <div className="flex flex-wrap gap-4">
             <Button variant="primary">Primary</Button>
@@ -54,23 +65,31 @@ const Components: React.FC = () => {
 
       {/* Cards Section */}
       <section>
-        <h2 className="text-2xl font-semibold text-gray-900 mb-6">Cards</h2>
+        <h2 className="text-2xl font-semibold mb-6"
+        style={{ color: theme.colors.text.primary }}
+        >Cards</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card title="Basic Card">
-            <p className="text-gray-600">
+            <p className="text-gray-600"
+            style={{ color: theme.colors.text.secondary }}
+            >
               This is a basic card with some content inside.
             </p>
           </Card>
           
           <Card title="Clickable Card" clickable>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 mb-4"
+            style={{ color: theme.colors.text.secondary }}
+            >
               This card is clickable and has a hover effect.
             </p>
             <Button size="sm">Action</Button>
           </Card>
           
           <Card title="No Shadow" shadow={false}>
-            <p className="text-gray-600">
+            <p className="text-gray-600"
+            style={{ color: theme.colors.text.secondary }}
+            >
               This card has no shadow for a flatter look.
             </p>
           </Card>
@@ -79,7 +98,9 @@ const Components: React.FC = () => {
 
       {/* Inputs Section */}
       <section>
-        <h2 className="text-2xl font-semibold text-gray-900 mb-6">Inputs</h2>
+        <h2 className="text-2xl font-semibold mb-6"
+        style={{ color: theme.colors.text.primary }}
+        >Inputs</h2>
         <div className="max-w-2xl space-y-6">
           <Input
             label="Name"
@@ -128,7 +149,9 @@ const Components: React.FC = () => {
 
       {/* Form Example */}
       <section>
-        <h2 className="text-2xl font-semibold text-gray-900 mb-6">Form Example</h2>
+        <h2 className="text-2xl font-semibold mb-6"
+        style={{ color: theme.colors.text.primary }}
+        >Form Example</h2>
         <Card title="Contact Form">
           <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -152,7 +175,9 @@ const Components: React.FC = () => {
             />
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1"
+              style={{ color: theme.colors.text.primary }}
+              >
                 Message
               </label>
               <textarea
@@ -178,21 +203,29 @@ const Components: React.FC = () => {
 
       {/* Component Stats */}
       <section>
-        <h2 className="text-2xl font-semibold text-gray-900 mb-6">Component Stats</h2>
+        <h2 className="text-2xl font-semibold mb-6"
+        style={{ color: theme.colors.text.primary }}
+        >Component Stats</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card title="Total Components">
             <p className="text-3xl font-bold text-blue-600">4</p>
-            <p className="text-sm text-gray-500">Button, Card, Input, Layout</p>
+            <p className="text-sm text-gray-500"
+            style={{ color: theme.colors.text.secondary }}
+            >Button, Card, Input, Layout</p>
           </Card>
           
           <Card title="Stories Created">
             <p className="text-3xl font-bold text-green-600">12</p>
-            <p className="text-sm text-gray-500">Comprehensive test coverage</p>
+            <p className="text-sm text-gray-500"
+            style={{ color: theme.colors.text.secondary }}
+            >Comprehensive test coverage</p>
           </Card>
           
           <Card title="TypeScript Coverage">
             <p className="text-3xl font-bold text-purple-600">100%</p>
-            <p className="text-sm text-gray-500">Fully typed components</p>
+            <p className="text-sm text-gray-500"
+            style={{ color: theme.colors.text.secondary }}
+            >Fully typed components</p>
           </Card>
         </div>
       </section>

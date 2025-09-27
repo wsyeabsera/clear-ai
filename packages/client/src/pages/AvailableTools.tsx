@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { toolService, ToolInfo } from '../services/toolService'
 import { Table, TableColumn } from '../components/Table'
 import Button from '../components/Button'
+import { useTheme } from '@/themes';
 
 export const AvailableTools: React.FC = () => {
   const [tools, setTools] = useState<ToolInfo[]>([])
@@ -36,7 +37,7 @@ export const AvailableTools: React.FC = () => {
         setLoading(true)
         setError(null)
         const response = await toolService.getTools()
-        
+
         if (response.success && response.data) {
           setTools(response.data)
         } else {
@@ -59,7 +60,7 @@ export const AvailableTools: React.FC = () => {
         setLoading(true)
         setError(null)
         const response = await toolService.getTools()
-        
+
         if (response.success && response.data) {
           setTools(response.data)
         } else {
@@ -76,11 +77,17 @@ export const AvailableTools: React.FC = () => {
     fetchTools()
   }
 
+  const { theme } = useTheme();
+
   return (
-    <div className="bg-white overflow-hidden shadow rounded-lg">
+    <div className="bg-inherit overflow-hidden shadow rounded-lg"
+      style={{ backgroundColor: theme.colors.background.default }}
+    >
       <div className="px-4 py-5 sm:p-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold"
+            style={{ color: theme.colors.text.primary }}
+          >
             Tool List
           </h1>
           <Button
@@ -92,15 +99,19 @@ export const AvailableTools: React.FC = () => {
             {loading ? 'Loading...' : 'Refresh'}
           </Button>
         </div>
-        
+
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
             <div className="flex">
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800">
+                <h3 className="text-sm font-medium text-red-800"
+                  style={{ color: theme.colors.text.primary }}
+                >
                   Error loading tools
                 </h3>
-                <div className="mt-2 text-sm text-red-700">
+                <div className="mt-2 text-sm text-red-700"
+                  style={{ color: theme.colors.text.primary }}
+                >
                   {error}
                 </div>
               </div>
@@ -110,10 +121,12 @@ export const AvailableTools: React.FC = () => {
 
         {!error && (
           <div className="space-y-4">
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-gray-600 mb-6"
+              style={{ color: theme.colors.text.secondary }}
+            >
               Available MCP (Model Context Protocol) tools that can be executed through the API.
             </p>
-            
+
             <Table
               columns={columns}
               dataSource={tools}
@@ -125,11 +138,17 @@ export const AvailableTools: React.FC = () => {
               size="medium"
               className="w-full"
             />
-            
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-              <h4 className="text-sm font-medium text-gray-900 mb-2">API Information</h4>
-              <p className="text-sm text-gray-600">
-                These tools can be executed via the <code className="bg-gray-200 px-1 rounded">/api/mcp/execute</code> endpoint.
+
+            <div className="mt-6 p-4 rounded-lg"
+              style={{ backgroundColor: theme.colors.background.paper }}
+            >
+              <h4 className="text-sm font-medium mb-2"
+                style={{ color: theme.colors.text.primary }}
+              >API Information</h4>
+              <p className="text-sm"
+                style={{ color: theme.colors.text.secondary }}
+              >
+                These tools can be executed via the <code className="bg-inherit px-1 rounded">/api/mcp/execute</code> endpoint.
                 Use the tool name and provide the required arguments to execute any tool.
               </p>
             </div>

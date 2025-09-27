@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { User } from '@clear-ai/shared'
 import { userService } from '../services/userService'
 import { Table, TableColumn } from '../components/Table'
+import { useTheme } from '@/themes';
 
 export const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([])
@@ -43,6 +44,8 @@ export const Users: React.FC = () => {
     setUsers(sortedUsers)
   }
 
+  const { theme } = useTheme();
+
   const columns: TableColumn<User>[] = [
     {
       key: 'id',
@@ -76,10 +79,14 @@ export const Users: React.FC = () => {
 
   if (error) {
     return (
-      <div className="bg-white overflow-hidden shadow rounded-lg">
+      <div className="bg-white overflow-hidden shadow rounded-lg"
+      style={{ backgroundColor: theme.colors.background.default }}
+      >
         <div className="px-4 py-5 sm:p-6">
           <div className="bg-red-50 border border-red-200 rounded-md p-4">
-            <div className="text-red-800">{error}</div>
+            <div className="text-red-800"
+            style={{ color: theme.colors.text.primary }}
+            >{error}</div>
           </div>
         </div>
       </div>
@@ -87,9 +94,13 @@ export const Users: React.FC = () => {
   }
 
   return (
-    <div className="bg-white overflow-hidden shadow rounded-lg">
+    <div className="bg-inherit overflow-hidden shadow rounded-lg"
+    style={{ backgroundColor: theme.colors.background.default }}
+    >
       <div className="px-4 py-5 sm:p-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+        <h1 className="text-3xl font-bold mb-6"
+        style={{ color: theme.colors.text.primary }}
+        >
           Users
         </h1>
         
