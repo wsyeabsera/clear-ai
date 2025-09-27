@@ -1,2 +1,2 @@
 // Export LangChain service
-export { SimpleLangChainService, simpleLangChainService } from './SimpleLangChainService';
+export { SimpleLangChainService, CoreKeysAndModels } from './SimpleLangChainService';

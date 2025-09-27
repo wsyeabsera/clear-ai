@@ -1,12 +1,33 @@
 import { Request, Response } from 'express'
 import { ApiResponse } from '@clear-ai/shared'
-import { simpleLangChainService } from '@clear-ai/shared'
+import { SimpleLangChainService, CoreKeysAndModels } from '@clear-ai/shared'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const input: CoreKeysAndModels = {
+  langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || ''  ,
+  langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+  langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || '',
+  openaiApiKey: process.env.OPENAI_API_KEY || '',
+  openaiModel: process.env.OPENAI_MODEL || '',
+  mistralApiKey: process.env.MISTRAL_API_KEY || '',
+  mistralModel: process.env.MISTRAL_MODEL || '',
+  groqApiKey: process.env.GROQ_API_KEY || '',
+  groqModel: process.env.GROQ_MODEL || '',
+  ollamaBaseUrl: process.env.OLLAMA_BASE_URL || '',
+  ollamaModel: process.env.OLLAMA_MODEL || '',
+}
+
+// Export singleton instance
+export const simpleLangChainService = new SimpleLangChainService(input)
 
 export const langchainController = {
   /**
    * Get available LangChain models
    */
   async getModels(req: Request, res: Response): Promise<void> {
+    console.log('Getting models', input)
     try {
       const models = simpleLangChainService.getAvailableModels()
       const currentModel = simpleLangChainService.getCurrentModel()

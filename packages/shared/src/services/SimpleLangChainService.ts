@@ -5,6 +5,21 @@ import { ChatGroq } from '@langchain/groq'
 import { BaseLanguageModel } from '@langchain/core/language_models/base'
 import { HumanMessage, SystemMessage, AIMessage, BaseMessage } from '@langchain/core/messages'
 
+export interface CoreKeysAndModels {
+  langfuseSecretKey: string
+  langfusePublicKey: string
+  langfuseBaseUrl: string
+  openaiApiKey: string
+  openaiModel: string
+  mistralApiKey: string
+  mistralModel: string
+  groqApiKey: string
+  groqModel: string
+  ollamaBaseUrl: string
+  ollamaModel: string
+}
+
+
 /**
  * Simple LangChain service that uses native LangChain providers with Langfuse tracing
  */
@@ -13,48 +28,48 @@ export class SimpleLangChainService {
   private models: Map<string, BaseLanguageModel> = new Map()
   private defaultModel: string
 
-  constructor() {
+  constructor(input: CoreKeysAndModels) {
     // Initialize Langfuse
     this.langfuse = new Langfuse({
-      secretKey: process.env.LANGFUSE_SECRET_KEY || 'test-secret-key',
-      publicKey: process.env.LANGFUSE_PUBLIC_KEY || 'test-public-key',
-      baseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com',
+      secretKey: input.langfuseSecretKey,
+      publicKey: input.langfusePublicKey,
+      baseUrl: input.langfuseBaseUrl,
     })
 
     // Initialize models
-    this.initializeModels()
+    this.initializeModels(input)
 
     // Set default model
     const availableModels = Array.from(this.models.keys())
     this.defaultModel = availableModels.length > 0 ? availableModels[0] : 'ollama'
   }
 
-  private initializeModels(): void {
+  private initializeModels(input: CoreKeysAndModels): void {
     // OpenAI
     if (process.env.OPENAI_API_KEY) {
       const openai = new ChatOpenAI({
-        apiKey: process.env.OPENAI_API_KEY,
-        model: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
+        apiKey: input.openaiApiKey,
+        model: input.openaiModel,
         temperature: 0.7,
       })
       this.models.set('openai', openai)
     }
 
     // Mistral
-    if (process.env.MISTRAL_API_KEY) {
+    if (input.mistralApiKey) {
       const mistral = new ChatMistralAI({
-        apiKey: process.env.MISTRAL_API_KEY,
-        model: process.env.MISTRAL_MODEL || 'mistral-small-latest',
+        apiKey: input.mistralApiKey,
+        model: input.mistralModel,
         temperature: 0.7,
       })
       this.models.set('mistral', mistral)
     }
 
     // Groq
-    if (process.env.GROQ_API_KEY) {
+    if (input.groqApiKey) {
       const groq = new ChatGroq({
-        apiKey: process.env.GROQ_API_KEY,
-        model: process.env.GROQ_MODEL || 'llama3-8b-8192',
+        apiKey: input.groqApiKey,
+        model: input.groqModel,
         temperature: 0.7,
       })
       this.models.set('groq', groq)
@@ -62,11 +77,11 @@ export class SimpleLangChainService {
 
     // Ollama (custom implementation since there's no official LangChain Ollama integration)
     // Always add Ollama as it's our fallback
-    const ollama = this.createOllamaModel()
+    const ollama = this.createOllamaModel(input)
     this.models.set('ollama', ollama)
   }
 
-  private createOllamaModel(): any {
+  private createOllamaModel(input: CoreKeysAndModels): any {
     // Create a simple Ollama model wrapper that works with Langfuse
     return {
       _llmType: 'ollama',
@@ -74,7 +89,7 @@ export class SimpleLangChainService {
         const startTime = Date.now()
 
         try {
-          const url = `${process.env.OLLAMA_BASE_URL || 'http://localhost:11434'}/api/generate`
+          const url = `${input.ollamaBaseUrl}/api/generate`
           // Convert LangChain messages to a single prompt
           let prompt = ''
           for (const msg of input) {
@@ -89,15 +104,15 @@ export class SimpleLangChainService {
           prompt += 'Assistant:'
           
           const payload = {
-            model: process.env.OLLAMA_MODEL || 'mistral:latest',
+            model: input.ollamaModel,
             prompt: prompt,
             stream: false,
           }
 
           console.log('Ollama request:', { url, payload })
           console.log('Environment variables:', {
-            OLLAMA_BASE_URL: process.env.OLLAMA_BASE_URL,
-            OLLAMA_MODEL: process.env.OLLAMA_MODEL
+            OLLAMA_BASE_URL: input.ollamaBaseUrl,
+            OLLAMA_MODEL: input.ollamaModel
           })
 
           const response = await fetch(url, {
@@ -122,7 +137,7 @@ export class SimpleLangChainService {
               total_tokens: 0,
             },
             response_metadata: {
-              model: process.env.OLLAMA_MODEL || 'mistral:latest',
+              model: input.ollamaModel,
               duration: endTime - startTime,
               ollama_response: data
             }
@@ -449,6 +464,3 @@ export class SimpleLangChainService {
     return this.langfuse.flush()
   }
 }
-
-// Export singleton instance
-export const simpleLangChainService = new SimpleLangChainService()
