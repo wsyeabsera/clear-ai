@@ -4,17 +4,20 @@ import { Home } from './pages/Home'
 import { About } from './pages/About'
 import { Users } from './pages/Users'
 import Components from './pages/Components'
+import { ThemeProvider } from './themes'
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/components" element={<Components />} />
-      </Routes>
-    </Layout>
+    <ThemeProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/components" element={<Components />} />
+        </Routes>
+      </Layout>
+    </ThemeProvider>
   )
 }
 

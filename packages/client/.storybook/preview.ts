@@ -1,5 +1,6 @@
-import type { Preview } from '@storybook/react-vite'
+import type { Preview } from '@storybook/react'
 import '../src/styles/index.css'
+import { withThemeProvider } from './withThemeProvider'
 
 const preview: Preview = {
   parameters: {
@@ -17,6 +18,28 @@ const preview: Preview = {
       test: 'todo'
     }
   },
+
+  globalTypes: {
+    theme: {
+      description: 'Global theme for components',
+      defaultValue: 'default',
+      toolbar: {
+        title: 'Theme',
+        icon: 'paintbrush',
+        items: [
+          { value: 'default', title: 'Professional 💼' },
+          { value: 'neowave', title: 'Neowave 🌊' },
+          { value: 'techno', title: 'Techno ⚡' },
+          { value: 'oldschool', title: 'Old School 📜' },
+          { value: 'alien', title: 'Alien 👽' },
+        ],
+        showName: true,
+        dynamicTitle: true,
+      },
+    },
+  },
+
+  decorators: [withThemeProvider],
 };
 
 export default preview;

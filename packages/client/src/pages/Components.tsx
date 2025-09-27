@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Input } from '../components';
+import { Button, Card, Input, ThemeSwitcher } from '../components';
 
 const Components: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -21,9 +21,13 @@ const Components: React.FC = () => {
     <div className="space-y-8">
       <div>
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Component Library</h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-gray-600 mb-6">
           A showcase of all available components in the Clear AI design system.
         </p>
+        <div className="flex items-center gap-4">
+          <span className="text-sm font-medium text-gray-700">Theme:</span>
+          <ThemeSwitcher />
+        </div>
       </div>
 
       {/* Buttons Section */}

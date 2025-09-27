@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '../themes';
 
 export interface CardProps {
   /**
@@ -35,16 +36,52 @@ const Card: React.FC<CardProps> = ({
   onClick,
   className = '',
 }) => {
-  const baseClasses = 'bg-white rounded-lg border border-gray-200 p-6';
-  const shadowClasses = shadow ? 'shadow-sm' : '';
-  const clickableClasses = clickable ? 'cursor-pointer hover:shadow-md transition-shadow' : '';
+  const { theme } = useTheme();
   
-  const classes = `${baseClasses} ${shadowClasses} ${clickableClasses} ${className}`.trim();
+  const cardStyles = {
+    backgroundColor: theme.colors.background.paper,
+    border: `1px solid ${theme.colors.border.light}`,
+    borderRadius: theme.effects.borderRadius.lg,
+    padding: '1.5rem',
+    fontFamily: theme.typography.fontFamily.primary,
+    transition: theme.effects.transition.normal,
+    cursor: clickable ? 'pointer' : 'default',
+    boxShadow: shadow ? theme.effects.shadow.sm : 'none',
+    '&:hover': clickable ? {
+      boxShadow: theme.effects.shadow.md,
+      transform: 'translateY(-2px)',
+    } : {},
+  };
+
+  const titleStyles = {
+    fontSize: theme.typography.fontSize.lg,
+    fontWeight: theme.typography.fontWeight.semibold,
+    color: theme.colors.text.primary,
+    marginBottom: '1rem',
+    fontFamily: theme.typography.fontFamily.primary,
+  };
+
+  // Convert styles object to CSS string for inline styles
+  const inlineStyles = Object.entries(cardStyles).reduce((acc, [key, value]) => {
+    if (typeof value === 'object' && value !== null) {
+      // Handle nested objects (like &:hover)
+      return acc;
+    }
+    const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
+    acc[cssKey] = String(value);
+    return acc;
+  }, {} as Record<string, string>);
+
+  const titleInlineStyles = Object.entries(titleStyles).reduce((acc, [key, value]) => {
+    const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
+    acc[cssKey] = String(value);
+    return acc;
+  }, {} as Record<string, string>);
   
   return (
-    <div className={classes} onClick={onClick}>
+    <div style={inlineStyles} className={className} onClick={onClick}>
       {title && (
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+        <h3 style={titleInlineStyles}>
           {title}
         </h3>
       )}
