@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { User, ApiResponse } from '@clear-ai/shared'
+import { User } from '@clear-ai/shared'
 import { userService } from '../services/userService'
 
 export const Users: React.FC = () => {

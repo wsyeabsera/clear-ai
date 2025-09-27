@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import dotenv from 'dotenv'
 import { userRoutes } from './routes/userRoutes'
 import { healthRoutes } from './routes/healthRoutes'
+import { mcpRoutes } from './routes/mcpRoutes'
 import { errorHandler } from './middleware/errorHandler'
 import { setupSwagger } from './config/swagger'
 
@@ -34,6 +35,7 @@ setupSwagger(app)
 // Routes
 app.use('/api/health', healthRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/mcp', mcpRoutes)
 
 // Error handling middleware
 app.use(errorHandler)

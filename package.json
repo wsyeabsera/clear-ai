@@ -8,6 +8,9 @@
   ],
   "scripts": {
     "dev": "turbo run dev",
+    "dev:server": "yarn build:shared && cd packages/mcp-basic && yarn build && cd ../server && yarn dev",
+    "dev:client": "cd packages/client && yarn dev",
+    "dev:mcp": "cd packages/mcp-basic && yarn dev",
     "build": "turbo run build",
     "build:shared": "cd packages/shared && yarn build",
     "lint": "turbo run lint",

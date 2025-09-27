@@ -31,3 +31,22 @@ export interface Config {
   apiUrl: string;
   version: string;
 }
+
+// MCP (Model Context Protocol) types
+export interface Tool {
+  name: string;
+  description: string;
+  inputSchema: any; // Using any to avoid zod dependency in shared
+  execute: (args: any) => Promise<any>;
+}
+
+export interface ToolExecutionRequest {
+  toolName: string;
+  arguments: Record<string, any>;
+}
+
+export interface ToolExecutionResponse {
+  success: boolean;
+  result?: any;
+  error?: string;
+}
