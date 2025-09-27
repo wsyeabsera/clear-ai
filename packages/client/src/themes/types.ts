@@ -20,6 +20,10 @@ export interface ThemeColors {
     default: string;
     paper: string;
     elevated: string;
+    // Enhanced background options
+    pattern?: string;
+    overlay?: string;
+    accent?: string;
   };
   
   // Text colors
@@ -28,6 +32,9 @@ export interface ThemeColors {
     secondary: string;
     disabled: string;
     inverse: string;
+    // Enhanced text options
+    accent?: string;
+    highlight?: string;
   };
   
   // Border colors
@@ -35,6 +42,9 @@ export interface ThemeColors {
     default: string;
     light: string;
     dark: string;
+    // Enhanced border options
+    accent?: string;
+    glow?: string;
   };
   
   // Status colors
@@ -98,6 +108,20 @@ export interface ThemeEffects {
     light?: string;
   };
   
+  // Background patterns
+  patterns: {
+    dots?: string;
+    grid?: string;
+    lines?: string;
+    waves?: string;
+    hexagons?: string;
+    triangles?: string;
+    circles?: string;
+    squares?: string;
+    // Custom patterns
+    custom?: string;
+  };
+  
   // Special effects
   effects: {
     glow?: string;
@@ -110,6 +134,13 @@ export interface ThemeEffects {
     slide?: string;
     fade?: string;
     scale?: string;
+    // New enhanced effects
+    hologram?: string;
+    matrix?: string;
+    cyber?: string;
+    vintage?: string;
+    cosmic?: string;
+    quantum?: string;
   };
   
   // Hover effects
@@ -120,6 +151,17 @@ export interface ThemeEffects {
     glow?: string;
     shadow?: string;
     background?: string;
+  };
+  
+  // Background animations
+  backgroundAnimations: {
+    floating?: string;
+    rotating?: string;
+    pulsing?: string;
+    morphing?: string;
+    flowing?: string;
+    // Custom background animations
+    custom?: string;
   };
 }
 

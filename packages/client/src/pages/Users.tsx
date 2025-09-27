@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { User } from '@clear-ai/shared'
 import { userService } from '../services/userService'
+import { Table, TableColumn } from '../components/Table'
 
 export const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [sortInfo, setSortInfo] = useState<{ key: string; direction: 'asc' | 'desc' } | undefined>(undefined)
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -27,17 +29,50 @@ export const Users: React.FC = () => {
     fetchUsers()
   }, [])
 
-  if (loading) {
-    return (
-      <div className="bg-white overflow-hidden shadow rounded-lg">
-        <div className="px-4 py-5 sm:p-6">
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          </div>
-        </div>
-      </div>
-    )
+  const handleSort = (key: string, direction: 'asc' | 'desc') => {
+    setSortInfo({ key, direction })
+    // In a real app, you might want to sort the data here or make an API call
+    const sortedUsers = [...users].sort((a, b) => {
+      const aValue = a[key as keyof User]
+      const bValue = b[key as keyof User]
+      
+      if (aValue < bValue) return direction === 'asc' ? -1 : 1
+      if (aValue > bValue) return direction === 'asc' ? 1 : -1
+      return 0
+    })
+    setUsers(sortedUsers)
   }
+
+  const columns: TableColumn<User>[] = [
+    {
+      key: 'id',
+      title: 'ID',
+      dataIndex: 'id',
+      width: '80px',
+      align: 'center',
+      sortable: true,
+    },
+    {
+      key: 'name',
+      title: 'Name',
+      dataIndex: 'name',
+      sortable: true,
+    },
+    {
+      key: 'email',
+      title: 'Email',
+      dataIndex: 'email',
+      sortable: true,
+    },
+    {
+      key: 'createdAt',
+      title: 'Created',
+      dataIndex: 'createdAt',
+      render: (value: string) => new Date(value).toLocaleDateString(),
+      sortable: true,
+      width: '120px',
+    },
+  ]
 
   if (error) {
     return (
@@ -58,26 +93,19 @@ export const Users: React.FC = () => {
           Users
         </h1>
         
-        {users.length === 0 ? (
-          <p className="text-gray-600">No users found.</p>
-        ) : (
-          <div className="grid gap-4">
-            {users.map((user) => (
-              <div
-                key={user.id}
-                className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50"
-              >
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {user.name}
-                </h3>
-                <p className="text-gray-600">{user.email}</p>
-                <p className="text-sm text-gray-500">
-                  Created: {new Date(user.createdAt).toLocaleDateString()}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
+        <Table
+          columns={columns}
+          dataSource={users}
+          loading={loading}
+          bordered={true}
+          striped={true}
+          hoverable={true}
+          size="medium"
+          onSort={handleSort}
+          sortInfo={sortInfo}
+          emptyText="No users found"
+          className="w-full"
+        />
       </div>
     </div>
   )

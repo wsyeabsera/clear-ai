@@ -19,17 +19,24 @@ export const alienTheme: Theme = {
       default: '#0A0A0A',
       paper: '#1A1A2E',
       elevated: '#16213E',
+      pattern: '#00FF88',
+      overlay: 'rgba(0, 255, 136, 0.05)',
+      accent: '#FF0080',
     },
     text: {
-      primary: '#00FF88', // softer green for better readability
-      secondary: '#FF0080', // adjusted pink
-      disabled: '#4A4A4A', // better contrast for disabled text
+      primary: '#FFFFFF', // Much better contrast - white text
+      secondary: '#00FF88', // green for secondary
+      disabled: '#666666', // better contrast for disabled text
       inverse: '#000000',
+      accent: '#FF0080',
+      highlight: '#00CCFF',
     },
     border: {
       default: '#00FF88',
       light: '#33FF99',
       dark: '#00CC6A',
+      accent: '#FF0080',
+      glow: '#00FF88',
     },
     status: {
       success: '#00FF88',

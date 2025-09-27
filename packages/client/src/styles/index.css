@@ -1,5 +1,6 @@
 /* Import theme animations */
 @import './theme-animations.css';
+@import './theme-patterns.css';
 
 /* Import Google Fonts for theme fonts */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Exo+2:wght@400;500;600;700&display=swap');
@@ -163,7 +164,33 @@ code {
 
 .table-wrapper {
   overflow-x: auto;
+  overflow-y: hidden;
   border-radius: inherit;
+  /* Hide horizontal scrollbar by default, show on hover */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.table-wrapper::-webkit-scrollbar {
+  height: 0px; /* Hide horizontal scrollbar in webkit browsers */
+  background: transparent;
+}
+
+.table-wrapper:hover::-webkit-scrollbar {
+  height: 6px; /* Show on hover */
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--table-border-default, #D1D5DB);
+  border-radius: 3px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--table-border-dark, #9CA3AF);
 }
 
 .table {
@@ -237,6 +264,8 @@ code {
   text-align: left;
   position: relative;
   transition: all var(--table-transition-fast, 150ms ease-in-out);
+  /* Ensure proper contrast for all themes */
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .table-header-cell-sortable {
@@ -246,7 +275,7 @@ code {
 
 .table-header-cell-sortable:hover {
   background-color: var(--table-interactive-hover, #F3F4F6);
-  transform: var(--table-hover-scale, scale(1.02));
+  transform: scale(1.01);
 }
 
 .table-header-content {
@@ -293,7 +322,7 @@ code {
 
 .table-row-hoverable:hover {
   background-color: var(--table-interactive-hover, #F3F4F6);
-  transform: var(--table-hover-scale, scale(1.01));
+  transform: scale(1.005);
   box-shadow: var(--table-hover-shadow, 0 10px 25px -5px rgba(0, 0, 0, 0.1));
 }
 
@@ -307,6 +336,8 @@ code {
   font-weight: var(--table-font-weight-normal, 400);
   vertical-align: middle;
   transition: all var(--table-transition-fast, 150ms ease-in-out);
+  /* Ensure proper contrast for all themes */
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .table-cell-left {
@@ -394,14 +425,43 @@ code {
   box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
 }
 
+.table-container-neowave .table-header-cell {
+  background-color: var(--table-background-elevated) !important;
+  color: #FFFFFF !important;
+  text-shadow: 0 0 1px rgba(0, 212, 255, 0.5);
+  border-bottom: 1px solid var(--table-border-default);
+  font-weight: 600;
+}
+
+.table-container-neowave .table-cell {
+  color: #FFFFFF !important;
+  text-shadow: 0 0 1px rgba(0, 212, 255, 0.3);
+  font-weight: 500;
+}
+
+.table-container-neowave th {
+  color: #FFFFFF !important;
+}
+
+.table-container-neowave td {
+  color: #FFFFFF !important;
+}
+
 .table-container-neowave .table-header-cell-sortable:hover {
-  background-color: rgba(0, 245, 255, 0.1);
-  box-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+  background-color: rgba(0, 212, 255, 0.15);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+  color: #FFFFFF;
+  text-shadow: 0 0 2px rgba(0, 212, 255, 0.7);
 }
 
 .table-container-neowave .table-row-hoverable:hover {
-  background-color: rgba(0, 245, 255, 0.05);
-  box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+  background-color: rgba(0, 212, 255, 0.08);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+}
+
+.table-container-neowave .table-row-hoverable:hover .table-cell {
+  color: #FFFFFF;
+  text-shadow: 0 0 1px rgba(0, 212, 255, 0.5);
 }
 
 .table-container-techno {
@@ -410,14 +470,43 @@ code {
   box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
 }
 
+.table-container-techno .table-header-cell {
+  background-color: var(--table-background-elevated) !important;
+  color: #FFFFFF !important;
+  text-shadow: 0 0 1px rgba(0, 255, 65, 0.5);
+  border-bottom: 1px solid var(--table-border-default);
+  font-weight: 600;
+}
+
+.table-container-techno .table-cell {
+  color: #FFFFFF !important;
+  text-shadow: 0 0 1px rgba(0, 255, 65, 0.3);
+  font-weight: 500;
+}
+
+.table-container-techno th {
+  color: #FFFFFF !important;
+}
+
+.table-container-techno td {
+  color: #FFFFFF !important;
+}
+
 .table-container-techno .table-header-cell-sortable:hover {
-  background-color: rgba(0, 255, 65, 0.1);
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+  background-color: rgba(0, 255, 65, 0.15);
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.6);
+  color: #FFFFFF;
+  text-shadow: 0 0 2px rgba(0, 255, 65, 0.7);
 }
 
 .table-container-techno .table-row-hoverable:hover {
-  background-color: rgba(0, 255, 65, 0.05);
-  box-shadow: 0 0 12px rgba(0, 255, 65, 0.2);
+  background-color: rgba(0, 255, 65, 0.08);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+}
+
+.table-container-techno .table-row-hoverable:hover .table-cell {
+  color: #FFFFFF;
+  text-shadow: 0 0 1px rgba(0, 255, 65, 0.5);
 }
 
 .table-container-oldschool {
@@ -442,12 +531,41 @@ code {
   box-shadow: 0 0 25px rgba(57, 255, 20, 0.4);
 }
 
+.table-container-alien .table-header-cell {
+  background-color: var(--table-background-elevated) !important;
+  color: #FFFFFF !important;
+  text-shadow: 0 0 1px rgba(0, 255, 136, 0.5);
+  border-bottom: 1px solid var(--table-border-default);
+  font-weight: 600;
+}
+
+.table-container-alien .table-cell {
+  color: #FFFFFF !important;
+  text-shadow: 0 0 1px rgba(0, 255, 136, 0.3);
+  font-weight: 500;
+}
+
+.table-container-alien th {
+  color: #FFFFFF !important;
+}
+
+.table-container-alien td {
+  color: #FFFFFF !important;
+}
+
 .table-container-alien .table-header-cell-sortable:hover {
-  background-color: rgba(57, 255, 20, 0.1);
-  box-shadow: 0 0 20px rgba(57, 255, 20, 0.6);
+  background-color: rgba(0, 255, 136, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+  color: #FFFFFF;
+  text-shadow: 0 0 2px rgba(0, 255, 136, 0.7);
 }
 
 .table-container-alien .table-row-hoverable:hover {
-  background-color: rgba(57, 255, 20, 0.05);
-  box-shadow: 0 0 30px rgba(57, 255, 20, 0.4);
+  background-color: rgba(0, 255, 136, 0.08);
+  box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
+}
+
+.table-container-alien .table-row-hoverable:hover .table-cell {
+  color: #FFFFFF;
+  text-shadow: 0 0 1px rgba(0, 255, 136, 0.5);
 }

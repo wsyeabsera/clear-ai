@@ -19,17 +19,24 @@ export const technoTheme: Theme = {
       default: '#000000',
       paper: '#0D1117',
       elevated: '#161B22',
+      pattern: '#00E676',
+      overlay: 'rgba(0, 230, 118, 0.05)',
+      accent: '#FF5722',
     },
     text: {
-      primary: '#00E676', // softer green for better readability
-      secondary: '#FF5722', // adjusted orange
-      disabled: '#4A4A4A', // better contrast for disabled text
+      primary: '#FFFFFF', // Much better contrast - white text
+      secondary: '#00E676', // green for secondary
+      disabled: '#666666', // better contrast for disabled text
       inverse: '#000000',
+      accent: '#FF5722',
+      highlight: '#00BCD4',
     },
     border: {
       default: '#00E676',
       light: '#33F088',
       dark: '#00C853',
+      accent: '#FF5722',
+      glow: '#00E676',
     },
     status: {
       success: '#00E676',
@@ -78,6 +85,17 @@ export const technoTheme: Theme = {
       dark: 'linear-gradient(135deg, #000000 0%, #0D1117 100%)',
       light: 'linear-gradient(135deg, #0D1117 0%, #161B22 100%)',
     },
+    patterns: {
+      dots: 'radial-gradient(circle, #00E676 1px, transparent 1px)',
+      grid: 'linear-gradient(#00E676 1px, transparent 1px), linear-gradient(90deg, #00E676 1px, transparent 1px)',
+      lines: 'repeating-linear-gradient(45deg, transparent, transparent 10px, #00E676 10px, #00E676 11px)',
+      waves: 'radial-gradient(circle at 25% 25%, #00E676 2px, transparent 2px), radial-gradient(circle at 75% 75%, #00E676 2px, transparent 2px)',
+      hexagons: 'linear-gradient(30deg, #00E676 12%, transparent 12.5%, transparent 87%, #00E676 87.5%, #00E676), linear-gradient(150deg, #00E676 12%, transparent 12.5%, transparent 87%, #00E676 87.5%, #00E676)',
+      triangles: 'linear-gradient(45deg, #00E676 25%, transparent 25%), linear-gradient(-45deg, #00E676 25%, transparent 25%)',
+      circles: 'radial-gradient(circle at 20% 50%, #00E676 1px, transparent 1px), radial-gradient(circle at 80% 50%, #00E676 1px, transparent 1px)',
+      squares: 'linear-gradient(45deg, #00E676 25%, transparent 25%), linear-gradient(-45deg, #00E676 25%, transparent 25%)',
+      custom: 'conic-gradient(from 0deg, #00E676 0deg, #FF5722 60deg, #00BCD4 120deg, #00E676 180deg, #FF5722 240deg, #00BCD4 300deg, #00E676 360deg)',
+    },
     effects: {
       glow: '0 0 10px currentColor',
       neon: '0 0 5px currentColor, 0 0 10px currentColor',
@@ -88,6 +106,12 @@ export const technoTheme: Theme = {
       slide: 'translateX(3px)',
       fade: 'opacity 0.1s linear',
       scale: 'scale(1.08)',
+      hologram: 'linear-gradient(45deg, transparent 30%, rgba(0,230,118,0.1) 50%, transparent 70%)',
+      matrix: 'linear-gradient(90deg, transparent 98%, #00E676 100%), linear-gradient(0deg, transparent 98%, #00E676 100%)',
+      cyber: 'linear-gradient(45deg, #00E676 1px, transparent 1px), linear-gradient(-45deg, #00E676 1px, transparent 1px)',
+      vintage: 'radial-gradient(circle at 20% 80%, #00E676 1px, transparent 1px), radial-gradient(circle at 80% 20%, #00E676 1px, transparent 1px)',
+      cosmic: 'radial-gradient(ellipse at top, #00E676 1px, transparent 1px), radial-gradient(ellipse at bottom, #00E676 1px, transparent 1px)',
+      quantum: 'conic-gradient(from 0deg, #00E676 0deg, transparent 60deg, #00E676 120deg, transparent 180deg, #00E676 240deg, transparent 300deg, #00E676 360deg)',
     },
     hover: {
       scale: 'scale(1.03)',
@@ -96,6 +120,14 @@ export const technoTheme: Theme = {
       glow: '0 0 15px rgba(0, 230, 118, 0.5)',
       shadow: '0 0 20px rgba(0, 230, 118, 0.3)',
       background: 'rgba(0, 230, 118, 0.08)',
+    },
+    backgroundAnimations: {
+      floating: 'floating 3s ease-in-out infinite',
+      rotating: 'rotating 4s linear infinite',
+      pulsing: 'pulsing 2s ease-in-out infinite',
+      morphing: 'morphing 5s ease-in-out infinite',
+      flowing: 'flowing 6s ease-in-out infinite',
+      custom: 'matrix 0.5s ease-in-out infinite',
     },
   },
   typography: {

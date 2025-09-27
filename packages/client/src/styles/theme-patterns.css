@@ -1,0 +1,293 @@
+/* Background Patterns */
+.pattern-dots {
+  background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.pattern-grid {
+  background-image: 
+    linear-gradient(currentColor 1px, transparent 1px),
+    linear-gradient(90deg, currentColor 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.pattern-lines {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    currentColor 10px,
+    currentColor 11px
+  );
+}
+
+.pattern-waves {
+  background-image: 
+    radial-gradient(circle at 25% 25%, currentColor 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, currentColor 2px, transparent 2px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+.pattern-hexagons {
+  background-image: 
+    linear-gradient(30deg, currentColor 12%, transparent 12.5%, transparent 87%, currentColor 87.5%, currentColor),
+    linear-gradient(150deg, currentColor 12%, transparent 12.5%, transparent 87%, currentColor 87.5%, currentColor),
+    linear-gradient(90deg, currentColor 12%, transparent 12.5%, transparent 87%, currentColor 87.5%, currentColor);
+  background-size: 20px 35px;
+}
+
+.pattern-triangles {
+  background-image: 
+    linear-gradient(45deg, currentColor 25%, transparent 25%),
+    linear-gradient(-45deg, currentColor 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, currentColor 75%),
+    linear-gradient(-45deg, transparent 75%, currentColor 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.pattern-circles {
+  background-image: 
+    radial-gradient(circle at 20% 50%, currentColor 1px, transparent 1px),
+    radial-gradient(circle at 80% 50%, currentColor 1px, transparent 1px),
+    radial-gradient(circle at 40% 20%, currentColor 1px, transparent 1px),
+    radial-gradient(circle at 60% 80%, currentColor 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.pattern-squares {
+  background-image: 
+    linear-gradient(45deg, currentColor 25%, transparent 25%),
+    linear-gradient(-45deg, currentColor 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, currentColor 75%),
+    linear-gradient(-45deg, transparent 75%, currentColor 75%);
+  background-size: 15px 15px;
+  background-position: 0 0, 0 7.5px, 7.5px -7.5px, -7.5px 0px;
+}
+
+/* Enhanced Effects */
+.effect-hologram {
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  background-size: 200% 200%;
+  animation: hologram-shimmer 3s ease-in-out infinite;
+}
+
+.effect-matrix {
+  background: 
+    linear-gradient(90deg, transparent 98%, currentColor 100%),
+    linear-gradient(0deg, transparent 98%, currentColor 100%);
+  background-size: 2px 2px;
+  animation: matrix-rain 2s linear infinite;
+}
+
+.effect-cyber {
+  background: 
+    linear-gradient(45deg, currentColor 1px, transparent 1px),
+    linear-gradient(-45deg, currentColor 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: cyber-scan 4s linear infinite;
+}
+
+.effect-vintage {
+  background: 
+    radial-gradient(circle at 20% 80%, currentColor 1px, transparent 1px),
+    radial-gradient(circle at 80% 20%, currentColor 1px, transparent 1px),
+    radial-gradient(circle at 40% 40%, currentColor 1px, transparent 1px);
+  background-size: 25px 25px;
+  animation: vintage-fade 5s ease-in-out infinite;
+}
+
+.effect-cosmic {
+  background: 
+    radial-gradient(ellipse at top, currentColor 1px, transparent 1px),
+    radial-gradient(ellipse at bottom, currentColor 1px, transparent 1px);
+  background-size: 30px 30px;
+  animation: cosmic-drift 6s ease-in-out infinite;
+}
+
+.effect-quantum {
+  background: 
+    conic-gradient(from 0deg, currentColor 0deg, transparent 60deg, currentColor 120deg, transparent 180deg, currentColor 240deg, transparent 300deg, currentColor 360deg);
+  background-size: 40px 40px;
+  animation: quantum-spin 8s linear infinite;
+}
+
+/* Background Animations */
+@keyframes hologram-shimmer {
+  0% { background-position: -200% -200%; }
+  100% { background-position: 200% 200%; }
+}
+
+@keyframes matrix-rain {
+  0% { background-position: 0 -100%; }
+  100% { background-position: 0 100%; }
+}
+
+@keyframes cyber-scan {
+  0% { background-position: -100% 0; }
+  100% { background-position: 100% 0; }
+}
+
+@keyframes vintage-fade {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes cosmic-drift {
+  0% { background-position: 0 0, 0 0; }
+  50% { background-position: 50% 50%, -50% -50%; }
+  100% { background-position: 100% 100%, -100% -100%; }
+}
+
+@keyframes quantum-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Techno Club Animations */
+@keyframes disco {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(90deg) scale(1.1); }
+  50% { transform: rotate(180deg) scale(1); }
+  75% { transform: rotate(270deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes laser {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100vw) rotate(45deg); }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.5; 
+  }
+  50% { 
+    transform: scale(1.2); 
+    opacity: 0.8; 
+  }
+}
+
+/* Floating animations */
+.animate-floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+.animate-rotating {
+  animation: rotating 4s linear infinite;
+}
+
+.animate-pulsing {
+  animation: pulsing 2s ease-in-out infinite;
+}
+
+.animate-morphing {
+  animation: morphing 5s ease-in-out infinite;
+}
+
+.animate-flowing {
+  animation: flowing 6s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes rotating {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulsing {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+@keyframes morphing {
+  0%, 100% { border-radius: 50%; transform: scale(1); }
+  25% { border-radius: 20%; transform: scale(1.1); }
+  50% { border-radius: 0%; transform: scale(0.9); }
+  75% { border-radius: 30%; transform: scale(1.05); }
+}
+
+@keyframes flowing {
+  0% { transform: translateX(-100%) rotate(0deg); }
+  50% { transform: translateX(0%) rotate(180deg); }
+  100% { transform: translateX(100%) rotate(360deg); }
+}
+
+/* Theme-specific pattern overrides */
+.theme-neowave .pattern-dots {
+  opacity: 0.3;
+  color: #00D4FF;
+}
+
+.theme-techno .pattern-grid {
+  opacity: 0.4;
+  color: #00E676;
+}
+
+.theme-oldschool .pattern-lines {
+  opacity: 0.2;
+  color: #B8860B;
+}
+
+.theme-alien .pattern-hexagons {
+  opacity: 0.5;
+  color: #00FF88;
+}
+
+/* Responsive patterns */
+@media (max-width: 768px) {
+  .pattern-dots,
+  .pattern-grid,
+  .pattern-hexagons,
+  .pattern-triangles {
+    background-size: 15px 15px;
+  }
+  
+  .pattern-circles,
+  .pattern-squares {
+    background-size: 20px 20px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .pattern-dots,
+  .pattern-grid,
+  .pattern-lines,
+  .pattern-waves,
+  .pattern-hexagons,
+  .pattern-triangles,
+  .pattern-circles,
+  .pattern-squares {
+    opacity: 0.6;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-floating,
+  .animate-rotating,
+  .animate-pulsing,
+  .animate-morphing,
+  .animate-flowing,
+  .effect-hologram,
+  .effect-matrix,
+  .effect-cyber,
+  .effect-vintage,
+  .effect-cosmic,
+  .effect-quantum {
+    animation: none;
+  }
+}

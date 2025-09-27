@@ -19,17 +19,24 @@ export const oldschoolTheme: Theme = {
       default: '#F5F5DC', // beige
       paper: '#FAEBD7', // antique white
       elevated: '#FFFFFF',
+      pattern: '#B8860B',
+      overlay: 'rgba(184, 134, 11, 0.05)',
+      accent: '#DAA520',
     },
     text: {
       primary: '#2D1810', // much darker brown for better contrast
       secondary: '#4A2C17', // darker secondary
       disabled: '#8B7355', // better contrast for disabled
       inverse: '#FFFFFF',
+      accent: '#B8860B',
+      highlight: '#DAA520',
     },
     border: {
       default: '#B8860B',
       light: '#DAA520',
       dark: '#9A7209',
+      accent: '#DAA520',
+      glow: '#B8860B',
     },
     status: {
       success: '#1B5E20', // darker forest green

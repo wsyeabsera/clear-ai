@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import ThemeDropdown from './ThemeDropdown'
+import { useTheme } from '../themes'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -7,70 +9,109 @@ interface LayoutProps {
 
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation()
+  const { theme } = useTheme()
 
   const isActive = (path: string) => {
     return location.pathname === path
   }
 
+  const getNavStyle = () => {
+    return {
+      backgroundColor: `${theme.colors.background.paper}E6`, // 90% opacity
+      backdropFilter: 'blur(8px)',
+      borderBottom: `1px solid ${theme.colors.border.default}`,
+    }
+  }
+
+  const getMainStyle = () => {
+    return {
+      backgroundColor: `${theme.colors.background.paper}66`, // 40% opacity
+      backdropFilter: 'blur(8px)',
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm border-b">
+    <div className="min-h-screen relative z-10" style={{ background: 'transparent' }}>
+      <nav className="shadow-sm relative z-50" style={getNavStyle()}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex-shrink-0 flex items-center">
-                <Link to="/" className="text-xl font-bold text-blue-600">
+                <Link 
+                  to="/" 
+                  className="text-xl font-bold"
+                  style={{ color: theme.colors.primary.main }}
+                >
                   Clear AI
                 </Link>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                 <Link
                   to="/"
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    isActive('/') 
-                      ? 'border-blue-500 text-gray-900' 
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
+                  className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  style={{
+                    borderBottomColor: isActive('/') ? theme.colors.primary.main : 'transparent',
+                    color: isActive('/') ? theme.colors.text.primary : theme.colors.text.secondary,
+                  }}
                 >
                   Home
                 </Link>
                 <Link
-                  to="/about"
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    isActive('/about') 
-                      ? 'border-blue-500 text-gray-900' 
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
+                  to="/available-tools"
+                  className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  style={{
+                    borderBottomColor: isActive('/available-tools') ? theme.colors.primary.main : 'transparent',
+                    color: isActive('/available-tools') ? theme.colors.text.primary : theme.colors.text.secondary,
+                  }}
                 >
-                  About
+                  Available Tools
                 </Link>
                 <Link
                   to="/users"
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    isActive('/users') 
-                      ? 'border-blue-500 text-gray-900' 
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
+                  className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  style={{
+                    borderBottomColor: isActive('/users') ? theme.colors.primary.main : 'transparent',
+                    color: isActive('/users') ? theme.colors.text.primary : theme.colors.text.secondary,
+                  }}
                 >
                   Users
                 </Link>
                 <Link
                   to="/components"
-                  className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                    isActive('/components') 
-                      ? 'border-blue-500 text-gray-900' 
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                  }`}
+                  className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  style={{
+                    borderBottomColor: isActive('/components') ? theme.colors.primary.main : 'transparent',
+                    color: isActive('/components') ? theme.colors.text.primary : theme.colors.text.secondary,
+                  }}
                 >
                   Components
                 </Link>
               </div>
             </div>
+            
+            {/* Theme Dropdown */}
+            <div className="flex items-center">
+              <ThemeDropdown 
+                size="sm" 
+                showLabels={true}
+                className="hidden sm:block"
+              />
+            </div>
+          </div>
+          
+          {/* Mobile Theme Dropdown */}
+          <div className="sm:hidden px-4 py-3 border-t border-gray-200">
+            <div className="flex justify-center">
+              <ThemeDropdown 
+                size="sm" 
+                showLabels={true}
+              />
+            </div>
           </div>
         </div>
       </nav>
       
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 relative z-40 rounded-lg" style={getMainStyle()}>
         <div className="px-4 py-6 sm:px-0">
           {children}
         </div>
