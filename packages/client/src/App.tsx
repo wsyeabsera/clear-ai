@@ -3,6 +3,7 @@ import { Layout } from './components/Layout'
 import { Home } from './pages/Home'
 import { AvailableTools } from './pages/AvailableTools'
 import { Users } from './pages/Users'
+import { ToolExecute } from './pages/ToolExecute'
 import Components from './pages/Components'
 import { ThemeProvider, useTheme } from './themes'
 
@@ -210,6 +211,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/available-tools" element={<AvailableTools />} />
+          <Route path="/tool-execute" element={<ToolExecute />} />
           <Route path="/users" element={<Users />} />
           <Route path="/components" element={<Components />} />
         </Routes>

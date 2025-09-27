@@ -90,6 +90,14 @@ class ApiClient {
     return this.get('/api/mcp/tools')
   }
 
+  async getToolSchemas(): Promise<ApiResponse<Array<any>>> {
+    return this.get('/api/mcp/schemas')
+  }
+
+  async getToolSchema(toolName: string): Promise<ApiResponse<any>> {
+    return this.get(`/api/mcp/schemas/${toolName}`)
+  }
+
   async executeTool(toolName: string, toolArguments?: Record<string, any>): Promise<ApiResponse<any>> {
     const request: ToolExecutionRequest = { toolName, arguments: toolArguments || {} }
     return this.post('/api/mcp/execute', request)

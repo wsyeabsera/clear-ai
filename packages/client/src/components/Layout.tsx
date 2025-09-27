@@ -67,6 +67,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   Available Tools
                 </Link>
                 <Link
+                  to="/tool-execute"
+                  className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  style={{
+                    borderBottomColor: isActive('/tool-execute') ? theme.colors.primary.main : 'transparent',
+                    color: isActive('/tool-execute') ? theme.colors.text.primary : theme.colors.text.secondary,
+                  }}
+                >
+                  Tool Execute
+                </Link>
+                <Link
                   to="/users"
                   className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                   style={{
