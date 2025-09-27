@@ -331,4 +331,32 @@ router.post('/flush', langchainController.flushTraces)
  */
 router.post('/test-all', langchainController.testAllModels)
 
+/**
+ * @swagger
+ * /api/langchain/debug-ollama:
+ *   get:
+ *     summary: Debug Ollama connection
+ *     tags: [LangChain]
+ *     responses:
+ *       200:
+ *         description: Ollama debug information
+ *       500:
+ *         description: Server error
+ */
+router.get('/debug-ollama', langchainController.debugOllama)
+
+/**
+ * @swagger
+ * /api/langchain/debug-service:
+ *   get:
+ *     summary: Debug LangChain service
+ *     tags: [LangChain]
+ *     responses:
+ *       200:
+ *         description: Service debug information
+ *       500:
+ *         description: Server error
+ */
+router.get('/debug-service', langchainController.debugService)
+
 export { router as langchainRoutes }

@@ -16,14 +16,14 @@ export class SimpleLangChainService {
   constructor() {
     // Initialize Langfuse
     this.langfuse = new Langfuse({
-      secretKey: process.env.LANGFUSE_SECRET_KEY || '',
-      publicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+      secretKey: process.env.LANGFUSE_SECRET_KEY || 'test-secret-key',
+      publicKey: process.env.LANGFUSE_PUBLIC_KEY || 'test-public-key',
       baseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com',
     })
 
     // Initialize models
     this.initializeModels()
-    
+
     // Set default model
     const availableModels = Array.from(this.models.keys())
     this.defaultModel = availableModels.length > 0 ? availableModels[0] : 'ollama'
@@ -61,33 +61,76 @@ export class SimpleLangChainService {
     }
 
     // Ollama (custom implementation since there's no official LangChain Ollama integration)
-    if (process.env.OLLAMA_BASE_URL) {
-      const ollama = this.createOllamaModel()
-      this.models.set('ollama', ollama)
-    }
+    // Always add Ollama as it's our fallback
+    const ollama = this.createOllamaModel()
+    this.models.set('ollama', ollama)
   }
 
   private createOllamaModel(): any {
-    // Create a simple Ollama model wrapper
+    // Create a simple Ollama model wrapper that works with Langfuse
     return {
       _llmType: 'ollama',
       async invoke(input: any, options?: any) {
-        const response = await fetch(`${process.env.OLLAMA_BASE_URL || 'http://localhost:11434'}/api/chat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
+        const startTime = Date.now()
+
+        try {
+          const url = `${process.env.OLLAMA_BASE_URL || 'http://localhost:11434'}/api/generate`
+          // Convert LangChain messages to a single prompt
+          let prompt = ''
+          for (const msg of input) {
+            if (msg._getType() === 'system') {
+              prompt += `System: ${msg.content}\n\n`
+            } else if (msg._getType() === 'human') {
+              prompt += `Human: ${msg.content}\n\n`
+            } else if (msg._getType() === 'ai') {
+              prompt += `Assistant: ${msg.content}\n\n`
+            }
+          }
+          prompt += 'Assistant:'
+          
+          const payload = {
             model: process.env.OLLAMA_MODEL || 'mistral:latest',
-            messages: input,
+            prompt: prompt,
             stream: false,
-          }),
-        })
-        
-        if (!response.ok) {
-          throw new Error(`Ollama API error: ${response.status} ${response.statusText}`)
+          }
+
+          console.log('Ollama request:', { url, payload })
+          console.log('Environment variables:', {
+            OLLAMA_BASE_URL: process.env.OLLAMA_BASE_URL,
+            OLLAMA_MODEL: process.env.OLLAMA_MODEL
+          })
+
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          })
+
+          if (!response.ok) {
+            throw new Error(`Ollama API error: ${response.status} ${response.statusText}`)
+          }
+
+          const data = await response.json()
+          const endTime = Date.now()
+
+          return {
+            content: data.response || '',
+            additional_kwargs: {},
+            usage: {
+              prompt_tokens: 0, // Ollama doesn't provide token usage
+              completion_tokens: 0,
+              total_tokens: 0,
+            },
+            response_metadata: {
+              model: process.env.OLLAMA_MODEL || 'mistral:latest',
+              duration: endTime - startTime,
+              ollama_response: data
+            }
+          }
+        } catch (error) {
+          const endTime = Date.now()
+          throw new Error(`Ollama generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
         }
-        
-        const data = await response.json()
-        return { content: data.message?.content || '', additional_kwargs: {} }
       },
     }
   }
@@ -135,7 +178,7 @@ export class SimpleLangChainService {
    * Complete a prompt with tracing
    */
   async complete(
-    prompt: string, 
+    prompt: string,
     options?: {
       model?: string
       temperature?: number
@@ -151,7 +194,7 @@ export class SimpleLangChainService {
   }> {
     const modelName = options?.model || this.defaultModel
     const model = this.getModel(modelName)
-    
+
     if (!model) {
       throw new Error(`Model ${modelName} not found`)
     }
@@ -167,7 +210,11 @@ export class SimpleLangChainService {
     const trace = this.langfuse.trace({
       name: 'llm-completion',
       input: { prompt, options },
-      metadata: options?.metadata || {},
+      metadata: {
+        ...options?.metadata,
+        timestamp: new Date().toISOString(),
+        service: 'SimpleLangChainService'
+      },
     })
 
     try {
@@ -180,13 +227,28 @@ export class SimpleLangChainService {
         input: messages,
         output: result,
         model: modelName,
-        usage: result.usage,
+        usage: result.usage || { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
+        metadata: {
+          model: modelName,
+          duration: result.response_metadata?.duration || 0,
+        }
       })
 
       await trace.update({
-        output: { content: result.content },
-        metadata: { model: modelName },
+        output: {
+          content: result.content,
+          model: modelName,
+          usage: result.usage
+        },
+        metadata: {
+          model: modelName,
+          success: true,
+          timestamp: new Date().toISOString()
+        },
       })
+
+      // Flush to ensure data is sent
+      await this.langfuse.flush()
 
       return {
         content: result.content,
@@ -198,7 +260,16 @@ export class SimpleLangChainService {
       // Log error to Langfuse
       await trace.update({
         output: { error: error instanceof Error ? error.message : 'Unknown error' },
+        metadata: {
+          model: modelName,
+          success: false,
+          error: error instanceof Error ? error.message : 'Unknown error',
+          timestamp: new Date().toISOString()
+        },
       })
+
+      // Flush error data
+      await this.langfuse.flush()
       throw error
     }
   }
@@ -222,7 +293,7 @@ export class SimpleLangChainService {
   }> {
     const modelName = options?.model || this.defaultModel
     const model = this.getModel(modelName)
-    
+
     if (!model) {
       throw new Error(`Model ${modelName} not found`)
     }
@@ -245,7 +316,11 @@ export class SimpleLangChainService {
     const trace = this.langfuse.trace({
       name: 'llm-chat-completion',
       input: { messages, options },
-      metadata: options?.metadata || {},
+      metadata: {
+        ...options?.metadata,
+        timestamp: new Date().toISOString(),
+        service: 'SimpleLangChainService'
+      },
     })
 
     try {
@@ -258,13 +333,28 @@ export class SimpleLangChainService {
         input: langchainMessages,
         output: result,
         model: modelName,
-        usage: result.usage,
+        usage: result.usage || { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
+        metadata: {
+          model: modelName,
+          duration: result.response_metadata?.duration || 0,
+        }
       })
 
       await trace.update({
-        output: { content: result.content },
-        metadata: { model: modelName },
+        output: {
+          content: result.content,
+          model: modelName,
+          usage: result.usage
+        },
+        metadata: {
+          model: modelName,
+          success: true,
+          timestamp: new Date().toISOString()
+        },
       })
+
+      // Flush to ensure data is sent
+      await this.langfuse.flush()
 
       return {
         content: result.content,
@@ -276,7 +366,16 @@ export class SimpleLangChainService {
       // Log error to Langfuse
       await trace.update({
         output: { error: error instanceof Error ? error.message : 'Unknown error' },
+        metadata: {
+          model: modelName,
+          success: false,
+          error: error instanceof Error ? error.message : 'Unknown error',
+          timestamp: new Date().toISOString()
+        },
       })
+
+      // Flush error data
+      await this.langfuse.flush()
       throw error
     }
   }

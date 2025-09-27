@@ -1,15 +1,18 @@
 {
   "watch": ["src"],
   "ext": "ts,js,json",
-  "ignore": ["src/**/*.spec.ts", "src/**/*.test.ts", "dist"],
-  "exec": "ts-node src/index.ts",
+  "ignore": ["src/**/*.spec.ts", "src/**/*.test.ts", "dist", "node_modules"],
+  "exec": "ts-node --esm src/index.ts",
   "env": {
     "NODE_ENV": "development"
   },
   "delay": 1000,
-  "verbose": true,
+  "verbose": false,
   "restartable": "rs",
   "colours": true,
   "stdout": true,
-  "stderr": true
+  "stderr": true,
+  "signal": "SIGUSR2",
+  "killTimeout": 8000,
+  "legacyWatch": false
 }

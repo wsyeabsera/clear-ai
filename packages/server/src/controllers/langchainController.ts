@@ -318,5 +318,69 @@ export const langchainController = {
       }
       res.status(500).json(response)
     }
+  },
+
+  async debugOllama(req: Request, res: Response): Promise<void> {
+    try {
+      const testUrl = 'http://localhost:11434/api/generate'
+      const testPayload = {
+        model: 'mistral:latest',
+        prompt: 'What is 2+2?',
+        stream: false,
+      }
+
+      console.log('Testing Ollama directly:', { testUrl, testPayload })
+
+      const response = await fetch(testUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(testPayload),
+      })
+
+      const data = await response.json()
+
+      const debugResponse: ApiResponse<any> = {
+        success: true,
+        data: {
+          status: response.status,
+          statusText: response.statusText,
+          data: data,
+          url: testUrl,
+          payload: testPayload
+        },
+        message: 'Ollama debug test completed'
+      }
+      res.json(debugResponse)
+    } catch (error) {
+      const response: ApiResponse = {
+        success: false,
+        error: 'Failed to debug Ollama',
+        message: error instanceof Error ? error.message : 'Unknown error'
+      }
+      res.status(500).json(response)
+    }
+  },
+
+  async debugService(req: Request, res: Response): Promise<void> {
+    try {
+      // Test the service directly
+      const result = await simpleLangChainService.complete('What is 2+2?', {
+        metadata: { test: true }
+      })
+
+      const debugResponse: ApiResponse<any> = {
+        success: true,
+        data: result,
+        message: 'Service debug test completed'
+      }
+      res.json(debugResponse)
+    } catch (error) {
+      const response: ApiResponse = {
+        success: false,
+        error: 'Failed to debug service',
+        message: error instanceof Error ? error.message : 'Unknown error'
+      }
+      res.status(500).json(response)
+    }
   }
 }
