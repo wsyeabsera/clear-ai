@@ -16,3 +16,4 @@ export { MCPServer } from './mcp-server';
 export { ToolRegistry } from './tool-registry';
 export * from './types';
 export * from './tools';
+export * from './schema-utils';

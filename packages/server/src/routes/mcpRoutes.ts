@@ -110,4 +110,118 @@ router.post('/execute', mcpController.executeTool);
  */
 router.get('/tools', mcpController.getTools);
 
+/**
+ * @swagger
+ * /api/mcp/schemas:
+ *   get:
+ *     summary: Get all MCP tool schemas
+ *     description: Retrieve input and output schemas for all available MCP tools
+ *     tags: [MCP]
+ *     responses:
+ *       200:
+ *         description: Tool schemas retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           name:
+ *                             type: string
+ *                             example: "api_call"
+ *                           description:
+ *                             type: string
+ *                             example: "Make HTTP API calls to external services"
+ *                           inputSchema:
+ *                             type: object
+ *                             description: JSON Schema for input parameters
+ *                           outputSchema:
+ *                             type: object
+ *                             description: JSON Schema for output format
+ *             example:
+ *               success: true
+ *               data:
+ *                 - name: "api_call"
+ *                   description: "Make HTTP API calls to external services"
+ *                   inputSchema: { ... }
+ *                   outputSchema: { ... }
+ *               message: "Tool schemas retrieved successfully"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/schemas', mcpController.getToolSchemas);
+
+/**
+ * @swagger
+ * /api/mcp/schemas/{toolName}:
+ *   get:
+ *     summary: Get specific MCP tool schema
+ *     description: Retrieve input and output schema for a specific MCP tool
+ *     tags: [MCP]
+ *     parameters:
+ *       - in: path
+ *         name: toolName
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Name of the tool
+ *         example: "api_call"
+ *     responses:
+ *       200:
+ *         description: Tool schema retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       type: object
+ *                       properties:
+ *                         name:
+ *                           type: string
+ *                           example: "api_call"
+ *                         description:
+ *                           type: string
+ *                           example: "Make HTTP API calls to external services"
+ *                         inputSchema:
+ *                           type: object
+ *                           description: JSON Schema for input parameters
+ *                         outputSchema:
+ *                           type: object
+ *                           description: JSON Schema for output format
+ *             example:
+ *               success: true
+ *               data:
+ *                 name: "api_call"
+ *                 description: "Make HTTP API calls to external services"
+ *                 inputSchema: { ... }
+ *                 outputSchema: { ... }
+ *               message: "Schema for tool 'api_call' retrieved successfully"
+ *       404:
+ *         description: Tool not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/schemas/:toolName', mcpController.getToolSchema);
+
 export { router as mcpRoutes };

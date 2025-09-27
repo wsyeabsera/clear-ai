@@ -1,5 +1,6 @@
 import { Tool, ZodTool } from './types';
 import { apiCallTool, jsonReaderTool, fileReaderTool } from './tools';
+import { convertZodToolToToolSchema } from './schema-utils';
 
 export class ToolRegistry {
   private tools: Map<string, Tool> = new Map();
@@ -37,5 +38,18 @@ export class ToolRegistry {
     } catch (error: any) {
       throw new Error(`Tool execution failed: ${error.message}`);
     }
+  }
+
+  getToolSchema(name: string): any {
+    const tool = this.getTool(name);
+    if (!tool) {
+      throw new Error(`Tool '${name}' not found`);
+    }
+
+    return convertZodToolToToolSchema(tool);
+  }
+
+  getAllToolSchemas(): any[] {
+    return this.getAllTools().map(tool => convertZodToolToToolSchema(tool));
   }
 }

@@ -37,7 +37,15 @@ export interface Tool {
   name: string;
   description: string;
   inputSchema: any; // Using any to avoid zod dependency in shared
+  outputSchema?: any; // Optional output schema
   execute: (args: any) => Promise<any>;
+}
+
+export interface ToolSchema {
+  name: string;
+  description: string;
+  inputSchema: any;
+  outputSchema?: any;
 }
 
 export interface ToolExecutionRequest {

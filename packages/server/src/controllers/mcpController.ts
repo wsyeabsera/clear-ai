@@ -56,4 +56,61 @@ export const mcpController = {
       });
     }
   },
+
+  /**
+   * Get all available tool schemas
+   */
+  async getToolSchemas(req: Request, res: Response): Promise<void> {
+    try {
+      const schemas = toolRegistry.getAllToolSchemas();
+      
+      res.json({
+        success: true,
+        data: schemas,
+        message: 'Tool schemas retrieved successfully',
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: error.message || 'Failed to retrieve tool schemas',
+      });
+    }
+  },
+
+  /**
+   * Get a specific tool schema by name
+   */
+  async getToolSchema(req: Request, res: Response): Promise<void> {
+    try {
+      const { toolName } = req.params;
+
+      if (!toolName) {
+        res.status(400).json({
+          success: false,
+          message: 'Tool name is required',
+        });
+        return;
+      }
+
+      const schema = toolRegistry.getToolSchema(toolName);
+      
+      res.json({
+        success: true,
+        data: schema,
+        message: `Schema for tool '${toolName}' retrieved successfully`,
+      });
+    } catch (error: any) {
+      if (error.message.includes('not found')) {
+        res.status(404).json({
+          success: false,
+          message: error.message,
+        });
+      } else {
+        res.status(500).json({
+          success: false,
+          message: error.message || 'Failed to retrieve tool schema',
+        });
+      }
+    }
+  },
 };

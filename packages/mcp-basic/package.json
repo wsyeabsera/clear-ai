@@ -13,8 +13,8 @@
     "lint": "eslint src --ext .ts"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0",
     "@clear-ai/shared": "*",
+    "@modelcontextprotocol/sdk": "^0.5.0",
     "axios": "^1.6.0",
     "zod": "^3.22.4",
     "zod-to-json-schema": "^3.24.6"

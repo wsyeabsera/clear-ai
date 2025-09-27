@@ -9,10 +9,43 @@ const FileReaderSchema = z.object({
   operation: z.enum(['read', 'list', 'info']).default('read'),
 });
 
+const FileReaderOutputSchema = z.union([
+  // For 'read' operation
+  z.object({
+    path: z.string(),
+    content: z.string(),
+    encoding: z.string(),
+    size: z.number(),
+  }),
+  // For 'list' operation
+  z.object({
+    path: z.string(),
+    items: z.array(z.object({
+      name: z.string(),
+      path: z.string(),
+      isDirectory: z.boolean(),
+      isFile: z.boolean(),
+      size: z.number(),
+      modified: z.date(),
+    })),
+  }),
+  // For 'info' operation
+  z.object({
+    path: z.string(),
+    isDirectory: z.boolean(),
+    isFile: z.boolean(),
+    size: z.number(),
+    created: z.date(),
+    modified: z.date(),
+    accessed: z.date(),
+  }),
+]);
+
 export const fileReaderTool: ZodTool = {
   name: 'file_reader',
   description: 'Read files, list directories, or get file information',
   inputSchema: FileReaderSchema,
+  outputSchema: FileReaderOutputSchema,
   execute: async (args) => {
     const { path, encoding, operation } = FileReaderSchema.parse(args);
     

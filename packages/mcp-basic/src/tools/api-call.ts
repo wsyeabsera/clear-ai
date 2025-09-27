@@ -10,10 +10,19 @@ const ApiCallSchema = z.object({
   timeout: z.number().min(1000).max(30000).default(10000),
 });
 
+const ApiCallOutputSchema = z.object({
+  status: z.number(),
+  statusText: z.string(),
+  headers: z.record(z.any()),
+  data: z.any(),
+  error: z.boolean().optional(),
+});
+
 export const apiCallTool: ZodTool = {
   name: 'api_call',
   description: 'Make HTTP API calls to external services',
   inputSchema: ApiCallSchema,
+  outputSchema: ApiCallOutputSchema,
   execute: async (args) => {
     const { url, method, headers, body, timeout } = ApiCallSchema.parse(args);
     

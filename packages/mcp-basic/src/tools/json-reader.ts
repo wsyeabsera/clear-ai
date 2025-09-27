@@ -6,10 +6,13 @@ const JsonReaderSchema = z.object({
   path: z.string().optional(),
 });
 
+const JsonReaderOutputSchema = z.any(); // JSON can be any valid JSON value
+
 export const jsonReaderTool: ZodTool = {
   name: 'json_reader',
   description: 'Parse and read JSON data with optional path extraction',
   inputSchema: JsonReaderSchema,
+  outputSchema: JsonReaderOutputSchema,
   execute: async (args) => {
     const { jsonString, path } = JsonReaderSchema.parse(args);
     
