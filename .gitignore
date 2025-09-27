@@ -94,3 +94,6 @@ dist
 # Temporary folders
 tmp/
 temp/
+
+*storybook.log
+storybook-static
