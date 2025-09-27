@@ -1,14 +1,15 @@
 import { Request, Response } from 'express'
 import { ApiResponse } from '@clear-ai/shared'
-import { 
-  ToolExecutionService, 
-  ToolDefinition, 
+import {
+  ToolExecutionService,
+  ToolDefinition,
   ToolExecutionOptions,
-  CoreKeysAndModels 
+  CoreKeysAndModels
 } from '@clear-ai/shared'
 import dotenv from 'dotenv'
 import { ToolRegistry } from '@clear-ai/mcp-basic'
 import { zodToJsonSchema } from 'zod-to-json-schema'
+import { logger } from '@clear-ai/shared'
 
 dotenv.config()
 
@@ -34,7 +35,7 @@ async function initializeTools() {
   try {
     const toolRegistry = new ToolRegistry()
     const tools = toolRegistry.getAllTools()
-    
+
     // Convert MCP tools to ToolDefinition format
     const toolDefinitions: ToolDefinition[] = tools.map(tool => ({
       name: tool.name,
@@ -46,7 +47,7 @@ async function initializeTools() {
       },
       execute: tool.execute
     }))
-    
+
     toolExecutionService.registerTools(toolDefinitions)
     console.log(`Registered ${toolDefinitions.length} tools from MCP server`)
   } catch (error) {
@@ -60,7 +61,7 @@ function convertZodSchemaToJsonSchema(schema: any): Record<string, any> {
     target: 'openApi3',
     $refStrategy: 'none',
   }) as any
-  
+
   return jsonSchema.properties || {}
 }
 
@@ -70,7 +71,7 @@ function getRequiredFields(schema: any): string[] {
     target: 'openApi3',
     $refStrategy: 'none',
   }) as any
-  
+
   return jsonSchema.required || []
 }
 
@@ -84,7 +85,7 @@ export const toolExecutionController = {
   async getTools(req: Request, res: Response): Promise<void> {
     try {
       const tools = toolExecutionService.getRegisteredTools()
-      
+
       const response: ApiResponse<{
         tools: ToolDefinition[]
         count: number
@@ -113,7 +114,7 @@ export const toolExecutionController = {
   async getTool(req: Request, res: Response): Promise<void> {
     try {
       const { toolName } = req.params
-      
+
       if (!toolName) {
         const response: ApiResponse = {
           success: false,
@@ -125,7 +126,7 @@ export const toolExecutionController = {
       }
 
       const tool = toolExecutionService.getTool(toolName)
-      
+
       if (!tool) {
         const response: ApiResponse = {
           success: false,
@@ -158,7 +159,7 @@ export const toolExecutionController = {
   async registerTool(req: Request, res: Response): Promise<void> {
     try {
       const tool: ToolDefinition = req.body
-      
+
       if (!tool.name || !tool.description || !tool.parameters || !tool.execute) {
         const response: ApiResponse = {
           success: false,
@@ -170,7 +171,7 @@ export const toolExecutionController = {
       }
 
       toolExecutionService.registerTool(tool)
-      
+
       const response: ApiResponse<{ toolName: string }> = {
         success: true,
         data: { toolName: tool.name },
@@ -193,7 +194,7 @@ export const toolExecutionController = {
   async executeTool(req: Request, res: Response): Promise<void> {
     try {
       const { toolName, args, options } = req.body
-      
+
       if (!toolName) {
         const response: ApiResponse = {
           success: false,
@@ -212,7 +213,7 @@ export const toolExecutionController = {
           ...options?.metadata
         }
       })
-      
+
       const response: ApiResponse<typeof result> = {
         success: true,
         data: result,
@@ -235,7 +236,7 @@ export const toolExecutionController = {
   async executeTools(req: Request, res: Response): Promise<void> {
     try {
       const { toolExecutions, options } = req.body
-      
+
       if (!toolExecutions || !Array.isArray(toolExecutions)) {
         const response: ApiResponse = {
           success: false,
@@ -254,7 +255,7 @@ export const toolExecutionController = {
           ...options?.metadata
         }
       })
-      
+
       const response: ApiResponse<typeof results> = {
         success: true,
         data: results,
@@ -277,7 +278,7 @@ export const toolExecutionController = {
   async executeToolsSequential(req: Request, res: Response): Promise<void> {
     try {
       const { toolExecutions, options } = req.body
-      
+
       if (!toolExecutions || !Array.isArray(toolExecutions)) {
         const response: ApiResponse = {
           success: false,
@@ -296,7 +297,7 @@ export const toolExecutionController = {
           ...options?.metadata
         }
       })
-      
+
       const response: ApiResponse<typeof results> = {
         success: true,
         data: results,
@@ -314,54 +315,12 @@ export const toolExecutionController = {
   },
 
   /**
-   * Execute a tool using LLM to determine parameters
-   */
-  async executeToolWithLLM(req: Request, res: Response): Promise<void> {
-    try {
-      const { toolName, userQuery, options } = req.body
-      
-      if (!toolName || !userQuery) {
-        const response: ApiResponse = {
-          success: false,
-          error: 'Tool name and user query are required',
-          message: 'Please provide both tool name and user query'
-        }
-        res.status(400).json(response)
-        return
-      }
-
-      const result = await toolExecutionService.executeToolWithLLM(toolName, userQuery, {
-        ...options,
-        metadata: {
-          userId: req.headers['x-user-id'] as string,
-          sessionId: req.headers['x-session-id'] as string,
-          ...options?.metadata
-        }
-      })
-      
-      const response: ApiResponse<typeof result> = {
-        success: true,
-        data: result,
-        message: result.success ? 'Tool executed with LLM successfully' : 'Tool execution with LLM failed'
-      }
-      res.json(response)
-    } catch (error) {
-      const response: ApiResponse = {
-        success: false,
-        error: 'Failed to execute tool with LLM',
-        message: error instanceof Error ? error.message : 'Unknown error'
-      }
-      res.status(500).json(response)
-    }
-  },
-
-  /**
    * Get tool definitions for LLM function calling
    */
   async getToolDefinitionsForLLM(req: Request, res: Response): Promise<void> {
     try {
       const definitions = toolExecutionService.getToolDefinitionsForLLM()
-      
+
       const response: ApiResponse<typeof definitions> = {
         success: true,
         data: definitions,
@@ -384,7 +343,7 @@ export const toolExecutionController = {
   async getStats(req: Request, res: Response): Promise<void> {
     try {
       const stats = toolExecutionService.getExecutionStats()
-      
+
       const response: ApiResponse<typeof stats> = {
         success: true,
         data: stats,
@@ -407,7 +366,7 @@ export const toolExecutionController = {
   async removeTool(req: Request, res: Response): Promise<void> {
     try {
       const { toolName } = req.params
-      
+
       if (!toolName) {
         const response: ApiResponse = {
           success: false,
@@ -419,7 +378,7 @@ export const toolExecutionController = {
       }
 
       const removed = toolExecutionService.removeTool(toolName)
-      
+
       if (!removed) {
         const response: ApiResponse = {
           success: false,
@@ -447,58 +406,12 @@ export const toolExecutionController = {
   },
 
   /**
-   * MCP-style execution: Execute tool based on natural language query
-   */
-  async executeWithMCP(req: Request, res: Response): Promise<void> {
-    try {
-      const { userQuery, options } = req.body
-      
-      if (!userQuery) {
-        const response: ApiResponse = {
-          success: false,
-          error: 'User query is required',
-          message: 'Please provide a natural language query'
-        }
-        res.status(400).json(response)
-        return
-      }
-
-      const result = await toolExecutionService.executeWithMCP(userQuery, {
-        ...options,
-        metadata: {
-          userId: req.headers['x-user-id'] as string,
-          sessionId: req.headers['x-session-id'] as string,
-          ...options?.metadata
-        }
-      })
-      
-      const response: ApiResponse<typeof result> = {
-        success: true,
-        data: result,
-        message: result.success 
-          ? 'MCP execution successful' 
-          : result.needsMoreInfo === true
-            ? 'Query incomplete - more information needed'
-            : 'MCP execution failed'
-      }
-      res.json(response)
-    } catch (error) {
-      const response: ApiResponse = {
-        success: false,
-        error: 'Failed to execute with MCP',
-        message: error instanceof Error ? error.message : 'Unknown error'
-      }
-      res.status(500).json(response)
-    }
-  },
-
-  /**
    * Clear all tools
    */
   async clearTools(req: Request, res: Response): Promise<void> {
     try {
       toolExecutionService.clearTools()
-      
+
       const response: ApiResponse = {
         success: true,
         message: 'All tools cleared successfully'
@@ -520,7 +433,7 @@ export const toolExecutionController = {
   async executeQuery(req: Request, res: Response): Promise<void> {
     try {
       const { query, options } = req.body
-      
+
       if (!query) {
         const response: ApiResponse = {
           success: false,
@@ -531,6 +444,8 @@ export const toolExecutionController = {
         return
       }
 
+      logger.info('Executing query', query)
+
       // Use the MCP execution method which automatically selects and executes tools
       const result = await toolExecutionService.executeWithMCP(query, {
         ...options,
@@ -540,11 +455,11 @@ export const toolExecutionController = {
           ...options?.metadata
         }
       })
-      
+
       const response: ApiResponse<typeof result> = {
         success: true,
         data: result,
-        message: result.success 
+        message: result.success
           ? `Query executed successfully using tool: ${result.toolName}`
           : result.needsMoreInfo === true
             ? 'Query incomplete - more information needed'

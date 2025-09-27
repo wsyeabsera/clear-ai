@@ -3,6 +3,7 @@ import { ChatOpenAI } from '@langchain/openai'
 import { ChatMistralAI } from '@langchain/mistralai'
 import { ChatGroq } from '@langchain/groq'
 import { BaseLanguageModel } from '@langchain/core/language_models/base'
+import { ChatOllama } from '@langchain/ollama'
 import { HumanMessage, SystemMessage, AIMessage, BaseMessage } from '@langchain/core/messages'
 
 export interface CoreKeysAndModels {
@@ -39,14 +40,25 @@ export class SimpleLangChainService {
     // Initialize models
     this.initializeModels(input)
 
-    // Set default model
+    // Set default model - prioritize local Mistral via Ollama
     const availableModels = Array.from(this.models.keys())
-    this.defaultModel = availableModels.length > 0 ? availableModels[0] : 'ollama'
+    if (availableModels.includes('mistral-ollama')) {
+      this.defaultModel = 'mistral-ollama'
+    } else if (availableModels.includes('ollama')) {
+      this.defaultModel = 'ollama'
+    } else if (availableModels.length > 0) {
+      this.defaultModel = availableModels[0]
+    } else {
+      this.defaultModel = 'mistral-ollama' // fallback
+    }
   }
 
   private initializeModels(input: CoreKeysAndModels): void {
+    console.log('Initializing models...')
+    console.log('Input:', input)
+
     // OpenAI
-    if (process.env.OPENAI_API_KEY) {
+    if (input.openaiApiKey && process.env.OPENAI_API_KEY) {
       const openai = new ChatOpenAI({
         apiKey: input.openaiApiKey,
         model: input.openaiModel,
@@ -55,7 +67,7 @@ export class SimpleLangChainService {
       this.models.set('openai', openai)
     }
 
-    // Mistral
+    // Mistral (Cloud API)
     if (input.mistralApiKey) {
       const mistral = new ChatMistralAI({
         apiKey: input.mistralApiKey,
@@ -63,6 +75,25 @@ export class SimpleLangChainService {
         temperature: 0.7,
       })
       this.models.set('mistral', mistral)
+    }
+
+    // Mistral via Ollama (Local)
+    if (input.ollamaBaseUrl) {
+      const mistralOllama = new ChatOllama({
+        baseUrl: input.ollamaBaseUrl,
+        model: input.ollamaModel || 'mistral:latest',
+        temperature: 0.7,
+      })
+      this.models.set('mistral-ollama', mistralOllama)
+    }
+    if (input.ollamaBaseUrl) {
+      // Also add generic ollama model
+      const ollama = new ChatOllama({
+        baseUrl: input.ollamaBaseUrl,
+        model: input.ollamaModel || 'mistral:latest',
+        temperature: 0.7,
+      })
+      this.models.set('ollama', ollama)
     }
 
     // Groq
@@ -74,81 +105,8 @@ export class SimpleLangChainService {
       })
       this.models.set('groq', groq)
     }
-
-    // Ollama (custom implementation since there's no official LangChain Ollama integration)
-    // Always add Ollama as it's our fallback
-    const ollama = this.createOllamaModel(input)
-    this.models.set('ollama', ollama)
   }
 
-  private createOllamaModel(input: CoreKeysAndModels): any {
-    // Create a simple Ollama model wrapper that works with Langfuse
-    return {
-      _llmType: 'ollama',
-      async invoke(input: any, options?: any) {
-        const startTime = Date.now()
-
-        try {
-          const url = `${input.ollamaBaseUrl}/api/generate`
-          // Convert LangChain messages to a single prompt
-          let prompt = ''
-          for (const msg of input) {
-            if (msg._getType() === 'system') {
-              prompt += `System: ${msg.content}\n\n`
-            } else if (msg._getType() === 'human') {
-              prompt += `Human: ${msg.content}\n\n`
-            } else if (msg._getType() === 'ai') {
-              prompt += `Assistant: ${msg.content}\n\n`
-            }
-          }
-          prompt += 'Assistant:'
-          
-          const payload = {
-            model: input.ollamaModel,
-            prompt: prompt,
-            stream: false,
-          }
-
-          console.log('Ollama request:', { url, payload })
-          console.log('Environment variables:', {
-            OLLAMA_BASE_URL: input.ollamaBaseUrl,
-            OLLAMA_MODEL: input.ollamaModel
-          })
-
-          const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-          })
-
-          if (!response.ok) {
-            throw new Error(`Ollama API error: ${response.status} ${response.statusText}`)
-          }
-
-          const data = await response.json()
-          const endTime = Date.now()
-
-          return {
-            content: data.response || '',
-            additional_kwargs: {},
-            usage: {
-              prompt_tokens: 0, // Ollama doesn't provide token usage
-              completion_tokens: 0,
-              total_tokens: 0,
-            },
-            response_metadata: {
-              model: input.ollamaModel,
-              duration: endTime - startTime,
-              ollama_response: data
-            }
-          }
-        } catch (error) {
-          const endTime = Date.now()
-          throw new Error(`Ollama generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
-        }
-      },
-    }
-  }
 
   /**
    * Get available model names

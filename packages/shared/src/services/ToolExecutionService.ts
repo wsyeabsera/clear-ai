@@ -1,4 +1,6 @@
+import { logger } from '../logger'
 import { SimpleLangChainService, CoreKeysAndModels } from './SimpleLangChainService'
+import { parseLLMJsonResponse } from '../utils'
 
 /**
  * Tool definition interface
@@ -391,7 +393,6 @@ export class ToolExecutionService {
         }
       }
 
-      console.log('Available tools', availableTools)
       // Create a system message that helps the LLM choose the right tool and validate inputs
       const systemMessage = `You are a tool selection and validation assistant. Given a user query, you must:
 1. Analyze the query to understand what the user wants to do
@@ -401,7 +402,7 @@ export class ToolExecutionService {
 5. Validate if all required parameters are provided
 6. If missing required parameters, indicate what information is needed
 
-Return ONLY a JSON object with this exact structure:
+Return ONLY a JSON object with this exact structure (always include the 'complete' field):
 
 For complete queries (all required parameters provided):
 {
@@ -434,6 +435,8 @@ For queries that don't match any specific tool:
   "complete": true
 }
 
+IMPORTANT: Always include the 'complete' field in your response. Set it to 'true' if all required parameters are provided, 'false' if any required parameters are missing.
+
 Available tools:
 ${availableTools.map(tool => `
 - ${tool.name}: ${tool.description}
@@ -464,19 +467,27 @@ Return ONLY the JSON object, no other text.`
         toolName: string
         args?: Record<string, any>
         reasoning?: string
-        complete: boolean
+        complete?: boolean
         missingInfo?: string[]
         followUpQuestion?: string
       }
 
       try {
-        // Try to extract JSON from the response
-        const jsonMatch = llmResponse.content.match(/\{[\s\S]*\}/)
-        if (jsonMatch) {
-          toolSelection = JSON.parse(jsonMatch[0])
-        } else {
-          toolSelection = JSON.parse(llmResponse.content)
+        // Use robust JSON parsing to handle different LLM response formats
+        logger.info('LLM response', llmResponse.content)
+        const parseResult = parseLLMJsonResponse(llmResponse.content)
+
+        if (!parseResult.success) {
+          logger.error('JSON parsing failed after multiple attempts:', parseResult.attempts)
+          return {
+            success: false,
+            error: `Failed to parse LLM response: ${parseResult.error}. Attempts: ${parseResult.attempts.join(', ')}`,
+            executionTime: Date.now() - startTime
+          }
         }
+
+        toolSelection = parseResult.data
+        logger.info('Successfully parsed JSON response after attempts:', parseResult.success ? ['success'] : [])
       } catch (parseError) {
         return {
           success: false,
@@ -484,6 +495,8 @@ Return ONLY the JSON object, no other text.`
           executionTime: Date.now() - startTime
         }
       }
+
+      console.log('Tool selection', toolSelection)
 
       // Validate tool selection
       if (!toolSelection.toolName) {
@@ -494,8 +507,8 @@ Return ONLY the JSON object, no other text.`
         }
       }
 
-      // Check if query is complete
-      if (!toolSelection.complete) {
+      // Check if query is complete (treat undefined as incomplete)
+      if (toolSelection.complete === false || toolSelection.complete === undefined) {
         return {
           success: false,
           error: 'Incomplete query - missing required information',
@@ -538,6 +551,7 @@ Return ONLY the JSON object, no other text.`
       }
 
       console.log('Tool selection', toolSelection)
+      logger.info('Tool selection', toolSelection)
       // Execute the selected tool
       const executionResult = await this.executeTool(
         toolSelection.toolName,

@@ -82,6 +82,7 @@ const router = Router()
  *         model:
  *           type: string
  *           description: LLM model to use
+ *           example: ollama
  *         temperature:
  *           type: number
  *           description: Temperature for LLM generation
@@ -349,117 +350,6 @@ router.post('/execute-multiple', toolExecutionController.executeTools)
  */
 router.post('/execute-sequential', toolExecutionController.executeToolsSequential)
 
-/**
- * @swagger
- * /api/tools/execute-with-llm:
- *   post:
- *     summary: Execute a tool using LLM to determine parameters
- *     tags: [Tools]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - toolName
- *               - userQuery
- *             properties:
- *               toolName:
- *                 type: string
- *                 description: Name of the tool to execute
- *               userQuery:
- *                 type: string
- *                 description: Natural language query to extract parameters from
- *               options:
- *                 $ref: '#/components/schemas/ToolExecutionOptions'
- *     responses:
- *       200:
- *         description: Tool executed with LLM successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ApiResponse'
- *       400:
- *         description: Invalid request
- *       500:
- *         description: Internal server error
- */
-router.post('/execute-with-llm', toolExecutionController.executeToolWithLLM)
-
-/**
- * @swagger
- * /api/tools/mcp:
- *   post:
- *     summary: Execute tool using MCP-style natural language query
- *     tags: [Tools]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - userQuery
- *             properties:
- *               userQuery:
- *                 type: string
- *                 description: Natural language query describing what you want to do
- *                 example: "What is 15 multiplied by 8?"
- *               options:
- *                 $ref: '#/components/schemas/ToolExecutionOptions'
- *     responses:
- *       200:
- *         description: MCP execution completed
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 data:
- *                   type: object
- *                   properties:
- *                     success:
- *                       type: boolean
- *                     result:
- *                       type: object
- *                       description: Tool execution result (if successful)
- *                     error:
- *                       type: string
- *                       description: Error message (if failed)
- *                     toolName:
- *                       type: string
- *                       description: Name of the selected tool
- *                     reasoning:
- *                       type: string
- *                       description: Why this tool was chosen
- *                     needsMoreInfo:
- *                       type: boolean
- *                       description: Whether more information is needed
- *                     missingInfo:
- *                       type: array
- *                       items:
- *                         type: string
- *                       description: List of missing parameters (if incomplete)
- *                     followUpQuestion:
- *                       type: string
- *                       description: Question to ask for missing information (if incomplete)
- *                     executionTime:
- *                       type: number
- *                       description: Execution time in milliseconds
- *                     traceId:
- *                       type: string
- *                       description: Langfuse trace ID
- *                 message:
- *                   type: string
- *       400:
- *         description: Invalid request
- *       500:
- *         description: Internal server error
- */
-router.post('/mcp', toolExecutionController.executeWithMCP)
 
 /**
  * @swagger

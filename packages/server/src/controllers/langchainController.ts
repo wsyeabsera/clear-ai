@@ -27,7 +27,6 @@ export const langchainController = {
    * Get available LangChain models
    */
   async getModels(req: Request, res: Response): Promise<void> {
-    console.log('Getting models', input)
     try {
       const models = simpleLangChainService.getAvailableModels()
       const currentModel = simpleLangChainService.getCurrentModel()
