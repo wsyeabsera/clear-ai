@@ -4,15 +4,15 @@ export const oldschoolTheme: Theme = {
   name: 'oldschool',
   colors: {
     primary: {
-      main: '#8B4513', // saddle brown
-      light: '#A0522D',
-      dark: '#654321',
+      main: '#6B4423', // darker brown for better contrast
+      light: '#8B4513',
+      dark: '#4A2C17',
       contrast: '#FFFFFF',
     },
     secondary: {
-      main: '#DAA520', // goldenrod
-      light: '#FFD700',
-      dark: '#B8860B',
+      main: '#B8860B', // darker goldenrod for better contrast
+      light: '#DAA520',
+      dark: '#9A7209',
       contrast: '#000000',
     },
     background: {
@@ -21,33 +21,33 @@ export const oldschoolTheme: Theme = {
       elevated: '#FFFFFF',
     },
     text: {
-      primary: '#8B4513',
-      secondary: '#654321',
-      disabled: '#A0A0A0',
+      primary: '#2D1810', // much darker brown for better contrast
+      secondary: '#4A2C17', // darker secondary
+      disabled: '#8B7355', // better contrast for disabled
       inverse: '#FFFFFF',
     },
     border: {
-      default: '#DAA520',
-      light: '#FFD700',
-      dark: '#B8860B',
+      default: '#B8860B',
+      light: '#DAA520',
+      dark: '#9A7209',
     },
     status: {
-      success: '#228B22', // forest green
-      warning: '#FF8C00', // dark orange
-      error: '#DC143C', // crimson
-      info: '#4169E1', // royal blue
+      success: '#1B5E20', // darker forest green
+      warning: '#E65100', // darker orange
+      error: '#B71C1C', // darker crimson
+      info: '#1A237E', // darker royal blue
     },
     interactive: {
       hover: '#FAEBD7',
       active: '#F5F5DC',
-      focus: '#DAA52033',
+      focus: '#B8860B33',
       disabled: '#E0E0E0',
-      hoverPrimary: '#DAA52022',
-      hoverSecondary: '#FFD70022',
-      hoverSuccess: '#228B2222',
-      hoverWarning: '#FF8C0022',
-      hoverError: '#DC143C22',
-      hoverInfo: '#4169E122',
+      hoverPrimary: '#B8860B22',
+      hoverSecondary: '#DAA52022',
+      hoverSuccess: '#1B5E2022',
+      hoverWarning: '#E6510022',
+      hoverError: '#B71C1C22',
+      hoverInfo: '#1A237E22',
     },
   },
   effects: {
@@ -69,21 +69,21 @@ export const oldschoolTheme: Theme = {
       slow: '350ms ease',
     },
     gradient: {
-      primary: 'linear-gradient(135deg, #8B4513 0%, #DAA520 100%)',
-      secondary: 'linear-gradient(45deg, #DAA520 0%, #FFD700 100%)',
-      accent: 'linear-gradient(90deg, #8B4513 0%, #DAA520 50%, #FFD700 100%)',
+      primary: 'linear-gradient(135deg, #6B4423 0%, #B8860B 100%)',
+      secondary: 'linear-gradient(45deg, #B8860B 0%, #DAA520 100%)',
+      accent: 'linear-gradient(90deg, #6B4423 0%, #B8860B 50%, #DAA520 100%)',
       subtle: 'linear-gradient(135deg, #F5F5DC 0%, #FAEBD7 100%)',
-      bold: 'linear-gradient(135deg, #8B4513 0%, #DAA520 50%, #FFD700 100%)',
-      rainbow: 'linear-gradient(135deg, #8B4513 0%, #DAA520 25%, #FFD700 50%, #228B22 75%, #DC143C 100%)',
-      dark: 'linear-gradient(135deg, #654321 0%, #8B4513 100%)',
+      bold: 'linear-gradient(135deg, #6B4423 0%, #B8860B 50%, #DAA520 100%)',
+      rainbow: 'linear-gradient(135deg, #6B4423 0%, #B8860B 25%, #DAA520 50%, #1B5E20 75%, #B71C1C 100%)',
+      dark: 'linear-gradient(135deg, #4A2C17 0%, #6B4423 100%)',
       light: 'linear-gradient(135deg, #FFFFFF 0%, #F5F5DC 100%)',
     },
     effects: {
-      metallic: '0 0 5px rgba(218, 165, 32, 0.3)',
-      glow: '0 0 10px rgba(218, 165, 32, 0.4)',
-      neon: '0 0 3px rgba(218, 165, 32, 0.6)',
-      shimmer: 'linear-gradient(90deg, transparent, rgba(218,165,32,0.2), transparent)',
-      pulse: '0 0 0 0 rgba(218, 165, 32, 0.5)',
+      metallic: '0 0 5px rgba(184, 134, 11, 0.3)',
+      glow: '0 0 10px rgba(184, 134, 11, 0.4)',
+      neon: '0 0 3px rgba(184, 134, 11, 0.6)',
+      shimmer: 'linear-gradient(90deg, transparent, rgba(184,134,11,0.2), transparent)',
+      pulse: '0 0 0 0 rgba(184, 134, 11, 0.5)',
       bounce: 'translateY(-2px)',
       slide: 'translateX(2px)',
       fade: 'opacity 0.25s ease',
@@ -93,9 +93,9 @@ export const oldschoolTheme: Theme = {
       scale: 'scale(1.01)',
       rotate: 'rotate(0.5deg)',
       translate: 'translateY(-1px)',
-      glow: '0 0 8px rgba(218, 165, 32, 0.3)',
+      glow: '0 0 8px rgba(184, 134, 11, 0.3)',
       shadow: '6px 6px 12px rgba(0, 0, 0, 0.25)',
-      background: 'rgba(218, 165, 32, 0.05)',
+      background: 'rgba(184, 134, 11, 0.05)',
     },
   },
   typography: {
@@ -135,7 +135,7 @@ export const oldschoolTheme: Theme = {
     bounce: '@keyframes bounce { 0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); } 40%, 43% { transform: translate3d(0,-30px,0); } 70% { transform: translate3d(0,-15px,0); } 90% { transform: translate3d(0,-4px,0); } }',
     antique: '@keyframes antique { 0%, 100% { box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15); } 50% { box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2); } }',
     vintage: '@keyframes vintage { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(1deg) scale(1.02); } 100% { transform: rotate(0deg) scale(1); } }',
-    classic: '@keyframes classic { 0%, 100% { color: #8B4513; } 50% { color: #DAA520; } }',
+    classic: '@keyframes classic { 0%, 100% { color: #6B4423; } 50% { color: #B8860B; } }',
     elegant: '@keyframes elegant { 0% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); } 50% { text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15); } 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); } }',
   },
 };

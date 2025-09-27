@@ -4,47 +4,47 @@ export const defaultTheme: Theme = {
   name: 'default',
   colors: {
     primary: {
-      main: '#3B82F6', // blue-500
-      light: '#60A5FA', // blue-400
-      dark: '#2563EB', // blue-600
+      main: '#2563EB', // blue-600 - better contrast
+      light: '#3B82F6', // blue-500
+      dark: '#1D4ED8', // blue-700
       contrast: '#FFFFFF',
     },
     secondary: {
-      main: '#6B7280', // gray-500
-      light: '#9CA3AF', // gray-400
-      dark: '#4B5563', // gray-600
+      main: '#7C3AED', // violet-600 - more vibrant
+      light: '#8B5CF6', // violet-500
+      dark: '#6D28D9', // violet-700
       contrast: '#FFFFFF',
     },
     background: {
       default: '#FFFFFF',
-      paper: '#F9FAFB', // gray-50
+      paper: '#F8FAFC', // slate-50 - slightly cooler
       elevated: '#FFFFFF',
     },
     text: {
-      primary: '#111827', // gray-900
-      secondary: '#6B7280', // gray-500
-      disabled: '#9CA3AF', // gray-400
+      primary: '#0F172A', // slate-900 - better contrast
+      secondary: '#475569', // slate-600 - improved contrast
+      disabled: '#94A3B8', // slate-400 - better contrast
       inverse: '#FFFFFF',
     },
     border: {
-      default: '#D1D5DB', // gray-300
-      light: '#E5E7EB', // gray-200
-      dark: '#9CA3AF', // gray-400
+      default: '#CBD5E1', // slate-300 - better contrast
+      light: '#E2E8F0', // slate-200
+      dark: '#94A3B8', // slate-400
     },
     status: {
-      success: '#10B981', // emerald-500
-      warning: '#F59E0B', // amber-500
-      error: '#EF4444', // red-500
-      info: '#3B82F6', // blue-500
+      success: '#059669', // emerald-600 - better contrast
+      warning: '#D97706', // amber-600 - better contrast
+      error: '#DC2626', // red-600 - better contrast
+      info: '#2563EB', // blue-600 - consistent with primary
     },
     interactive: {
-      hover: '#F3F4F6', // gray-100
-      active: '#E5E7EB', // gray-200
+      hover: '#F1F5F9', // slate-100 - better contrast
+      active: '#E2E8F0', // slate-200
       focus: '#DBEAFE', // blue-100
-      disabled: '#F9FAFB', // gray-50
+      disabled: '#F8FAFC', // slate-50
       hoverPrimary: '#EBF8FF', // blue-50
-      hoverSecondary: '#F9FAFB', // gray-50
-      hoverSuccess: '#ECFDF5', // green-50
+      hoverSecondary: '#F3E8FF', // violet-50
+      hoverSuccess: '#ECFDF5', // emerald-50
       hoverWarning: '#FFFBEB', // amber-50
       hoverError: '#FEF2F2', // red-50
       hoverInfo: '#EBF8FF', // blue-50
@@ -69,21 +69,21 @@ export const defaultTheme: Theme = {
       slow: '300ms ease-in-out',
     },
     gradient: {
-      primary: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
-      secondary: 'linear-gradient(135deg, #6B7280 0%, #374151 100%)',
-      accent: 'linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%)',
+      primary: 'linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)',
+      secondary: 'linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)',
+      accent: 'linear-gradient(135deg, #2563EB 0%, #7C3AED 50%, #EC4899 100%)',
       subtle: 'linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%)',
       bold: 'linear-gradient(135deg, #1E40AF 0%, #7C3AED 50%, #DC2626 100%)',
-      rainbow: 'linear-gradient(135deg, #EF4444 0%, #F59E0B 25%, #10B981 50%, #3B82F6 75%, #8B5CF6 100%)',
-      dark: 'linear-gradient(135deg, #1F2937 0%, #111827 100%)',
-      light: 'linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%)',
+      rainbow: 'linear-gradient(135deg, #DC2626 0%, #D97706 25%, #059669 50%, #2563EB 75%, #7C3AED 100%)',
+      dark: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
+      light: 'linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%)',
     },
     effects: {
-      glow: '0 0 20px rgba(59, 130, 246, 0.5)',
+      glow: '0 0 20px rgba(37, 99, 235, 0.5)',
       neon: '0 0 5px currentColor, 0 0 10px currentColor',
-      metallic: '0 0 10px rgba(156, 163, 175, 0.3)',
+      metallic: '0 0 10px rgba(148, 163, 184, 0.3)',
       shimmer: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
-      pulse: '0 0 0 0 rgba(59, 130, 246, 0.7)',
+      pulse: '0 0 0 0 rgba(37, 99, 235, 0.7)',
       bounce: 'translateY(-4px)',
       slide: 'translateX(4px)',
       fade: 'opacity 0.3s ease-in-out',
@@ -93,9 +93,9 @@ export const defaultTheme: Theme = {
       scale: 'scale(1.02)',
       rotate: 'rotate(1deg)',
       translate: 'translateY(-2px)',
-      glow: '0 0 15px rgba(59, 130, 246, 0.4)',
+      glow: '0 0 15px rgba(37, 99, 235, 0.4)',
       shadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-      background: 'rgba(59, 130, 246, 0.05)',
+      background: 'rgba(37, 99, 235, 0.05)',
     },
   },
   typography: {
