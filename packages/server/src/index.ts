@@ -6,11 +6,12 @@ import dotenv from 'dotenv'
 import { userRoutes } from './routes/userRoutes'
 import { healthRoutes } from './routes/healthRoutes'
 import { mcpRoutes } from './routes/mcpRoutes'
+import { langchainRoutes } from './routes/langchainRoutes'
 import { errorHandler } from './middleware/errorHandler'
 import { setupSwagger } from './config/swagger'
 
 // Load environment variables
-dotenv.config()
+dotenv.config({path: '.env'})
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -36,6 +37,7 @@ setupSwagger(app)
 app.use('/api/health', healthRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/mcp', mcpRoutes)
+app.use('/api/langchain', langchainRoutes)
 
 // Error handling middleware
 app.use(errorHandler)
