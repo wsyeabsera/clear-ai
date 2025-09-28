@@ -84,7 +84,9 @@ export const Chat: React.FC = () => {
 
 
   const pageStyles = {
-    height: 'calc(100vh - 120px)', // Account for header
+    minHeight: 'calc(100vh - 120px)', // Account for header
+    height: 'fit-content',
+    width: '100%',
     backgroundColor: 'transparent',
   };
 
@@ -93,12 +95,13 @@ export const Chat: React.FC = () => {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '0.5rem 1rem',
-    backgroundColor: theme.colors.background.paper,
-    border: `1px solid ${theme.colors.border.default}`,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    border: 'none',
     borderRadius: theme.effects.borderRadius.md,
     marginBottom: '1rem',
     fontSize: theme.typography.fontSize.sm,
     gap: '1rem',
+    backdropFilter: 'blur(10px)',
   };
 
   const statusIndicatorStyles = {
@@ -131,8 +134,8 @@ export const Chat: React.FC = () => {
   };
 
   const errorBannerStyles = {
-    backgroundColor: theme.colors.status.error + '10',
-    border: `1px solid ${theme.colors.status.error}40`,
+    backgroundColor: 'rgba(220, 38, 38, 0.1)',
+    border: 'none',
     borderRadius: theme.effects.borderRadius.md,
     padding: '0.75rem 1rem',
     marginBottom: '1rem',
@@ -141,6 +144,7 @@ export const Chat: React.FC = () => {
     display: 'flex',
     alignItems: 'center',
     gap: '0.5rem',
+    backdropFilter: 'blur(10px)',
   };
 
   return (

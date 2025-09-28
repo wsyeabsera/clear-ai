@@ -56,7 +56,7 @@ export class ClearAIApiService {
   constructor(baseURL: string = 'http://localhost:3001') {
     this.client = axios.create({
       baseURL,
-      timeout: 20000, // 20 seconds timeout
+      timeout: 50000, // 50 seconds timeout
       headers: {
         'Content-Type': 'application/json',
       },

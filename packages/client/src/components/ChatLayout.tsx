@@ -54,31 +54,33 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
 
   const layoutStyles = {
     display: 'flex',
-    height: 'calc(100vh - 120px)', // Account for header
-    backgroundColor: theme.colors.background.default,
+    minHeight: 'calc(100vh - 120px)', // Account for header
+    height: 'fit-content',
+    width: '100%',
+    backgroundColor: 'transparent',
     borderRadius: theme.effects.borderRadius.lg,
-    overflow: 'hidden',
-    boxShadow: theme.effects.shadow.lg,
+    overflow: 'visible',
   };
 
   const chatAreaStyles = {
     flex: 1,
     display: 'flex',
     flexDirection: 'column' as const,
-    backgroundColor: theme.colors.background.paper,
+    backgroundColor: 'transparent',
   };
 
   const messagesAreaStyles = {
     flex: 1,
     overflowY: 'auto' as const,
     padding: '1rem',
-    backgroundColor: theme.colors.background.default,
+    backgroundColor: 'transparent',
+    minHeight: '400px',
+    maxHeight: 'calc(100vh - 200px)',
   };
 
   const inputAreaStyles = {
     padding: '1rem',
-    borderTop: `1px solid ${theme.colors.border.default}`,
-    backgroundColor: theme.colors.background.paper,
+    backgroundColor: 'transparent',
   };
 
   const welcomeMessageStyles = {
@@ -108,17 +110,17 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
     display: 'flex',
     flexDirection: 'column' as const,
     gap: '1rem',
-    maxWidth: '600px',
+    width: '100%',
   };
 
   const featureItemStyles = {
     display: 'flex',
     alignItems: 'center',
     gap: '0.75rem',
-    padding: '0.75rem',
-    backgroundColor: theme.colors.background.paper,
-    borderRadius: theme.effects.borderRadius.md,
+    padding: '0.5rem 0',
+    backgroundColor: 'transparent',
     fontSize: theme.typography.fontSize.sm,
+    color: theme.colors.text.secondary,
   };
 
   const iconStyles = {

@@ -37,10 +37,10 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     flexDirection: 'column' as const,
     gap: '0.5rem',
     padding: '1rem',
-    backgroundColor: theme.colors.background.paper,
-    border: `1px solid ${theme.colors.border.default}`,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    border: 'none',
     borderRadius: theme.effects.borderRadius.lg,
-    boxShadow: theme.effects.shadow.md,
+    backdropFilter: 'blur(10px)',
   };
 
   const textareaStyles = {
@@ -48,18 +48,18 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     minHeight: '60px',
     maxHeight: '200px',
     padding: '0.75rem',
-    border: `1px solid ${theme.colors.border.default}`,
+    border: 'none',
     borderRadius: theme.effects.borderRadius.md,
-    backgroundColor: theme.colors.background.default,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
     color: theme.colors.text.primary,
     fontFamily: theme.typography.fontFamily.primary,
     fontSize: theme.typography.fontSize.base,
     resize: 'none' as const,
     outline: 'none',
     transition: theme.effects.transition.normal,
+    backdropFilter: 'blur(5px)',
     '&:focus': {
-      borderColor: theme.colors.primary.main,
-      boxShadow: `0 0 0 3px ${theme.colors.primary.main}33`,
+      backgroundColor: 'rgba(255, 255, 255, 0.15)',
     },
     '&::placeholder': {
       color: theme.colors.text.disabled,
