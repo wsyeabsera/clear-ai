@@ -161,6 +161,8 @@ export interface MemoryService {
 
   // Utility operations
   clearUserMemories(userId: string): Promise<boolean>;
+  clearSessionMemories(userId: string, sessionId: string): Promise<boolean>;
+  clearSemanticMemories(userId: string): Promise<boolean>;
   getMemoryStats(userId: string): Promise<{
     episodic: { count: number; oldest: Date | null; newest: Date | null };
     semantic: { count: number; categories: string[] };

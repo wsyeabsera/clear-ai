@@ -82,8 +82,8 @@ export class Neo4jMemoryService {
 
         // Create or merge session
         await tx.run(`
-          MERGE (s:Session {id: $sessionId, userId: $userId})
-          SET s.lastActive = datetime()
+          MERGE (s:Session {id: $sessionId})
+          SET s.userId = $userId, s.lastActive = datetime()
         `, { sessionId: memory.sessionId, userId: memory.userId });
 
         // Create episodic memory node
@@ -356,6 +356,20 @@ export class Neo4jMemoryService {
         MATCH (u:User {id: $userId})-[r:HAS_MEMORY]->(m:EpisodicMemory)
         DETACH DELETE m
       `, { userId });
+
+      return true;
+    } finally {
+      await session.close();
+    }
+  }
+
+  async clearSessionMemories(userId: string, sessionId: string): Promise<boolean> {
+    const session = this.driver.session({ database: this.config.database });
+    try {
+      await session.run(`
+        MATCH (m:EpisodicMemory {userId: $userId, sessionId: $sessionId})
+        DETACH DELETE m
+      `, { userId, sessionId });
 
       return true;
     } finally {

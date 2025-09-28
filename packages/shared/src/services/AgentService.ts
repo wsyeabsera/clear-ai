@@ -1,14 +1,14 @@
 import { logger } from '../logger'
-import { 
+import {
   MemorySearchQuery,
   MemoryContext,
   EpisodicMemory,
   SemanticMemory,
   MemoryService
 } from '../types/memory'
-import { 
-  IntentClassifierService, 
-  QueryIntent, 
+import {
+  IntentClassifierService,
+  QueryIntent,
   IntentClassificationOptions
 } from './IntentClassifierService'
 import { SimpleLangChainService } from './SimpleLangChainService'
@@ -46,6 +46,38 @@ export interface AgentExecutionResult {
 }
 
 /**
+ * Lightweight memory context for tool chaining - excludes vectors and heavy metadata
+ */
+export interface LightweightMemoryContext {
+  userId: string
+  sessionId: string
+  episodicMemories: Array<{
+    id: string
+    timestamp: Date
+    content: string
+    metadata: {
+      source: string
+      importance: number
+      tags: string[]
+    }
+  }>
+  semanticMemories: Array<{
+    id: string
+    concept: string
+    description: string
+    metadata: {
+      category: string
+      confidence: number
+    }
+  }>
+  contextWindow: {
+    startTime: Date
+    endTime: Date
+    relevanceScore: number
+  }
+}
+
+/**
  * Agent execution options
  */
 export interface AgentExecutionOptions {
@@ -57,6 +89,20 @@ export interface AgentExecutionOptions {
   temperature?: number
   includeReasoning?: boolean
   previousIntents?: QueryIntent[]
+  responseDetailLevel?: 'minimal' | 'standard' | 'full'
+  excludeVectors?: boolean
+}
+
+export interface PendingAction {
+  id: string
+  userId: string
+  sessionId: string
+  originalQuery: string
+  intent: QueryIntent
+  requiredTools: string[]
+  toolArgs: Record<string, any>[]
+  confirmationMessage: string
+  timestamp: number
 }
 
 /**
@@ -81,6 +127,7 @@ export class AgentService {
   private relationshipAnalyzer: RelationshipAnalysisService
   private enhancedSemanticService: EnhancedSemanticService
   private config: AgentServiceConfig
+  private pendingActions: Map<string, PendingAction> = new Map()
 
   constructor(config: AgentServiceConfig) {
     this.config = config
@@ -137,11 +184,11 @@ export class AgentService {
    * Main execution method that processes user queries
    */
   async executeQuery(
-    query: string, 
+    query: string,
     options: AgentExecutionOptions = {}
   ): Promise<AgentExecutionResult> {
     const startTime = Date.now()
-    
+
     try {
       logger.info(`Agent executing query: "${query}"`)
 
@@ -151,7 +198,18 @@ export class AgentService {
         ...options
       }
 
-      // Step 1: Classify the query intent
+      // Step 1: Retrieve memory context FIRST for hybrid classification
+      let memoryContext: MemoryContext | undefined
+      logger.info(`Memory context check: includeMemoryContext=${executionOptions.includeMemoryContext}, userId=${executionOptions.userId}, sessionId=${executionOptions.sessionId}`)
+      if (executionOptions.includeMemoryContext !== false) {
+        logger.info(`Retrieving memory context for userId: ${executionOptions.userId}, sessionId: ${executionOptions.sessionId}`)
+        memoryContext = await this.retrieveMemoryContext(query, executionOptions)
+        logger.info(`Retrieved memory context with ${memoryContext.episodicMemories.length} episodic and ${memoryContext.semanticMemories.length} semantic memories`)
+      } else {
+        logger.info('Memory context retrieval disabled')
+      }
+
+      // Step 2: Classify the query intent with memory context
       const intentOptions: IntentClassificationOptions = {
         model: executionOptions.model,
         temperature: executionOptions.temperature,
@@ -160,20 +218,21 @@ export class AgentService {
           userId: executionOptions.userId,
           sessionId: executionOptions.sessionId,
           previousIntents: executionOptions.previousIntents
-        }
+        },
+        // Pass memory context to enable hybrid classification
+        memoryContext: memoryContext
       }
 
       const intent = await this.intentClassifier.classifyQuery(query, intentOptions)
       logger.info(`Query classified as: ${intent.type} (confidence: ${intent.confidence})`)
 
-      // Step 2: Retrieve memory context if needed
-      let memoryContext: MemoryContext | undefined
-      if (intent.memoryContext && executionOptions.includeMemoryContext !== false) {
+      // Step 3: Re-retrieve memory context if not already retrieved and needed
+      if (!memoryContext && intent.memoryContext && executionOptions.includeMemoryContext !== false) {
         memoryContext = await this.retrieveMemoryContext(query, executionOptions)
         logger.info(`Retrieved memory context with ${memoryContext.episodicMemories.length} episodic and ${memoryContext.semanticMemories.length} semantic memories`)
       }
 
-      // Step 3: Execute based on intent type
+      // Step 4: Execute based on intent type
       let response: string
       let toolResults: ToolExecutionResult[] = []
 
@@ -202,6 +261,10 @@ export class AgentService {
           response = await this.handleConversation(query, memoryContext, executionOptions)
           break
 
+        case 'confirmation_request':
+          response = await this.handleConfirmationRequest(query, intent, executionOptions)
+          break
+
         case 'unknown':
         default:
           response = await this.handleUnknownQuery(query, memoryContext, executionOptions)
@@ -209,13 +272,13 @@ export class AgentService {
       }
 
       // Step 4: Store the interaction in memory if it's worth remembering
-      logger.info('Checking if should store interaction', { 
-        userId: executionOptions.userId, 
+      logger.info('Checking if should store interaction', {
+        userId: executionOptions.userId,
         sessionId: executionOptions.sessionId,
         hasUserId: !!executionOptions.userId,
         hasSessionId: !!executionOptions.sessionId
       })
-      
+
       if (executionOptions.userId && executionOptions.sessionId) {
         logger.info('Storing interaction in memory')
         await this.storeInteraction(query, response, intent, executionOptions)
@@ -228,14 +291,30 @@ export class AgentService {
 
       const executionTime = Date.now() - startTime
 
+      // Determine response detail level
+      const responseDetailLevel = executionOptions.responseDetailLevel || 'standard'
+      const excludeVectors = executionOptions.excludeVectors !== false // Default to true
+
+      // Create appropriate memory context based on detail level
+      let finalMemoryContext: MemoryContext | LightweightMemoryContext | undefined
+      if (memoryContext) {
+        if (responseDetailLevel === 'minimal' || excludeVectors) {
+          finalMemoryContext = this.createLightweightMemoryContext(memoryContext)
+        } else {
+          finalMemoryContext = memoryContext
+        }
+      }
+
       const result: AgentExecutionResult = {
         success: true,
         response,
         intent,
-        memoryContext,
-        toolResults,
-        reasoning: executionOptions.includeReasoning ? this.generateReasoning(intent, memoryContext, toolResults) : undefined,
-        metadata: {
+        memoryContext: finalMemoryContext as MemoryContext, // Type assertion for compatibility
+        toolResults: responseDetailLevel === 'minimal' ? undefined : toolResults,
+        reasoning: (executionOptions.includeReasoning && responseDetailLevel !== 'minimal')
+          ? this.generateReasoning(intent, memoryContext, toolResults)
+          : undefined,
+        metadata: responseDetailLevel === 'minimal' ? undefined : {
           executionTime,
           memoryRetrieved: (memoryContext?.episodicMemories.length || 0) + (memoryContext?.semanticMemories.length || 0),
           toolsExecuted: toolResults.length,
@@ -248,7 +327,7 @@ export class AgentService {
 
     } catch (error) {
       logger.error('Agent execution failed:', error)
-      
+
       return {
         success: false,
         response: `I apologize, but I encountered an error while processing your request: ${error instanceof Error ? error.message : 'Unknown error'}`,
@@ -271,14 +350,14 @@ export class AgentService {
    * Retrieve memory context for the query with enhanced relationship analysis
    */
   private async retrieveMemoryContext(
-    query: string, 
+    query: string,
     options: AgentExecutionOptions
   ): Promise<MemoryContext> {
     if (!options.userId || !options.sessionId) {
-      return { 
-        userId: '', 
+      return {
+        userId: '',
         sessionId: '',
-        episodicMemories: [], 
+        episodicMemories: [],
         semanticMemories: [],
         contextWindow: {
           startTime: new Date(),
@@ -291,7 +370,7 @@ export class AgentService {
     try {
       // Get memory context from the service
       const context = await this.memoryService.getMemoryContext(
-        options.userId, 
+        options.userId,
         options.sessionId
       )
 
@@ -304,7 +383,7 @@ export class AgentService {
       }
 
       const searchResults = await this.memoryService.searchMemories(searchQuery)
-      
+
       // Combine context with search results
       const combinedContext = {
         userId: context.userId,
@@ -322,10 +401,10 @@ export class AgentService {
       return combinedContext
     } catch (error) {
       logger.warn('Failed to retrieve memory context:', error)
-      return { 
-        userId: options.userId || '', 
+      return {
+        userId: options.userId || '',
         sessionId: options.sessionId || '',
-        episodicMemories: [], 
+        episodicMemories: [],
         semanticMemories: [],
         contextWindow: {
           startTime: new Date(),
@@ -495,12 +574,12 @@ export class AgentService {
    * Handle memory-based chat
    */
   private async handleMemoryChat(
-    query: string, 
+    query: string,
     memoryContext: MemoryContext | undefined,
     options: AgentExecutionOptions
   ): Promise<string> {
     const systemPrompt = this.buildMemoryChatSystemPrompt(memoryContext)
-    
+
     const response = await this.langchainService.complete(query, {
       model: options.model || 'openai',
       temperature: options.temperature || 0.7,
@@ -524,40 +603,56 @@ export class AgentService {
     intent: QueryIntent,
     options: AgentExecutionOptions
   ): Promise<{ response: string; toolResults: ToolExecutionResult[] }> {
-    const toolResults: ToolExecutionResult[] = []
+    let toolResults: ToolExecutionResult[] = []
 
     try {
-      // Execute required tools
-      if (intent.requiredTools && intent.requiredTools.length > 0) {
-        for (const toolName of intent.requiredTools) {
-          try {
-            const toolArgs = await this.extractToolArgs(query, toolName)
-            const tool = this.toolRegistry.getTool(toolName)
-            if (!tool) {
-              throw new Error(`Tool '${toolName}' not found`)
+      // Check if this tool execution needs confirmation
+      if (intent.needsConfirmation && intent.confirmationMessage) {
+        // Store the pending action for later execution
+        const pendingActionId = `${options.userId || 'anonymous'}-${options.sessionId || 'default'}-${Date.now()}`
+        const toolArgs: Record<string, any>[] = []
+
+        // Extract tool arguments for each required tool
+        if (intent.requiredTools && intent.requiredTools.length > 0) {
+          for (const toolName of intent.requiredTools) {
+            try {
+              const args = await this.extractToolArgs(query, toolName)
+              toolArgs.push({ toolName, args })
+            } catch (error) {
+              logger.warn(`Failed to extract args for tool ${toolName}:`, error)
+              toolArgs.push({ toolName, args: {} })
             }
-            const result = await tool.execute(toolArgs)
-            
-            toolResults.push({
-              success: true,
-              toolName,
-              result,
-              executionTime: 0 // Tool registry doesn't provide timing
-            })
-          } catch (error) {
-            toolResults.push({
-              success: false,
-              toolName,
-              error: error instanceof Error ? error.message : 'Unknown error',
-              executionTime: 0
-            })
           }
         }
+
+        const pendingAction: PendingAction = {
+          id: pendingActionId,
+          userId: options.userId || 'anonymous',
+          sessionId: options.sessionId || 'default',
+          originalQuery: query,
+          intent,
+          requiredTools: intent.requiredTools || [],
+          toolArgs,
+          confirmationMessage: intent.confirmationMessage,
+          timestamp: Date.now()
+        }
+
+        this.pendingActions.set(pendingActionId, pendingAction)
+
+        return {
+          response: `🤔 ${intent.confirmationMessage}\n\nWould you like me to perform this action for you?`,
+          toolResults: []
+        }
+      }
+
+      // Execute required tools - enhanced for multi-step workflows
+      if (intent.requiredTools && intent.requiredTools.length > 0) {
+        toolResults = await this.executeToolsWithWorkflowSupport(query, intent.requiredTools, options)
       }
 
       // Generate response based on tool results
       const response = await this.generateToolResponse(query, toolResults, options)
-      
+
       return { response, toolResults }
     } catch (error) {
       logger.error('Tool execution failed:', error)
@@ -579,10 +674,10 @@ export class AgentService {
   ): Promise<{ response: string; toolResults: ToolExecutionResult[] }> {
     // First execute tools
     const toolResult = await this.handleToolExecution(query, intent, options)
-    
+
     // Then generate response with both memory context and tool results
     const systemPrompt = this.buildHybridSystemPrompt(memoryContext, toolResult.toolResults)
-    
+
     const response = await this.langchainService.complete(query, {
       model: options.model || 'openai',
       temperature: options.temperature || 0.7,
@@ -610,7 +705,7 @@ export class AgentService {
     options: AgentExecutionOptions
   ): Promise<string> {
     const systemPrompt = this.buildKnowledgeSearchSystemPrompt(memoryContext)
-    
+
     const response = await this.langchainService.complete(query, {
       model: options.model || 'openai',
       temperature: options.temperature || 0.3,
@@ -635,7 +730,7 @@ export class AgentService {
     options: AgentExecutionOptions
   ): Promise<string> {
     const systemPrompt = this.buildConversationSystemPrompt(memoryContext)
-    
+
     const response = await this.langchainService.complete(query, {
       model: options.model || 'openai',
       temperature: options.temperature || 0.8,
@@ -652,6 +747,78 @@ export class AgentService {
   }
 
   /**
+   * Handle confirmation requests
+   */
+  private async handleConfirmationRequest(
+    query: string,
+    intent: QueryIntent,
+    options: AgentExecutionOptions
+  ): Promise<string> {
+    // Check if this is a positive confirmation (yes, do it, proceed, etc.)
+    const positiveConfirmations = ['yes', 'y', 'do it', 'proceed', 'go ahead', 'execute', 'confirm', 'ok', 'okay', 'sure']
+    const negativeConfirmations = ['no', 'n', 'cancel', 'stop', 'abort', 'don\'t', 'dont', 'nevermind', 'never mind']
+
+    const queryLower = query.toLowerCase().trim()
+    const isPositive = positiveConfirmations.some(conf => queryLower.includes(conf))
+    const isNegative = negativeConfirmations.some(conf => queryLower.includes(conf))
+
+    if (isPositive) {
+      // User confirmed - find and execute the pending action
+      const pendingAction = this.findPendingAction(options.userId, options.sessionId)
+
+      if (pendingAction) {
+        try {
+          // Execute the pending action
+          const toolResults: ToolExecutionResult[] = []
+
+          for (const toolArg of pendingAction.toolArgs) {
+            try {
+              const tool = this.toolRegistry.getTool(toolArg.toolName)
+              if (!tool) {
+                throw new Error(`Tool '${toolArg.toolName}' not found`)
+              }
+              const result = await tool.execute(toolArg.args)
+
+              toolResults.push({
+                success: true,
+                toolName: toolArg.toolName,
+                result,
+                executionTime: 0
+              })
+            } catch (error) {
+              toolResults.push({
+                success: false,
+                toolName: toolArg.toolName,
+                error: error instanceof Error ? error.message : 'Unknown error',
+                executionTime: 0
+              })
+            }
+          }
+
+          // Generate response based on tool results
+          const response = await this.generateToolResponse(pendingAction.originalQuery, toolResults, options)
+
+          // Clean up the pending action
+          this.pendingActions.delete(pendingAction.id)
+
+          return `✅ ${response}`
+        } catch (error) {
+          logger.error('Failed to execute pending action:', error)
+          return `❌ I encountered an error while executing the action: ${error instanceof Error ? error.message : 'Unknown error'}`
+        }
+      } else {
+        return "❌ I don't have any pending actions to execute. Please make a new request that requires confirmation."
+      }
+    } else if (isNegative) {
+      // User declined - clean up any pending actions
+      this.clearPendingActions(options.userId, options.sessionId)
+      return "❌ Understood. I won't proceed with the action. Is there anything else I can help you with?"
+    } else {
+      return "I'm not sure if you're confirming or declining. Please respond with 'yes' to proceed or 'no' to cancel."
+    }
+  }
+
+  /**
    * Handle unknown queries
    */
   private async handleUnknownQuery(
@@ -660,7 +827,7 @@ export class AgentService {
     options: AgentExecutionOptions
   ): Promise<string> {
     const systemPrompt = this.buildUnknownQuerySystemPrompt(memoryContext)
-    
+
     const response = await this.langchainService.complete(query, {
       model: options.model || 'openai',
       temperature: options.temperature || 0.5,
@@ -677,18 +844,316 @@ export class AgentService {
   }
 
   /**
+   * Find the most recent pending action for a user/session
+   */
+  private findPendingAction(userId?: string, sessionId?: string): PendingAction | null {
+    const userKey = userId || 'anonymous'
+    const sessionKey = sessionId || 'default'
+
+    // Find the most recent pending action for this user/session
+    let mostRecent: PendingAction | null = null
+    let mostRecentTime = 0
+
+    for (const [id, action] of this.pendingActions) {
+      if (action.userId === userKey && action.sessionId === sessionKey) {
+        if (action.timestamp > mostRecentTime) {
+          mostRecent = action
+          mostRecentTime = action.timestamp
+        }
+      }
+    }
+
+    return mostRecent
+  }
+
+  /**
+   * Clear all pending actions for a user/session
+   */
+  private clearPendingActions(userId?: string, sessionId?: string): void {
+    const userKey = userId || 'anonymous'
+    const sessionKey = sessionId || 'default'
+
+    for (const [id, action] of this.pendingActions) {
+      if (action.userId === userKey && action.sessionId === sessionKey) {
+        this.pendingActions.delete(id)
+      }
+    }
+  }
+
+  /**
+   * Execute tools with support for multi-step workflows
+   */
+  private async executeToolsWithWorkflowSupport(
+    query: string,
+    requiredTools: string[],
+    options: AgentExecutionOptions
+  ): Promise<ToolExecutionResult[]> {
+    const toolResults: ToolExecutionResult[] = []
+
+    // Check if this is a multi-step workflow
+    const isMultiStep = this.isMultiStepWorkflow(query)
+
+    if (isMultiStep && requiredTools.length > 1) {
+      // Execute tools sequentially for multi-step workflows
+      logger.info(`Executing ${requiredTools.length} tools sequentially for multi-step workflow`)
+      return await this.executeSequentialTools(query, requiredTools, options)
+    } else {
+      // Execute tools in parallel for single-step or simple workflows
+      logger.info(`Executing ${requiredTools.length} tools in parallel`)
+      return await this.executeParallelTools(query, requiredTools, options)
+    }
+  }
+
+  /**
+   * Check if the query represents a multi-step workflow
+   */
+  private isMultiStepWorkflow(query: string): boolean {
+    const multiStepPatterns = [
+      /then\s+(?:show|get|fetch|call|use)/i,
+      /after\s+(?:that|getting|fetching)/i,
+      /next\s+(?:step|call|request)/i,
+      /followed\s+by/i,
+      /and\s+then/i,
+      /,\s+then/i,
+      /step\s+\d+/i,
+      /first\s+.*then/i
+    ]
+
+    return multiStepPatterns.some(pattern => pattern.test(query))
+  }
+
+  /**
+   * Execute tools sequentially for multi-step workflows
+   */
+  private async executeSequentialTools(
+    query: string,
+    requiredTools: string[],
+    options: AgentExecutionOptions
+  ): Promise<ToolExecutionResult[]> {
+    const toolResults: ToolExecutionResult[] = []
+    let previousResults: any[] = []
+
+    for (let i = 0; i < requiredTools.length; i++) {
+      const toolName = requiredTools[i]
+      const toolIndex = i + 1
+
+      try {
+        logger.info(`Executing tool ${toolIndex}/${requiredTools.length}: ${toolName}`)
+
+        // Extract arguments for this specific step
+        const toolArgs = await this.extractToolArgsForStep(query, toolName, toolIndex, previousResults)
+        const tool = this.toolRegistry.getTool(toolName)
+
+        if (!tool) {
+          throw new Error(`Tool '${toolName}' not found`)
+        }
+
+        const result = await tool.execute(toolArgs)
+
+        toolResults.push({
+          success: true,
+          toolName,
+          result,
+          executionTime: 0 // Tool registry doesn't provide timing
+        })
+
+        // Store result for potential use in next steps
+        previousResults.push(result)
+
+        logger.info(`Tool ${toolName} executed successfully`, { step: toolIndex })
+
+      } catch (error) {
+        logger.error(`Tool ${toolName} failed at step ${toolIndex}:`, error)
+        toolResults.push({
+          success: false,
+          toolName,
+          error: error instanceof Error ? error.message : 'Unknown error',
+          executionTime: 0
+        })
+
+        // For sequential workflows, if one step fails, we might want to stop
+        // or continue depending on the error type
+        break
+      }
+    }
+
+    return toolResults
+  }
+
+  /**
+   * Execute tools in parallel for single-step workflows
+   */
+  private async executeParallelTools(
+    query: string,
+    requiredTools: string[],
+    options: AgentExecutionOptions
+  ): Promise<ToolExecutionResult[]> {
+    const toolResults: ToolExecutionResult[] = []
+
+    // Execute all tools in parallel
+    const toolPromises = requiredTools.map(async (toolName) => {
+      try {
+        const toolArgs = await this.extractToolArgs(query, toolName)
+        const tool = this.toolRegistry.getTool(toolName)
+
+        if (!tool) {
+          throw new Error(`Tool '${toolName}' not found`)
+        }
+
+        const result = await tool.execute(toolArgs)
+
+        return {
+          success: true,
+          toolName,
+          result,
+          executionTime: 0
+        }
+      } catch (error) {
+        return {
+          success: false,
+          toolName,
+          error: error instanceof Error ? error.message : 'Unknown error',
+          executionTime: 0
+        }
+      }
+    })
+
+    // Wait for all tools to complete
+    const results = await Promise.all(toolPromises)
+    toolResults.push(...results)
+
+    return toolResults
+  }
+
+  /**
+   * Extract tool arguments for a specific step in a multi-step workflow
+   */
+  private async extractToolArgsForStep(
+    query: string,
+    toolName: string,
+    stepNumber: number,
+    previousResults: any[]
+  ): Promise<Record<string, any>> {
+    try {
+      const toolSchema = this.toolRegistry.getToolSchema(toolName)
+
+      // Build context for this specific step (limit to avoid token overflow)
+      let contextInfo = ''
+      if (previousResults.length > 0) {
+        // Only include the most recent result and limit its size
+        const lastResult = previousResults[previousResults.length - 1]
+        const resultSummary = {
+          success: lastResult.success,
+          toolName: lastResult.toolName,
+          dataType: lastResult.result?.data ? 'array' : 'object',
+          dataLength: Array.isArray(lastResult.result?.data) ? lastResult.result.data.length : 1,
+          sampleData: Array.isArray(lastResult.result?.data)
+            ? lastResult.result.data.slice(0, 2) // Only first 2 items
+            : lastResult.result?.data
+        }
+        contextInfo = `\n\nPrevious step result summary: ${JSON.stringify(resultSummary, null, 2)}`
+      }
+
+      // Enhanced prompt for API call tool in multi-step workflows
+      let prompt = `Step ${stepNumber} of multi-step workflow.
+
+Tool: ${toolName}
+Schema: ${JSON.stringify(toolSchema)}
+
+Query: ${query.substring(0, 200)}...
+${contextInfo}
+
+Extract arguments for this step. If step 2 and previous step returned posts, use first post's ID for comments API.
+
+Return JSON with arguments only:`
+
+      // Special handling for API call tool in multi-step workflows
+      if (toolName === 'api_call') {
+        prompt = `Step ${stepNumber} of multi-step API workflow.
+
+Tool: ${toolName}
+Schema: ${JSON.stringify(toolSchema)}
+
+Query: ${query.substring(0, 200)}...
+${contextInfo}
+
+CRITICAL: You MUST use the JSONPlaceholder API (https://jsonplaceholder.typicode.com) for all API calls unless explicitly told otherwise.
+
+URL Construction Rules:
+- For posts by user: "https://jsonplaceholder.typicode.com/posts?userId={userId}"
+- For specific post: "https://jsonplaceholder.typicode.com/posts/{postId}"
+- For comments: "https://jsonplaceholder.typicode.com/comments?postId={postId}"
+
+Query Analysis:
+- If query mentions "posts made by user id X" or "posts for user X" → "https://jsonplaceholder.typicode.com/posts?userId=X"
+- If query mentions "comments for post X" or "comments for the first post" → "https://jsonplaceholder.typicode.com/comments?postId=X"
+- If query mentions "get posts" without specific user → "https://jsonplaceholder.typicode.com/posts"
+
+MANDATORY: Always use jsonplaceholder.typicode.com as the domain. Never use api.example.com or any other domain.
+
+If previous results contain post data, look for the first post's ID and use it for comments.
+
+Return JSON with arguments only. The URL must be a complete, valid URL starting with https://.`
+      }
+
+      const response = await this.langchainService.complete(prompt, {
+        model: 'openai',
+        temperature: 0.1,
+        metadata: {
+          service: 'AgentService',
+          method: 'extractToolArgsForStep',
+          toolName,
+          stepNumber
+        }
+      })
+
+      return JSON.parse(response.content)
+    } catch (error) {
+      logger.warn(`Failed to extract tool args for step ${stepNumber} (${toolName}):`, error)
+      return {}
+    }
+  }
+
+  /**
    * Extract tool arguments from query using LLM
    */
   private async extractToolArgs(query: string, toolName: string): Promise<Record<string, any>> {
     try {
       const toolSchema = this.toolRegistry.getToolSchema(toolName)
-      const prompt = `Extract arguments for the tool "${toolName}" from this query: "${query}"
+
+      // Enhanced prompt for API call tool with better URL construction guidance
+      let prompt = `Extract arguments for the tool "${toolName}" from this query: "${query}"
 
 Tool schema: ${JSON.stringify(toolSchema, null, 2)}
 
 Return only a JSON object with the extracted arguments. If you cannot extract valid arguments, return an empty object {}.
 
 Example: If the tool needs { "operation": "add", "a": 5, "b": 3 } and the query is "add 5 and 3", return {"operation": "add", "a": 5, "b": 3}.`
+
+      // Special handling for API call tool
+      if (toolName === 'api_call') {
+        prompt = `Extract arguments for the API call tool from this query: "${query}"
+
+Tool schema: ${JSON.stringify(toolSchema, null, 2)}
+
+CRITICAL: You MUST use the JSONPlaceholder API (https://jsonplaceholder.typicode.com) for all API calls unless explicitly told otherwise.
+
+URL Construction Rules:
+- For posts by user: "https://jsonplaceholder.typicode.com/posts?userId={userId}"
+- For specific post: "https://jsonplaceholder.typicode.com/posts/{postId}"
+- For comments: "https://jsonplaceholder.typicode.com/comments?postId={postId}"
+
+Query Analysis:
+- If query mentions "posts made by user id X" or "posts for user X" → "https://jsonplaceholder.typicode.com/posts?userId=X"
+- If query mentions "comments for post X" or "comments for the first post" → "https://jsonplaceholder.typicode.com/comments?postId=X"
+- If query mentions "get posts" without specific user → "https://jsonplaceholder.typicode.com/posts"
+
+MANDATORY: Always use jsonplaceholder.typicode.com as the domain. Never use api.example.com or any other domain.
+
+Return only a JSON object with the extracted arguments. The URL must be a complete, valid URL starting with https://.
+
+Example: For "get posts for user 2", return {"url": "https://jsonplaceholder.typicode.com/posts?userId=2", "method": "GET"}`
+      }
 
       const response = await this.langchainService.complete(prompt, {
         model: 'openai',
@@ -700,10 +1165,71 @@ Example: If the tool needs { "operation": "add", "a": 5, "b": 3 } and the query 
         }
       })
 
-      return JSON.parse(response.content)
+      const extractedArgs = JSON.parse(response.content)
+
+      // Fallback correction for API call tool
+      if (toolName === 'api_call' && extractedArgs.url) {
+        // Check if the URL is incorrect and fix it
+        if (extractedArgs.url.includes('api.example.com') ||
+          (!extractedArgs.url.includes('jsonplaceholder.typicode.com') &&
+            !extractedArgs.url.includes('http'))) {
+
+          logger.warn(`Detected incorrect URL: ${extractedArgs.url}, correcting to JSONPlaceholder`)
+
+          // Extract user ID from query
+          const userIdMatch = query.match(/user\s+id\s+(\d+)/i) || query.match(/user\s+(\d+)/i)
+          const postIdMatch = query.match(/post\s+id\s+(\d+)/i) || query.match(/post\s+(\d+)/i)
+
+          if (userIdMatch) {
+            extractedArgs.url = `https://jsonplaceholder.typicode.com/posts?userId=${userIdMatch[1]}`
+            extractedArgs.method = 'GET'
+          } else if (postIdMatch) {
+            extractedArgs.url = `https://jsonplaceholder.typicode.com/comments?postId=${postIdMatch[1]}`
+            extractedArgs.method = 'GET'
+          } else if (query.includes('posts')) {
+            extractedArgs.url = 'https://jsonplaceholder.typicode.com/posts'
+            extractedArgs.method = 'GET'
+          } else if (query.includes('comments')) {
+            extractedArgs.url = 'https://jsonplaceholder.typicode.com/comments'
+            extractedArgs.method = 'GET'
+          }
+        }
+      }
+
+      return extractedArgs
     } catch (error) {
       logger.warn(`Failed to extract tool args for ${toolName}:`, error)
       return {}
+    }
+  }
+
+  /**
+   * Convert full memory context to lightweight version for tool chaining
+   */
+  private createLightweightMemoryContext(memoryContext: MemoryContext): LightweightMemoryContext {
+    return {
+      userId: memoryContext.userId,
+      sessionId: memoryContext.sessionId,
+      episodicMemories: memoryContext.episodicMemories.map(memory => ({
+        id: memory.id,
+        timestamp: memory.timestamp,
+        content: memory.content,
+        metadata: {
+          source: memory.metadata.source,
+          importance: memory.metadata.importance,
+          tags: memory.metadata.tags
+        }
+      })),
+      semanticMemories: memoryContext.semanticMemories.map(memory => ({
+        id: memory.id,
+        concept: memory.concept,
+        description: memory.description,
+        metadata: {
+          category: memory.metadata.category,
+          confidence: memory.metadata.confidence
+        }
+      })),
+      contextWindow: memoryContext.contextWindow
     }
   }
 
@@ -715,7 +1241,7 @@ Example: If the tool needs { "operation": "add", "a": 5, "b": 3 } and the query 
     toolResults: ToolExecutionResult[],
     options: AgentExecutionOptions
   ): Promise<string> {
-    const toolResultsText = toolResults.map(result => 
+    const toolResultsText = toolResults.map(result =>
       `Tool: ${result.toolName}\nSuccess: ${result.success}\nResult: ${JSON.stringify(result.result || result.error, null, 2)}`
     ).join('\n\n')
 
@@ -725,8 +1251,8 @@ Example: If the tool needs { "operation": "add", "a": 5, "b": 3 } and the query 
       r.success &&
       r.result &&
       (JSON.stringify(r.result).includes('api') ||
-       JSON.stringify(r.result).includes('http') ||
-       JSON.stringify(r.result).includes('json'))
+        JSON.stringify(r.result).includes('http') ||
+        JSON.stringify(r.result).includes('json'))
     )
 
     let prompt = `User query: "${query}"
@@ -859,21 +1385,21 @@ Focus on showing deep understanding of the relationships and structure in the AP
     toolResults: ToolExecutionResult[]
   ): string {
     const parts = []
-    
+
     parts.push(`Intent: ${intent.type} (confidence: ${intent.confidence})`)
-    
+
     if (intent.reasoning) {
       parts.push(`Reasoning: ${intent.reasoning}`)
     }
-    
+
     if (memoryContext) {
       parts.push(`Memory context: ${memoryContext.episodicMemories.length} episodic, ${memoryContext.semanticMemories.length} semantic memories`)
     }
-    
+
     if (toolResults.length > 0) {
       parts.push(`Tools executed: ${toolResults.map(r => r.toolName).join(', ')}`)
     }
-    
+
     return parts.join(' | ')
   }
 
@@ -883,15 +1409,23 @@ Focus on showing deep understanding of the relationships and structure in the AP
 
 Current memory context:`
 
-    if (memoryContext?.episodicMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+    const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nRecent conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
     }
 
-    if (memoryContext?.semanticMemories.length) {
+    if (hasSemanticMemories && memoryContext) {
       prompt += `\n\nRelevant knowledge:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
     }
 
-    prompt += `\n\nUse this context to provide helpful, personalized responses. If the user asks about something from memory, reference it naturally.`
+    if (!hasEpisodicMemories && !hasSemanticMemories) {
+      prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
+    } else {
+      prompt += `\n\nUse this context to provide helpful, personalized responses. If the user asks about something from memory, reference it naturally.`
+    }
 
     return prompt
   }
@@ -901,12 +1435,20 @@ Current memory context:`
 
 Memory context:`
 
-    if (memoryContext?.episodicMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+    const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nRecent conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
     }
 
-    if (memoryContext?.semanticMemories.length) {
+    if (hasSemanticMemories && memoryContext) {
       prompt += `\n\nRelevant knowledge and patterns:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
+    }
+
+    if (!hasEpisodicMemories && !hasSemanticMemories) {
+      prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
     }
 
     if (toolResults?.length) {
@@ -931,12 +1473,20 @@ Use both the memory context and tool results to provide a comprehensive response
 
 Available knowledge:`
 
-    if (memoryContext?.semanticMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+    const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+
+    if (hasSemanticMemories && memoryContext) {
       prompt += `\n\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
     }
 
-    if (memoryContext?.episodicMemories.length) {
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nRelated conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
+    }
+
+    if (!hasEpisodicMemories && !hasSemanticMemories) {
+      prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
     }
 
     prompt += `\n\nSearch through this knowledge to provide accurate, detailed answers. If you don't find relevant information, say so clearly.`
@@ -947,8 +1497,13 @@ Available knowledge:`
   private buildConversationSystemPrompt(memoryContext?: MemoryContext): string {
     let prompt = `You are a helpful AI assistant engaged in conversation.`
 
-    if (memoryContext?.episodicMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nYou have some context from previous conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
+    } else {
+      prompt += `\n\nThis appears to be our first conversation - no previous context available.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
     }
 
     prompt += `\n\nBe friendly, helpful, and engaging in your responses.`
@@ -959,8 +1514,13 @@ Available knowledge:`
   private buildUnknownQuerySystemPrompt(memoryContext?: MemoryContext): string {
     let prompt = `You are an AI assistant dealing with an unclear or ambiguous query.`
 
-    if (memoryContext?.episodicMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nPrevious context:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
+    } else {
+      prompt += `\n\nThis appears to be our first conversation - no previous context available.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
     }
 
     prompt += `\n\nTry to understand what the user might be asking for and provide helpful guidance. Ask clarifying questions if needed.`

@@ -31,7 +31,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 
   return (
-    <div className="min-h-screen relative z-10" style={{ background: 'transparent' }}>
+    <div className="min-h-screen h-full relative z-10" style={{ background: 'transparent' }}>
       <nav className="shadow-sm relative z-50" style={getNavStyle()}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
@@ -55,6 +55,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   }}
                 >
                   Home
+                </Link>
+                <Link
+                  to="/chat"
+                  className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  style={{
+                    borderBottomColor: isActive('/chat') ? theme.colors.primary.main : 'transparent',
+                    color: isActive('/chat') ? theme.colors.text.primary : theme.colors.text.secondary,
+                  }}
+                >
+                  Chat
                 </Link>
                 <Link
                   to="/available-tools"
@@ -121,8 +131,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
       </nav>
       
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 relative z-40 rounded-lg" style={getMainStyle()}>
-        <div className="px-4 py-6 sm:px-0">
+      <main className="min-h-screen w-full py-6 px-4 sm:px-6 lg:px-8 relative z-40" style={getMainStyle()}>
+        <div className="w-full h-fit">
           {children}
         </div>
       </main>

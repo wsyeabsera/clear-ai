@@ -543,5 +543,67 @@ export const memoryController = {
       };
       res.status(500).json(response);
     }
+  },
+
+  // Clear session-specific memories
+  async clearSessionMemories(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId, sessionId } = req.params;
+      const service = getMemoryService();
+
+      // Use the new clearSessionMemories method from the service
+      const cleared = await service.clearSessionMemories(userId!, sessionId!);
+
+      const response: ApiResponse = {
+        success: true,
+        data: {
+          cleared,
+          sessionId,
+          userId
+        },
+        message: `Session memories cleared successfully for session ${sessionId}`,
+        tools: ['MemoryContextService.clearSessionMemories']
+      };
+
+      res.json(response);
+    } catch (error) {
+      const response: ApiResponse = {
+        success: false,
+        error: 'Failed to clear session memories',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        tools: ['MemoryContextService.clearSessionMemories']
+      };
+      res.status(500).json(response);
+    }
+  },
+
+  // Clear semantic memories (user knowledge)
+  async clearSemanticMemories(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId } = req.params;
+      const service = getMemoryService();
+
+      const cleared = await service.clearSemanticMemories(userId!);
+
+      const response: ApiResponse = {
+        success: true,
+        data: {
+          cleared,
+          userId
+        },
+        message: `Semantic memories (knowledge) cleared successfully for user ${userId}`,
+        tools: ['MemoryContextService.clearSemanticMemories']
+      };
+
+      res.json(response);
+    } catch (error) {
+      const response: ApiResponse = {
+        success: false,
+        error: 'Failed to clear semantic memories',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        tools: ['MemoryContextService.clearSemanticMemories']
+      };
+      res.status(500).json(response);
+    }
   }
 };

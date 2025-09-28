@@ -10,13 +10,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.apiClient = exports.apiService = exports.ClearAIApiService = void 0;
 const axios_1 = __importDefault(require("axios"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
 class ClearAIApiService {
-    constructor(baseURL = process.env.VITE_API_URL || 'http://localhost:3001') {
+    constructor(baseURL = 'http://localhost:3001') {
         this.client = axios_1.default.create({
             baseURL,
-            timeout: 10000,
+            timeout: 50000, // 50 seconds timeout
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -77,12 +75,44 @@ class ClearAIApiService {
         return response.data;
     }
     /**
+     * Get available models for agent
+     */
+    async getAvailableModels() {
+        const response = await this.client.get('/api/langchain/models');
+        if (response.data.success) {
+            return response.data.data;
+        }
+        else {
+            throw new Error(response.data.message || 'Failed to get available models');
+        }
+    }
+    /**
      * Execute a workflow
      */
     async executeWorkflow(description, options = {}) {
         const response = await this.client.post('/api/langgraph/execute', {
             description,
             model: options.model || 'ollama',
+        });
+        return response.data;
+    }
+    /**
+     * Execute an intelligent agent query
+     */
+    async executeAgentQuery(query, options = {}) {
+        const response = await this.client.post('/api/agent/execute', {
+            query,
+            options: {
+                userId: options.userId || 'default-user',
+                sessionId: options.sessionId || `session-${Date.now()}`,
+                includeMemoryContext: options.includeMemoryContext !== false,
+                includeReasoning: options.includeReasoning !== false,
+                model: options.model || 'openai',
+                temperature: options.temperature || 0.7,
+                responseDetailLevel: options.responseDetailLevel || 'standard',
+                excludeVectors: options.excludeVectors !== false, // Default to true
+                maxMemoryResults: options.maxMemoryResults || 10,
+            }
         });
         return response.data;
     }
@@ -97,6 +127,34 @@ class ClearAIApiService {
      */
     getBaseURL() {
         return this.client.defaults.baseURL || '';
+    }
+    /**
+     * Clear all memories for a user
+     */
+    async clearUserMemories(userId) {
+        const response = await this.client.delete(`/api/memory/clear/${userId}`);
+        return response.data;
+    }
+    /**
+     * Clear memories for a specific user session
+     */
+    async clearSessionMemories(userId, sessionId) {
+        const response = await this.client.delete(`/api/memory/clear/${userId}/${sessionId}`);
+        return response.data;
+    }
+    /**
+     * Clear semantic memories (user knowledge) for a user
+     */
+    async clearSemanticMemories(userId) {
+        const response = await this.client.delete(`/api/memory/clear-semantic/${userId}`);
+        return response.data;
+    }
+    /**
+     * Get memory statistics for a user
+     */
+    async getMemoryStats(userId) {
+        const response = await this.client.get(`/api/memory/stats/${userId}`);
+        return response.data;
     }
 }
 exports.ClearAIApiService = ClearAIApiService;

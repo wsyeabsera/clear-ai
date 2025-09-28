@@ -3,7 +3,7 @@
  */
 
 import { MCPServer } from '../packages/mcp-basic/dist/index';
-import { SimpleLangChainService, ToolExecutionService, SimpleWorkflowService } from '../packages/shared/dist/index';
+import { SimpleLangChainService, ToolExecutionService, SimpleWorkflowService, CoreKeysAndModels } from '../packages/shared/dist/index';
 import { createServer, CreateServerOptions } from '../packages/server/dist/createServer';
 
 export interface ClearAIConfig {
@@ -97,9 +97,9 @@ export class ClearAI {
   /**
    * Initialize the workflow service
    */
-  async initWorkflows(): Promise<SimpleWorkflowService> {
+  async initWorkflows(input: CoreKeysAndModels): Promise<SimpleWorkflowService> {
     if (!this.workflowService) {
-      const llm = await this.initLLM();
+      const llm = input;
       const tools = await this.initTools();
       this.workflowService = new SimpleWorkflowService(llm, tools);
     }
@@ -125,12 +125,12 @@ export class ClearAI {
   /**
    * Initialize all services
    */
-  async init(): Promise<void> {
+  async init(input: CoreKeysAndModels): Promise<void> {
     await Promise.all([
       this.initMCP(),
       this.initLLM(),
       this.initTools(),
-      this.initWorkflows(),
+      this.initWorkflows(input),
       this.initServer()
     ]);
   }

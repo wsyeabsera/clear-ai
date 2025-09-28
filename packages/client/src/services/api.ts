@@ -5,8 +5,6 @@
  */
 
 import axios from 'axios';
-import dotenv from 'dotenv';
-dotenv.config();
 
 // Type definitions for axios
 type AxiosInstance = ReturnType<typeof axios.create>;
@@ -39,6 +37,12 @@ export interface LLMModel {
   status: string;
 }
 
+export interface AvailableModels {
+  available: string[];
+  current: string;
+  count: number;
+}
+
 export interface WorkflowResult {
   success: boolean;
   result: any;
@@ -49,10 +53,10 @@ export interface WorkflowResult {
 export class ClearAIApiService {
   public client: AxiosInstance;
 
-  constructor(baseURL: string = process.env.VITE_API_URL || 'http://localhost:3001') {
+  constructor(baseURL: string = 'http://localhost:3001') {
     this.client = axios.create({
       baseURL,
-      timeout: 10000,
+      timeout: 50000, // 50 seconds timeout
       headers: {
         'Content-Type': 'application/json',
       },
@@ -131,6 +135,23 @@ export class ClearAIApiService {
   }
 
   /**
+   * Get available models for agent
+   */
+  async getAvailableModels(): Promise<AvailableModels> {
+    const response: AxiosResponse<{
+      success: boolean;
+      data: AvailableModels;
+      message?: string;
+    }> = await this.client.get('/api/langchain/models');
+
+    if (response.data.success) {
+      return response.data.data;
+    } else {
+      throw new Error(response.data.message || 'Failed to get available models');
+    }
+  }
+
+  /**
    * Execute a workflow
    */
   async executeWorkflow(description: string, options: {
@@ -141,6 +162,37 @@ export class ClearAIApiService {
       model: options.model || 'ollama',
     });
     return response.data as WorkflowResult;
+  }
+
+  /**
+   * Execute an intelligent agent query
+   */
+  async executeAgentQuery(query: string, options: {
+    userId?: string;
+    sessionId?: string;
+    includeMemoryContext?: boolean;
+    includeReasoning?: boolean;
+    model?: string;
+    temperature?: number;
+    responseDetailLevel?: 'minimal' | 'standard' | 'full';
+    excludeVectors?: boolean;
+    maxMemoryResults?: number;
+  } = {}): Promise<any> {
+    const response = await this.client.post('/api/agent/execute', {
+      query,
+      options: {
+        userId: options.userId || 'default-user',
+        sessionId: options.sessionId || `session-${Date.now()}`,
+        includeMemoryContext: options.includeMemoryContext !== false,
+        includeReasoning: options.includeReasoning !== false,
+        model: options.model || 'openai',
+        temperature: options.temperature || 0.7,
+        responseDetailLevel: options.responseDetailLevel || 'standard',
+        excludeVectors: options.excludeVectors !== false, // Default to true
+        maxMemoryResults: options.maxMemoryResults || 10,
+      }
+    });
+    return response.data;
   }
 
   /**
@@ -155,6 +207,38 @@ export class ClearAIApiService {
    */
   getBaseURL(): string {
     return this.client.defaults.baseURL || '';
+  }
+
+  /**
+   * Clear all memories for a user
+   */
+  async clearUserMemories(userId: string): Promise<any> {
+    const response = await this.client.delete(`/api/memory/clear/${userId}`);
+    return response.data;
+  }
+
+  /**
+   * Clear memories for a specific user session
+   */
+  async clearSessionMemories(userId: string, sessionId: string): Promise<any> {
+    const response = await this.client.delete(`/api/memory/clear/${userId}/${sessionId}`);
+    return response.data;
+  }
+
+  /**
+   * Clear semantic memories (user knowledge) for a user
+   */
+  async clearSemanticMemories(userId: string): Promise<any> {
+    const response = await this.client.delete(`/api/memory/clear-semantic/${userId}`);
+    return response.data;
+  }
+
+  /**
+   * Get memory statistics for a user
+   */
+  async getMemoryStats(userId: string): Promise<any> {
+    const response = await this.client.get(`/api/memory/stats/${userId}`);
+    return response.data;
   }
 }
 
