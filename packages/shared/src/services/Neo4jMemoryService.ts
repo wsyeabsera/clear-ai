@@ -226,8 +226,7 @@ export class Neo4jMemoryService {
       cypher += ` ORDER BY m.timestamp DESC`;
       
       if (query.limit) {
-        cypher += ` LIMIT $limit`;
-        params.limit = Math.floor(Number(query.limit));
+        cypher += ` LIMIT ${parseInt(query.limit.toString(), 10)}`;
       }
       
       cypher += ` RETURN m`;

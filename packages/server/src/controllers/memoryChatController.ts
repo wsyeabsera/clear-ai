@@ -6,6 +6,8 @@ import {
   ApiResponse
 } from '@clear-ai/shared';
 import { initializeMemoryService } from './memoryController';
+import dotenv from 'dotenv';
+dotenv.config({path: './.env'});
 
 export const memoryChatController = {
   // Initialize memory service for chat
@@ -15,12 +17,12 @@ export const memoryChatController = {
         neo4j: {
           uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
           username: process.env.NEO4J_USERNAME || 'neo4j',
-          password: process.env.NEO4J_PASSWORD || 'password',
+          password: process.env.NEO4J_PASSWORD || 'samplepassword',
           database: process.env.NEO4J_DATABASE || 'neo4j'
         },
         pinecone: {
           apiKey: process.env.PINECONE_API_KEY || '',
-          environment: process.env.PINECONE_ENVIRONMENT || '',
+          environment: process.env.PINECONE_ENVIRONMENT || 'clear-ai',
           indexName: process.env.PINECONE_INDEX_NAME || 'clear-ai-memories'
         },
         embedding: {
@@ -85,7 +87,7 @@ export const memoryChatController = {
           neo4j: {
             uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
             username: process.env.NEO4J_USERNAME || 'neo4j',
-            password: process.env.NEO4J_PASSWORD || 'password',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
             database: process.env.NEO4J_DATABASE || 'neo4j'
           },
           pinecone: {
@@ -187,7 +189,7 @@ export const memoryChatController = {
           neo4j: {
             uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
             username: process.env.NEO4J_USERNAME || 'neo4j',
-            password: process.env.NEO4J_PASSWORD || 'password',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
             database: process.env.NEO4J_DATABASE || 'neo4j'
           },
           pinecone: {
@@ -271,7 +273,7 @@ export const memoryChatController = {
           neo4j: {
             uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
             username: process.env.NEO4J_USERNAME || 'neo4j',
-            password: process.env.NEO4J_PASSWORD || 'password',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
             database: process.env.NEO4J_DATABASE || 'neo4j'
           },
           pinecone: {
@@ -365,7 +367,7 @@ export const memoryChatController = {
           neo4j: {
             uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
             username: process.env.NEO4J_USERNAME || 'neo4j',
-            password: process.env.NEO4J_PASSWORD || 'password',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
             database: process.env.NEO4J_DATABASE || 'neo4j'
           },
           pinecone: {

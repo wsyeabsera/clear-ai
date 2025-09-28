@@ -140,13 +140,17 @@ export class MemoryContextService implements MemoryService {
       .join(' ');
 
     let semanticMemories: SemanticMemory[] = [];
-    if (recentContent) {
-      const semanticResult = await this.pineconeService.searchSemanticMemories({
-        userId,
-        query: recentContent,
-        limit: 20
-      });
-      semanticMemories = semanticResult.memories;
+    if (recentContent && this.pineconeService) {
+      try {
+        const semanticResult = await this.pineconeService.searchSemanticMemories({
+          userId,
+          query: recentContent,
+          limit: 20
+        });
+        semanticMemories = semanticResult.memories;
+      } catch (error) {
+        console.warn('Failed to search semantic memories:', error);
+      }
     }
 
     // Calculate context window

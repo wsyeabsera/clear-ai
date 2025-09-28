@@ -22,5 +22,14 @@ export {
   ToolRegistry
 } from './IntentClassifierService';
 
+// Export Agent service
+export {
+  AgentService,
+  AgentExecutionResult,
+  AgentExecutionOptions,
+  AgentServiceConfig,
+  AgentToolRegistry
+} from './AgentService';
+
 // Export Memory types
 export * from '../types/memory';

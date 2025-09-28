@@ -16,8 +16,12 @@ import { langGraphRoutes } from './routes/langGraphRoutes'
 import memoryRoutes from './routes/memoryRoutes'
 import memoryChatRoutes from './routes/memoryChatRoutes'
 import intentClassifierRoutes from './routes/intentClassifierRoutes'
+import agentRoutes from './routes/agentRoutes'
 import { errorHandler } from './middleware/errorHandler'
 import { setupSwagger } from './config/swagger'
+import { initializeAgentService } from './controllers/agentController'
+import { ToolRegistry } from 'clear-ai-mcp-basic'
+import { MemoryServiceConfig, CoreKeysAndModels } from 'clear-ai-shared'
 
 // Load environment variables
 dotenv.config({ path: './.env' })
@@ -52,6 +56,7 @@ app.use('/api/langgraph', langGraphRoutes)
 app.use('/api/memory', memoryRoutes)
 app.use('/api/memory-chat', memoryChatRoutes)
 app.use('/api/intent-classifier', intentClassifierRoutes)
+app.use('/api/agent', agentRoutes)
 
 // Error handling middleware
 app.use(errorHandler)
@@ -105,12 +110,58 @@ const startServer = async () => {
     process.exit(1)
   }
 
-  const server = app.listen(PORT, () => {
+  const server = app.listen(PORT, async () => {
     console.log(process.env.LANGFUSE_BASE_URL)
     console.log(`🚀 Server running on port ${PORT} - Hot reload working perfectly!`)
     console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`)
     console.log(`🌐 API URL: http://localhost:${PORT}`)
     console.log(`📚 API Documentation: http://localhost:${PORT}/api-docs`)
+
+    // Initialize agent service automatically
+    try {
+      console.log('🤖 Initializing Agent Service...')
+
+      const memoryConfig: MemoryServiceConfig = {
+        neo4j: {
+          uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
+          username: process.env.NEO4J_USERNAME || 'neo4j',
+          password: process.env.NEO4J_PASSWORD || 'samplepassword',
+          database: process.env.NEO4J_DATABASE || 'neo4j'
+        },
+        pinecone: {
+          apiKey: process.env.PINECONE_API_KEY || '',
+          environment: process.env.PINECONE_ENVIRONMENT || 'clear-ai',
+          indexName: process.env.PINECONE_INDEX_NAME || 'clear-ai-memories'
+        },
+        embedding: {
+          model: process.env.EMBEDDING_MODEL || 'nomic-embed-text',
+          dimensions: parseInt(process.env.EMBEDDING_DIMENSIONS || '768')
+        }
+      };
+
+      const langchainConfig: CoreKeysAndModels = {
+        openaiApiKey: process.env.OPENAI_API_KEY || '',
+        openaiModel: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
+        mistralApiKey: process.env.MISTRAL_API_KEY || '',
+        mistralModel: process.env.MISTRAL_MODEL || 'mistral-small',
+        groqApiKey: process.env.GROQ_API_KEY || '',
+        groqModel: process.env.GROQ_MODEL || 'llama3-8b-8192',
+        ollamaModel: process.env.OLLAMA_MODEL || 'mistral',
+        ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+        langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+        langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+        langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
+      };
+
+      // Initialize tool registry
+      const toolRegistry = new ToolRegistry();
+
+      await initializeAgentService(memoryConfig, langchainConfig, toolRegistry);
+      console.log('✅ Agent Service initialized successfully');
+    } catch (error) {
+      console.error('❌ Failed to initialize Agent Service:', error);
+      // Don't exit the server, just log the error
+    }
   })
 
   return server
