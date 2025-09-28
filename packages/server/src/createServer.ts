@@ -18,6 +18,7 @@ import { toolExecutionRoutes } from './routes/toolExecutionRoutes';
 import { langGraphRoutes } from './routes/langGraphRoutes';
 import memoryRoutes from './routes/memoryRoutes';
 import memoryChatRoutes from './routes/memoryChatRoutes';
+import intentClassifierRoutes from './routes/intentClassifierRoutes';
 import { errorHandler } from './middleware/errorHandler';
 import { setupSwagger } from './config/swagger';
 
@@ -74,6 +75,7 @@ export function createServer(options: CreateServerOptions = {}) {
   app.use('/api/langgraph', langGraphRoutes);
   app.use('/api/memory', memoryRoutes);
   app.use('/api/memory-chat', memoryChatRoutes);
+  app.use('/api/intent-classifier', intentClassifierRoutes);
 
   // Error handling middleware
   app.use(errorHandler);
