@@ -47,6 +47,7 @@ export default {
       {
         "docs": {
           "sidebarPath": "./sidebars.ts",
+          "routeBasePath": "/",
           "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/"
         },
         "blog": {

@@ -5,7 +5,7 @@
   "source": "@site/docs/architecture/overview.md",
   "sourceDirName": "architecture",
   "slug": "/architecture/overview",
-  "permalink": "/Clear-AI/docs/architecture/overview",
+  "permalink": "/Clear-AI/architecture/overview",
   "draft": false,
   "unlisted": false,
   "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/architecture/overview.md",
@@ -15,10 +15,10 @@
   "sidebar": "tutorialSidebar",
   "previous": {
     "title": "Development Guide",
-    "permalink": "/Clear-AI/docs/getting-started/development"
+    "permalink": "/Clear-AI/getting-started/development"
   },
   "next": {
     "title": "Client Package",
-    "permalink": "/Clear-AI/docs/packages/client"
+    "permalink": "/Clear-AI/packages/client"
   }
 }
