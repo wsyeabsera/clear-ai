@@ -15,6 +15,7 @@ export const JsonModal: React.FC<JsonModalProps> = ({
   title = 'Response Data',
 }) => {
   const { theme } = useTheme();
+  const [copySuccess, setCopySuccess] = React.useState(false);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -141,7 +142,8 @@ export const JsonModal: React.FC<JsonModalProps> = ({
     try {
       const jsonString = formatJson(data);
       await navigator.clipboard.writeText(jsonString);
-      // You could add a toast notification here
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000); // Hide success message after 2 seconds
     } catch (error) {
       console.error('Failed to copy to clipboard:', error);
     }
@@ -191,18 +193,34 @@ export const JsonModal: React.FC<JsonModalProps> = ({
             {formatJson(data)}
           </div>
           
-          <button
-            style={copyButtonStyles}
-            onClick={handleCopyToClipboard}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = theme.colors.primary.dark;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = theme.colors.primary.main;
-            }}
-          >
-            Copy to Clipboard
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
+            <button
+              style={{
+                ...copyButtonStyles,
+                backgroundColor: copySuccess ? theme.colors.status.success : theme.colors.primary.main,
+                marginTop: 0,
+              }}
+              onClick={handleCopyToClipboard}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = copySuccess ? theme.colors.status.success : theme.colors.primary.dark;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = copySuccess ? theme.colors.status.success : theme.colors.primary.main;
+              }}
+            >
+              {copySuccess ? '✅ Copied!' : '📋 Copy to Clipboard'}
+            </button>
+            
+            {copySuccess && (
+              <span style={{ 
+                color: theme.colors.status.success, 
+                fontSize: theme.typography.fontSize.sm,
+                fontWeight: theme.typography.fontWeight.medium,
+              }}>
+                Full response copied to clipboard!
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </div>

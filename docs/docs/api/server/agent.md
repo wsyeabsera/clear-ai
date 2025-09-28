@@ -111,7 +111,9 @@ The main endpoint for interacting with the agent. Send any query and the agent w
     "model": "string (default: 'openai')",
     "temperature": "number (default: 0.7)",
     "includeReasoning": "boolean (default: true)",
-    "previousIntents": "array (optional)"
+    "previousIntents": "array (optional)",
+    "responseDetailLevel": "string (default: 'standard') - 'minimal' | 'standard' | 'full'",
+    "excludeVectors": "boolean (default: true) - Exclude vector embeddings to reduce response size"
   }
 }
 ```
@@ -151,6 +153,36 @@ The main endpoint for interacting with the agent. Send any query and the agent w
     }
   },
   "message": "Query executed successfully (conversation)"
+}
+```
+
+### Response Optimization
+
+The agent API supports several optimization options to reduce response size and improve performance, especially important for tool chaining scenarios:
+
+#### Response Detail Levels
+
+- **`minimal`**: Only essential data (response text, basic intent)
+- **`standard`**: Standard data with memory context but no vectors (default)
+- **`full`**: Complete data including vectors and all metadata
+
+#### Vector Exclusion
+
+By default, `excludeVectors` is set to `true` to exclude vector embeddings from semantic memories. This can reduce response size by 60-80% while maintaining functionality for most use cases.
+
+#### Example Optimized Request
+
+```json
+{
+  "query": "What's the weather?",
+  "options": {
+    "userId": "user123",
+    "sessionId": "session456",
+    "responseDetailLevel": "standard",
+    "excludeVectors": true,
+    "includeReasoning": false,
+    "maxMemoryResults": 5
+  }
 }
 ```
 

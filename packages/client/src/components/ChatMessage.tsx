@@ -193,23 +193,19 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                     <button
                       style={{
                         ...metadataButtonStyles,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.25rem',
+                        backgroundColor: theme.colors.primary.main,
+                        color: theme.colors.background.default,
+                        fontWeight: theme.typography.fontWeight.medium,
                       }}
                       onClick={() => setShowJsonModal(true)}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = theme.colors.interactive.hover;
-                        e.currentTarget.style.color = theme.colors.text.secondary;
+                        e.currentTarget.style.backgroundColor = theme.colors.primary.dark;
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                        e.currentTarget.style.color = theme.colors.text.disabled;
+                        e.currentTarget.style.backgroundColor = theme.colors.primary.main;
                       }}
-                      title="View full JSON response"
                     >
-                      <span>📄</span>
-                      <span>JSON</span>
+                      📋 Copy Full Response
                     </button>
                   )}
                 </div>

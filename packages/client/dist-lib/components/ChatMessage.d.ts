@@ -15,6 +15,8 @@ export interface ChatMessageProps {
         memoryContext?: any[];
     };
     fullResponseData?: any;
+    onConfirmAction?: () => void;
+    onCancelAction?: () => void;
 }
 export declare const ChatMessage: React.FC<ChatMessageProps>;
 export default ChatMessage;

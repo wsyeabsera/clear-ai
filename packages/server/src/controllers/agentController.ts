@@ -163,7 +163,9 @@ export const agentController = {
         model: options?.model || process.env.DEFAULT_MODEL || 'openai',
         temperature: options?.temperature || 0.7,
         includeReasoning: options?.includeReasoning !== false,
-        previousIntents: options?.previousIntents
+        previousIntents: options?.previousIntents,
+        responseDetailLevel: options?.responseDetailLevel || 'standard',
+        excludeVectors: options?.excludeVectors !== false // Default to true to exclude vectors
       };
 
       const result = await agent.executeQuery(query, executionOptions);

@@ -159,7 +159,6 @@ export class ToolRegistry {
     this.registerTool(apiCallTool);
     this.registerTool(jsonReaderTool);
     this.registerTool(fileReaderTool);
-    this.registerTool(executeParallelTool);
   }
 
   // Register a new tool

@@ -82,8 +82,8 @@ export class Neo4jMemoryService {
 
         // Create or merge session
         await tx.run(`
-          MERGE (s:Session {id: $sessionId, userId: $userId})
-          SET s.lastActive = datetime()
+          MERGE (s:Session {id: $sessionId})
+          SET s.userId = $userId, s.lastActive = datetime()
         `, { sessionId: memory.sessionId, userId: memory.userId });
 
         // Create episodic memory node

@@ -19,4 +19,5 @@ export { PromptModal } from './PromptModal';
 export { JsonModal } from './JsonModal';
 export { DataManager } from './DataManager';
 export { DataManagerModal } from './DataManagerModal';
+export { ConfirmationButtons } from './ConfirmationButtons';
 //# sourceMappingURL=index.d.ts.map

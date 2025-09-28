@@ -174,6 +174,9 @@ export class ClearAIApiService {
     includeReasoning?: boolean;
     model?: string;
     temperature?: number;
+    responseDetailLevel?: 'minimal' | 'standard' | 'full';
+    excludeVectors?: boolean;
+    maxMemoryResults?: number;
   } = {}): Promise<any> {
     const response = await this.client.post('/api/agent/execute', {
       query,
@@ -184,6 +187,9 @@ export class ClearAIApiService {
         includeReasoning: options.includeReasoning !== false,
         model: options.model || 'openai',
         temperature: options.temperature || 0.7,
+        responseDetailLevel: options.responseDetailLevel || 'standard',
+        excludeVectors: options.excludeVectors !== false, // Default to true
+        maxMemoryResults: options.maxMemoryResults || 10,
       }
     });
     return response.data;

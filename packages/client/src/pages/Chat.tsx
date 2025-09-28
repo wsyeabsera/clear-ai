@@ -37,14 +37,16 @@ export const Chat: React.FC = () => {
     setError(null);
 
     try {
-      // Call the advanced agent API endpoint
+      // Call the advanced agent API endpoint with optimized response
       const response = await apiService.executeAgentQuery(message, {
         userId: userId,
         sessionId: sessionId,
         includeMemoryContext: true,
-        includeReasoning: true,
+        includeReasoning: false, // Disable reasoning to reduce response size
         model: selectedModel,
         temperature: 0.7,
+        responseDetailLevel: 'standard', // Use standard detail level
+        excludeVectors: true, // Exclude vectors to reduce token usage
       });
 
       if (response.success) {

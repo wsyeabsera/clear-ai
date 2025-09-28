@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DataManagerModal = exports.DataManager = exports.JsonModal = exports.PromptModal = exports.PromptSelector = exports.ModelSelector = exports.ChatLayout = exports.ChatSidebar = exports.ChatInput = exports.ChatMessage = exports.DynamicForm = exports.ThemeDropdown = exports.ThemeBackground = exports.ThemeSwitcher = exports.Layout = exports.Table = exports.Select = exports.TextArea = exports.Input = exports.Card = exports.Button = void 0;
+exports.ConfirmationButtons = exports.DataManagerModal = exports.DataManager = exports.JsonModal = exports.PromptModal = exports.PromptSelector = exports.ModelSelector = exports.ChatLayout = exports.ChatSidebar = exports.ChatInput = exports.ChatMessage = exports.DynamicForm = exports.ThemeDropdown = exports.ThemeBackground = exports.ThemeSwitcher = exports.Layout = exports.Table = exports.Select = exports.TextArea = exports.Input = exports.Card = exports.Button = void 0;
 // Simple component exports - just for internal use
 var Button_1 = require("./Button");
 Object.defineProperty(exports, "Button", { enumerable: true, get: function () { return __importDefault(Button_1).default; } });
@@ -48,4 +48,6 @@ var DataManager_1 = require("./DataManager");
 Object.defineProperty(exports, "DataManager", { enumerable: true, get: function () { return DataManager_1.DataManager; } });
 var DataManagerModal_1 = require("./DataManagerModal");
 Object.defineProperty(exports, "DataManagerModal", { enumerable: true, get: function () { return DataManagerModal_1.DataManagerModal; } });
+var ConfirmationButtons_1 = require("./ConfirmationButtons");
+Object.defineProperty(exports, "ConfirmationButtons", { enumerable: true, get: function () { return ConfirmationButtons_1.ConfirmationButtons; } });
 //# sourceMappingURL=index.js.map

@@ -1,11 +1,45 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JsonModal = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
-const react_1 = require("react");
+const react_1 = __importStar(require("react"));
 const themes_1 = require("../themes");
 const JsonModal = ({ isOpen, onClose, data, title = 'Response Data', }) => {
     const { theme } = (0, themes_1.useTheme)();
+    const [copySuccess, setCopySuccess] = react_1.default.useState(false);
     // Lock body scroll when modal is open
     (0, react_1.useEffect)(() => {
         if (isOpen) {
@@ -121,7 +155,8 @@ const JsonModal = ({ isOpen, onClose, data, title = 'Response Data', }) => {
         try {
             const jsonString = formatJson(data);
             await navigator.clipboard.writeText(jsonString);
-            // You could add a toast notification here
+            setCopySuccess(true);
+            setTimeout(() => setCopySuccess(false), 2000); // Hide success message after 2 seconds
         }
         catch (error) {
             console.error('Failed to copy to clipboard:', error);
@@ -143,11 +178,19 @@ const JsonModal = ({ isOpen, onClose, data, title = 'Response Data', }) => {
                             }, onMouseLeave: (e) => {
                                 e.currentTarget.style.backgroundColor = 'transparent';
                                 e.currentTarget.style.color = theme.colors.text.secondary;
-                            }, title: "Close modal", children: "\u00D7" })] }), (0, jsx_runtime_1.jsxs)("div", { style: contentStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: jsonContainerStyles, children: formatJson(data) }), (0, jsx_runtime_1.jsx)("button", { style: copyButtonStyles, onClick: handleCopyToClipboard, onMouseEnter: (e) => {
-                                e.currentTarget.style.backgroundColor = theme.colors.primary.dark;
-                            }, onMouseLeave: (e) => {
-                                e.currentTarget.style.backgroundColor = theme.colors.primary.main;
-                            }, children: "Copy to Clipboard" })] })] }) }));
+                            }, title: "Close modal", children: "\u00D7" })] }), (0, jsx_runtime_1.jsxs)("div", { style: contentStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: jsonContainerStyles, children: formatJson(data) }), (0, jsx_runtime_1.jsxs)("div", { style: { display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem' }, children: [(0, jsx_runtime_1.jsx)("button", { style: {
+                                        ...copyButtonStyles,
+                                        backgroundColor: copySuccess ? theme.colors.status.success : theme.colors.primary.main,
+                                        marginTop: 0,
+                                    }, onClick: handleCopyToClipboard, onMouseEnter: (e) => {
+                                        e.currentTarget.style.backgroundColor = copySuccess ? theme.colors.status.success : theme.colors.primary.dark;
+                                    }, onMouseLeave: (e) => {
+                                        e.currentTarget.style.backgroundColor = copySuccess ? theme.colors.status.success : theme.colors.primary.main;
+                                    }, children: copySuccess ? '✅ Copied!' : '📋 Copy to Clipboard' }), copySuccess && ((0, jsx_runtime_1.jsx)("span", { style: {
+                                        color: theme.colors.status.success,
+                                        fontSize: theme.typography.fontSize.sm,
+                                        fontWeight: theme.typography.fontWeight.medium,
+                                    }, children: "Full response copied to clipboard!" }))] })] })] }) }));
 };
 exports.JsonModal = JsonModal;
 exports.default = exports.JsonModal;

@@ -180,6 +180,24 @@ const ChatLayout = ({ userId, onSendMessage, isLoading = false, error, }) => {
             }
         }
     };
+    const handleConfirmAction = async () => {
+        try {
+            // Send confirmation message
+            await handleSendMessage('yes');
+        }
+        catch (error) {
+            console.error('Failed to confirm action:', error);
+        }
+    };
+    const handleCancelAction = async () => {
+        try {
+            // Send cancellation message
+            await handleSendMessage('no');
+        }
+        catch (error) {
+            console.error('Failed to cancel action:', error);
+        }
+    };
     const handleSessionSelect = async (sessionId) => {
         try {
             await selectSession(sessionId);
@@ -204,7 +222,7 @@ const ChatLayout = ({ userId, onSendMessage, isLoading = false, error, }) => {
             console.error('Failed to delete session:', error);
         }
     };
-    return ((0, jsx_runtime_1.jsxs)("div", { style: layoutStyles, children: [(0, jsx_runtime_1.jsx)(index_1.ChatSidebar, { sessions: sessions, currentSessionId: currentSession?.id, onSessionSelect: handleSessionSelect, onNewSession: handleNewSession, onDeleteSession: handleDeleteSession, isCollapsed: sidebarCollapsed, onToggleCollapse: () => setSidebarCollapsed(!sidebarCollapsed) }), (0, jsx_runtime_1.jsxs)("div", { style: chatAreaStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: messagesAreaStyles, children: messages.length === 0 ? ((0, jsx_runtime_1.jsxs)("div", { style: welcomeMessageStyles, children: [(0, jsx_runtime_1.jsx)("h2", { style: welcomeTitleStyles, children: "Welcome to Clear AI Chat" }), (0, jsx_runtime_1.jsx)("p", { style: welcomeSubtitleStyles, children: "Start a conversation with your intelligent AI assistant" }), (0, jsx_runtime_1.jsxs)("div", { style: featureListStyles, children: [(0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83E\uDDE0" }), (0, jsx_runtime_1.jsx)("span", { children: "Advanced reasoning and memory integration" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDCAC" }), (0, jsx_runtime_1.jsx)("span", { children: "Natural conversation with context awareness" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDD27" }), (0, jsx_runtime_1.jsx)("span", { children: "Tool execution and workflow automation" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDCDA" }), (0, jsx_runtime_1.jsx)("span", { children: "Persistent memory across conversations" })] })] })] })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [messages.map((message) => ((0, jsx_runtime_1.jsx)(index_1.ChatMessage, { ...message }, message.id))), (0, jsx_runtime_1.jsx)("div", { ref: messagesEndRef })] })) }), (0, jsx_runtime_1.jsx)("div", { style: inputAreaStyles, children: (0, jsx_runtime_1.jsx)(index_1.ChatInput, { onSendMessage: handleSendMessage, disabled: isLoading || sessionLoading, placeholder: error || sessionError ? 'Error occurred. Try again...' : 'Type your message...', value: currentPrompt, onChange: setCurrentPrompt, showPromptSelector: true }) })] })] }));
+    return ((0, jsx_runtime_1.jsxs)("div", { style: layoutStyles, children: [(0, jsx_runtime_1.jsx)(index_1.ChatSidebar, { sessions: sessions, currentSessionId: currentSession?.id, onSessionSelect: handleSessionSelect, onNewSession: handleNewSession, onDeleteSession: handleDeleteSession, isCollapsed: sidebarCollapsed, onToggleCollapse: () => setSidebarCollapsed(!sidebarCollapsed) }), (0, jsx_runtime_1.jsxs)("div", { style: chatAreaStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: messagesAreaStyles, children: messages.length === 0 ? ((0, jsx_runtime_1.jsxs)("div", { style: welcomeMessageStyles, children: [(0, jsx_runtime_1.jsx)("h2", { style: welcomeTitleStyles, children: "Welcome to Clear AI Chat" }), (0, jsx_runtime_1.jsx)("p", { style: welcomeSubtitleStyles, children: "Start a conversation with your intelligent AI assistant" }), (0, jsx_runtime_1.jsxs)("div", { style: featureListStyles, children: [(0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83E\uDDE0" }), (0, jsx_runtime_1.jsx)("span", { children: "Advanced reasoning and memory integration" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDCAC" }), (0, jsx_runtime_1.jsx)("span", { children: "Natural conversation with context awareness" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDD27" }), (0, jsx_runtime_1.jsx)("span", { children: "Tool execution and workflow automation" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDCDA" }), (0, jsx_runtime_1.jsx)("span", { children: "Persistent memory across conversations" })] })] })] })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [messages.map((message) => ((0, jsx_runtime_1.jsx)(index_1.ChatMessage, { ...message, onConfirmAction: handleConfirmAction, onCancelAction: handleCancelAction }, message.id))), (0, jsx_runtime_1.jsx)("div", { ref: messagesEndRef })] })) }), (0, jsx_runtime_1.jsx)("div", { style: inputAreaStyles, children: (0, jsx_runtime_1.jsx)(index_1.ChatInput, { onSendMessage: handleSendMessage, disabled: isLoading || sessionLoading, placeholder: error || sessionError ? 'Error occurred. Try again...' : 'Type your message...', value: currentPrompt, onChange: setCurrentPrompt, showPromptSelector: true }) })] })] }));
 };
 exports.ChatLayout = ChatLayout;
 exports.default = exports.ChatLayout;

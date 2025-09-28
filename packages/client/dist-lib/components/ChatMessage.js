@@ -5,12 +5,18 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const themes_1 = require("../themes");
 const JsonModal_1 = require("./JsonModal");
-const ChatMessage = ({ content, role, timestamp, isLoading = false, error, metadata, fullResponseData }) => {
+const ConfirmationButtons_1 = require("./ConfirmationButtons");
+const ChatMessage = ({ content, role, timestamp, isLoading = false, error, metadata, fullResponseData, onConfirmAction, onCancelAction }) => {
     const { theme } = (0, themes_1.useTheme)();
     const [showMetadata, setShowMetadata] = (0, react_1.useState)(false);
     const [showJsonModal, setShowJsonModal] = (0, react_1.useState)(false);
     const isUser = role === 'user';
     const isAssistant = role === 'assistant';
+    // Check if this is a confirmation request
+    const isConfirmationRequest = isAssistant &&
+        content.includes('Would you like me to perform this action for you?') &&
+        onConfirmAction &&
+        onCancelAction;
     const messageStyles = {
         display: 'flex',
         flexDirection: 'column',
@@ -95,24 +101,22 @@ const ChatMessage = ({ content, role, timestamp, isLoading = false, error, metad
                             backgroundColor: theme.colors.text.disabled,
                             animation: 'pulse 1.5s ease-in-out infinite 0.4s',
                         } })] })] }));
-    return ((0, jsx_runtime_1.jsxs)("div", { style: messageStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: timestampStyles, children: timestamp.toLocaleTimeString() }), (0, jsx_runtime_1.jsx)("div", { style: bubbleStyles, children: isLoading ? ((0, jsx_runtime_1.jsx)(LoadingDots, {})) : error ? ((0, jsx_runtime_1.jsxs)("div", { style: errorStyles, children: ["Error: ", error] })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [content, isAssistant && metadata && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("div", { style: { display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }, children: [(0, jsx_runtime_1.jsx)("button", { style: metadataButtonStyles, onClick: () => setShowMetadata(!showMetadata), onMouseEnter: (e) => {
+    return ((0, jsx_runtime_1.jsxs)("div", { style: messageStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: timestampStyles, children: timestamp.toLocaleTimeString() }), (0, jsx_runtime_1.jsx)("div", { style: bubbleStyles, children: isLoading ? ((0, jsx_runtime_1.jsx)(LoadingDots, {})) : error ? ((0, jsx_runtime_1.jsxs)("div", { style: errorStyles, children: ["Error: ", error] })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [content, isConfirmationRequest && ((0, jsx_runtime_1.jsx)(ConfirmationButtons_1.ConfirmationButtons, { onConfirm: onConfirmAction, onCancel: onCancelAction, isLoading: isLoading })), isAssistant && metadata && ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsxs)("div", { style: { display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }, children: [(0, jsx_runtime_1.jsx)("button", { style: metadataButtonStyles, onClick: () => setShowMetadata(!showMetadata), onMouseEnter: (e) => {
                                                 e.currentTarget.style.backgroundColor = theme.colors.interactive.hover;
                                                 e.currentTarget.style.color = theme.colors.text.secondary;
                                             }, onMouseLeave: (e) => {
                                                 e.currentTarget.style.backgroundColor = 'transparent';
                                                 e.currentTarget.style.color = theme.colors.text.disabled;
-                                            }, children: showMetadata ? 'Hide Details' : 'Show Details' }), fullResponseData && ((0, jsx_runtime_1.jsxs)("button", { style: {
+                                            }, children: showMetadata ? 'Hide Details' : 'Show Details' }), fullResponseData && ((0, jsx_runtime_1.jsx)("button", { style: {
                                                 ...metadataButtonStyles,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '0.25rem',
+                                                backgroundColor: theme.colors.primary.main,
+                                                color: theme.colors.background.default,
+                                                fontWeight: theme.typography.fontWeight.medium,
                                             }, onClick: () => setShowJsonModal(true), onMouseEnter: (e) => {
-                                                e.currentTarget.style.backgroundColor = theme.colors.interactive.hover;
-                                                e.currentTarget.style.color = theme.colors.text.secondary;
+                                                e.currentTarget.style.backgroundColor = theme.colors.primary.dark;
                                             }, onMouseLeave: (e) => {
-                                                e.currentTarget.style.backgroundColor = 'transparent';
-                                                e.currentTarget.style.color = theme.colors.text.disabled;
-                                            }, title: "View full JSON response", children: [(0, jsx_runtime_1.jsx)("span", { children: "\uD83D\uDCC4" }), (0, jsx_runtime_1.jsx)("span", { children: "JSON" })] }))] }), showMetadata && ((0, jsx_runtime_1.jsxs)("div", { style: metadataStyles, children: [metadata.intent && ((0, jsx_runtime_1.jsxs)("div", { style: { marginBottom: '0.5rem' }, children: [(0, jsx_runtime_1.jsx)("strong", { children: "Intent:" }), " ", metadata.intent.type, (0, jsx_runtime_1.jsxs)("span", { style: { color: theme.colors.text.disabled, marginLeft: '0.5rem' }, children: ["(confidence: ", (metadata.intent.confidence * 100).toFixed(1), "%)"] })] })), metadata.reasoning && ((0, jsx_runtime_1.jsxs)("div", { style: { marginBottom: '0.5rem' }, children: [(0, jsx_runtime_1.jsx)("strong", { children: "Reasoning:" }), (0, jsx_runtime_1.jsx)("div", { style: {
+                                                e.currentTarget.style.backgroundColor = theme.colors.primary.main;
+                                            }, children: "\uD83D\uDCCB Copy Full Response" }))] }), showMetadata && ((0, jsx_runtime_1.jsxs)("div", { style: metadataStyles, children: [metadata.intent && ((0, jsx_runtime_1.jsxs)("div", { style: { marginBottom: '0.5rem' }, children: [(0, jsx_runtime_1.jsx)("strong", { children: "Intent:" }), " ", metadata.intent.type, (0, jsx_runtime_1.jsxs)("span", { style: { color: theme.colors.text.disabled, marginLeft: '0.5rem' }, children: ["(confidence: ", (metadata.intent.confidence * 100).toFixed(1), "%)"] })] })), metadata.reasoning && ((0, jsx_runtime_1.jsxs)("div", { style: { marginBottom: '0.5rem' }, children: [(0, jsx_runtime_1.jsx)("strong", { children: "Reasoning:" }), (0, jsx_runtime_1.jsx)("div", { style: {
                                                         marginTop: '0.25rem',
                                                         padding: '0.5rem',
                                                         backgroundColor: theme.colors.background.default,

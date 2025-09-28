@@ -81,6 +81,42 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
     backgroundColor: 'transparent',
   };
 
+  const chatHeaderStyles = {
+    padding: '1rem',
+    borderBottom: `1px solid ${theme.colors.border.default}`,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backdropFilter: 'blur(10px)',
+  };
+
+  const chatTitleStyles = {
+    fontSize: theme.typography.fontSize.lg,
+    fontWeight: theme.typography.fontWeight.bold,
+    color: theme.colors.text.primary,
+    fontFamily: theme.typography.fontFamily.primary,
+  };
+
+  const exportButtonStyles = {
+    padding: '0.5rem 1rem',
+    backgroundColor: theme.colors.primary.main,
+    color: theme.colors.background.default,
+    border: 'none',
+    borderRadius: theme.effects.borderRadius.md,
+    cursor: 'pointer',
+    fontSize: theme.typography.fontSize.sm,
+    fontWeight: theme.typography.fontWeight.medium,
+    transition: theme.effects.transition.normal,
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    '&:hover': {
+      backgroundColor: theme.colors.primary.dark,
+      transform: 'translateY(-1px)',
+    },
+  };
+
   const messagesAreaStyles = {
     flex: 1,
     overflowY: 'auto' as const,
@@ -270,6 +306,32 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
     }
   };
 
+  const handleExportConversation = async () => {
+    try {
+      // Create a clean export of all messages with full data
+      const conversationData = dbMessages
+        .filter((msg: DBChatMessage) => msg.role === 'user' || msg.role === 'assistant')
+        .map((msg: DBChatMessage) => ({
+          id: msg.id,
+          content: msg.content,
+          role: msg.role,
+          timestamp: msg.timestamp.toISOString(),
+          metadata: msg.metadata,
+          fullResponseData: msg.fullResponseData,
+          error: msg.error,
+        }));
+
+      // Copy to clipboard
+      await navigator.clipboard.writeText(JSON.stringify(conversationData, null, 2));
+      
+      // Show success message (you could replace this with a toast notification)
+      alert(`Conversation exported to clipboard! (${conversationData.length} messages)`);
+    } catch (error) {
+      console.error('Failed to export conversation:', error);
+      alert('Failed to export conversation. Please try again.');
+    }
+  };
+
 
   return (
     <div style={layoutStyles}>
@@ -284,6 +346,29 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
       />
       
       <div style={chatAreaStyles}>
+        {/* Chat Header */}
+        {messages.length > 0 && (
+          <div style={chatHeaderStyles}>
+            <h3 style={chatTitleStyles}>
+              {currentSession?.title || 'Chat Conversation'}
+            </h3>
+            <button
+              onClick={handleExportConversation}
+              style={exportButtonStyles}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = theme.colors.primary.dark;
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = theme.colors.primary.main;
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              📋 Export Conversation
+            </button>
+          </div>
+        )}
+        
         <div style={messagesAreaStyles}>
           {messages.length === 0 ? (
             <div style={welcomeMessageStyles}>
