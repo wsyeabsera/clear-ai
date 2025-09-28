@@ -1,8 +1,8 @@
 {
-  "name": "@clear-ai/core",
+  "name": "clear-ai-core",
   "version": "1.0.0",
   "description": "Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration",
-  "private": true,
+  "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -82,9 +82,9 @@
     "kill-all": "bash scripts/kill-ports.sh --all"
   },
   "dependencies": {
-    "@clear-ai/mcp-basic": "*",
-    "@clear-ai/shared": "*",
-    "@clear-ai/server": "*",
+    "clear-ai-mcp-basic": "^1.0.0",
+    "clear-ai-shared": "^1.0.0",
+    "clear-ai-server": "^1.0.0",
     "@modelcontextprotocol/sdk": "^0.5.0",
     "@langchain/core": "^0.3.77",
     "@langchain/groq": "^0.2.4",
