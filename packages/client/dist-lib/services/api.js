@@ -10,8 +10,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.apiClient = exports.apiService = exports.ClearAIApiService = void 0;
 const axios_1 = __importDefault(require("axios"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 class ClearAIApiService {
-    constructor(baseURL = 'http://localhost:3001') {
+    constructor(baseURL = process.env.VITE_API_URL || 'http://localhost:3001') {
         this.client = axios_1.default.create({
             baseURL,
             timeout: 10000,
@@ -39,7 +41,7 @@ class ClearAIApiService {
      */
     async getTools() {
         const response = await this.client.get('/api/mcp/tools');
-        return response.data;
+        return response.data.data || [];
     }
     /**
      * Get MCP tool schemas

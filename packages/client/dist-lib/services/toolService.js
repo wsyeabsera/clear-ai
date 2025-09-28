@@ -10,10 +10,13 @@ exports.toolService = {
     },
     async getToolSchemas() {
         try {
+            console.log('Calling apiClient.getToolSchemas()...');
             const response = await api_1.apiClient.getToolSchemas();
+            console.log('API response:', response);
             return response;
         }
         catch (error) {
+            console.error('API call failed:', error);
             return {
                 success: false,
                 error: error.message || 'Failed to load tool schemas'

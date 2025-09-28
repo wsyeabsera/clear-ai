@@ -5,6 +5,8 @@
  */
 
 import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Type definitions for axios
 type AxiosInstance = ReturnType<typeof axios.create>;
@@ -47,7 +49,7 @@ export interface WorkflowResult {
 export class ClearAIApiService {
   public client: AxiosInstance;
 
-  constructor(baseURL: string = import.meta.env.VITE_API_URL || 'http://localhost:3001') {
+  constructor(baseURL: string = process.env.VITE_API_URL || 'http://localhost:3001') {
     this.client = axios.create({
       baseURL,
       timeout: 10000,
