@@ -8,3 +8,11 @@ export {
   ToolExecutionResult,
   ToolExecutionOptions
 } from './ToolExecutionService';
+
+// Export Memory services
+export { MemoryContextService } from './MemoryContextService';
+export { Neo4jMemoryService } from './Neo4jMemoryService';
+export { PineconeMemoryService } from './PineconeMemoryService';
+
+// Export Memory types
+export * from '../types/memory';
