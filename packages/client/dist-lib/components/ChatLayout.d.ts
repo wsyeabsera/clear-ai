@@ -1,6 +1,6 @@
 import React from 'react';
 export interface ChatLayoutProps {
-    userId?: string;
+    userId: string;
     onSendMessage?: (message: string, sessionId: string) => Promise<{
         content: string;
         metadata?: {

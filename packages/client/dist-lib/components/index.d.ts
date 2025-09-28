@@ -14,5 +14,9 @@ export { ChatInput } from './ChatInput';
 export { ChatSidebar } from './ChatSidebar';
 export { ChatLayout } from './ChatLayout';
 export { ModelSelector } from './ModelSelector';
+export { PromptSelector } from './PromptSelector';
+export { PromptModal } from './PromptModal';
 export { JsonModal } from './JsonModal';
+export { DataManager } from './DataManager';
+export { DataManagerModal } from './DataManagerModal';
 //# sourceMappingURL=index.d.ts.map

@@ -13,7 +13,7 @@ export const Chat: React.FC = () => {
   const [isDataManagerOpen, setIsDataManagerOpen] = useState(false);
 
   // Hardcoded user ID as requested
-  const userId = 'clear-ai-user-001';
+  const userId = 'clear-ai-user-002';
 
   // Check server connection on mount
   useEffect(() => {

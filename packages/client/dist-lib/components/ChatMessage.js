@@ -18,19 +18,17 @@ const ChatMessage = ({ content, role, timestamp, isLoading = false, error, metad
         alignItems: isUser ? 'flex-end' : 'flex-start',
     };
     const bubbleStyles = {
-        maxWidth: '80%',
+        maxWidth: '90%',
         padding: '0.75rem 1rem',
-        borderRadius: theme.effects.borderRadius.lg,
+        borderRadius: theme.effects.borderRadius.md,
         backgroundColor: isUser
             ? theme.colors.primary.main
-            : theme.colors.background.paper,
+            : 'rgba(255, 255, 255, 0.1)',
         color: isUser
             ? theme.colors.background.default
             : theme.colors.text.primary,
-        border: isUser
-            ? 'none'
-            : `1px solid ${theme.colors.border.default}`,
-        boxShadow: theme.effects.shadow.md,
+        border: 'none',
+        backdropFilter: 'blur(10px)',
         wordWrap: 'break-word',
         whiteSpace: 'pre-wrap',
     };
@@ -57,10 +55,9 @@ const ChatMessage = ({ content, role, timestamp, isLoading = false, error, metad
     };
     const metadataStyles = {
         marginTop: '0.5rem',
-        padding: '0.75rem',
-        backgroundColor: theme.colors.background.paper,
-        borderRadius: theme.effects.borderRadius.md,
-        border: `1px solid ${theme.colors.border.default}`,
+        padding: '0.5rem',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        borderRadius: theme.effects.borderRadius.sm,
         fontSize: theme.typography.fontSize.sm,
         color: theme.colors.text.secondary,
     };

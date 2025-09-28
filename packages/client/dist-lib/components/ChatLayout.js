@@ -5,55 +5,57 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const themes_1 = require("../themes");
 const index_1 = require("./index");
-const ChatLayout = ({ onSendMessage, isLoading = false, error, }) => {
+const useSessionManager_1 = require("../hooks/useSessionManager");
+const ChatLayout = ({ userId, onSendMessage, isLoading = false, error, }) => {
     const { theme } = (0, themes_1.useTheme)();
-    const [messages, setMessages] = (0, react_1.useState)([]);
-    const [sessions, setSessions] = (0, react_1.useState)([]);
-    const [currentSessionId, setCurrentSessionId] = (0, react_1.useState)('');
     const [sidebarCollapsed, setSidebarCollapsed] = (0, react_1.useState)(false);
+    const [currentPrompt, setCurrentPrompt] = (0, react_1.useState)('');
     const messagesEndRef = (0, react_1.useRef)(null);
+    // Use session manager for persistent storage
+    const { sessions, currentSession, messages: dbMessages, isLoading: sessionLoading, error: sessionError, createSession, selectSession, deleteSession, addMessage, updateMessage, } = (0, useSessionManager_1.useSessionManager)({ userId, autoInitialize: true });
+    // Convert DB messages to ChatMessageProps format
+    const messages = dbMessages
+        .filter((msg) => msg.role === 'user' || msg.role === 'assistant')
+        .map((msg) => ({
+        id: msg.id,
+        content: msg.content,
+        role: msg.role,
+        timestamp: msg.timestamp,
+        metadata: msg.metadata,
+        fullResponseData: msg.fullResponseData,
+        isLoading: msg.isLoading,
+        error: msg.error,
+    }));
     // Auto-scroll to bottom when new messages arrive
     (0, react_1.useEffect)(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
-    // Initialize with a default session
-    (0, react_1.useEffect)(() => {
-        if (sessions.length === 0) {
-            const defaultSession = {
-                id: `session-${Date.now()}`,
-                title: 'New Chat',
-                lastMessage: 'Start a conversation...',
-                timestamp: new Date(),
-                messageCount: 0,
-            };
-            setSessions([defaultSession]);
-            setCurrentSessionId(defaultSession.id);
-        }
-    }, [sessions.length]);
     const layoutStyles = {
         display: 'flex',
-        height: 'calc(100vh - 120px)', // Account for header
-        backgroundColor: theme.colors.background.default,
+        minHeight: 'calc(100vh - 120px)', // Account for header
+        height: 'fit-content',
+        width: '100%',
+        backgroundColor: 'transparent',
         borderRadius: theme.effects.borderRadius.lg,
-        overflow: 'hidden',
-        boxShadow: theme.effects.shadow.lg,
+        overflow: 'visible',
     };
     const chatAreaStyles = {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: theme.colors.background.paper,
+        backgroundColor: 'transparent',
     };
     const messagesAreaStyles = {
         flex: 1,
         overflowY: 'auto',
         padding: '1rem',
-        backgroundColor: theme.colors.background.default,
+        backgroundColor: 'transparent',
+        minHeight: '400px',
+        maxHeight: 'calc(100vh - 200px)',
     };
     const inputAreaStyles = {
         padding: '1rem',
-        borderTop: `1px solid ${theme.colors.border.default}`,
-        backgroundColor: theme.colors.background.paper,
+        backgroundColor: 'transparent',
     };
     const welcomeMessageStyles = {
         display: 'flex',
@@ -79,16 +81,16 @@ const ChatLayout = ({ onSendMessage, isLoading = false, error, }) => {
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
-        maxWidth: '600px',
+        width: '100%',
     };
     const featureItemStyles = {
         display: 'flex',
         alignItems: 'center',
         gap: '0.75rem',
-        padding: '0.75rem',
-        backgroundColor: theme.colors.background.paper,
-        borderRadius: theme.effects.borderRadius.md,
+        padding: '0.5rem 0',
+        backgroundColor: 'transparent',
         fontSize: theme.typography.fontSize.sm,
+        color: theme.colors.text.secondary,
     };
     const iconStyles = {
         width: '24px',
@@ -103,53 +105,50 @@ const ChatLayout = ({ onSendMessage, isLoading = false, error, }) => {
         fontWeight: theme.typography.fontWeight.bold,
     };
     const handleSendMessage = async (message) => {
-        if (!message.trim() || !currentSessionId)
+        if (!message.trim())
             return;
-        // Add user message immediately
-        const userMessage = {
-            id: `msg-${Date.now()}-user`,
-            content: message,
-            role: 'user',
-            timestamp: new Date(),
-        };
-        setMessages(prev => [...prev, userMessage]);
-        // Add loading message for assistant
-        const loadingMessage = {
-            id: `msg-${Date.now()}-loading`,
-            content: '',
-            role: 'assistant',
-            timestamp: new Date(),
-            isLoading: true,
-        };
-        setMessages(prev => [...prev, loadingMessage]);
+        // Ensure we have a current session
+        let sessionId = currentSession?.id;
+        if (!sessionId) {
+            try {
+                const newSession = await createSession();
+                sessionId = newSession.id;
+            }
+            catch (error) {
+                console.error('Failed to create session:', error);
+                return;
+            }
+        }
         try {
+            // Add user message to database
+            await addMessage({
+                content: message,
+                role: 'user',
+            });
+            // Add loading message for assistant
+            const loadingMessage = await addMessage({
+                content: '',
+                role: 'assistant',
+                isLoading: true,
+            });
             // Call the onSendMessage prop if provided
             if (onSendMessage) {
-                const result = await onSendMessage(message, currentSessionId);
-                // Replace loading message with actual AI response
-                const assistantMessage = {
-                    id: `msg-${Date.now()}-assistant`,
+                const result = await onSendMessage(message, sessionId);
+                // Update loading message with actual AI response
+                await updateMessage(loadingMessage.id, {
                     content: result.content,
-                    role: 'assistant',
-                    timestamp: new Date(),
                     metadata: result.metadata,
                     fullResponseData: result.fullResponseData,
-                };
-                setMessages(prev => {
-                    const filtered = prev.filter(msg => msg.id !== loadingMessage.id);
-                    return [...filtered, assistantMessage];
+                    isLoading: false,
                 });
-                // Update session
-                updateSession(currentSessionId, message, result.content);
+                // Clear the prompt after sending
+                setCurrentPrompt('');
             }
             else {
                 // Default behavior - simulate AI response
-                setTimeout(() => {
-                    const assistantMessage = {
-                        id: `msg-${Date.now()}-assistant`,
+                setTimeout(async () => {
+                    await updateMessage(loadingMessage.id, {
                         content: `I received your message: "${message}". This is a placeholder response. Please integrate with the AI agent API to get real responses.`,
-                        role: 'assistant',
-                        timestamp: new Date(),
                         metadata: {
                             intent: {
                                 type: 'general_query',
@@ -157,77 +156,55 @@ const ChatLayout = ({ onSendMessage, isLoading = false, error, }) => {
                             },
                             reasoning: 'This is a placeholder response. The actual AI agent integration is pending.',
                         },
-                    };
-                    setMessages(prev => {
-                        const filtered = prev.filter(msg => msg.id !== loadingMessage.id);
-                        return [...filtered, assistantMessage];
+                        isLoading: false,
                     });
-                    // Update session
-                    updateSession(currentSessionId, message, assistantMessage.content);
+                    // Clear the prompt after sending
+                    setCurrentPrompt('');
                 }, 1000);
             }
         }
         catch (error) {
-            // Replace loading message with error
-            const errorMessage = {
-                id: `msg-${Date.now()}-error`,
-                content: '',
-                role: 'assistant',
-                timestamp: new Date(),
-                error: error instanceof Error ? error.message : 'An error occurred',
-            };
-            setMessages(prev => {
-                const filtered = prev.filter(msg => msg.id !== loadingMessage.id);
-                return [...filtered, errorMessage];
-            });
-        }
-    };
-    const updateSession = (sessionId, userMessage, assistantResponse) => {
-        setSessions(prev => prev.map(session => {
-            if (session.id === sessionId) {
-                return {
-                    ...session,
-                    title: session.title === 'New Chat' ? userMessage.slice(0, 50) + (userMessage.length > 50 ? '...' : '') : session.title,
-                    lastMessage: assistantResponse.slice(0, 100) + (assistantResponse.length > 100 ? '...' : ''),
-                    timestamp: new Date(),
-                    messageCount: session.messageCount + 2, // User + Assistant
-                };
+            // Update loading message with error
+            try {
+                const loadingMessage = messages.find(msg => msg.isLoading);
+                if (loadingMessage) {
+                    await updateMessage(loadingMessage.id, {
+                        content: '',
+                        error: error instanceof Error ? error.message : 'An error occurred',
+                        isLoading: false,
+                    });
+                }
             }
-            return session;
-        }));
-    };
-    const handleSessionSelect = (sessionId) => {
-        setCurrentSessionId(sessionId);
-        // In a real app, you'd load messages for this session
-        // For now, we'll just clear messages when switching sessions
-        setMessages([]);
-    };
-    const handleNewSession = () => {
-        const newSession = {
-            id: `session-${Date.now()}`,
-            title: 'New Chat',
-            lastMessage: 'Start a conversation...',
-            timestamp: new Date(),
-            messageCount: 0,
-        };
-        setSessions(prev => [newSession, ...prev]);
-        setCurrentSessionId(newSession.id);
-        setMessages([]);
-    };
-    const handleDeleteSession = (sessionId) => {
-        setSessions(prev => prev.filter(session => session.id !== sessionId));
-        if (sessionId === currentSessionId) {
-            const remainingSessions = sessions.filter(session => session.id !== sessionId);
-            if (remainingSessions.length > 0) {
-                setCurrentSessionId(remainingSessions[0].id);
-                setMessages([]);
-            }
-            else {
-                handleNewSession();
+            catch (updateError) {
+                console.error('Failed to update message with error:', updateError);
             }
         }
     };
-    return ((0, jsx_runtime_1.jsxs)("div", { style: layoutStyles, children: [(0, jsx_runtime_1.jsx)(index_1.ChatSidebar, { sessions: sessions, currentSessionId: currentSessionId, onSessionSelect: handleSessionSelect, onNewSession: handleNewSession, onDeleteSession: handleDeleteSession, isCollapsed: sidebarCollapsed, onToggleCollapse: () => setSidebarCollapsed(!sidebarCollapsed) }), (0, jsx_runtime_1.jsxs)("div", { style: chatAreaStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: messagesAreaStyles, children: messages.length === 0 ? ((0, jsx_runtime_1.jsxs)("div", { style: welcomeMessageStyles, children: [(0, jsx_runtime_1.jsx)("h2", { style: welcomeTitleStyles, children: "Welcome to Clear AI Chat" }), (0, jsx_runtime_1.jsx)("p", { style: welcomeSubtitleStyles, children: "Start a conversation with your intelligent AI assistant" }), (0, jsx_runtime_1.jsxs)("div", { style: featureListStyles, children: [(0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83E\uDDE0" }), (0, jsx_runtime_1.jsx)("span", { children: "Advanced reasoning and memory integration" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDCAC" }), (0, jsx_runtime_1.jsx)("span", { children: "Natural conversation with context awareness" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDD27" }), (0, jsx_runtime_1.jsx)("span", { children: "Tool execution and workflow automation" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDCDA" }), (0, jsx_runtime_1.jsx)("span", { children: "Persistent memory across conversations" })] })] })] })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [messages.map((message) => ((0, jsx_runtime_1.jsx)(index_1.ChatMessage, { ...message }, message.id))), (0, jsx_runtime_1.jsx)("div", { ref: messagesEndRef })] })) }), (0, jsx_runtime_1.jsx)("div", { style: inputAreaStyles, children: (0, jsx_runtime_1.jsx)(index_1.ChatInput, { onSendMessage: handleSendMessage, disabled: isLoading, placeholder: error ? 'Error occurred. Try again...' : 'Type your message...' }) })] })] }));
+    const handleSessionSelect = async (sessionId) => {
+        try {
+            await selectSession(sessionId);
+        }
+        catch (error) {
+            console.error('Failed to select session:', error);
+        }
+    };
+    const handleNewSession = async () => {
+        try {
+            await createSession();
+        }
+        catch (error) {
+            console.error('Failed to create new session:', error);
+        }
+    };
+    const handleDeleteSession = async (sessionId) => {
+        try {
+            await deleteSession(sessionId);
+        }
+        catch (error) {
+            console.error('Failed to delete session:', error);
+        }
+    };
+    return ((0, jsx_runtime_1.jsxs)("div", { style: layoutStyles, children: [(0, jsx_runtime_1.jsx)(index_1.ChatSidebar, { sessions: sessions, currentSessionId: currentSession?.id, onSessionSelect: handleSessionSelect, onNewSession: handleNewSession, onDeleteSession: handleDeleteSession, isCollapsed: sidebarCollapsed, onToggleCollapse: () => setSidebarCollapsed(!sidebarCollapsed) }), (0, jsx_runtime_1.jsxs)("div", { style: chatAreaStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: messagesAreaStyles, children: messages.length === 0 ? ((0, jsx_runtime_1.jsxs)("div", { style: welcomeMessageStyles, children: [(0, jsx_runtime_1.jsx)("h2", { style: welcomeTitleStyles, children: "Welcome to Clear AI Chat" }), (0, jsx_runtime_1.jsx)("p", { style: welcomeSubtitleStyles, children: "Start a conversation with your intelligent AI assistant" }), (0, jsx_runtime_1.jsxs)("div", { style: featureListStyles, children: [(0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83E\uDDE0" }), (0, jsx_runtime_1.jsx)("span", { children: "Advanced reasoning and memory integration" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDCAC" }), (0, jsx_runtime_1.jsx)("span", { children: "Natural conversation with context awareness" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDD27" }), (0, jsx_runtime_1.jsx)("span", { children: "Tool execution and workflow automation" })] }), (0, jsx_runtime_1.jsxs)("div", { style: featureItemStyles, children: [(0, jsx_runtime_1.jsx)("div", { style: iconStyles, children: "\uD83D\uDCDA" }), (0, jsx_runtime_1.jsx)("span", { children: "Persistent memory across conversations" })] })] })] })) : ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [messages.map((message) => ((0, jsx_runtime_1.jsx)(index_1.ChatMessage, { ...message }, message.id))), (0, jsx_runtime_1.jsx)("div", { ref: messagesEndRef })] })) }), (0, jsx_runtime_1.jsx)("div", { style: inputAreaStyles, children: (0, jsx_runtime_1.jsx)(index_1.ChatInput, { onSendMessage: handleSendMessage, disabled: isLoading || sessionLoading, placeholder: error || sessionError ? 'Error occurred. Try again...' : 'Type your message...', value: currentPrompt, onChange: setCurrentPrompt, showPromptSelector: true }) })] })] }));
 };
 exports.ChatLayout = ChatLayout;
 exports.default = exports.ChatLayout;

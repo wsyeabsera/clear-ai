@@ -37,6 +37,7 @@ export interface UseSessionManagerReturn {
 
   // Utilities
   isReady: boolean;
+  sessionManager: SessionManager;
 }
 
 export function useSessionManager(options: UseSessionManagerOptions): UseSessionManagerReturn {
@@ -220,6 +221,7 @@ export function useSessionManager(options: UseSessionManagerOptions): UseSession
 
     // Utilities
     isReady: !state.isLoading && !state.error,
+    sessionManager: sessionManagerRef.current,
   };
 }
 

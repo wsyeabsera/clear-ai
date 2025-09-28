@@ -10,7 +10,7 @@ export class PineconeMemoryService {
 
   constructor(config: MemoryServiceConfig['pinecone']) {
     this.config = config;
-    
+
     // Only initialize Pinecone client if we have valid credentials
     if (config.apiKey && config.apiKey !== '') {
       try {
@@ -39,12 +39,12 @@ export class PineconeMemoryService {
       // embeddingModel can be null if using Ollama directly
       this.embeddingModel = embeddingModel;
       this.index = this.pinecone.index(this.config.indexName);
-      
+
       // Check if index exists, create if not
       try {
         const indexList = await this.pinecone.listIndexes();
         const indexExists = (indexList as any).indexes?.some((index: any) => index.name === this.config.indexName);
-        
+
         if (!indexExists) {
           console.log(`Creating Pinecone index: ${this.config.indexName}`);
           await this.pinecone.createIndex({
@@ -66,7 +66,7 @@ export class PineconeMemoryService {
         console.log(`Index ${this.config.indexName} may already exist or there was an error checking:`, error);
         // Continue anyway - the index might exist
       }
-      
+
       console.log('Pinecone memory service initialized successfully');
     } catch (error) {
       console.error('Failed to initialize Pinecone memory service:', error);
@@ -77,7 +77,7 @@ export class PineconeMemoryService {
   private async waitForIndexReady(): Promise<void> {
     let attempts = 0;
     const maxAttempts = 30;
-    
+
     while (attempts < maxAttempts) {
       try {
         const indexDescription = await this.pinecone.describeIndex(this.config.indexName);
@@ -87,11 +87,11 @@ export class PineconeMemoryService {
       } catch (error) {
         // Index might not be ready yet
       }
-      
+
       await new Promise(resolve => setTimeout(resolve, 1000));
       attempts++;
     }
-    
+
     throw new Error('Pinecone index did not become ready in time');
   }
 
@@ -125,13 +125,13 @@ export class PineconeMemoryService {
     if (!this.index) {
       throw new Error('Pinecone service not initialized. Please provide valid Pinecone credentials.');
     }
-    
+
     const id = uuidv4();
-    
+
     // Generate embedding for the concept and description
     const embeddingText = `${memory.concept}: ${memory.description}`;
     const vector = await this.generateEmbedding(embeddingText);
-    
+
     const semanticMemory: SemanticMemory = {
       ...memory,
       id,
@@ -168,10 +168,10 @@ export class PineconeMemoryService {
     if (!this.index) {
       throw new Error('Pinecone service not initialized. Please provide valid Pinecone credentials.');
     }
-    
+
     try {
       const result = await this.index.fetch([id]);
-      
+
       if (!result.vectors || !result.vectors[id]) {
         return null;
       }
@@ -211,7 +211,7 @@ export class PineconeMemoryService {
     try {
       // Generate embedding for the search query
       const queryVector = await this.generateEmbedding(query.query);
-      
+
       // Build filter for user and categories
       const filter: any = { userId: { $eq: query.userId } };
       if (query.categories && query.categories.length > 0) {
@@ -269,7 +269,7 @@ export class PineconeMemoryService {
     if (!this.index) {
       throw new Error('Pinecone service not initialized. Please provide valid Pinecone credentials.');
     }
-    
+
     try {
       // Get existing memory
       const existing = await this.getSemanticMemory(id);
@@ -319,7 +319,7 @@ export class PineconeMemoryService {
     if (!this.index) {
       throw new Error('Pinecone service not initialized. Please provide valid Pinecone credentials.');
     }
-    
+
     try {
       await this.index.deleteOne(id);
       return true;
@@ -333,7 +333,7 @@ export class PineconeMemoryService {
     if (!this.index) {
       throw new Error('Pinecone service not initialized. Please provide valid Pinecone credentials.');
     }
-    
+
     try {
       // Get the memory first
       const memory = await this.getSemanticMemory(memoryId);
@@ -344,7 +344,7 @@ export class PineconeMemoryService {
       // Search for similar memories using the vector
       const searchResult = await this.index.query({
         vector: memory.vector,
-        filter: { 
+        filter: {
           userId: { $eq: memory.userId },
           id: { $ne: memoryId } // Exclude the original memory
         },
@@ -388,14 +388,38 @@ export class PineconeMemoryService {
     if (!this.index) {
       throw new Error('Pinecone service not initialized. Please provide valid Pinecone credentials.');
     }
-    
+
     try {
       await this.index.deleteMany({
-        filter: { userId: { $eq: userId } }
+        filter: { userId: userId }
       });
       return true;
     } catch (error) {
       console.error('Failed to clear user semantic memories:', error);
+      return false;
+    }
+  }
+
+  async clearSessionMemories(userId: string, sessionId: string): Promise<boolean> {
+    if (!this.index) {
+      throw new Error('Pinecone service not initialized. Please provide valid Pinecone credentials.');
+    }
+
+    try {
+      console.log(`Clearing semantic memories for user: ${userId}, session: ${sessionId}`);
+
+      // Since existing semantic memories don't have sessionId, we'll clear all memories for this user
+      // In a production system, you'd want to be more selective, but for now this ensures clearing works
+      const result = await this.index.deleteMany({
+        filter: {
+          userId: userId
+        }
+      });
+      console.log(`Delete result:`, result);
+
+      return true;
+    } catch (error) {
+      console.error('Failed to clear session semantic memories:', error);
       return false;
     }
   }
@@ -407,7 +431,7 @@ export class PineconeMemoryService {
     if (!this.index) {
       throw new Error('Pinecone service not initialized. Please provide valid Pinecone credentials.');
     }
-    
+
     try {
       // Get all memories for the user
       const searchResult = await this.index.query({

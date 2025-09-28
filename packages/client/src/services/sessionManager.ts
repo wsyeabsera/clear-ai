@@ -5,6 +5,7 @@
  */
 
 import { indexedDBService, ChatSession, ChatMessage } from './indexedDB';
+import { apiService } from './api';
 
 export interface SessionManagerState {
   sessions: ChatSession[];
@@ -167,9 +168,29 @@ export class SessionManager {
     }
   }
 
+  // Clear semantic memories (user knowledge)
+  async clearSemanticMemories(): Promise<void> {
+    try {
+      await apiService.clearSemanticMemories(this.userId);
+      console.log('Semantic memories cleared successfully');
+    } catch (error) {
+      console.error('Failed to clear semantic memories:', error);
+      throw error;
+    }
+  }
+
   // Delete a session and all its messages
   async deleteSession(sessionId: string): Promise<void> {
     try {
+      // First, clear the episodic memory from Neo4j for this session
+      try {
+        await apiService.clearSessionMemories(this.userId, sessionId);
+      } catch (memoryError) {
+        console.warn('Failed to clear session memories from Neo4j:', memoryError);
+        // Continue with local deletion even if memory clearing fails
+      }
+
+      // Then delete from IndexedDB
       await indexedDBService.deleteSession(sessionId);
       
       const updatedSessions = this.state.sessions.filter(s => s.id !== sessionId);
@@ -227,7 +248,7 @@ export class SessionManager {
 
       // If this is the first message, update the title
       if (this.state.currentSession.messageCount === 0 && message.role === 'user') {
-        sessionUpdates.title = message.content.slice(0, 50) + (message.content.length > 50 ? '...' : '');
+        (sessionUpdates as any).title = message.content.slice(0, 50) + (message.content.length > 50 ? '...' : '');
       }
 
       // Update last message if this is an assistant response
@@ -313,6 +334,15 @@ export class SessionManager {
   // Clear all data for the user
   async clearAllData(): Promise<void> {
     try {
+      // First, clear all episodic memories from Neo4j for this user
+      try {
+        await apiService.clearUserMemories(this.userId);
+      } catch (memoryError) {
+        console.warn('Failed to clear user memories from Neo4j:', memoryError);
+        // Continue with local deletion even if memory clearing fails
+      }
+
+      // Then clear from IndexedDB
       await indexedDBService.clearUserData(this.userId);
       
       this.updateState({
@@ -367,4 +397,4 @@ export class SessionManager {
 }
 
 // Export types
-export type { SessionManagerState };
+export type { SessionManagerState as SessionManagerStateType };

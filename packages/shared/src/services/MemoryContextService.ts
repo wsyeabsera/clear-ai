@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
-import { 
-  EpisodicMemory, 
-  SemanticMemory, 
-  MemoryContext, 
-  MemorySearchQuery, 
-  MemorySearchResult, 
-  MemoryService, 
-  MemoryServiceConfig 
+import {
+  EpisodicMemory,
+  SemanticMemory,
+  MemoryContext,
+  MemorySearchQuery,
+  MemorySearchResult,
+  MemoryService,
+  MemoryServiceConfig
 } from '../types/memory';
 import { Neo4jMemoryService } from './Neo4jMemoryService';
 import { PineconeMemoryService } from './PineconeMemoryService';
@@ -39,7 +39,7 @@ export class MemoryContextService implements MemoryService {
   async initialize(): Promise<void> {
     await this.neo4jService.initialize();
     console.log('Neo4j memory service initialized successfully');
-    
+
     // Initialize Pinecone service only if API key is provided
     if (this.config.pinecone.apiKey && this.config.pinecone.apiKey !== '') {
       try {
@@ -54,7 +54,7 @@ export class MemoryContextService implements MemoryService {
       console.log('⚠️ Pinecone API key not provided, skipping semantic memory initialization');
       this.pineconeService = null as any; // Disable Pinecone if no API key
     }
-    
+
     console.log('Memory context service initialized successfully with Ollama embeddings');
   }
 
@@ -108,7 +108,7 @@ export class MemoryContextService implements MemoryService {
       console.warn('Pinecone service not available, returning empty semantic memory results');
       return [];
     }
-    
+
     const pineconeQuery = {
       userId: query.userId,
       query: query.query,
@@ -231,14 +231,14 @@ export class MemoryContextService implements MemoryService {
 
   // Relationship operations
   async createMemoryRelationship(
-    sourceId: string, 
-    targetId: string, 
+    sourceId: string,
+    targetId: string,
     relationshipType: string
   ): Promise<boolean> {
     // Determine if memories are episodic or semantic
     const sourceEpisodic = await this.getEpisodicMemory(sourceId);
     const targetEpisodic = await this.getEpisodicMemory(targetId);
-    
+
     if (sourceEpisodic && targetEpisodic) {
       // Both are episodic - use Neo4j
       return await this.createEpisodicRelationship(sourceId, targetId, relationshipType);
@@ -249,15 +249,15 @@ export class MemoryContextService implements MemoryService {
   }
 
   private async createEpisodicRelationship(
-    sourceId: string, 
-    targetId: string, 
+    sourceId: string,
+    targetId: string,
     relationshipType: string
   ): Promise<boolean> {
     // This would require extending Neo4j service to support custom relationships
     // For now, we'll update the relationships field
     const source = await this.getEpisodicMemory(sourceId);
     const target = await this.getEpisodicMemory(targetId);
-    
+
     if (!source || !target) return false;
 
     // Update source memory
@@ -274,14 +274,14 @@ export class MemoryContextService implements MemoryService {
   }
 
   private async createSemanticRelationship(
-    sourceId: string, 
-    targetId: string, 
+    sourceId: string,
+    targetId: string,
     relationshipType: string
   ): Promise<boolean> {
     // Update both memories' relationship metadata
     const source = await this.getSemanticMemory(sourceId);
     const target = await this.getSemanticMemory(targetId);
-    
+
     if (!source || !target) return false;
 
     // Update source memory
@@ -310,7 +310,7 @@ export class MemoryContextService implements MemoryService {
   // Utility operations
   async clearUserMemories(userId: string): Promise<boolean> {
     const episodicCleared = await this.neo4jService.clearUserMemories(userId);
-    
+
     let semanticCleared = true;
     if (this.pineconeService) {
       try {
@@ -320,8 +320,39 @@ export class MemoryContextService implements MemoryService {
         semanticCleared = false;
       }
     }
-    
+
     return episodicCleared && semanticCleared;
+  }
+
+  async clearSessionMemories(userId: string, sessionId: string): Promise<boolean> {
+    // Only clear episodic memories (session-specific)
+    // Semantic memories are user-level knowledge and should persist across sessions
+    const episodicCleared = await this.neo4jService.clearSessionMemories(userId, sessionId);
+
+    // Don't clear semantic memories as they represent persistent user knowledge
+    // that should carry over between sessions
+
+    return episodicCleared;
+  }
+
+  async clearSemanticMemories(userId: string): Promise<boolean> {
+    // Clear all semantic memories for a user (their knowledge base)
+    console.log(`Clearing semantic memories for user: ${userId}`);
+    let semanticCleared = true;
+    if (this.pineconeService) {
+      try {
+        console.log('Calling pineconeService.clearUserMemories...');
+        semanticCleared = await this.pineconeService.clearUserMemories(userId);
+        console.log(`Pinecone clear result: ${semanticCleared}`);
+      } catch (error) {
+        console.warn('Failed to clear semantic memories:', (error as Error).message);
+        semanticCleared = false;
+      }
+    } else {
+      console.log('Pinecone service not available');
+    }
+    
+    return semanticCleared;
   }
 
   async getMemoryStats(userId: string): Promise<{
@@ -329,7 +360,7 @@ export class MemoryContextService implements MemoryService {
     semantic: { count: number; categories: string[] };
   }> {
     const episodicStats = await this.neo4jService.getMemoryStats(userId);
-    
+
     let semanticStats = { count: 0, categories: [] as string[] };
     if (this.pineconeService) {
       try {
@@ -347,7 +378,7 @@ export class MemoryContextService implements MemoryService {
 
   // Helper methods
   private calculateRelevanceScore(
-    episodicMemories: EpisodicMemory[], 
+    episodicMemories: EpisodicMemory[],
     semanticMemories: SemanticMemory[]
   ): number {
     if (episodicMemories.length === 0 && semanticMemories.length === 0) {
@@ -378,8 +409,8 @@ export class MemoryContextService implements MemoryService {
 
   // Integration with LangChain/LangGraph
   async enhanceContextWithMemories(
-    userId: string, 
-    sessionId: string, 
+    userId: string,
+    sessionId: string,
     currentQuery: string
   ): Promise<{
     enhancedContext: string;
@@ -390,7 +421,7 @@ export class MemoryContextService implements MemoryService {
   }> {
     // Get memory context
     const context = await this.getMemoryContext(userId, sessionId);
-    
+
     // Search for additional relevant memories based on current query
     const searchResults = await this.searchMemories({
       userId,
@@ -404,10 +435,10 @@ export class MemoryContextService implements MemoryService {
     const allSemantic = [...context.semanticMemories, ...searchResults.semantic.memories];
 
     // Remove duplicates
-    const uniqueEpisodic = allEpisodic.filter((memory, index, self) => 
+    const uniqueEpisodic = allEpisodic.filter((memory, index, self) =>
       index === self.findIndex(m => m.id === memory.id)
     );
-    const uniqueSemantic = allSemantic.filter((memory, index, self) => 
+    const uniqueSemantic = allSemantic.filter((memory, index, self) =>
       index === self.findIndex(m => m.id === memory.id)
     );
 

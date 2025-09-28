@@ -832,6 +832,35 @@ router.delete('/clear/:userId', memoryController.clearUserMemories);
 
 /**
  * @swagger
+ * /api/memory/clear/{userId}/{sessionId}:
+ *   delete:
+ *     summary: Clear session memories
+ *     description: Clear all memories for a specific user session
+ *     tags: [Memory - Utility]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *       - in: path
+ *         name: sessionId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Session ID
+ *     responses:
+ *       200:
+ *         description: Session memories cleared successfully
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/clear/:userId/:sessionId', memoryController.clearSessionMemories);
+router.delete('/clear-semantic/:userId', memoryController.clearSemanticMemories);
+
+/**
+ * @swagger
  * /api/memory/stats/{userId}:
  *   get:
  *     summary: Get memory statistics

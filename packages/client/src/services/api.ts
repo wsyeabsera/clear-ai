@@ -202,6 +202,38 @@ export class ClearAIApiService {
   getBaseURL(): string {
     return this.client.defaults.baseURL || '';
   }
+
+  /**
+   * Clear all memories for a user
+   */
+  async clearUserMemories(userId: string): Promise<any> {
+    const response = await this.client.delete(`/api/memory/clear/${userId}`);
+    return response.data;
+  }
+
+  /**
+   * Clear memories for a specific user session
+   */
+  async clearSessionMemories(userId: string, sessionId: string): Promise<any> {
+    const response = await this.client.delete(`/api/memory/clear/${userId}/${sessionId}`);
+    return response.data;
+  }
+
+  /**
+   * Clear semantic memories (user knowledge) for a user
+   */
+  async clearSemanticMemories(userId: string): Promise<any> {
+    const response = await this.client.delete(`/api/memory/clear-semantic/${userId}`);
+    return response.data;
+  }
+
+  /**
+   * Get memory statistics for a user
+   */
+  async getMemoryStats(userId: string): Promise<any> {
+    const response = await this.client.get(`/api/memory/stats/${userId}`);
+    return response.data;
+  }
 }
 
 // Default instance

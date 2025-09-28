@@ -14,7 +14,7 @@ class ClearAIApiService {
     constructor(baseURL = 'http://localhost:3001') {
         this.client = axios_1.default.create({
             baseURL,
-            timeout: 10000,
+            timeout: 50000, // 50 seconds timeout
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -124,6 +124,27 @@ class ClearAIApiService {
      */
     getBaseURL() {
         return this.client.defaults.baseURL || '';
+    }
+    /**
+     * Clear all memories for a user
+     */
+    async clearUserMemories(userId) {
+        const response = await this.client.delete(`/api/memory/clear/${userId}`);
+        return response.data;
+    }
+    /**
+     * Clear memories for a specific user session
+     */
+    async clearSessionMemories(userId, sessionId) {
+        const response = await this.client.delete(`/api/memory/clear/${userId}/${sessionId}`);
+        return response.data;
+    }
+    /**
+     * Get memory statistics for a user
+     */
+    async getMemoryStats(userId) {
+        const response = await this.client.get(`/api/memory/stats/${userId}`);
+        return response.data;
     }
 }
 exports.ClearAIApiService = ClearAIApiService;

@@ -7,6 +7,7 @@
 import React, { useState } from 'react';
 import { useTheme } from '../themes';
 import { useSessionManager } from '../hooks/useSessionManager';
+import { apiService } from '../services/api';
 import Button from './Button';
 
 export interface DataManagerModalProps {
@@ -25,12 +26,14 @@ export const DataManagerModal: React.FC<DataManagerModalProps> = ({
   const [isImporting, setIsImporting] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const [stats, setStats] = useState<{ sessionCount: number; messageCount: number; totalStorageSize: number } | null>(null);
+  const [memoryStats, setMemoryStats] = useState<{ episodicCount: number; semanticCount: number; totalMemories: number } | null>(null);
   
   const {
     exportData,
     importData,
     clearAllData,
     getStorageStats,
+    sessionManager,
   } = useSessionManager({ userId, autoInitialize: false });
 
   const handleExport = async () => {
@@ -77,14 +80,14 @@ export const DataManagerModal: React.FC<DataManagerModalProps> = ({
   };
 
   const handleClearAll = async () => {
-    if (!confirm('Are you sure you want to clear all conversation data? This action cannot be undone.')) {
+    if (!confirm('Are you sure you want to clear all conversation data? This will remove:\n\n• All chat sessions and messages (IndexedDB)\n• All episodic memories (Neo4j)\n• All semantic memories (Neo4j)\n\nThis action cannot be undone.')) {
       return;
     }
 
     setIsClearing(true);
     try {
       await clearAllData();
-      alert('All data cleared successfully!');
+      alert('All data cleared successfully!\n\n✅ Chat sessions and messages removed\n✅ Episodic memories cleared from Neo4j\n✅ Semantic memories cleared from Neo4j');
       // Refresh stats
       await loadStats();
     } catch (error) {
@@ -95,12 +98,39 @@ export const DataManagerModal: React.FC<DataManagerModalProps> = ({
     }
   };
 
+  const handleClearSemanticMemories = async () => {
+    if (!confirm('Are you sure you want to clear your knowledge base? This will remove:\n\n• All semantic memories (your learned knowledge)\n• The AI will forget what it has learned about you\n\nThis action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      await sessionManager.clearSemanticMemories();
+      alert('Knowledge base cleared successfully!\n\n✅ Semantic memories removed\n✅ AI will start fresh with new knowledge');
+      // Refresh memory stats
+      await loadMemoryStats();
+    } catch (error) {
+      console.error('Failed to clear semantic memories:', error);
+      alert('Failed to clear knowledge base. Please try again.');
+    }
+  };
+
   const loadStats = async () => {
     try {
       const statsData = await getStorageStats();
       setStats(statsData);
     } catch (error) {
       console.error('Failed to load stats:', error);
+    }
+  };
+
+  const loadMemoryStats = async () => {
+    try {
+      const memoryStatsData = await apiService.getMemoryStats(userId);
+      if (memoryStatsData.success) {
+        setMemoryStats(memoryStatsData.data);
+      }
+    } catch (error) {
+      console.error('Failed to load memory stats:', error);
     }
   };
 
@@ -116,6 +146,7 @@ export const DataManagerModal: React.FC<DataManagerModalProps> = ({
   React.useEffect(() => {
     if (isOpen) {
       loadStats();
+      loadMemoryStats();
     }
   }, [isOpen]);
 
@@ -235,14 +266,14 @@ export const DataManagerModal: React.FC<DataManagerModalProps> = ({
         </div>
 
         <p style={descriptionStyles}>
-          Manage your conversation data. Export to backup, import to restore, or clear all data.
+          Manage your conversation data. Export to backup, import to restore, or clear all data including Neo4j memories.
         </p>
         
         {stats && (
           <div style={statsStyles}>
             <div style={statItemStyles}>
               <div style={statValueStyles}>{stats.sessionCount}</div>
-              <div style={statLabelStyles}>Sessions</div>
+              <div style={statLabelStyles}>Chat Sessions</div>
             </div>
             <div style={statItemStyles}>
               <div style={statValueStyles}>{stats.messageCount}</div>
@@ -250,7 +281,24 @@ export const DataManagerModal: React.FC<DataManagerModalProps> = ({
             </div>
             <div style={statItemStyles}>
               <div style={statValueStyles}>{formatBytes(stats.totalStorageSize)}</div>
-              <div style={statLabelStyles}>Storage Used</div>
+              <div style={statLabelStyles}>Local Storage</div>
+            </div>
+          </div>
+        )}
+
+        {memoryStats && (
+          <div style={statsStyles}>
+            <div style={statItemStyles}>
+              <div style={statValueStyles}>{memoryStats.episodicCount}</div>
+              <div style={statLabelStyles}>Episodic Memories</div>
+            </div>
+            <div style={statItemStyles}>
+              <div style={statValueStyles}>{memoryStats.semanticCount}</div>
+              <div style={statLabelStyles}>Semantic Memories</div>
+            </div>
+            <div style={statItemStyles}>
+              <div style={statValueStyles}>{memoryStats.totalMemories}</div>
+              <div style={statLabelStyles}>Total Memories (Neo4j)</div>
             </div>
           </div>
         )}
@@ -281,6 +329,13 @@ export const DataManagerModal: React.FC<DataManagerModalProps> = ({
           />
 
           <Button
+            onClick={handleClearSemanticMemories}
+            variant="outline"
+          >
+            Clear Knowledge Base
+          </Button>
+
+          <Button
             onClick={handleClearAll}
             disabled={isClearing}
             variant="outline"
@@ -288,12 +343,15 @@ export const DataManagerModal: React.FC<DataManagerModalProps> = ({
             {isClearing ? 'Clearing...' : 'Clear All Data'}
           </Button>
 
-          <Button
-            onClick={loadStats}
-            variant="ghost"
-          >
-            Refresh Stats
-          </Button>
+        <Button
+          onClick={() => {
+            loadStats();
+            loadMemoryStats();
+          }}
+          variant="ghost"
+        >
+          Refresh Stats
+        </Button>
         </div>
       </div>
     </div>

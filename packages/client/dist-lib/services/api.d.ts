@@ -96,6 +96,18 @@ export declare class ClearAIApiService {
      * Get current server URL
      */
     getBaseURL(): string;
+    /**
+     * Clear all memories for a user
+     */
+    clearUserMemories(userId: string): Promise<any>;
+    /**
+     * Clear memories for a specific user session
+     */
+    clearSessionMemories(userId: string, sessionId: string): Promise<any>;
+    /**
+     * Get memory statistics for a user
+     */
+    getMemoryStats(userId: string): Promise<any>;
 }
 export declare const apiService: ClearAIApiService;
 export declare const apiClient: ClearAIApiService;

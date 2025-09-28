@@ -363,6 +363,20 @@ export class Neo4jMemoryService {
     }
   }
 
+  async clearSessionMemories(userId: string, sessionId: string): Promise<boolean> {
+    const session = this.driver.session({ database: this.config.database });
+    try {
+      await session.run(`
+        MATCH (m:EpisodicMemory {userId: $userId, sessionId: $sessionId})
+        DETACH DELETE m
+      `, { userId, sessionId });
+
+      return true;
+    } finally {
+      await session.close();
+    }
+  }
+
   async getMemoryStats(userId: string): Promise<{
     count: number;
     oldest: Date | null;

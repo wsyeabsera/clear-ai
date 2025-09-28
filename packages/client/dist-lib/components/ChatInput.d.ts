@@ -5,6 +5,9 @@ export interface ChatInputProps {
     placeholder?: string;
     maxLength?: number;
     showCharacterCount?: boolean;
+    value?: string;
+    onChange?: (value: string) => void;
+    showPromptSelector?: boolean;
 }
 export declare const ChatInput: React.FC<ChatInputProps>;
 export default ChatInput;

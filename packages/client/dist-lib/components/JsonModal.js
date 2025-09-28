@@ -2,9 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JsonModal = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
+const react_1 = require("react");
 const themes_1 = require("../themes");
 const JsonModal = ({ isOpen, onClose, data, title = 'Response Data', }) => {
     const { theme } = (0, themes_1.useTheme)();
+    // Lock body scroll when modal is open
+    (0, react_1.useEffect)(() => {
+        if (isOpen) {
+            // Store the original overflow style
+            const originalStyle = window.getComputedStyle(document.body).overflow;
+            // Lock the body scroll
+            document.body.style.overflow = 'hidden';
+            // Cleanup function to restore scroll when modal closes
+            return () => {
+                document.body.style.overflow = originalStyle;
+            };
+        }
+    }, [isOpen]);
     if (!isOpen)
         return null;
     const overlayStyles = {
@@ -17,8 +31,10 @@ const JsonModal = ({ isOpen, onClose, data, title = 'Response Data', }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        zIndex: 1000,
+        zIndex: 9999, // Higher z-index to ensure it's above everything
         padding: '1rem',
+        width: '100vw',
+        height: '100vh',
     };
     const modalStyles = {
         backgroundColor: theme.colors.background.paper,
