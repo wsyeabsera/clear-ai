@@ -5,7 +5,7 @@
   "source": "@site/docs/getting-started/quick-start.md",
   "sourceDirName": "getting-started",
   "slug": "/getting-started/quick-start",
-  "permalink": "/Clear-AI/getting-started/quick-start",
+  "permalink": "/Clear-AI/docs/getting-started/quick-start",
   "draft": false,
   "unlisted": false,
   "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/getting-started/quick-start.md",
@@ -15,10 +15,10 @@
   "sidebar": "tutorialSidebar",
   "previous": {
     "title": "Installation",
-    "permalink": "/Clear-AI/getting-started/installation"
+    "permalink": "/Clear-AI/docs/getting-started/installation"
   },
   "next": {
     "title": "Development Guide",
-    "permalink": "/Clear-AI/getting-started/development"
+    "permalink": "/Clear-AI/docs/getting-started/development"
   }
 }

@@ -199,105 +199,112 @@
     "sidebar": "814f3328",
     "content": "d9f32620"
   },
-  "/Clear-AI/-969": {
+  "/Clear-AI/docs-e1d": {
     "__comp": "5e95c892",
     "__context": {
       "plugin": "aba21aa0"
     }
   },
-  "/Clear-AI/-bdd": {
+  "/Clear-AI/docs-9be": {
     "__comp": "a7bd4aaa",
-    "__props": "f17cd9bd"
+    "__props": "fcd73a04"
   },
-  "/Clear-AI/-91f": {
+  "/Clear-AI/docs-5f6": {
     "__comp": "a94703ab"
   },
-  "/Clear-AI/api/overview-696": {
+  "/Clear-AI/docs/-ea0": {
+    "__comp": "17896441",
+    "content": "23374ca6"
+  },
+  "/Clear-AI/docs/api/overview-b65": {
     "__comp": "17896441",
     "content": "65df3d35"
   },
-  "/Clear-AI/api/server/tools-ec2": {
+  "/Clear-AI/docs/api/server/tools-5cc": {
     "__comp": "17896441",
     "content": "da4b9305"
   },
-  "/Clear-AI/architecture/overview-4d8": {
+  "/Clear-AI/docs/architecture/overview-3f2": {
     "__comp": "17896441",
     "content": "0b1ac180"
   },
-  "/Clear-AI/getting-started/development-e9a": {
+  "/Clear-AI/docs/getting-started/development-d20": {
     "__comp": "17896441",
     "content": "0aa62002"
   },
-  "/Clear-AI/getting-started/installation-42f": {
+  "/Clear-AI/docs/getting-started/installation-4fe": {
     "__comp": "17896441",
     "content": "54f44165"
   },
-  "/Clear-AI/getting-started/quick-start-254": {
+  "/Clear-AI/docs/getting-started/quick-start-099": {
     "__comp": "17896441",
     "content": "588bd741"
   },
-  "/Clear-AI/intro-ebc": {
+  "/Clear-AI/docs/intro-678": {
     "__comp": "17896441",
     "content": "0e384e19"
   },
-  "/Clear-AI/packages/client-51c": {
+  "/Clear-AI/docs/packages/client-eb6": {
     "__comp": "17896441",
     "content": "d5e52200"
   },
-  "/Clear-AI/packages/mcp-basic-a0f": {
+  "/Clear-AI/docs/packages/mcp-basic-2d2": {
     "__comp": "17896441",
     "content": "e47a3f68"
   },
-  "/Clear-AI/packages/server-60f": {
+  "/Clear-AI/docs/packages/server-760": {
     "__comp": "17896441",
     "content": "8ebdddd1"
   },
-  "/Clear-AI/packages/shared-5fc": {
+  "/Clear-AI/docs/packages/shared-97a": {
     "__comp": "17896441",
     "content": "5c296ff7"
   },
-  "/Clear-AI/tutorial-basics/congratulations-1bd": {
+  "/Clear-AI/docs/tutorial-basics/congratulations-084": {
     "__comp": "17896441",
     "content": "822bd8ab"
   },
-  "/Clear-AI/tutorial-basics/create-a-blog-post-350": {
+  "/Clear-AI/docs/tutorial-basics/create-a-blog-post-9e0": {
     "__comp": "17896441",
     "content": "533a09ca"
   },
-  "/Clear-AI/tutorial-basics/create-a-document-c38": {
+  "/Clear-AI/docs/tutorial-basics/create-a-document-23e": {
     "__comp": "17896441",
     "content": "1e4232ab"
   },
-  "/Clear-AI/tutorial-basics/create-a-page-181": {
+  "/Clear-AI/docs/tutorial-basics/create-a-page-f57": {
     "__comp": "17896441",
     "content": "5c868d36"
   },
-  "/Clear-AI/tutorial-basics/deploy-your-site-5b3": {
+  "/Clear-AI/docs/tutorial-basics/deploy-your-site-83e": {
     "__comp": "17896441",
     "content": "f55d3e7a"
   },
-  "/Clear-AI/tutorial-basics/markdown-features-acb": {
+  "/Clear-AI/docs/tutorial-basics/markdown-features-740": {
     "__comp": "17896441",
     "content": "18c41134"
   },
-  "/Clear-AI/tutorial-extras/manage-docs-versions-310": {
+  "/Clear-AI/docs/tutorial-extras/manage-docs-versions-1ff": {
     "__comp": "17896441",
     "content": "dff1c289"
   },
-  "/Clear-AI/tutorial-extras/translate-your-site-e54": {
+  "/Clear-AI/docs/tutorial-extras/translate-your-site-a8b": {
     "__comp": "17896441",
     "content": "e44a2883"
   },
-  "/Clear-AI/tutorials/building-your-first-tool-20e": {
+  "/Clear-AI/docs/tutorials/building-your-first-tool-17d": {
     "__comp": "17896441",
     "content": "65b9696f"
   },
-  "/Clear-AI/tutorials/creating-workflows-24c": {
+  "/Clear-AI/docs/tutorials/creating-workflows-ad6": {
     "__comp": "17896441",
     "content": "cd6311b9"
   },
-  "/Clear-AI/-136": {
-    "__comp": "17896441",
-    "content": "23374ca6"
+  "/Clear-AI/-628": {
+    "__comp": "1df93b7f",
+    "__context": {
+      "plugin": "a7456010"
+    },
+    "config": "5e9f5e1a"
   }
 }

@@ -1,114 +1,114 @@
 {
   "docusaurus-plugin-content-docs": {
     "default": {
-      "path": "/Clear-AI/",
+      "path": "/Clear-AI/docs",
       "versions": [
         {
           "name": "current",
           "label": "Next",
           "isLast": true,
-          "path": "/Clear-AI/",
+          "path": "/Clear-AI/docs",
           "mainDocId": "README",
           "docs": [
             {
               "id": "api/overview",
-              "path": "/Clear-AI/api/overview",
+              "path": "/Clear-AI/docs/api/overview",
               "sidebar": "apiSidebar"
             },
             {
               "id": "api/server/tools",
-              "path": "/Clear-AI/api/server/tools",
+              "path": "/Clear-AI/docs/api/server/tools",
               "sidebar": "apiSidebar"
             },
             {
               "id": "architecture/overview",
-              "path": "/Clear-AI/architecture/overview",
+              "path": "/Clear-AI/docs/architecture/overview",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "getting-started/development",
-              "path": "/Clear-AI/getting-started/development",
+              "path": "/Clear-AI/docs/getting-started/development",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "getting-started/installation",
-              "path": "/Clear-AI/getting-started/installation",
+              "path": "/Clear-AI/docs/getting-started/installation",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "getting-started/quick-start",
-              "path": "/Clear-AI/getting-started/quick-start",
+              "path": "/Clear-AI/docs/getting-started/quick-start",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "intro",
-              "path": "/Clear-AI/intro",
+              "path": "/Clear-AI/docs/intro",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "packages/client",
-              "path": "/Clear-AI/packages/client",
+              "path": "/Clear-AI/docs/packages/client",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "packages/mcp-basic",
-              "path": "/Clear-AI/packages/mcp-basic",
+              "path": "/Clear-AI/docs/packages/mcp-basic",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "packages/server",
-              "path": "/Clear-AI/packages/server",
+              "path": "/Clear-AI/docs/packages/server",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "packages/shared",
-              "path": "/Clear-AI/packages/shared",
+              "path": "/Clear-AI/docs/packages/shared",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "README",
-              "path": "/Clear-AI/"
+              "path": "/Clear-AI/docs/"
             },
             {
               "id": "tutorial-basics/congratulations",
-              "path": "/Clear-AI/tutorial-basics/congratulations"
+              "path": "/Clear-AI/docs/tutorial-basics/congratulations"
             },
             {
               "id": "tutorial-basics/create-a-blog-post",
-              "path": "/Clear-AI/tutorial-basics/create-a-blog-post"
+              "path": "/Clear-AI/docs/tutorial-basics/create-a-blog-post"
             },
             {
               "id": "tutorial-basics/create-a-document",
-              "path": "/Clear-AI/tutorial-basics/create-a-document"
+              "path": "/Clear-AI/docs/tutorial-basics/create-a-document"
             },
             {
               "id": "tutorial-basics/create-a-page",
-              "path": "/Clear-AI/tutorial-basics/create-a-page"
+              "path": "/Clear-AI/docs/tutorial-basics/create-a-page"
             },
             {
               "id": "tutorial-basics/deploy-your-site",
-              "path": "/Clear-AI/tutorial-basics/deploy-your-site"
+              "path": "/Clear-AI/docs/tutorial-basics/deploy-your-site"
             },
             {
               "id": "tutorial-basics/markdown-features",
-              "path": "/Clear-AI/tutorial-basics/markdown-features"
+              "path": "/Clear-AI/docs/tutorial-basics/markdown-features"
             },
             {
               "id": "tutorial-extras/manage-docs-versions",
-              "path": "/Clear-AI/tutorial-extras/manage-docs-versions"
+              "path": "/Clear-AI/docs/tutorial-extras/manage-docs-versions"
             },
             {
               "id": "tutorial-extras/translate-your-site",
-              "path": "/Clear-AI/tutorial-extras/translate-your-site"
+              "path": "/Clear-AI/docs/tutorial-extras/translate-your-site"
             },
             {
               "id": "tutorials/building-your-first-tool",
-              "path": "/Clear-AI/tutorials/building-your-first-tool",
+              "path": "/Clear-AI/docs/tutorials/building-your-first-tool",
               "sidebar": "tutorialSidebar"
             },
             {
               "id": "tutorials/creating-workflows",
-              "path": "/Clear-AI/tutorials/creating-workflows",
+              "path": "/Clear-AI/docs/tutorials/creating-workflows",
               "sidebar": "tutorialSidebar"
             }
           ],
@@ -116,13 +116,13 @@
           "sidebars": {
             "tutorialSidebar": {
               "link": {
-                "path": "/Clear-AI/intro",
+                "path": "/Clear-AI/docs/intro",
                 "label": "intro"
               }
             },
             "apiSidebar": {
               "link": {
-                "path": "/Clear-AI/api/overview",
+                "path": "/Clear-AI/docs/api/overview",
                 "label": "api/overview"
               }
             }

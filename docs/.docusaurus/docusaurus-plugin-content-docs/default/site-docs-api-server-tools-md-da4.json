@@ -5,7 +5,7 @@
   "source": "@site/docs/api/server/tools.md",
   "sourceDirName": "api/server",
   "slug": "/api/server/tools",
-  "permalink": "/Clear-AI/api/server/tools",
+  "permalink": "/Clear-AI/docs/api/server/tools",
   "draft": false,
   "unlisted": false,
   "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/api/server/tools.md",
@@ -15,6 +15,6 @@
   "sidebar": "apiSidebar",
   "previous": {
     "title": "API Reference Overview",
-    "permalink": "/Clear-AI/api/overview"
+    "permalink": "/Clear-AI/docs/api/overview"
   }
 }
