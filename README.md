@@ -1,29 +1,29 @@
-# clear-ai-core
+# clear-ai
 
 Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration. Perfect for CLI tools, APIs, and server applications.
 
-[![npm version](https://badge.fury.io/js/clear-ai-core.svg)](https://badge.fury.io/js/clear-ai-core)
+[![npm version](https://badge.fury.io/js/clear-ai.svg)](https://badge.fury.io/js/clear-ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
-[![Documentation](https://img.shields.io/badge/Documentation-Clear%20AI-blue)](https://wsyeabsera.github.io/Clear-AI/)
+[![Documentation](https://img.shields.io/badge/Documentation-Clear%20AI-blue)](https://wsyeabsera.github.io/clear-ai/docs/intro)
 
 ## 📚 Documentation
 
-**📖 [Full Documentation](https://wsyeabsera.github.io/Clear-AI/)** - Complete guides, API reference, and examples
+**📖 [Full Documentation](https://wsyeabsera.github.io/clear-ai/docs/intro)** - Complete guides, API reference, and examples
 
-- [Getting Started](https://wsyeabsera.github.io/Clear-AI/docs/intro)
-- [Architecture Overview](https://wsyeabsera.github.io/Clear-AI/docs/architecture/overview)
-- [API Reference](https://wsyeabsera.github.io/Clear-AI/docs/api/overview)
-- [Package Guides](https://wsyeabsera.github.io/Clear-AI/docs/packages/client)
+- [Getting Started](https://wsyeabsera.github.io/clear-ai/docs/intro)
+- [Architecture Overview](https://wsyeabsera.github.io/clear-ai/docs/architecture/overview)
+- [API Reference](https://wsyeabsera.github.io/clear-ai/docs/api/overview)
+- [Package Guides](https://wsyeabsera.github.io/clear-ai/docs/packages/client)
 
 ## 🚀 Quick Start
 
 ```bash
-npm install clear-ai-core
+npm install clear-ai
 ```
 
 ```typescript
-import { ClearAI } from "clear-ai-core";
+import { ClearAI } from "clear-ai";
 
 // Initialize the framework for CLI usage
 const ai = new ClearAI({

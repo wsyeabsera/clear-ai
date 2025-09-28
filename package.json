@@ -1,6 +1,6 @@
 {
   "name": "clear-ai",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration",
   "private": false,
   "main": "dist/index.js",
