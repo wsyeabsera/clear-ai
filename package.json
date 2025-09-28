@@ -1,6 +1,6 @@
 {
-  "name": "clear-ai-core",
-  "version": "1.0.1",
+  "name": "clear-ai",
+  "version": "1.0.4",
   "description": "Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration",
   "private": false,
   "main": "dist/index.js",
@@ -25,13 +25,13 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wsyeabsera/clear-ai.git"
+    "url": "git+https://github.com/wsyeabsera/clear-ai.git"
   },
-  "homepage": "https://wsyeabsera.github.io/Clear-AI/",
+  "homepage": "https://wsyeabsera.github.io/clear-ai/docs/intro",
   "bugs": {
     "url": "https://github.com/wsyeabsera/clear-ai/issues"
   },
-  "docs": "https://wsyeabsera.github.io/Clear-AI/",
+  "docs": "https://wsyeabsera.github.io/clear-ai/docs/intro",
   "engines": {
     "node": ">=18.0.0"
   },

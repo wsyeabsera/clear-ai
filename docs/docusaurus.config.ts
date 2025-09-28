@@ -23,7 +23,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'wsyeabsera', // Usually your GitHub org/user name.
-  projectName: 'Clear-AI', // Usually your repo name.
+  projectName: 'clear-ai', // Usually your repo name.
 
   onBrokenLinks: 'warn',
 
@@ -44,7 +44,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/',
+            'https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/',
         },
         blog: {
           showReadingTime: true,
@@ -55,7 +55,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/',
+            'https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -101,7 +101,7 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/wsyeabsera/Clear-AI',
+          href: 'https://github.com/wsyeabsera/clear-ai',
           label: 'GitHub',
           position: 'right',
         },
@@ -157,7 +157,7 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/wsyeabsera/Clear-AI',
+              href: 'https://github.com/wsyeabsera/clear-ai',
             },
           ],
         },

@@ -31,7 +31,7 @@ export default {
   "url": "https://wsyeabsera.github.io",
   "baseUrl": "/clear-ai/",
   "organizationName": "wsyeabsera",
-  "projectName": "Clear-AI",
+  "projectName": "clear-ai",
   "onBrokenLinks": "warn",
   "i18n": {
     "defaultLocale": "en",
@@ -47,7 +47,7 @@ export default {
       {
         "docs": {
           "sidebarPath": "./sidebars.ts",
-          "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/"
+          "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/"
         },
         "blog": {
           "showReadingTime": true,
@@ -58,7 +58,7 @@ export default {
             ],
             "xslt": true
           },
-          "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/",
+          "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/",
           "onInlineTags": "warn",
           "onInlineAuthors": "warn",
           "onUntruncatedBlogPosts": "warn"
@@ -121,7 +121,7 @@ export default {
           "position": "left"
         },
         {
-          "href": "https://github.com/wsyeabsera/Clear-AI",
+          "href": "https://github.com/wsyeabsera/clear-ai",
           "label": "GitHub",
           "position": "right"
         }
@@ -178,7 +178,7 @@ export default {
             },
             {
               "label": "GitHub",
-              "href": "https://github.com/wsyeabsera/Clear-AI"
+              "href": "https://github.com/wsyeabsera/clear-ai"
             }
           ]
         }

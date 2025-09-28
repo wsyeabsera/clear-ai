@@ -1,6 +1,6 @@
 {
   "permalink": "/clear-ai/blog/mdx-blog-post",
-  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/blog/2021-08-01-mdx-blog-post.mdx",
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/blog/2021-08-01-mdx-blog-post.mdx",
   "source": "@site/blog/2021-08-01-mdx-blog-post.mdx",
   "title": "MDX Blog Post",
   "description": "Blog posts support Docusaurus Markdown features, such as MDX.",
