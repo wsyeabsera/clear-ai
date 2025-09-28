@@ -2,7 +2,7 @@
   "name": "clear-ai",
   "version": "1.0.6",
   "description": "Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration",
-  "private": false,
+  "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -126,7 +126,7 @@
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.1",
     "tsx": "^4.6.0",
-    "turbo": "^1.11.0",
+    "turbo": "^2.5.8",
     "typescript": "^5.3.0"
   },
   "packageManager": "yarn@1.22.22"

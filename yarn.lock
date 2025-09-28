@@ -1880,7 +1880,7 @@ clear-ai-mcp-basic@*, "clear-ai-mcp-basic@file:/Users/yab/Projects/Clear-AI/pack
     "@types/axios" "^0.9.36"
     axios "^1.12.2"
     clear-ai-mcp-basic "*"
-    clear-ai-shared "*"
+    clear-ai-shared "file:../shared"
     cors "^2.8.5"
     dotenv "^16.3.1"
     express "^4.18.2"
@@ -1893,7 +1893,7 @@ clear-ai-mcp-basic@*, "clear-ai-mcp-basic@file:/Users/yab/Projects/Clear-AI/pack
     swagger-ui-express "^5.0.1"
     uuid "^9.0.1"
 
-clear-ai-shared@*, clear-ai-shared@^1.0.0, "clear-ai-shared@file:/Users/yab/Projects/Clear-AI/packages/shared":
+clear-ai-shared@^1.0.0, "clear-ai-shared@file:../shared", "clear-ai-shared@file:/Users/yab/Projects/Clear-AI/packages/shared":
   version "1.0.0"
   resolved "file:packages/shared"
   dependencies:
@@ -4921,22 +4921,22 @@ tsx@^4.6.0, tsx@^4.8.1:
   optionalDependencies:
     fsevents "~2.3.3"
 
-turbo-darwin-arm64@1.13.4:
-  version "1.13.4"
-  resolved "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-1.13.4.tgz"
-  integrity sha512-eG769Q0NF6/Vyjsr3mKCnkG/eW6dKMBZk6dxWOdrHfrg6QgfkBUk0WUUujzdtVPiUIvsh4l46vQrNVd9EOtbyA==
+turbo-darwin-arm64@2.5.8:
+  version "2.5.8"
+  resolved "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-2.5.8.tgz"
+  integrity sha512-f1H/tQC9px7+hmXn6Kx/w8Jd/FneIUnvLlcI/7RGHunxfOkKJKvsoiNzySkoHQ8uq1pJnhJ0xNGTlYM48ZaJOQ==
 
-turbo@^1.11.0:
-  version "1.13.4"
-  resolved "https://registry.npmjs.org/turbo/-/turbo-1.13.4.tgz"
-  integrity sha512-1q7+9UJABuBAHrcC4Sxp5lOqYS5mvxRrwa33wpIyM18hlOCpRD/fTJNxZ0vhbMcJmz15o9kkVm743mPn7p6jpQ==
+turbo@^2.5.8:
+  version "2.5.8"
+  resolved "https://registry.npmjs.org/turbo/-/turbo-2.5.8.tgz"
+  integrity sha512-5c9Fdsr9qfpT3hA0EyYSFRZj1dVVsb6KIWubA9JBYZ/9ZEAijgUEae0BBR/Xl/wekt4w65/lYLTFaP3JmwSO8w==
   optionalDependencies:
-    turbo-darwin-64 "1.13.4"
-    turbo-darwin-arm64 "1.13.4"
-    turbo-linux-64 "1.13.4"
-    turbo-linux-arm64 "1.13.4"
-    turbo-windows-64 "1.13.4"
-    turbo-windows-arm64 "1.13.4"
+    turbo-darwin-64 "2.5.8"
+    turbo-darwin-arm64 "2.5.8"
+    turbo-linux-64 "2.5.8"
+    turbo-linux-arm64 "2.5.8"
+    turbo-windows-64 "2.5.8"
+    turbo-windows-arm64 "2.5.8"
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
