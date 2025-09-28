@@ -745,7 +745,7 @@ node --inspect dist/index.js
 
 Now that you understand the server package:
 
-1. **Explore APIs**: Check out the [API reference](/docs/api/server/overview)
-2. **Learn Tool Execution**: Understand [tool execution](/docs/features/tool-execution)
-3. **Workflow Orchestration**: Dive into [LangGraph workflows](/docs/features/langgraph-workflows)
+1. **Explore APIs**: Check out the [API reference](/docs/api/overview)
+2. **Learn Tool Execution**: Understand tool execution patterns
+3. **Workflow Orchestration**: Dive into [LangGraph workflows](/docs/tutorials/creating-workflows)
 4. **Build Something**: Follow the [tutorials](/docs/tutorials/building-your-first-tool)

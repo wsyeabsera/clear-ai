@@ -704,6 +704,6 @@ llm_result = tool_service.execute_tool_with_llm(
 ## Next Steps
 
 1. **Explore Tool Creation**: Learn how to [build custom tools](/docs/tutorials/building-your-first-tool)
-2. **Understand Workflows**: Check out [LangGraph workflows](/docs/features/langgraph-workflows)
-3. **Learn MCP Integration**: Dive into [MCP tools](/docs/api/mcp/api-call)
-4. **Build Applications**: Use the [Client APIs](/docs/api/client/services)
+2. **Understand Workflows**: Check out [LangGraph workflows](/docs/tutorials/creating-workflows)
+3. **Learn MCP Integration**: Dive into [MCP tools](/docs/packages/mcp-basic)
+4. **Build Applications**: Use the [Client APIs](/docs/packages/client)

@@ -742,11 +742,11 @@ export class ConditionalWorkflow {
 
 Now that you understand workflow creation:
 
-1. **Explore More Workflows**: Check out the [workflow examples](/docs/features/langgraph-workflows)
-2. **Learn Advanced Patterns**: Understand [workflow orchestration](/docs/architecture/workflow-orchestration)
+1. **Explore More Workflows**: Check out the workflow examples in the codebase
+2. **Learn Advanced Patterns**: Understand workflow orchestration patterns
 3. **Build Complex Workflows**: Create multi-step business processes
 4. **Add Monitoring**: Implement comprehensive workflow monitoring
-5. **Optimize Performance**: Learn about [workflow optimization](/docs/performance/workflows)
+5. **Optimize Performance**: Learn about workflow optimization techniques
 
 ## Resources
 

@@ -5,27 +5,27 @@ This section provides comprehensive documentation for all APIs in the Clear AI s
 ## API Organization
 
 ### Server APIs
-- **[Health APIs](/docs/api/server/health)** - System health and status endpoints
 - **[Tool Execution APIs](/docs/api/server/tools)** - Tool registration and execution
-- **[LangGraph APIs](/docs/api/server/langgraph)** - Workflow orchestration
-- **[MCP APIs](/docs/api/server/mcp)** - Model Context Protocol integration
-- **[User Management APIs](/docs/api/server/users)** - User CRUD operations
+- **Health APIs** - System health and status endpoints (coming soon)
+- **LangGraph APIs** - Workflow orchestration (coming soon)
+- **MCP APIs** - Model Context Protocol integration (coming soon)
+- **User Management APIs** - User CRUD operations (coming soon)
 
 ### Client APIs
-- **[Service APIs](/docs/api/client/services)** - Frontend service layer
-- **[Component APIs](/docs/api/client/components)** - React component interfaces
-- **[Hook APIs](/docs/api/client/hooks)** - Custom React hooks
+- **Service APIs** - Frontend service layer (coming soon)
+- **Component APIs** - React component interfaces (coming soon)
+- **Hook APIs** - Custom React hooks (coming soon)
 
 ### MCP Tool APIs
-- **[API Call Tool](/docs/api/mcp/api-call)** - HTTP API requests
-- **[JSON Reader Tool](/docs/api/mcp/json-reader)** - JSON data processing
-- **[File Reader Tool](/docs/api/mcp/file-reader)** - File system operations
-- **[Parallel Execution Tool](/docs/api/mcp/execute-parallel)** - Concurrent tool execution
+- **API Call Tool** - HTTP API requests (coming soon)
+- **JSON Reader Tool** - JSON data processing (coming soon)
+- **File Reader Tool** - File system operations (coming soon)
+- **Parallel Execution Tool** - Concurrent tool execution (coming soon)
 
 ### Shared Service APIs
-- **[LLM Provider APIs](/docs/api/shared/llm-providers)** - Language model integrations
-- **[Workflow APIs](/docs/api/shared/workflows)** - Workflow orchestration services
-- **[Type Definitions](/docs/api/shared/types)** - TypeScript interfaces and types
+- **LLM Provider APIs** - Language model integrations (coming soon)
+- **Workflow APIs** - Workflow orchestration services (coming soon)
+- **Type Definitions** - TypeScript interfaces and types (coming soon)
 
 ## Base URL
 

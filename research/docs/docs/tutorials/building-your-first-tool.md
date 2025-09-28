@@ -575,8 +575,8 @@ export const weatherTool: ZodTool = {
 
 Now that you've built your first tool:
 
-1. **Explore More Tools**: Check out the [MCP tools reference](/docs/api/mcp/overview)
-2. **Learn Workflows**: Understand how to use tools in [LangGraph workflows](/docs/features/langgraph-workflows)
+1. **Explore More Tools**: Check out the available MCP tools
+2. **Learn Workflows**: Understand how to use tools in [LangGraph workflows](/docs/tutorials/creating-workflows)
 3. **Build Complex Tools**: Create more sophisticated tools with multiple parameters
 4. **Add Monitoring**: Implement logging and metrics for your tools
 5. **Share Your Tools**: Contribute your tools back to the project

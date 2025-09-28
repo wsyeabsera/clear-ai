@@ -731,7 +731,7 @@ npm list @clear-ai/shared
 
 Now that you understand the Shared package:
 
-1. **Explore Services**: Check out the [LLM services](/docs/api/shared/llm-providers)
-2. **Learn Workflows**: Understand [workflow services](/docs/api/shared/workflows)
-3. **Use Types**: Learn about [type definitions](/docs/api/shared/types)
+1. **Explore Services**: Check out the LLM provider implementations
+2. **Learn Workflows**: Understand workflow service patterns
+3. **Use Types**: Learn about the shared type definitions
 4. **Build Something**: Follow the [tutorials](/docs/tutorials/building-your-first-tool)

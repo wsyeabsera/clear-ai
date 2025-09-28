@@ -547,7 +547,7 @@ npm run build
 
 Now that you understand the client package:
 
-1. **Explore Components**: Check out the [component library](/docs/features/component-library)
-2. **Learn Theming**: Deep dive into the [theme system](/docs/features/theme-system)
-3. **API Integration**: Understand [API services](/docs/api/client/services)
-4. **Build Something**: Follow the [tutorials](/docs/tutorials/custom-themes)
+1. **Explore Components**: Check out the component showcase in the UI
+2. **Learn Theming**: Try different themes in the theme switcher
+3. **API Integration**: Understand the service layer patterns
+4. **Build Something**: Follow the [tutorials](/docs/tutorials/building-your-first-tool)

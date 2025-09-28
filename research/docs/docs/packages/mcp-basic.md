@@ -706,7 +706,7 @@ ps aux | grep mcp-server
 
 Now that you understand the MCP Basic package:
 
-1. **Explore Tools**: Check out the [tool reference](/docs/api/mcp/overview)
+1. **Explore Tools**: Check out the available tools in the system
 2. **Learn Integration**: Understand [server integration](/docs/packages/server)
 3. **Build Custom Tools**: Follow the [tutorials](/docs/tutorials/building-your-first-tool)
-4. **Advanced Usage**: Learn about [workflow orchestration](/docs/features/langgraph-workflows)
+4. **Advanced Usage**: Learn about [workflow orchestration](/docs/tutorials/creating-workflows)
