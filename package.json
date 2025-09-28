@@ -27,10 +27,11 @@
     "type": "git",
     "url": "https://github.com/wsyeabsera/clear-ai.git"
   },
-  "homepage": "https://github.com/wsyeabsera/clear-ai#readme",
+  "homepage": "https://wsyeabsera.github.io/Clear-AI/",
   "bugs": {
     "url": "https://github.com/wsyeabsera/clear-ai/issues"
   },
+  "docs": "https://wsyeabsera.github.io/Clear-AI/",
   "engines": {
     "node": ">=18.0.0"
   },
@@ -79,7 +80,10 @@
     "prepublishOnly": "yarn build",
     "kill-ports": "bash scripts/kill-ports.sh",
     "kill-dev": "bash scripts/kill-ports.sh --dev",
-    "kill-all": "bash scripts/kill-ports.sh --all"
+    "kill-all": "bash scripts/kill-ports.sh --all",
+    "docs:build": "cd research/docs && npm install && npm run build",
+    "docs:dev": "cd research/docs && npm install && npm start",
+    "docs:deploy": "bash scripts/deploy-docs.sh"
   },
   "dependencies": {
     "clear-ai-mcp-basic": "^1.0.0",

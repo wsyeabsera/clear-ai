@@ -5,6 +5,16 @@ Clear AI - A modern TypeScript framework for building AI-powered applications wi
 [![npm version](https://badge.fury.io/js/clear-ai-core.svg)](https://badge.fury.io/js/clear-ai-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
+[![Documentation](https://img.shields.io/badge/Documentation-Clear%20AI-blue)](https://wsyeabsera.github.io/Clear-AI/)
+
+## 📚 Documentation
+
+**📖 [Full Documentation](https://wsyeabsera.github.io/Clear-AI/)** - Complete guides, API reference, and examples
+
+- [Getting Started](https://wsyeabsera.github.io/Clear-AI/docs/intro)
+- [Architecture Overview](https://wsyeabsera.github.io/Clear-AI/docs/architecture/overview)
+- [API Reference](https://wsyeabsera.github.io/Clear-AI/docs/api/overview)
+- [Package Guides](https://wsyeabsera.github.io/Clear-AI/docs/packages/client)
 
 ## 🚀 Quick Start
 
@@ -236,6 +246,21 @@ npm run dev
 - **[API Reference](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/api/overview.md)** - Complete API documentation
 - **[Tutorials](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/tutorials/building-your-first-tool.md)** - Step-by-step tutorials
 - **[Architecture](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/architecture/overview.md)** - System architecture overview
+
+## 📖 Documentation Access
+
+### From NPM
+When you install the package, you can access documentation via:
+```bash
+npm docs clear-ai-core
+# or
+npm home clear-ai-core
+```
+
+### Direct Links
+- **Main Documentation**: https://wsyeabsera.github.io/Clear-AI/
+- **Getting Started**: https://wsyeabsera.github.io/Clear-AI/docs/intro
+- **API Reference**: https://wsyeabsera.github.io/Clear-AI/docs/api/overview
 
 ## 🤝 Contributing
 

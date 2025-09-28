@@ -15,15 +15,15 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://clear-ai-docs.example.com',
+  url: 'https://wsyeabsera.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/Clear-AI/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'clear-ai', // Usually your GitHub org/user name.
-  projectName: 'clear-ai-docs', // Usually your repo name.
+  organizationName: 'wsyeabsera', // Usually your GitHub org/user name.
+  projectName: 'Clear-AI', // Usually your repo name.
 
   onBrokenLinks: 'warn',
 
@@ -44,7 +44,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/',
         },
         blog: {
           showReadingTime: true,
@@ -55,7 +55,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -101,7 +101,7 @@ const config: Config = {
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/clear-ai/clear-ai',
+          href: 'https://github.com/wsyeabsera/Clear-AI',
           label: 'GitHub',
           position: 'right',
         },
@@ -157,7 +157,7 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/clear-ai/clear-ai',
+              href: 'https://github.com/wsyeabsera/Clear-AI',
             },
           ],
         },
