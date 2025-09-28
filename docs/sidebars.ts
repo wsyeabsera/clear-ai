@@ -25,7 +25,12 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Features',
       items: [
-        'features/memory-system',
+        'features/memory-system-overview',
+        'features/neo4j-integration',
+        'features/pinecone-vectors',
+        'features/ollama-embeddings',
+        'features/memory-examples',
+        'features/memory-troubleshooting',
         'features/component-library',
         'features/theme-system',
       ],

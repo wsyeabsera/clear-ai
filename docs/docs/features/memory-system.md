@@ -1,40 +1,30 @@
 # Memory System
 
+> **📚 This page has been moved to our comprehensive memory system documentation!**
+
 The Clear-AI Memory System provides intelligent memory management for AI applications, enabling persistent context, knowledge storage, and memory-aware conversations.
 
-## Overview
+## 🚀 New Comprehensive Documentation
 
-The Memory System combines two types of memory to create a comprehensive knowledge management solution:
+We've created detailed, junior-developer-friendly documentation for the memory system:
+
+### 📖 **Start Here**
+- **[Memory System Overview](./memory-system-overview.md)** - Complete introduction and architecture
+- **[Neo4j Integration](./neo4j-integration.md)** - Deep dive into episodic memory with graphs
+- **[Pinecone Vectors](./pinecone-vectors.md)** - Understanding semantic memory with vectors
+- **[Ollama Embeddings](./ollama-embeddings.md)** - Local text embedding setup and usage
+
+### 🎯 **Practical Guides**
+- **[Memory Examples](./memory-examples.md)** - Real-world scenarios and code examples
+- **[Troubleshooting Guide](./memory-troubleshooting.md)** - Common issues and solutions
+
+## Quick Overview
+
+The Memory System combines three powerful technologies:
 
 - **Episodic Memory** (Neo4j): Stores conversation history, user interactions, and temporal relationships
 - **Semantic Memory** (Pinecone): Stores knowledge, concepts, and facts as vector embeddings
 - **Local Embeddings** (Ollama): Privacy-focused text embeddings using local models
-
-## Key Features
-
-### 🧠 Intelligent Memory Storage
-- **Episodic Memory**: Track conversations, user interactions, and temporal sequences
-- **Semantic Memory**: Store and retrieve knowledge using vector similarity
-- **Relationship Mapping**: Connect related memories and concepts
-- **Importance Scoring**: Prioritize memories based on relevance and importance
-
-### 🔍 Advanced Search Capabilities
-- **Vector Similarity Search**: Find semantically similar content
-- **Temporal Filtering**: Search by time ranges and sequences
-- **Tag-based Organization**: Organize memories with custom tags
-- **Context Enhancement**: Retrieve relevant memories for better responses
-
-### 🔒 Privacy-Focused Design
-- **Local Embeddings**: No data sent to external services for embeddings
-- **User Isolation**: Memories are user-specific and isolated
-- **Encrypted Storage**: Secure storage with Neo4j encryption
-- **Configurable Cleanup**: Automatic cleanup of old memories
-
-### 🚀 Easy Integration
-- **REST API**: Simple HTTP endpoints for all operations
-- **TypeScript Support**: Full type definitions and interfaces
-- **LangChain Integration**: Seamless integration with existing workflows
-- **Chat Interface**: Ready-to-use conversational APIs
 
 ## Architecture
 
