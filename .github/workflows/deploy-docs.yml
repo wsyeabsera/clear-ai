@@ -21,17 +21,23 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Verify docs structure
+      run: |
+        ls -la docs/
+        echo "Package.json exists:"
+        test -f docs/package.json && echo "✅ docs/package.json found" || echo "❌ docs/package.json missing"
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
         cache: 'npm'
-        cache-dependency-path: docs/package-lock.json
+        cache-dependency-path: docs/package.json
 
     - name: Install dependencies
       run: |
         cd docs
-        npm ci
+        npm install
 
     - name: Build documentation
       run: |
