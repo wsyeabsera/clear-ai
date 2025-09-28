@@ -136,6 +136,14 @@ const startServer = async () => {
         embedding: {
           model: process.env.EMBEDDING_MODEL || 'nomic-embed-text',
           dimensions: parseInt(process.env.EMBEDDING_DIMENSIONS || '768')
+        },
+        semanticExtraction: {
+          enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+          minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+          maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+          enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+          categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+          batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
         }
       };
 
@@ -164,6 +172,20 @@ const startServer = async () => {
       const { initializeMemoryService } = await import('./controllers/memoryController');
       await initializeMemoryService(memoryConfig, langchainConfig);
       console.log('✅ Memory Service initialized successfully');
+
+      // Initialize Semantic Extraction Service
+      if (memoryConfig.semanticExtraction.enabled) {
+        console.log('🔍 Initializing Semantic Extraction Service...');
+        const { MemoryContextService } = await import('@clear-ai/shared');
+        const memoryService = new MemoryContextService(memoryConfig, langchainConfig);
+        await memoryService.initialize();
+        console.log('✅ Semantic Extraction Service initialized successfully');
+        console.log(`   📊 Configuration: ${memoryConfig.semanticExtraction.categories.join(', ')} categories`);
+        console.log(`   🎯 Min confidence: ${memoryConfig.semanticExtraction.minConfidence}`);
+        console.log(`   📦 Batch size: ${memoryConfig.semanticExtraction.batchSize}`);
+      } else {
+        console.log('⚠️  Semantic Extraction Service disabled in configuration');
+      }
     } catch (error) {
       console.error('❌ Failed to initialize services:', error);
       // Don't exit the server, just log the error

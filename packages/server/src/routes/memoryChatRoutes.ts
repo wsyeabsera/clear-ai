@@ -373,4 +373,106 @@ router.post('/search', memoryChatController.searchMemoriesInChat);
  */
 router.post('/knowledge', memoryChatController.storeKnowledgeInChat);
 
+/**
+ * @swagger
+ * /api/memory-chat/extract-semantic:
+ *   post:
+ *     summary: Extract semantic information from episodic memories
+ *     description: Use LLM to extract semantic concepts and relationships from episodic memories
+ *     tags: [Memory - Chat]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 example: "user123"
+ *               sessionId:
+ *                 type: string
+ *                 example: "session456"
+ *                 description: "Optional session ID to limit extraction to specific session"
+ *     responses:
+ *       200:
+ *         description: Semantic extraction completed successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       type: object
+ *                       properties:
+ *                         extractedConcepts:
+ *                           type: integer
+ *                           description: "Number of concepts extracted"
+ *                         extractedRelationships:
+ *                           type: integer
+ *                           description: "Number of relationships identified"
+ *                         processingTime:
+ *                           type: integer
+ *                           description: "Processing time in milliseconds"
+ *       400:
+ *         description: Bad request - missing required fields
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/extract-semantic', memoryChatController.extractSemanticMemories);
+
+/**
+ * @swagger
+ * /api/memory-chat/semantic-stats/{userId}:
+ *   get:
+ *     summary: Get semantic extraction statistics
+ *     description: Retrieve statistics about semantic extraction for a user
+ *     tags: [Memory - Chat]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *         example: "user123"
+ *     responses:
+ *       200:
+ *         description: Semantic extraction statistics retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/ApiResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       type: object
+ *                       properties:
+ *                         totalExtractions:
+ *                           type: integer
+ *                           description: "Total number of extracted concepts"
+ *                         averageConfidence:
+ *                           type: number
+ *                           description: "Average confidence score of extractions"
+ *                         conceptsByCategory:
+ *                           type: object
+ *                           additionalProperties:
+ *                             type: integer
+ *                           description: "Number of concepts per category"
+ *                         lastExtraction:
+ *                           type: string
+ *                           format: date-time
+ *                           description: "Timestamp of last extraction"
+ *       400:
+ *         description: Bad request - missing required fields
+ *       500:
+ *         description: Internal server error
+ */
+router.get('/semantic-stats/:userId', memoryChatController.getSemanticExtractionStats);
+
 export default router;

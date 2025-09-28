@@ -35,14 +35,16 @@ print_section() {
 }
 
 # Test suite configurations
-declare -A TEST_SUITES
-TEST_SUITES["quick"]="Quick validation test - basic functionality"
-TEST_SUITES["memory-persistence"]="Memory persistence test - verify memories are stored"
-TEST_SUITES["memory-validation"]="Comprehensive memory validation - full memory system test"
-TEST_SUITES["api-relationships"]="API relationships test - semantic understanding of API data"
-TEST_SUITES["comprehensive"]="Full agent test suite - all features"
-TEST_SUITES["stress"]="Stress test - performance under load"
-TEST_SUITES["benchmark"]="Benchmark test - performance metrics"
+declare -A TEST_SUITES 2>/dev/null || {
+    # Fallback for shells that don't support associative arrays
+    TEST_SUITES_quick="Quick validation test - basic functionality"
+    TEST_SUITES_memory_persistence="Memory persistence test - verify memories are stored"
+    TEST_SUITES_memory_validation="Comprehensive memory validation - full memory system test"
+    TEST_SUITES_api_relationships="API relationships test - semantic understanding of API data"
+    TEST_SUITES_comprehensive="Full agent test suite - all features"
+    TEST_SUITES_stress="Stress test - performance under load"
+    TEST_SUITES_benchmark="Benchmark test - performance metrics"
+}
 
 # Run a specific test suite
 run_test_suite() {

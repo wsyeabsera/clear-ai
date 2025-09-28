@@ -1,5 +1,4 @@
 import { EpisodicMemory, SemanticMemory } from '../types/memory';
-import { SimpleLangChainService } from './SimpleLangChainService';
 
 export interface SemanticExtractionResult {
   concepts: ExtractedConcept[];
@@ -33,18 +32,19 @@ export interface SemanticExtractionConfig {
 }
 
 export class SemanticExtractorService {
-  private langchainService: SimpleLangChainService;
   private config: SemanticExtractionConfig;
 
-  constructor(langchainService: SimpleLangChainService, config: SemanticExtractionConfig) {
-    this.langchainService = langchainService;
+  constructor(config: SemanticExtractionConfig) {
     this.config = config;
   }
 
   /**
-   * Extract semantic information from episodic memories
+   * Extract semantic information from episodic memories using an LLM service
    */
-  async extractSemanticInfo(episodicMemories: EpisodicMemory[]): Promise<SemanticExtractionResult> {
+  async extractSemanticInfo(
+    episodicMemories: EpisodicMemory[],
+    llmService: { complete: (prompt: string, options?: any) => Promise<{ content: string }> }
+  ): Promise<SemanticExtractionResult> {
     const startTime = Date.now();
     
     try {
@@ -58,7 +58,7 @@ export class SemanticExtractorService {
       let processedBatches = 0;
 
       for (const batch of batches) {
-        const batchResult = await this.processBatch(batch);
+        const batchResult = await this.processBatch(batch, llmService);
         allConcepts.push(...batchResult.concepts);
         allRelationships.push(...batchResult.relationships);
         totalConfidence += batchResult.confidence;
@@ -83,7 +83,10 @@ export class SemanticExtractorService {
   /**
    * Process a batch of episodic memories
    */
-  private async processBatch(episodicMemories: EpisodicMemory[]): Promise<{
+  private async processBatch(
+    episodicMemories: EpisodicMemory[],
+    llmService: { complete: (prompt: string, options?: any) => Promise<{ content: string }> }
+  ): Promise<{
     concepts: ExtractedConcept[];
     relationships: ExtractedRelationship[];
     confidence: number;
@@ -100,12 +103,12 @@ export class SemanticExtractorService {
     const prompt = this.buildExtractionPrompt(memoryTexts);
     
     try {
-      const response = await this.langchainService.generateResponse(prompt, {
+      const response = await llmService.complete(prompt, {
         temperature: 0.3,
         maxTokens: 2000
       });
 
-      return this.parseExtractionResponse(response, episodicMemories);
+      return this.parseExtractionResponse(response.content, episodicMemories);
     } catch (error) {
       console.error('Failed to process batch with LLM:', error);
       // Return empty result on error

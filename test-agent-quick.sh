@@ -106,8 +106,19 @@ main() {
         }
     }'
     
-    quick_test "Calculator tool" '{
-        "query": "What is 15 + 27?",
+    quick_test "API call tool" '{
+        "query": "Make an API call to https://httpbin.org/get to test connectivity",
+        "options": {
+        "userId": "'$USER_ID'",
+        "sessionId": "'$SESSION_ID'",
+        "testId": "'$TEST_ID'",
+            "includeMemoryContext": false,
+            "includeReasoning": false
+        }
+    }'
+    
+    quick_test "File reader tool" '{
+        "query": "Read the package.json file to see the project dependencies",
         "options": {
         "userId": "'$USER_ID'",
         "sessionId": "'$SESSION_ID'",

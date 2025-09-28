@@ -33,7 +33,7 @@ export class MemoryContextService implements MemoryService {
       enableRelationshipExtraction: config.semanticExtraction.enableRelationshipExtraction,
       categories: config.semanticExtraction.categories
     };
-    this.semanticExtractor = new SemanticExtractorService(this.langchainService, extractionConfig);
+    this.semanticExtractor = new SemanticExtractorService(extractionConfig);
   }
 
   async initialize(): Promise<void> {
@@ -479,7 +479,7 @@ Current query: ${currentQuery}
       }
 
       // Extract semantic information using LLM
-      const extractionResult = await this.semanticExtractor.extractSemanticInfo(episodicMemories);
+      const extractionResult = await this.semanticExtractor.extractSemanticInfo(episodicMemories, this.langchainService);
 
       if (extractionResult.concepts.length === 0) {
         return {

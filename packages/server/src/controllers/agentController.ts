@@ -80,6 +80,14 @@ export const agentController = {
         embedding: {
           model: process.env.MEMORY_EMBEDDING_MODEL || 'nomic-embed-text',
           dimensions: parseInt(process.env.MEMORY_EMBEDDING_DIMENSIONS || '768')
+        },
+        semanticExtraction: {
+          enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+          minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+          maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+          enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+          categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+          batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
         }
       };
 

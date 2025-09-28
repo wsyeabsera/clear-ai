@@ -153,7 +153,7 @@ export class PineconeMemoryService {
           lastAccessed: new Date(memory.metadata.lastAccessed).toISOString(),
           accessCount: memory.metadata.accessCount,
           relationships: JSON.stringify(memory.relationships),
-          extractionMetadata: memory.metadata.extractionMetadata ? JSON.stringify(memory.metadata.extractionMetadata) : null
+          extractionMetadata: memory.metadata.extractionMetadata ? JSON.stringify(memory.metadata.extractionMetadata) : "{}"
         }
       }]);
 
@@ -304,7 +304,7 @@ export class PineconeMemoryService {
           lastAccessed: new Date(updated.metadata.lastAccessed).toISOString(),
           accessCount: updated.metadata.accessCount,
           relationships: JSON.stringify(updated.relationships),
-          extractionMetadata: updated.metadata.extractionMetadata ? JSON.stringify(updated.metadata.extractionMetadata) : null
+          extractionMetadata: updated.metadata.extractionMetadata ? JSON.stringify(updated.metadata.extractionMetadata) : "{}"
         }
       }]);
 
@@ -411,7 +411,7 @@ export class PineconeMemoryService {
     try {
       // Get all memories for the user
       const searchResult = await this.index.query({
-        vector: new Array(1536).fill(0), // Dummy vector for metadata-only search
+        vector: new Array(768).fill(0), // Dummy vector for metadata-only search (768 = nomic-embed-text dimension)
         filter: { userId: { $eq: userId } },
         topK: 10000, // Large number to get all
         includeMetadata: true

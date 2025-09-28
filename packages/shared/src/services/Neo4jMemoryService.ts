@@ -213,12 +213,12 @@ export class Neo4jMemoryService {
       }
 
       if (query.tags && query.tags.length > 0) {
-        cypher += ` AND ANY(tag IN $tags WHERE tag IN m.metadata.tags)`;
+        cypher += ` AND ANY(tag IN $tags WHERE tag IN apoc.convert.fromJsonMap(m.metadata).tags)`;
         params.tags = query.tags;
       }
 
       if (query.importance) {
-        cypher += ` AND m.metadata.importance >= $minImportance AND m.metadata.importance <= $maxImportance`;
+        cypher += ` AND apoc.convert.fromJsonMap(m.metadata).importance >= $minImportance AND apoc.convert.fromJsonMap(m.metadata).importance <= $maxImportance`;
         params.minImportance = query.importance.min;
         params.maxImportance = query.importance.max;
       }
