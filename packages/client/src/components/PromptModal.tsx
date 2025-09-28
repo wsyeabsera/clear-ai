@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTheme } from '../themes';
 
 export interface ExamplePrompt {
@@ -25,25 +26,103 @@ export interface PromptModalProps {
 const EXAMPLE_CATEGORIES: PromptCategory[] = [
   {
     name: 'API Relationships',
-    description: 'Test understanding of data relationships and API structures',
+    description: 'Test understanding of data relationships and API structures using JSONPlaceholder',
     prompts: [
       {
         id: 'api-relationships-1',
-        text: 'Analyze the relationships between users, posts, and comments in this data structure',
+        text: 'Analyze the relationships between users, posts, and comments in the JSONPlaceholder API (https://jsonplaceholder.typicode.com/). Show me how a user can have multiple posts and each post can have multiple comments using these endpoints: GET /users, GET /posts, GET /comments.',
         category: 'API Relationships',
-        description: 'Tests relationship analysis capabilities'
+        description: 'Tests relationship analysis with users, posts, and comments'
       },
       {
         id: 'api-relationships-2',
-        text: 'What patterns do you see in this API data? How are the entities connected?',
+        text: 'Explain how albums and photos are connected in JSONPlaceholder (https://jsonplaceholder.typicode.com/). Can you show me how to get all photos for album ID 1 using GET /albums/1 and GET /photos?albumId=1?',
         category: 'API Relationships',
-        description: 'Pattern recognition and entity connections'
+        description: 'Album-photo relationship analysis'
       },
       {
         id: 'api-relationships-3',
-        text: 'Explain the data flow and dependencies in this system',
+        text: 'What patterns do you see in the JSONPlaceholder API (https://jsonplaceholder.typicode.com/)? How are users connected to todos and how can I filter todos by completion status using GET /todos?userId=1&completed=false?',
         category: 'API Relationships',
-        description: 'Data flow analysis'
+        description: 'User-todo relationships and filtering patterns'
+      },
+      {
+        id: 'api-relationships-4',
+        text: 'Show me the complete data flow using JSONPlaceholder (https://jsonplaceholder.typicode.com/): how can I get all posts by user ID 1 (GET /posts?userId=1), then get comments for the first post (GET /comments?postId=1), and finally get the user details for comment authors (GET /users/1)?',
+        category: 'API Relationships',
+        description: 'Complex relationship traversal and filtering'
+      },
+      {
+        id: 'api-relationships-5',
+        text: 'Explain the filtering capabilities in JSONPlaceholder (https://jsonplaceholder.typicode.com/). How can I filter posts by user ID (GET /posts?userId=1), todos by completion status (GET /todos?completed=true), and photos by album ID (GET /photos?albumId=1)?',
+        category: 'API Relationships',
+        description: 'API filtering and querying patterns'
+      }
+    ]
+  },
+  {
+    name: 'JSONPlaceholder API Examples',
+    description: 'Practical examples using the JSONPlaceholder API endpoints',
+    prompts: [
+      {
+        id: 'jsonplaceholder-1',
+        text: 'Using https://jsonplaceholder.typicode.com/, get all posts for user ID 1 (GET /posts?userId=1), then show me how to get comments for the first post (GET /comments?postId=1)',
+        category: 'JSONPlaceholder API Examples',
+        description: 'User posts and their comments traversal'
+      },
+      {
+        id: 'jsonplaceholder-2',
+        text: 'Using https://jsonplaceholder.typicode.com/, show me all incomplete todos for user ID 5 (GET /todos?userId=5&completed=false) and explain how to mark them as completed (PUT /todos/{id})',
+        category: 'JSONPlaceholder API Examples',
+        description: 'Todo filtering and status management'
+      },
+      {
+        id: 'jsonplaceholder-3',
+        text: 'Using https://jsonplaceholder.typicode.com/, get all photos from album ID 3 (GET /photos?albumId=3) and show me the photo URLs and titles',
+        category: 'JSONPlaceholder API Examples',
+        description: 'Album photos retrieval'
+      },
+      {
+        id: 'jsonplaceholder-4',
+        text: 'Using https://jsonplaceholder.typicode.com/, find all users who have commented on posts by user ID 2. Start with GET /posts?userId=2, then GET /comments?postId=11 for the first post, then GET /users/1 for the first comment author',
+        category: 'JSONPlaceholder API Examples',
+        description: 'Cross-entity relationship analysis'
+      },
+      {
+        id: 'jsonplaceholder-5',
+        text: 'Using https://jsonplaceholder.typicode.com/, create a new post for user ID 1 with title "My New Post" and body "This is the content" (POST /posts with JSON payload)',
+        category: 'JSONPlaceholder API Examples',
+        description: 'Data creation and POST operations'
+      },
+      {
+        id: 'jsonplaceholder-6',
+        text: 'Using https://jsonplaceholder.typicode.com/, show me how to get user details (GET /users/1), then get all their posts (GET /posts?userId=1), and finally get comments on their first post (GET /comments?postId=1)',
+        category: 'JSONPlaceholder API Examples',
+        description: 'Complete user profile analysis'
+      },
+      {
+        id: 'jsonplaceholder-7',
+        text: 'Using https://jsonplaceholder.typicode.com/, demonstrate filtering: GET /posts?userId=3&title_like=qui, GET /todos?completed=false&userId=2, and GET /photos?albumId=1&title_like=accusamus',
+        category: 'JSONPlaceholder API Examples',
+        description: 'Advanced filtering with query parameters'
+      },
+      {
+        id: 'jsonplaceholder-8',
+        text: 'Using https://jsonplaceholder.typicode.com/, show me how to update a post (PUT /posts/1), delete a post (DELETE /posts/1), and handle pagination (GET /posts?_limit=10&_page=2)',
+        category: 'JSONPlaceholder API Examples',
+        description: 'CRUD operations and pagination'
+      },
+      {
+        id: 'jsonplaceholder-9',
+        text: 'Using https://jsonplaceholder.typicode.com/, get user ID 1 details (GET /users/1) and show me their contact information',
+        category: 'JSONPlaceholder API Examples',
+        description: 'Simple user data retrieval'
+      },
+      {
+        id: 'jsonplaceholder-10',
+        text: 'Using https://jsonplaceholder.typicode.com/, get all comments for post ID 1 (GET /comments?postId=1) and analyze the comment structure',
+        category: 'JSONPlaceholder API Examples',
+        description: 'Comment data analysis'
       }
     ]
   },
@@ -403,7 +482,7 @@ export const PromptModal: React.FC<PromptModalProps> = ({
       prompt.description?.toLowerCase().includes(searchTerm.toLowerCase())
     ) : [];
 
-  return (
+  return createPortal(
     <div
       style={overlayStyles}
       onClick={handleOverlayClick}
@@ -550,7 +629,8 @@ export const PromptModal: React.FC<PromptModalProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
