@@ -80,8 +80,12 @@ export class ClearAIApiService {
    * Get available MCP tools
    */
   async getTools(): Promise<MCPTool[]> {
-    const response: AxiosResponse<MCPTool[]> = await this.client.get('/api/mcp/tools');
-    return response.data;
+    const response: AxiosResponse<{
+      success: boolean;
+      data: MCPTool[];
+      error?: string;
+    }> = await this.client.get('/api/mcp/tools');
+    return response.data.data || [];
   }
 
   /**

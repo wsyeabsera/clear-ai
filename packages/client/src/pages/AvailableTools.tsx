@@ -37,6 +37,7 @@ export const AvailableTools: React.FC = () => {
         setLoading(true)
         setError(null)
         const tools = await toolService.getTools()
+        console.log('Tools:', tools)
         setTools(tools)
       } catch (err) {
         setError('An unexpected error occurred')
