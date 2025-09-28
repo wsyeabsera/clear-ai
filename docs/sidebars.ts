@@ -39,6 +39,13 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Intelligence',
+      items: [
+        'agent-intelligence',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Packages',
       items: [
         'packages/client',
