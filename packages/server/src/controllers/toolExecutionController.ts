@@ -7,7 +7,7 @@ import {
   CoreKeysAndModels
 } from '@clear-ai/shared'
 import dotenv from 'dotenv'
-import { ToolRegistry } from '@clear-ai/mcp-basic'
+import { ToolRegistry } from 'clear-ai-mcp-basic'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import { logger } from '@clear-ai/shared'
 

@@ -231,9 +231,14 @@
   dependencies:
     "@clear-ai/shared" "*"
     axios "^1.6.0"
+    chalk "^5.3.0"
+    commander "^11.1.0"
+    inquirer "^9.2.12"
+    ora "^7.0.1"
     react "^18.2.0"
     react-dom "^18.2.0"
     react-router-dom "^6.20.0"
+    table "^6.8.1"
 
 "@clear-ai/shared@*":
   version "1.0.0"
@@ -245,9 +250,12 @@
     "@langchain/mistralai" "^0.2.1"
     "@langchain/ollama" "^0.2.4"
     "@langchain/openai" "^0.6.13"
+    "@pinecone-database/pinecone" "^1.1.0"
     jsonrepair "^3.13.1"
     langchain "^0.3.34"
     langfuse "^3.38.5"
+    neo4j-driver "^5.15.0"
+    uuid "^9.0.1"
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -991,6 +999,14 @@
   resolved "https://registry.npmjs.org/@types/http-errors/-/http-errors-2.0.5.tgz"
   integrity sha512-r8Tayk8HJnX0FztbZN7oVqGccWgw98T/0neJphO91KkmOzug1KkofZURD4UaD5uH8AqcFLfdPErnBod0u71/qg==
 
+"@types/inquirer@^9.0.9":
+  version "9.0.9"
+  resolved "https://registry.npmjs.org/@types/inquirer/-/inquirer-9.0.9.tgz"
+  integrity sha512-/mWx5136gts2Z2e5izdoRCo46lPp5TMs9R15GTSsgg/XnZyxDWVqoVU3R9lWnccKpqwsJLvRoxbCjoJtZB7DSw==
+  dependencies:
+    "@types/through" "*"
+    rxjs "^7.2.0"
+
 "@types/json-schema@^7.0.12", "@types/json-schema@^7.0.15", "@types/json-schema@^7.0.6":
   version "7.0.15"
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.15.tgz"
@@ -1112,6 +1128,13 @@
   dependencies:
     "@types/express" "*"
     "@types/serve-static" "*"
+
+"@types/through@*":
+  version "0.0.33"
+  resolved "https://registry.npmjs.org/@types/through/-/through-0.0.33.tgz"
+  integrity sha512-HsJ+z3QuETzP3cswwtzt2vEIiHBk/dCcHGhbmG5X3ecnwFD/lPrMpliGXxSCg03L9AhrdwA4Oz/qfspkDW+xGQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/uuid@^10.0.0":
   version "10.0.0"
@@ -4269,7 +4292,7 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-rxjs@^7.8.1, rxjs@^7.8.2:
+rxjs@^7.2.0, rxjs@^7.8.1, rxjs@^7.8.2:
   version "7.8.2"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.2.tgz"
   integrity sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==
