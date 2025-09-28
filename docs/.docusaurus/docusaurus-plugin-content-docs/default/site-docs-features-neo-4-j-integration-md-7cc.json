@@ -1,0 +1,24 @@
+{
+  "id": "features/neo4j-integration",
+  "title": "Neo4j Integration Guide",
+  "description": "Neo4j is the heart of our episodic memory system, storing conversation history, user interactions, and temporal relationships in a graph database. This guide explains why we chose Neo4j and how to work with it effectively.",
+  "source": "@site/docs/features/neo4j-integration.md",
+  "sourceDirName": "features",
+  "slug": "/features/neo4j-integration",
+  "permalink": "/clear-ai/docs/features/neo4j-integration",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/neo4j-integration.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Testing Framework",
+    "permalink": "/clear-ai/docs/features/testing-framework"
+  },
+  "next": {
+    "title": "Pinecone Vector Database Guide",
+    "permalink": "/clear-ai/docs/features/pinecone-vectors"
+  }
+}

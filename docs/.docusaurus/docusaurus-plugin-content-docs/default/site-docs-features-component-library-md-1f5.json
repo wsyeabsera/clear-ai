@@ -11,5 +11,14 @@
   "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/component-library.md",
   "tags": [],
   "version": "current",
-  "frontMatter": {}
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Memory System Troubleshooting Guide",
+    "permalink": "/clear-ai/docs/features/memory-troubleshooting"
+  },
+  "next": {
+    "title": "Theme System",
+    "permalink": "/clear-ai/docs/features/theme-system"
+  }
 }

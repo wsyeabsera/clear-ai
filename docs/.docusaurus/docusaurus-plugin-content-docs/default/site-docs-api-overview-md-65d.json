@@ -14,7 +14,7 @@
   "frontMatter": {},
   "sidebar": "apiSidebar",
   "next": {
-    "title": "Tool Execution APIs",
-    "permalink": "/clear-ai/docs/api/server/tools"
+    "title": "Agent API Reference",
+    "permalink": "/clear-ai/docs/api/server/agent"
   }
 }

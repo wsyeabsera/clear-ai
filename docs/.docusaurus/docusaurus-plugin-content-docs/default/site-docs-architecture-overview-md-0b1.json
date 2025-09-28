@@ -14,11 +14,11 @@
   "frontMatter": {},
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Development Guide",
-    "permalink": "/clear-ai/docs/getting-started/development"
+    "title": "Memory System Setup Guide",
+    "permalink": "/clear-ai/docs/getting-started/memory-setup"
   },
   "next": {
-    "title": "Client Package",
-    "permalink": "/clear-ai/docs/packages/client"
+    "title": "New Features Overview",
+    "permalink": "/clear-ai/docs/features/new-features-overview"
   }
 }

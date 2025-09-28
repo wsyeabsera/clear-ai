@@ -14,7 +14,11 @@
   "frontMatter": {},
   "sidebar": "apiSidebar",
   "previous": {
-    "title": "API Reference Overview",
-    "permalink": "/clear-ai/docs/api/overview"
+    "title": "Intent Classifier API Reference",
+    "permalink": "/clear-ai/docs/api/server/intent-classifier"
+  },
+  "next": {
+    "title": "Memory System APIs",
+    "permalink": "/clear-ai/docs/api/server/memory"
   }
 }

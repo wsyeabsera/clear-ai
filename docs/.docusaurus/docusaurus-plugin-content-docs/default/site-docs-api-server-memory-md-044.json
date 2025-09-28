@@ -1,0 +1,24 @@
+{
+  "id": "api/server/memory",
+  "title": "Memory System APIs",
+  "description": "The Memory System provides intelligent memory management for AI applications using Neo4j for episodic memory and Pinecone for semantic memory, with local Ollama embeddings for privacy.",
+  "source": "@site/docs/api/server/memory.md",
+  "sourceDirName": "api/server",
+  "slug": "/api/server/memory",
+  "permalink": "/clear-ai/docs/api/server/memory",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/api/server/memory.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "apiSidebar",
+  "previous": {
+    "title": "Tool Execution APIs",
+    "permalink": "/clear-ai/docs/api/server/tools"
+  },
+  "next": {
+    "title": "Memory Chat APIs",
+    "permalink": "/clear-ai/docs/api/server/memory-chat"
+  }
+}

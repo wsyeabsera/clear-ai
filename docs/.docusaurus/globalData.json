@@ -11,6 +11,11 @@
           "mainDocId": "README",
           "docs": [
             {
+              "id": "agent-intelligence",
+              "path": "/clear-ai/docs/agent-intelligence",
+              "sidebar": "tutorialSidebar"
+            },
+            {
               "id": "api/client/services",
               "path": "/clear-ai/docs/api/client/services"
             },
@@ -24,12 +29,34 @@
               "sidebar": "apiSidebar"
             },
             {
+              "id": "api/server/agent",
+              "path": "/clear-ai/docs/api/server/agent",
+              "sidebar": "apiSidebar"
+            },
+            {
               "id": "api/server/health",
-              "path": "/clear-ai/docs/api/server/health"
+              "path": "/clear-ai/docs/api/server/health",
+              "sidebar": "apiSidebar"
+            },
+            {
+              "id": "api/server/intent-classifier",
+              "path": "/clear-ai/docs/api/server/intent-classifier",
+              "sidebar": "apiSidebar"
             },
             {
               "id": "api/server/langgraph",
-              "path": "/clear-ai/docs/api/server/langgraph"
+              "path": "/clear-ai/docs/api/server/langgraph",
+              "sidebar": "apiSidebar"
+            },
+            {
+              "id": "api/server/memory",
+              "path": "/clear-ai/docs/api/server/memory",
+              "sidebar": "apiSidebar"
+            },
+            {
+              "id": "api/server/memory-chat",
+              "path": "/clear-ai/docs/api/server/memory-chat",
+              "sidebar": "apiSidebar"
             },
             {
               "id": "api/server/tools",
@@ -43,11 +70,61 @@
             },
             {
               "id": "features/component-library",
-              "path": "/clear-ai/docs/features/component-library"
+              "path": "/clear-ai/docs/features/component-library",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "features/memory-examples",
+              "path": "/clear-ai/docs/features/memory-examples",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "features/memory-system",
+              "path": "/clear-ai/docs/features/memory-system"
+            },
+            {
+              "id": "features/memory-system-overview",
+              "path": "/clear-ai/docs/features/memory-system-overview",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "features/memory-troubleshooting",
+              "path": "/clear-ai/docs/features/memory-troubleshooting",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "features/neo4j-integration",
+              "path": "/clear-ai/docs/features/neo4j-integration",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "features/new-features-overview",
+              "path": "/clear-ai/docs/features/new-features-overview",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "features/ollama-embeddings",
+              "path": "/clear-ai/docs/features/ollama-embeddings",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "features/pinecone-vectors",
+              "path": "/clear-ai/docs/features/pinecone-vectors",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "features/semantic-extraction",
+              "path": "/clear-ai/docs/features/semantic-extraction"
+            },
+            {
+              "id": "features/testing-framework",
+              "path": "/clear-ai/docs/features/testing-framework",
+              "sidebar": "tutorialSidebar"
             },
             {
               "id": "features/theme-system",
-              "path": "/clear-ai/docs/features/theme-system"
+              "path": "/clear-ai/docs/features/theme-system",
+              "sidebar": "tutorialSidebar"
             },
             {
               "id": "getting-started/development",
@@ -57,6 +134,11 @@
             {
               "id": "getting-started/installation",
               "path": "/clear-ai/docs/getting-started/installation",
+              "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "getting-started/memory-setup",
+              "path": "/clear-ai/docs/getting-started/memory-setup",
               "sidebar": "tutorialSidebar"
             },
             {
@@ -92,6 +174,11 @@
             {
               "id": "README",
               "path": "/clear-ai/docs/"
+            },
+            {
+              "id": "reference/memory-quick-reference",
+              "path": "/clear-ai/docs/reference/memory-quick-reference",
+              "sidebar": "tutorialSidebar"
             },
             {
               "id": "tutorial-basics/congratulations",

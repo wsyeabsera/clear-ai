@@ -13,6 +13,8 @@ import {
 } from './IntentClassifierService'
 import { SimpleLangChainService } from './SimpleLangChainService'
 import { ToolExecutionResult } from './ToolExecutionService'
+import { RelationshipAnalysisService, DataStructureAnalysis, APIDataInsight } from './RelationshipAnalysisService'
+import { EnhancedSemanticService, SemanticConcept, SemanticNetwork, ContextualUnderstanding } from './EnhancedSemanticService'
 
 /**
  * Tool registry interface for agent service
@@ -76,6 +78,8 @@ export class AgentService {
   private intentClassifier: IntentClassifierService
   private langchainService: SimpleLangChainService
   private toolRegistry: AgentToolRegistry
+  private relationshipAnalyzer: RelationshipAnalysisService
+  private enhancedSemanticService: EnhancedSemanticService
   private config: AgentServiceConfig
 
   constructor(config: AgentServiceConfig) {
@@ -84,6 +88,35 @@ export class AgentService {
     this.intentClassifier = config.intentClassifier
     this.langchainService = config.langchainService
     this.toolRegistry = config.toolRegistry
+
+    // Initialize enhanced services
+    this.relationshipAnalyzer = new RelationshipAnalysisService({
+      openaiApiKey: process.env.OPENAI_API_KEY || '',
+      openaiModel: 'gpt-3.5-turbo',
+      mistralApiKey: process.env.MISTRAL_API_KEY || '',
+      mistralModel: 'mistral-small',
+      groqApiKey: process.env.GROQ_API_KEY || '',
+      groqModel: 'llama3-8b-8192',
+      ollamaModel: 'llama2',
+      ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+      langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+      langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+      langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
+    });
+
+    this.enhancedSemanticService = new EnhancedSemanticService({
+      openaiApiKey: process.env.OPENAI_API_KEY || '',
+      openaiModel: 'gpt-3.5-turbo',
+      mistralApiKey: process.env.MISTRAL_API_KEY || '',
+      mistralModel: 'mistral-small',
+      groqApiKey: process.env.GROQ_API_KEY || '',
+      groqModel: 'llama3-8b-8192',
+      ollamaModel: 'llama2',
+      ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+      langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+      langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+      langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
+    });
   }
 
   /**
@@ -235,7 +268,7 @@ export class AgentService {
   }
 
   /**
-   * Retrieve memory context for the query
+   * Retrieve memory context for the query with enhanced relationship analysis
    */
   private async retrieveMemoryContext(
     query: string, 
@@ -273,13 +306,20 @@ export class AgentService {
       const searchResults = await this.memoryService.searchMemories(searchQuery)
       
       // Combine context with search results
-      return {
+      const combinedContext = {
         userId: context.userId,
         sessionId: context.sessionId,
         episodicMemories: [...context.episodicMemories, ...searchResults.episodic.memories],
         semanticMemories: [...context.semanticMemories, ...searchResults.semantic.memories],
         contextWindow: context.contextWindow
       }
+
+      // Enhanced analysis for API-related queries
+      if (this.isAPIQuery(query) || this.hasAPIMemories(combinedContext.episodicMemories)) {
+        await this.enhanceContextWithRelationshipAnalysis(combinedContext, query)
+      }
+
+      return combinedContext
     } catch (error) {
       logger.warn('Failed to retrieve memory context:', error)
       return { 
@@ -293,6 +333,161 @@ export class AgentService {
           relevanceScore: 0
         }
       }
+    }
+  }
+
+  /**
+   * Check if query is API-related
+   */
+  private isAPIQuery(query: string): boolean {
+    const apiKeywords = ['api', 'http', 'json', 'endpoint', 'resource', 'data', 'fetch', 'retrieve', 'get', 'post', 'put', 'delete']
+    return apiKeywords.some(keyword => query.toLowerCase().includes(keyword))
+  }
+
+  /**
+   * Check if memories contain API data
+   */
+  private hasAPIMemories(memories: EpisodicMemory[]): boolean {
+    return memories.some(m =>
+      m.content.includes('api') ||
+      m.content.includes('http') ||
+      m.content.includes('json') ||
+      m.metadata.tags?.includes('api_call')
+    )
+  }
+
+  /**
+   * Enhance context with relationship analysis and semantic understanding
+   */
+  private async enhanceContextWithRelationshipAnalysis(
+    context: MemoryContext,
+    query: string
+  ): Promise<void> {
+    try {
+      // Analyze relationships in API data
+      const relationshipAnalysis = await this.relationshipAnalyzer.analyzeAPIRelationships(context.episodicMemories)
+
+      // Extract enhanced semantic concepts
+      const enhancedConcepts = await this.enhancedSemanticService.extractEnhancedConcepts(context.episodicMemories)
+
+      // Build semantic network
+      const semanticNetwork = await this.enhancedSemanticService.buildSemanticNetwork(enhancedConcepts, context.episodicMemories)
+
+      // Generate contextual understanding
+      const contextualUnderstanding = await this.enhancedSemanticService.understandContext(query, semanticNetwork, context.episodicMemories)
+
+      // Store enhanced insights as semantic memories
+      await this.storeEnhancedInsights(context, relationshipAnalysis, semanticNetwork, contextualUnderstanding)
+
+      logger.info('Enhanced context with relationship analysis', {
+        patterns: relationshipAnalysis.patterns.length,
+        concepts: enhancedConcepts.length,
+        relationships: semanticNetwork.relationships.length,
+        clusters: semanticNetwork.clusters.length
+      })
+    } catch (error) {
+      logger.warn('Failed to enhance context with relationship analysis:', error)
+    }
+  }
+
+  /**
+   * Store enhanced insights as semantic memories
+   */
+  private async storeEnhancedInsights(
+    context: MemoryContext,
+    relationshipAnalysis: DataStructureAnalysis,
+    semanticNetwork: SemanticNetwork,
+    contextualUnderstanding: ContextualUnderstanding
+  ): Promise<void> {
+    try {
+      // Store relationship patterns as semantic memories
+      for (const pattern of relationshipAnalysis.patterns) {
+        await this.memoryService.storeSemanticMemory({
+          userId: context.userId,
+          concept: `pattern_${pattern.id}`,
+          description: `${pattern.type} relationship: ${pattern.description}`,
+          metadata: {
+            category: 'API_Pattern',
+            confidence: pattern.confidence,
+            source: 'relationship_analysis',
+            lastAccessed: new Date(),
+            accessCount: 1,
+            extractionMetadata: {
+              sourceMemoryIds: [pattern.id],
+              extractionTimestamp: new Date(),
+              extractionConfidence: pattern.confidence,
+              keywords: pattern.metadata.keywords,
+              processingTime: 0
+            }
+          },
+          relationships: {
+            similar: [],
+            parent: undefined,
+            children: [],
+            related: []
+          }
+        })
+      }
+
+      // Store semantic concepts
+      for (const concept of semanticNetwork.concepts) {
+        await this.memoryService.storeSemanticMemory({
+          userId: context.userId,
+          concept: concept.concept,
+          description: concept.description,
+          metadata: {
+            category: concept.category,
+            confidence: concept.confidence,
+            source: 'enhanced_semantic_analysis',
+            lastAccessed: new Date(),
+            accessCount: 1,
+            extractionMetadata: {
+              sourceMemoryIds: [concept.id],
+              extractionTimestamp: new Date(),
+              extractionConfidence: concept.confidence,
+              keywords: concept.metadata.keywords,
+              processingTime: 0
+            }
+          },
+          relationships: {
+            similar: concept.relationships.similar,
+            parent: concept.relationships.parent || undefined,
+            children: concept.relationships.children,
+            related: concept.relationships.related
+          }
+        })
+      }
+
+      // Store contextual insights
+      if (contextualUnderstanding.insights.length > 0) {
+        await this.memoryService.storeSemanticMemory({
+          userId: context.userId,
+          concept: `contextual_insight_${Date.now()}`,
+          description: contextualUnderstanding.insights.join('; '),
+          metadata: {
+            category: 'Contextual_Insight',
+            confidence: 0.8,
+            source: 'contextual_understanding',
+            lastAccessed: new Date(),
+            accessCount: 1,
+            extractionMetadata: {
+              sourceMemoryIds: [`contextual_${Date.now()}`],
+              extractionTimestamp: new Date(),
+              extractionConfidence: 0.8,
+              keywords: contextualUnderstanding.patterns,
+              processingTime: 0
+            }
+          },
+          relationships: {
+            similar: [],
+            parent: undefined,
+            children: [],
+            related: contextualUnderstanding.relevantConcepts.map(c => c.concept)
+          }
+        })
+      }
+    } catch (error) {
+      logger.warn('Failed to store enhanced insights:', error)
     }
   }
 
@@ -513,7 +708,7 @@ Example: If the tool needs { "operation": "add", "a": 5, "b": 3 } and the query 
   }
 
   /**
-   * Generate response based on tool results
+   * Generate response based on tool results with enhanced relationship analysis
    */
   private async generateToolResponse(
     query: string,
@@ -524,12 +719,34 @@ Example: If the tool needs { "operation": "add", "a": 5, "b": 3 } and the query 
       `Tool: ${result.toolName}\nSuccess: ${result.success}\nResult: ${JSON.stringify(result.result || result.error, null, 2)}`
     ).join('\n\n')
 
-    const prompt = `User query: "${query}"
+    // Check if this is an API-related query that would benefit from relationship analysis
+    const isAPIQuery = this.isAPIQuery(query)
+    const hasAPIData = toolResults.some(r =>
+      r.success &&
+      r.result &&
+      (JSON.stringify(r.result).includes('api') ||
+       JSON.stringify(r.result).includes('http') ||
+       JSON.stringify(r.result).includes('json'))
+    )
+
+    let prompt = `User query: "${query}"
 
 Tool execution results:
-${toolResultsText}
+${toolResultsText}`
 
-Based on the tool execution results, provide a helpful and natural response to the user. If tools failed, explain what went wrong and suggest alternatives.`
+    if (isAPIQuery || hasAPIData) {
+      prompt += `\n\nThis appears to be an API-related query. When responding:
+1. Analyze the data structure and identify patterns
+2. Look for relationships between different data elements
+3. Explain how different parts of the API data relate to each other
+4. Identify hierarchical, associative, or other relationship patterns
+5. Provide insights about the overall data organization
+6. Connect the current data with any patterns you can identify
+
+Focus on showing deep understanding of the relationships and structure in the API data.`
+    } else {
+      prompt += `\n\nBased on the tool execution results, provide a helpful and natural response to the user. If tools failed, explain what went wrong and suggest alternatives.`
+    }
 
     const response = await this.langchainService.complete(prompt, {
       model: options.model || 'openai',
@@ -562,6 +779,13 @@ Based on the tool execution results, provide a helpful and natural response to t
     logger.info('Storing interaction in memory', { userId: options.userId, sessionId: options.sessionId, intent: intent.type })
 
     try {
+      // Determine if this is an API-related interaction
+      const isAPIInteraction = this.isAPIQuery(query) ||
+        response.includes('api') ||
+        response.includes('http') ||
+        response.includes('json') ||
+        intent.type === 'tool_execution'
+
       // Always store as episodic memory for ALL interactions
       const memory = await this.memoryService.storeEpisodicMemory({
         userId: options.userId,
@@ -571,32 +795,47 @@ Based on the tool execution results, provide a helpful and natural response to t
         context: {
           intent: intent.type,
           confidence: intent.confidence,
-          conversation_turn: Date.now()
+          conversation_turn: Date.now(),
+          isAPIInteraction
         },
         metadata: {
           source: 'agent_service',
           importance: intent.confidence,
-          tags: [intent.type, 'conversation'],
-          location: 'agent_service'
+          tags: [intent.type, 'conversation', ...(isAPIInteraction ? ['api_call'] : [])],
+          location: 'agent_service',
+          ...(isAPIInteraction && {
+            apiContext: {
+              hasAPIData: true,
+              relationshipAnalysis: true,
+              semanticUnderstanding: true
+            }
+          })
         },
         relationships: {}
       })
 
       logger.info('Successfully stored episodic memory', { memoryId: memory.id })
 
-      // If it's knowledge-related, also store as semantic memory (if available)
-      if (intent.type === 'knowledge_search' || intent.type === 'hybrid') {
+      // If it's knowledge-related or API-related, also store as semantic memory (if available)
+      if (intent.type === 'knowledge_search' || intent.type === 'hybrid' || isAPIInteraction) {
         try {
           const semanticMemory = await this.memoryService.storeSemanticMemory({
             userId: options.userId,
-            concept: query,
+            concept: isAPIInteraction ? `api_interaction_${Date.now()}` : query,
             description: response,
             metadata: {
-              category: 'conversation',
+              category: isAPIInteraction ? 'API_Interaction' : 'conversation',
               confidence: intent.confidence,
               source: 'agent_service',
               lastAccessed: new Date(),
-              accessCount: 1
+              accessCount: 1,
+              ...(isAPIInteraction && {
+                apiContext: {
+                  hasAPIData: true,
+                  relationshipAnalysis: true,
+                  semanticUnderstanding: true
+                }
+              })
             },
             relationships: {}
           })
@@ -658,7 +897,7 @@ Current memory context:`
   }
 
   private buildHybridSystemPrompt(memoryContext?: MemoryContext, toolResults?: ToolExecutionResult[]): string {
-    let prompt = `You are an AI assistant that can both remember past conversations and execute tools. You have access to memory context and tool execution results.
+    let prompt = `You are an AI assistant with advanced relationship analysis and semantic understanding capabilities. You can remember past conversations, execute tools, and understand complex relationships in API data.
 
 Memory context:`
 
@@ -667,14 +906,22 @@ Memory context:`
     }
 
     if (memoryContext?.semanticMemories.length) {
-      prompt += `\n\nRelevant knowledge:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
+      prompt += `\n\nRelevant knowledge and patterns:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
     }
 
     if (toolResults?.length) {
       prompt += `\n\nTool execution results:\n${toolResults.map(r => `- ${r.toolName}: ${r.success ? 'Success' : 'Failed'} - ${JSON.stringify(r.result || r.error)}`).join('\n')}`
     }
 
-    prompt += `\n\nUse both the memory context and tool results to provide a comprehensive response.`
+    prompt += `\n\nWhen analyzing API data or relationships:
+1. Look for patterns in data structure and organization
+2. Identify relationships between different resources (hierarchical, associative, temporal, causal)
+3. Understand data flow and dependencies
+4. Recognize semantic similarities and groupings
+5. Provide insights about how different parts of the system work together
+6. Connect new information with previously learned patterns
+
+Use both the memory context and tool results to provide a comprehensive response that shows deep understanding of relationships and patterns.`
 
     return prompt
   }

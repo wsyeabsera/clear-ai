@@ -1,0 +1,24 @@
+{
+  "id": "api/server/agent",
+  "title": "Agent API Reference",
+  "description": "The Agent API is the unified interface that combines memory management, tool execution, and conversational AI into a single intelligent system. Think of it as the \"brain\" of Clear-AI that can understand what you want and execute the right actions.",
+  "source": "@site/docs/api/server/agent.md",
+  "sourceDirName": "api/server",
+  "slug": "/api/server/agent",
+  "permalink": "/clear-ai/docs/api/server/agent",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/api/server/agent.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "apiSidebar",
+  "previous": {
+    "title": "API Reference Overview",
+    "permalink": "/clear-ai/docs/api/overview"
+  },
+  "next": {
+    "title": "Intent Classifier API Reference",
+    "permalink": "/clear-ai/docs/api/server/intent-classifier"
+  }
+}

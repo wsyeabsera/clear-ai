@@ -1,0 +1,28 @@
+{
+  "id": "agent-intelligence",
+  "title": "Agent Intelligence Assessment",
+  "description": "Assessment Date: September 28, 2025",
+  "source": "@site/docs/agent-intelligence.md",
+  "sourceDirName": ".",
+  "slug": "/agent-intelligence",
+  "permalink": "/clear-ai/docs/agent-intelligence",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/agent-intelligence.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "id": "agent-intelligence",
+    "title": "Agent Intelligence Assessment",
+    "sidebar_label": "Intelligence Assessment"
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Theme System",
+    "permalink": "/clear-ai/docs/features/theme-system"
+  },
+  "next": {
+    "title": "Client Package",
+    "permalink": "/clear-ai/docs/packages/client"
+  }
+}

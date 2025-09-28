@@ -74,20 +74,26 @@ export default [
   },
   {
     path: '/clear-ai/docs',
-    component: ComponentCreator('/clear-ai/docs', '09f'),
+    component: ComponentCreator('/clear-ai/docs', 'd62'),
     routes: [
       {
         path: '/clear-ai/docs',
-        component: ComponentCreator('/clear-ai/docs', '853'),
+        component: ComponentCreator('/clear-ai/docs', '64c'),
         routes: [
           {
             path: '/clear-ai/docs',
-            component: ComponentCreator('/clear-ai/docs', 'eb6'),
+            component: ComponentCreator('/clear-ai/docs', '124'),
             routes: [
               {
                 path: '/clear-ai/docs/',
                 component: ComponentCreator('/clear-ai/docs/', '434'),
                 exact: true
+              },
+              {
+                path: '/clear-ai/docs/agent-intelligence',
+                component: ComponentCreator('/clear-ai/docs/agent-intelligence', '161'),
+                exact: true,
+                sidebar: "tutorialSidebar"
               },
               {
                 path: '/clear-ai/docs/api/client/services',
@@ -106,14 +112,40 @@ export default [
                 sidebar: "apiSidebar"
               },
               {
+                path: '/clear-ai/docs/api/server/agent',
+                component: ComponentCreator('/clear-ai/docs/api/server/agent', '231'),
+                exact: true,
+                sidebar: "apiSidebar"
+              },
+              {
                 path: '/clear-ai/docs/api/server/health',
-                component: ComponentCreator('/clear-ai/docs/api/server/health', 'e03'),
-                exact: true
+                component: ComponentCreator('/clear-ai/docs/api/server/health', '254'),
+                exact: true,
+                sidebar: "apiSidebar"
+              },
+              {
+                path: '/clear-ai/docs/api/server/intent-classifier',
+                component: ComponentCreator('/clear-ai/docs/api/server/intent-classifier', '9bf'),
+                exact: true,
+                sidebar: "apiSidebar"
               },
               {
                 path: '/clear-ai/docs/api/server/langgraph',
-                component: ComponentCreator('/clear-ai/docs/api/server/langgraph', '4e5'),
-                exact: true
+                component: ComponentCreator('/clear-ai/docs/api/server/langgraph', '2e5'),
+                exact: true,
+                sidebar: "apiSidebar"
+              },
+              {
+                path: '/clear-ai/docs/api/server/memory',
+                component: ComponentCreator('/clear-ai/docs/api/server/memory', 'd52'),
+                exact: true,
+                sidebar: "apiSidebar"
+              },
+              {
+                path: '/clear-ai/docs/api/server/memory-chat',
+                component: ComponentCreator('/clear-ai/docs/api/server/memory-chat', 'e1c'),
+                exact: true,
+                sidebar: "apiSidebar"
               },
               {
                 path: '/clear-ai/docs/api/server/tools',
@@ -129,13 +161,73 @@ export default [
               },
               {
                 path: '/clear-ai/docs/features/component-library',
-                component: ComponentCreator('/clear-ai/docs/features/component-library', '1e9'),
+                component: ComponentCreator('/clear-ai/docs/features/component-library', 'dcf'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/memory-examples',
+                component: ComponentCreator('/clear-ai/docs/features/memory-examples', '006'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/memory-system',
+                component: ComponentCreator('/clear-ai/docs/features/memory-system', '84d'),
                 exact: true
               },
               {
-                path: '/clear-ai/docs/features/theme-system',
-                component: ComponentCreator('/clear-ai/docs/features/theme-system', 'b76'),
+                path: '/clear-ai/docs/features/memory-system-overview',
+                component: ComponentCreator('/clear-ai/docs/features/memory-system-overview', '0f3'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/memory-troubleshooting',
+                component: ComponentCreator('/clear-ai/docs/features/memory-troubleshooting', '02b'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/neo4j-integration',
+                component: ComponentCreator('/clear-ai/docs/features/neo4j-integration', 'f4a'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/new-features-overview',
+                component: ComponentCreator('/clear-ai/docs/features/new-features-overview', '2a4'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/ollama-embeddings',
+                component: ComponentCreator('/clear-ai/docs/features/ollama-embeddings', 'fc5'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/pinecone-vectors',
+                component: ComponentCreator('/clear-ai/docs/features/pinecone-vectors', '0c2'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/semantic-extraction',
+                component: ComponentCreator('/clear-ai/docs/features/semantic-extraction', 'c9b'),
                 exact: true
+              },
+              {
+                path: '/clear-ai/docs/features/testing-framework',
+                component: ComponentCreator('/clear-ai/docs/features/testing-framework', '445'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/theme-system',
+                component: ComponentCreator('/clear-ai/docs/features/theme-system', '002'),
+                exact: true,
+                sidebar: "tutorialSidebar"
               },
               {
                 path: '/clear-ai/docs/getting-started/development',
@@ -146,6 +238,12 @@ export default [
               {
                 path: '/clear-ai/docs/getting-started/installation',
                 component: ComponentCreator('/clear-ai/docs/getting-started/installation', 'ce2'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/getting-started/memory-setup',
+                component: ComponentCreator('/clear-ai/docs/getting-started/memory-setup', 'fdb'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
@@ -182,6 +280,12 @@ export default [
               {
                 path: '/clear-ai/docs/packages/shared',
                 component: ComponentCreator('/clear-ai/docs/packages/shared', '39b'),
+                exact: true,
+                sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/reference/memory-quick-reference',
+                component: ComponentCreator('/clear-ai/docs/reference/memory-quick-reference', '8d5'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },

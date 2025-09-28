@@ -1,0 +1,24 @@
+{
+  "id": "features/memory-system-overview",
+  "title": "Memory System Overview",
+  "description": "The Clear-AI Memory System is a sophisticated, privacy-focused memory management solution designed for AI applications. It combines three powerful technologies to create a comprehensive memory ecosystem that can remember, learn, and provide context-aware responses.",
+  "source": "@site/docs/features/memory-system-overview.md",
+  "sourceDirName": "features",
+  "slug": "/features/memory-system-overview",
+  "permalink": "/clear-ai/docs/features/memory-system-overview",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/memory-system-overview.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "New Features Overview",
+    "permalink": "/clear-ai/docs/features/new-features-overview"
+  },
+  "next": {
+    "title": "Testing Framework",
+    "permalink": "/clear-ai/docs/features/testing-framework"
+  }
+}

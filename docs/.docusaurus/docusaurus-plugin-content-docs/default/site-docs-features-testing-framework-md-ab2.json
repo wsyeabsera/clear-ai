@@ -1,0 +1,24 @@
+{
+  "id": "features/testing-framework",
+  "title": "Testing Framework",
+  "description": "The Clear-AI Testing Framework is a comprehensive suite of tools designed to validate and ensure the reliability of your AI agent system. Think of it as your quality assurance toolkit that automatically tests every component to make sure everything works perfectly.",
+  "source": "@site/docs/features/testing-framework.md",
+  "sourceDirName": "features",
+  "slug": "/features/testing-framework",
+  "permalink": "/clear-ai/docs/features/testing-framework",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/testing-framework.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Memory System Overview",
+    "permalink": "/clear-ai/docs/features/memory-system-overview"
+  },
+  "next": {
+    "title": "Neo4j Integration Guide",
+    "permalink": "/clear-ai/docs/features/neo4j-integration"
+  }
+}

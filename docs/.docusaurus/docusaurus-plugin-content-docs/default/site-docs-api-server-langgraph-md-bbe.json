@@ -11,5 +11,10 @@
   "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/api/server/langgraph.md",
   "tags": [],
   "version": "current",
-  "frontMatter": {}
+  "frontMatter": {},
+  "sidebar": "apiSidebar",
+  "previous": {
+    "title": "Health APIs",
+    "permalink": "/clear-ai/docs/api/server/health"
+  }
 }

@@ -11,5 +11,14 @@
   "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/theme-system.md",
   "tags": [],
   "version": "current",
-  "frontMatter": {}
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Component Library",
+    "permalink": "/clear-ai/docs/features/component-library"
+  },
+  "next": {
+    "title": "Intelligence Assessment",
+    "permalink": "/clear-ai/docs/agent-intelligence"
+  }
 }

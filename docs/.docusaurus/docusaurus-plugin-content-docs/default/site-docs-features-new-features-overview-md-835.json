@@ -1,0 +1,24 @@
+{
+  "id": "features/new-features-overview",
+  "title": "New Features Overview",
+  "description": "Welcome to the latest Clear-AI features! This page highlights the exciting new capabilities we've added to make your AI development experience even better. 🚀",
+  "source": "@site/docs/features/new-features-overview.md",
+  "sourceDirName": "features",
+  "slug": "/features/new-features-overview",
+  "permalink": "/clear-ai/docs/features/new-features-overview",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/new-features-overview.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Architecture Overview",
+    "permalink": "/clear-ai/docs/architecture/overview"
+  },
+  "next": {
+    "title": "Memory System Overview",
+    "permalink": "/clear-ai/docs/features/memory-system-overview"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "api/server/intent-classifier",
+  "title": "Intent Classifier API Reference",
+  "description": "The Intent Classifier is the smart routing system that analyzes user queries and determines the best execution path. Think of it as the \"traffic controller\" that decides whether your request needs memory, tools, conversation, or a combination of all three.",
+  "source": "@site/docs/api/server/intent-classifier.md",
+  "sourceDirName": "api/server",
+  "slug": "/api/server/intent-classifier",
+  "permalink": "/clear-ai/docs/api/server/intent-classifier",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/api/server/intent-classifier.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "apiSidebar",
+  "previous": {
+    "title": "Agent API Reference",
+    "permalink": "/clear-ai/docs/api/server/agent"
+  },
+  "next": {
+    "title": "Tool Execution APIs",
+    "permalink": "/clear-ai/docs/api/server/tools"
+  }
+}

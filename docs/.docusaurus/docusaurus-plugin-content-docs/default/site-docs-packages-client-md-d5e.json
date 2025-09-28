@@ -14,8 +14,8 @@
   "frontMatter": {},
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Architecture Overview",
-    "permalink": "/clear-ai/docs/architecture/overview"
+    "title": "Intelligence Assessment",
+    "permalink": "/clear-ai/docs/agent-intelligence"
   },
   "next": {
     "title": "Server Package",

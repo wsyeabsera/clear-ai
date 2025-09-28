@@ -16,5 +16,9 @@
   "previous": {
     "title": "Building Your First Tool",
     "permalink": "/clear-ai/docs/tutorials/building-your-first-tool"
+  },
+  "next": {
+    "title": "Memory System Quick Reference",
+    "permalink": "/clear-ai/docs/reference/memory-quick-reference"
   }
 }

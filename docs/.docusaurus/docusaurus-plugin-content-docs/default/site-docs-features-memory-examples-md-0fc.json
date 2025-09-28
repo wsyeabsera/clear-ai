@@ -1,0 +1,24 @@
+{
+  "id": "features/memory-examples",
+  "title": "Memory System Examples",
+  "description": "This guide provides practical examples and real-world scenarios showing how to use the Clear-AI Memory System effectively. Each example includes code snippets, explanations, and expected outcomes.",
+  "source": "@site/docs/features/memory-examples.md",
+  "sourceDirName": "features",
+  "slug": "/features/memory-examples",
+  "permalink": "/clear-ai/docs/features/memory-examples",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/memory-examples.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Ollama Embeddings Guide",
+    "permalink": "/clear-ai/docs/features/ollama-embeddings"
+  },
+  "next": {
+    "title": "Memory System Troubleshooting Guide",
+    "permalink": "/clear-ai/docs/features/memory-troubleshooting"
+  }
+}

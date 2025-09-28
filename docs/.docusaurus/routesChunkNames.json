@@ -199,22 +199,26 @@
     "sidebar": "814f3328",
     "content": "d9f32620"
   },
-  "/clear-ai/docs-09f": {
+  "/clear-ai/docs-d62": {
     "__comp": "5e95c892",
     "__context": {
       "plugin": "aba21aa0"
     }
   },
-  "/clear-ai/docs-853": {
+  "/clear-ai/docs-64c": {
     "__comp": "a7bd4aaa",
     "__props": "25e3e6ca"
   },
-  "/clear-ai/docs-eb6": {
+  "/clear-ai/docs-124": {
     "__comp": "a94703ab"
   },
   "/clear-ai/docs/-434": {
     "__comp": "17896441",
     "content": "23374ca6"
+  },
+  "/clear-ai/docs/agent-intelligence-161": {
+    "__comp": "17896441",
+    "content": "1ceed1b0"
   },
   "/clear-ai/docs/api/client/services-3a9": {
     "__comp": "17896441",
@@ -228,13 +232,29 @@
     "__comp": "17896441",
     "content": "65df3d35"
   },
-  "/clear-ai/docs/api/server/health-e03": {
+  "/clear-ai/docs/api/server/agent-231": {
+    "__comp": "17896441",
+    "content": "9112684c"
+  },
+  "/clear-ai/docs/api/server/health-254": {
     "__comp": "17896441",
     "content": "6394b4d5"
   },
-  "/clear-ai/docs/api/server/langgraph-4e5": {
+  "/clear-ai/docs/api/server/intent-classifier-9bf": {
+    "__comp": "17896441",
+    "content": "0365e3d2"
+  },
+  "/clear-ai/docs/api/server/langgraph-2e5": {
     "__comp": "17896441",
     "content": "bbef23f0"
+  },
+  "/clear-ai/docs/api/server/memory-d52": {
+    "__comp": "17896441",
+    "content": "0448e3b8"
+  },
+  "/clear-ai/docs/api/server/memory-chat-e1c": {
+    "__comp": "17896441",
+    "content": "cf5ee21c"
   },
   "/clear-ai/docs/api/server/tools-87b": {
     "__comp": "17896441",
@@ -244,11 +264,51 @@
     "__comp": "17896441",
     "content": "0b1ac180"
   },
-  "/clear-ai/docs/features/component-library-1e9": {
+  "/clear-ai/docs/features/component-library-dcf": {
     "__comp": "17896441",
     "content": "1f5dc6b6"
   },
-  "/clear-ai/docs/features/theme-system-b76": {
+  "/clear-ai/docs/features/memory-examples-006": {
+    "__comp": "17896441",
+    "content": "0fcdf269"
+  },
+  "/clear-ai/docs/features/memory-system-84d": {
+    "__comp": "17896441",
+    "content": "2cef1d04"
+  },
+  "/clear-ai/docs/features/memory-system-overview-0f3": {
+    "__comp": "17896441",
+    "content": "62cdeee9"
+  },
+  "/clear-ai/docs/features/memory-troubleshooting-02b": {
+    "__comp": "17896441",
+    "content": "09582cd1"
+  },
+  "/clear-ai/docs/features/neo4j-integration-f4a": {
+    "__comp": "17896441",
+    "content": "7ccb5f8c"
+  },
+  "/clear-ai/docs/features/new-features-overview-2a4": {
+    "__comp": "17896441",
+    "content": "83544ca7"
+  },
+  "/clear-ai/docs/features/ollama-embeddings-fc5": {
+    "__comp": "17896441",
+    "content": "df71ea38"
+  },
+  "/clear-ai/docs/features/pinecone-vectors-0c2": {
+    "__comp": "17896441",
+    "content": "6cabb845"
+  },
+  "/clear-ai/docs/features/semantic-extraction-c9b": {
+    "__comp": "17896441",
+    "content": "af425e65"
+  },
+  "/clear-ai/docs/features/testing-framework-445": {
+    "__comp": "17896441",
+    "content": "ab273954"
+  },
+  "/clear-ai/docs/features/theme-system-002": {
     "__comp": "17896441",
     "content": "fe1b7220"
   },
@@ -259,6 +319,10 @@
   "/clear-ai/docs/getting-started/installation-ce2": {
     "__comp": "17896441",
     "content": "54f44165"
+  },
+  "/clear-ai/docs/getting-started/memory-setup-fdb": {
+    "__comp": "17896441",
+    "content": "832fc836"
   },
   "/clear-ai/docs/getting-started/quick-start-9b3": {
     "__comp": "17896441",
@@ -283,6 +347,10 @@
   "/clear-ai/docs/packages/shared-39b": {
     "__comp": "17896441",
     "content": "5c296ff7"
+  },
+  "/clear-ai/docs/reference/memory-quick-reference-8d5": {
+    "__comp": "17896441",
+    "content": "1dde5ed1"
   },
   "/clear-ai/docs/tutorial-basics/congratulations-08b": {
     "__comp": "17896441",

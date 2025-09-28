@@ -1,0 +1,15 @@
+{
+  "id": "features/semantic-extraction",
+  "title": "Semantic Extraction System",
+  "description": "The Semantic Extraction System is an advanced feature that addresses the redundancy issue between Pinecone and Neo4j memory storage by using LLM-powered analysis to extract only the essential semantic information from episodic memories.",
+  "source": "@site/docs/features/semantic-extraction.md",
+  "sourceDirName": "features",
+  "slug": "/features/semantic-extraction",
+  "permalink": "/clear-ai/docs/features/semantic-extraction",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/semantic-extraction.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

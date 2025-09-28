@@ -11,5 +11,14 @@
   "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/api/server/health.md",
   "tags": [],
   "version": "current",
-  "frontMatter": {}
+  "frontMatter": {},
+  "sidebar": "apiSidebar",
+  "previous": {
+    "title": "Memory Chat APIs",
+    "permalink": "/clear-ai/docs/api/server/memory-chat"
+  },
+  "next": {
+    "title": "LangGraph APIs",
+    "permalink": "/clear-ai/docs/api/server/langgraph"
+  }
 }

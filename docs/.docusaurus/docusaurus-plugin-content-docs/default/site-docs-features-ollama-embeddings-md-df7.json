@@ -1,0 +1,24 @@
+{
+  "id": "features/ollama-embeddings",
+  "title": "Ollama Embeddings Guide",
+  "description": "Ollama provides local, privacy-focused text embeddings for our memory system. This guide explains how embeddings work, why we chose Ollama, and how to set up and use local embeddings effectively.",
+  "source": "@site/docs/features/ollama-embeddings.md",
+  "sourceDirName": "features",
+  "slug": "/features/ollama-embeddings",
+  "permalink": "/clear-ai/docs/features/ollama-embeddings",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/ollama-embeddings.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Pinecone Vector Database Guide",
+    "permalink": "/clear-ai/docs/features/pinecone-vectors"
+  },
+  "next": {
+    "title": "Memory System Examples",
+    "permalink": "/clear-ai/docs/features/memory-examples"
+  }
+}

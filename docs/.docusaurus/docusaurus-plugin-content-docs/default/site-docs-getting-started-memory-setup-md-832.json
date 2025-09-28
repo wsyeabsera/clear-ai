@@ -1,0 +1,24 @@
+{
+  "id": "getting-started/memory-setup",
+  "title": "Memory System Setup Guide",
+  "description": "This guide will help you set up the Clear-AI Memory System with Neo4j, Pinecone, and Ollama for intelligent memory management.",
+  "source": "@site/docs/getting-started/memory-setup.md",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/memory-setup",
+  "permalink": "/clear-ai/docs/getting-started/memory-setup",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/getting-started/memory-setup.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Development Guide",
+    "permalink": "/clear-ai/docs/getting-started/development"
+  },
+  "next": {
+    "title": "Architecture Overview",
+    "permalink": "/clear-ai/docs/architecture/overview"
+  }
+}
