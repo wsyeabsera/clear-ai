@@ -138,6 +138,17 @@ class SessionManager {
             });
         }
     }
+    // Clear semantic memories (user knowledge)
+    async clearSemanticMemories() {
+        try {
+            await api_1.apiService.clearSemanticMemories(this.userId);
+            console.log('Semantic memories cleared successfully');
+        }
+        catch (error) {
+            console.error('Failed to clear semantic memories:', error);
+            throw error;
+        }
+    }
     // Delete a session and all its messages
     async deleteSession(sessionId) {
         try {

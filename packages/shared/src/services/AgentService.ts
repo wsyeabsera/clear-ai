@@ -883,15 +883,23 @@ Focus on showing deep understanding of the relationships and structure in the AP
 
 Current memory context:`
 
-    if (memoryContext?.episodicMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+    const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nRecent conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
     }
 
-    if (memoryContext?.semanticMemories.length) {
+    if (hasSemanticMemories && memoryContext) {
       prompt += `\n\nRelevant knowledge:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
     }
 
-    prompt += `\n\nUse this context to provide helpful, personalized responses. If the user asks about something from memory, reference it naturally.`
+    if (!hasEpisodicMemories && !hasSemanticMemories) {
+      prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
+    } else {
+      prompt += `\n\nUse this context to provide helpful, personalized responses. If the user asks about something from memory, reference it naturally.`
+    }
 
     return prompt
   }
@@ -901,12 +909,20 @@ Current memory context:`
 
 Memory context:`
 
-    if (memoryContext?.episodicMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+    const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nRecent conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
     }
 
-    if (memoryContext?.semanticMemories.length) {
+    if (hasSemanticMemories && memoryContext) {
       prompt += `\n\nRelevant knowledge and patterns:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
+    }
+
+    if (!hasEpisodicMemories && !hasSemanticMemories) {
+      prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
     }
 
     if (toolResults?.length) {
@@ -931,12 +947,20 @@ Use both the memory context and tool results to provide a comprehensive response
 
 Available knowledge:`
 
-    if (memoryContext?.semanticMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+    const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+
+    if (hasSemanticMemories && memoryContext) {
       prompt += `\n\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
     }
 
-    if (memoryContext?.episodicMemories.length) {
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nRelated conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
+    }
+
+    if (!hasEpisodicMemories && !hasSemanticMemories) {
+      prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
     }
 
     prompt += `\n\nSearch through this knowledge to provide accurate, detailed answers. If you don't find relevant information, say so clearly.`
@@ -947,8 +971,13 @@ Available knowledge:`
   private buildConversationSystemPrompt(memoryContext?: MemoryContext): string {
     let prompt = `You are a helpful AI assistant engaged in conversation.`
 
-    if (memoryContext?.episodicMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nYou have some context from previous conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
+    } else {
+      prompt += `\n\nThis appears to be our first conversation - no previous context available.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
     }
 
     prompt += `\n\nBe friendly, helpful, and engaging in your responses.`
@@ -959,8 +988,13 @@ Available knowledge:`
   private buildUnknownQuerySystemPrompt(memoryContext?: MemoryContext): string {
     let prompt = `You are an AI assistant dealing with an unclear or ambiguous query.`
 
-    if (memoryContext?.episodicMemories.length) {
+    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+
+    if (hasEpisodicMemories && memoryContext) {
       prompt += `\n\nPrevious context:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
+    } else {
+      prompt += `\n\nThis appears to be our first conversation - no previous context available.`
+      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
     }
 
     prompt += `\n\nTry to understand what the user might be asking for and provide helpful guidance. Ask clarifying questions if needed.`

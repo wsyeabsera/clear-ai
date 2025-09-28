@@ -23,6 +23,7 @@ export declare class SessionManager {
     createSession(title?: string): Promise<ChatSession>;
     selectSession(sessionId: string): Promise<void>;
     updateSession(sessionId: string, updates: Partial<Pick<ChatSession, 'title' | 'lastMessage' | 'messageCount'>>): Promise<void>;
+    clearSemanticMemories(): Promise<void>;
     deleteSession(sessionId: string): Promise<void>;
     addMessage(message: Omit<ChatMessage, 'id' | 'sessionId' | 'userId' | 'timestamp'>): Promise<ChatMessage>;
     updateMessage(messageId: string, updates: Partial<ChatMessage>): Promise<void>;

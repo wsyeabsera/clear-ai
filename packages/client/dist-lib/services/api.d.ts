@@ -105,6 +105,10 @@ export declare class ClearAIApiService {
      */
     clearSessionMemories(userId: string, sessionId: string): Promise<any>;
     /**
+     * Clear semantic memories (user knowledge) for a user
+     */
+    clearSemanticMemories(userId: string): Promise<any>;
+    /**
      * Get memory statistics for a user
      */
     getMemoryStats(userId: string): Promise<any>;

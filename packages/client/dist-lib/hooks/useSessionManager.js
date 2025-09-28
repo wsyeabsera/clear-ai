@@ -167,6 +167,7 @@ function useSessionManager(options) {
         getStorageStats,
         // Utilities
         isReady: !state.isLoading && !state.error,
+        sessionManager: sessionManagerRef.current,
     };
 }
 exports.default = useSessionManager;

@@ -140,6 +140,13 @@ class ClearAIApiService {
         return response.data;
     }
     /**
+     * Clear semantic memories (user knowledge) for a user
+     */
+    async clearSemanticMemories(userId) {
+        const response = await this.client.delete(`/api/memory/clear-semantic/${userId}`);
+        return response.data;
+    }
+    /**
      * Get memory statistics for a user
      */
     async getMemoryStats(userId) {

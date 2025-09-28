@@ -3,6 +3,7 @@
  *
  * Provides a React-friendly interface to the SessionManager
  */
+import { SessionManager } from '../services/sessionManager';
 import { ChatSession, ChatMessage } from '../services/indexedDB';
 export interface UseSessionManagerOptions {
     userId: string;
@@ -37,6 +38,7 @@ export interface UseSessionManagerReturn {
         totalStorageSize: number;
     }>;
     isReady: boolean;
+    sessionManager: SessionManager;
 }
 export declare function useSessionManager(options: UseSessionManagerOptions): UseSessionManagerReturn;
 export default useSessionManager;
