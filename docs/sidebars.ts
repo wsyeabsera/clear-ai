@@ -67,6 +67,7 @@ const sidebars: SidebarsConfig = {
       label: 'Reference',
       items: [
         'reference/memory-quick-reference',
+        'public-apis-for-agent-learning',
       ],
     },
   ],
