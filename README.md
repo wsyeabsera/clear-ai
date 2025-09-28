@@ -1,19 +1,19 @@
-# @clear-ai/core
+# clear-ai-core
 
 Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration. Perfect for CLI tools, APIs, and server applications.
 
-[![npm version](https://badge.fury.io/js/%40clear-ai%2Fcore.svg)](https://badge.fury.io/js/%40clear-ai%2Fcore)
+[![npm version](https://badge.fury.io/js/clear-ai-core.svg)](https://badge.fury.io/js/clear-ai-core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
 
 ## 🚀 Quick Start
 
 ```bash
-npm install @clear-ai/core
+npm install clear-ai-core
 ```
 
 ```typescript
-import { ClearAI } from "@clear-ai/core";
+import { ClearAI } from "clear-ai-core";
 
 // Initialize the framework for CLI usage
 const ai = new ClearAI({
@@ -37,26 +37,26 @@ const toolService = ai.getTools();
 
 ## 📦 What's Included
 
-### MCP (Model Context Protocol) - `@clear-ai/mcp`
+### MCP (Model Context Protocol) - `clear-ai-mcp-basic`
 
 - **MCPServer** - Full MCP protocol implementation
 - **ToolRegistry** - Dynamic tool registration and management
 - **Built-in Tools** - API calls, JSON processing, file operations
 
-### Shared Services - `@clear-ai/shared`
+### Shared Services - `clear-ai-shared`
 
 - **SimpleLangChainService** - Multi-provider LLM integration
 - **ToolExecutionService** - Tool registration and execution
 - **SimpleWorkflowService** - Workflow orchestration
 - **Logger** - Structured logging utilities
 
-### Server - `@clear-ai/server`
+### Server - `clear-ai-server`
 
 - **Express API** - RESTful endpoints for tool execution
 - **Workflow Execution** - LangGraph workflow orchestration
 - **Health Monitoring** - System health and status endpoints
 
-### Client - `@clear-ai/client` (Optional)
+### Client - `@clear-ai/client` (Private - Local Development Only)
 
 - **React Components** - Pre-built UI components with Storybook
 - **Theme System** - Multiple visual themes
@@ -67,7 +67,7 @@ const toolService = ai.getTools();
 ### Basic Tool Execution
 
 ```typescript
-import { MCPServer, ToolRegistry } from "@clear-ai/mcp";
+import { MCPServer, ToolRegistry } from "clear-ai-mcp-basic";
 
 const server = new MCPServer();
 const tools = server.getToolRegistry();
@@ -82,7 +82,7 @@ const result = await tools.executeTool("api_call", {
 ### LLM Integration
 
 ```typescript
-import { SimpleLangChainService } from "@clear-ai/shared";
+import { SimpleLangChainService } from "clear-ai-shared";
 
 const llm = new SimpleLangChainService({
   openaiApiKey: "your-key",
@@ -98,7 +98,7 @@ const response = await llm.complete("Hello, world!", {
 ### Workflow Execution
 
 ```typescript
-import { SimpleWorkflowService, ToolExecutionService } from "@clear-ai/shared";
+import { SimpleWorkflowService, ToolExecutionService } from "clear-ai-shared";
 
 const toolService = new ToolExecutionService(llmConfig);
 const workflow = new SimpleWorkflowService(llmConfig, toolService);
@@ -111,7 +111,7 @@ const result = await workflow.executeWorkflow(
 ### Server API
 
 ```typescript
-import { createServer } from "@clear-ai/server";
+import { createServer } from "clear-ai-server";
 
 const server = createServer({
   port: 3001,
@@ -125,7 +125,7 @@ await server.start();
 ### CLI Application
 
 ```typescript
-import { ClearAI, MCPServer } from "@clear-ai/core";
+import { ClearAI, MCPServer } from "clear-ai-core";
 
 async function main() {
   const ai = new ClearAI({
@@ -151,11 +151,11 @@ main().catch(console.error);
 ## 🏗️ Architecture
 
 ```
-@clear-ai/core
-├── @clear-ai/mcp      # Model Context Protocol
-├── @clear-ai/shared   # Shared services & utilities
-├── @clear-ai/server   # Express API server
-└── @clear-ai/client   # React web interface (optional)
+clear-ai-core
+├── clear-ai-mcp-basic # Model Context Protocol
+├── clear-ai-shared    # Shared services & utilities
+├── clear-ai-server    # Express API server
+└── @clear-ai/client   # React web interface (private)
 ```
 
 ## 🔧 Configuration
