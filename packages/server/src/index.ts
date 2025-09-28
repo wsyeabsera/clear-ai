@@ -13,11 +13,13 @@ import { mcpRoutes } from './routes/mcpRoutes'
 import { langchainRoutes } from './routes/langchainRoutes'
 import { toolExecutionRoutes } from './routes/toolExecutionRoutes'
 import { langGraphRoutes } from './routes/langGraphRoutes'
+import memoryRoutes from './routes/memoryRoutes'
+import memoryChatRoutes from './routes/memoryChatRoutes'
 import { errorHandler } from './middleware/errorHandler'
 import { setupSwagger } from './config/swagger'
 
 // Load environment variables
-dotenv.config({ path: '.env' })
+dotenv.config({ path: './.env' })
 
 const app = express()
 const PORT = parseInt(process.env.PORT || '3001', 10)
@@ -46,6 +48,8 @@ app.use('/api/mcp', mcpRoutes)
 app.use('/api/langchain', langchainRoutes)
 app.use('/api/tools', toolExecutionRoutes)
 app.use('/api/langgraph', langGraphRoutes)
+app.use('/api/memory', memoryRoutes)
+app.use('/api/memory-chat', memoryChatRoutes)
 
 // Error handling middleware
 app.use(errorHandler)
