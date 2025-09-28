@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "clear-ai-mcp-basic": "*",
-    "clear-ai-shared": "*",
+    "clear-ai-shared": "file:../shared",
     "@langchain/core": "^0.3.77",
     "@langchain/groq": "^0.2.4",
     "@langchain/langgraph": "^0.4.9",
