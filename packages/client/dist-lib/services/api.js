@@ -109,6 +109,9 @@ class ClearAIApiService {
                 includeReasoning: options.includeReasoning !== false,
                 model: options.model || 'openai',
                 temperature: options.temperature || 0.7,
+                responseDetailLevel: options.responseDetailLevel || 'standard',
+                excludeVectors: options.excludeVectors !== false, // Default to true
+                maxMemoryResults: options.maxMemoryResults || 10,
             }
         });
         return response.data;

@@ -87,6 +87,9 @@ export declare class ClearAIApiService {
         includeReasoning?: boolean;
         model?: string;
         temperature?: number;
+        responseDetailLevel?: 'minimal' | 'standard' | 'full';
+        excludeVectors?: boolean;
+        maxMemoryResults?: number;
     }): Promise<any>;
     /**
      * Update server URL
