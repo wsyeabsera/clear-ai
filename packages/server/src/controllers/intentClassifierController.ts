@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { 
+import {
   IntentClassifierService,
   QueryIntent,
   IntentClassificationOptions,
@@ -48,9 +48,9 @@ export const intentClassifierController = {
 
       // Initialize tool registry
       const toolRegistry = new MCPToolRegistry();
-      
+
       await initializeIntentClassifier(langchainConfig, toolRegistry);
-      
+
       const response: ApiResponse = {
         success: true,
         data: {
@@ -61,7 +61,7 @@ export const intentClassifierController = {
         message: 'Intent classifier service initialized successfully',
         tools: ['IntentClassifierService']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -99,14 +99,14 @@ export const intentClassifierController = {
       };
 
       const intent = await classifier.classifyQuery(query, classificationOptions);
-      
+
       const response: ApiResponse<QueryIntent> = {
         success: true,
         data: intent,
         message: `Query classified as: ${intent.type} (confidence: ${intent.confidence})`,
         tools: ['IntentClassifierService.classifyQuery']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -175,7 +175,7 @@ export const intentClassifierController = {
         message: `Classified ${queries.length} queries`,
         tools: ['IntentClassifierService.classifyQueriesBatch']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -193,18 +193,82 @@ export const intentClassifierController = {
     try {
       const classifier = getIntentClassifier();
 
-      // Sample queries for testing each intent type
+      // Challenging and confusing test queries
       const testQueries = [
+        // Clear cases
         { query: "What did we discuss yesterday?", expectedType: "memory_chat" },
         { query: "Calculate 5 + 3", expectedType: "tool_execution" },
-        { query: "Based on my preferences, find a restaurant", expectedType: "hybrid" },
-        { query: "What do I know about machine learning?", expectedType: "knowledge_search" },
         { query: "Hello, how are you?", expectedType: "conversation" },
-        { query: "Make an API call to get weather data", expectedType: "tool_execution" },
-        { query: "Remember that I like Python programming", expectedType: "memory_chat" },
-        { query: "Read this file and analyze the data", expectedType: "hybrid" },
-        { query: "Search my memories for information about AI", expectedType: "knowledge_search" },
-        { query: "Tell me a joke", expectedType: "conversation" }
+
+        // Ambiguous cases that could be multiple types
+        { query: "Can you help me with something?", expectedType: "unknown" },
+        { query: "I need assistance", expectedType: "unknown" },
+        { query: "What can you do?", expectedType: "conversation" },
+        { query: "Show me what you know", expectedType: "knowledge_search" },
+
+        // Edge cases with mixed signals
+        { query: "Remember that I like coffee and then find me a cafe", expectedType: "hybrid" },
+        { query: "What did I tell you about my favorite programming language?", expectedType: "memory_chat" },
+        { query: "Search my brain for Python knowledge", expectedType: "knowledge_search" },
+        { query: "Make a calculation based on what you remember about my preferences", expectedType: "hybrid" },
+
+        // Confusing tool vs conversation cases
+        { query: "Can you calculate something for me?", expectedType: "tool_execution" },
+        { query: "I want to do math", expectedType: "tool_execution" },
+        { query: "Let's talk about numbers", expectedType: "conversation" },
+        { query: "What's the weather like?", expectedType: "tool_execution" },
+
+        // Memory vs knowledge search confusion
+        { query: "What do I know about machine learning?", expectedType: "knowledge_search" },
+        { query: "Tell me what we talked about regarding AI", expectedType: "memory_chat" },
+        { query: "What information do you have about Python?", expectedType: "knowledge_search" },
+        { query: "Remind me of our conversation about programming", expectedType: "memory_chat" },
+
+        // Complex hybrid cases
+        { query: "Based on my preferences, find a restaurant and remember this choice", expectedType: "hybrid" },
+        { query: "Analyze this data and store the results for later", expectedType: "hybrid" },
+        { query: "Get the weather and tell me what I said about it yesterday", expectedType: "hybrid" },
+
+        // Unclear/gibberish cases
+        { query: "asdfghjkl", expectedType: "unknown" },
+        { query: "What?", expectedType: "unknown" },
+        { query: "I don't understand", expectedType: "unknown" },
+        { query: "Help me with something I don't know what", expectedType: "unknown" },
+
+        // Tool execution edge cases
+        { query: "Open a file", expectedType: "tool_execution" },
+        { query: "Fetch some data", expectedType: "tool_execution" },
+        { query: "Run a command", expectedType: "tool_execution" },
+        { query: "Execute something", expectedType: "unknown" },
+
+        // Memory context edge cases
+        { query: "Remember this for later", expectedType: "memory_chat" },
+        { query: "Save this information", expectedType: "memory_chat" },
+        { query: "Keep this in mind", expectedType: "memory_chat" },
+        { query: "Don't forget this", expectedType: "memory_chat" },
+
+        // Conversation vs other types
+        { query: "How are you feeling today?", expectedType: "conversation" },
+        { query: "Tell me about yourself", expectedType: "conversation" },
+        { query: "What's your opinion on AI?", expectedType: "conversation" },
+        { query: "Explain quantum computing", expectedType: "conversation" },
+
+        // Complex multi-part queries
+        { query: "First calculate 2+2, then remember that I like the result, and finally search for math facts", expectedType: "hybrid" },
+        { query: "Get the weather, remember my preference for sunny days, and suggest activities", expectedType: "hybrid" },
+        { query: "What did we discuss about machine learning and can you find more information about it?", expectedType: "hybrid" },
+
+        // Tool detection challenges
+        { query: "I need to make a request to an API", expectedType: "tool_execution" },
+        { query: "Can you read a file for me?", expectedType: "tool_execution" },
+        { query: "Parse this JSON data", expectedType: "tool_execution" },
+        { query: "Do multiple things at once", expectedType: "tool_execution" },
+
+        // Intentional confusion
+        { query: "Remember to calculate something", expectedType: "hybrid" },
+        { query: "What can you calculate and what do you remember?", expectedType: "hybrid" },
+        { query: "Help me with everything", expectedType: "unknown" },
+        { query: "Do what you think is best", expectedType: "unknown" }
       ];
 
       const testResults = await Promise.all(
@@ -212,7 +276,7 @@ export const intentClassifierController = {
           try {
             const intent = await classifier.classifyQuery(test.query);
             const isCorrect = intent.type === test.expectedType;
-            
+
             return {
               query: test.query,
               expectedType: test.expectedType,
@@ -254,7 +318,7 @@ export const intentClassifierController = {
         message: `Intent classification test completed with ${Math.round(accuracy * 100)}% accuracy`,
         tools: ['IntentClassifierService.testClassification']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -271,7 +335,7 @@ export const intentClassifierController = {
   async getIntentTypes(req: Request, res: Response): Promise<void> {
     try {
       const classifier = getIntentClassifier();
-      
+
       const response: ApiResponse = {
         success: true,
         data: {
@@ -281,7 +345,7 @@ export const intentClassifierController = {
         message: 'Intent types retrieved successfully',
         tools: ['IntentClassifierService.getIntentTypes']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {

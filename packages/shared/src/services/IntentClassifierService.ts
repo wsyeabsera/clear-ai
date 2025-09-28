@@ -6,7 +6,7 @@ import { parseLLMJsonResponse } from '../utils'
  * Query intent classification result
  */
 export interface QueryIntent {
-  type: 'memory_chat' | 'tool_execution' | 'hybrid' | 'knowledge_search' | 'conversation'
+  type: 'memory_chat' | 'tool_execution' | 'hybrid' | 'knowledge_search' | 'conversation' | 'unknown'
   confidence: number
   requiredTools?: string[]
   memoryContext?: boolean
@@ -162,6 +162,11 @@ Your task is to classify user queries into one of these intent types:
    - Questions that don't fit other categories
    - Examples: "Hello", "How are you?", "Tell me a joke"
 
+6. **unknown**: Queries that cannot be clearly classified
+   - Ambiguous or unclear requests
+   - Queries that don't fit any category
+   - Examples: "What?", "I don't understand", "Help me with something"
+
 ${availableToolsInfo}
 
 For each query, respond with a JSON object containing:
@@ -232,11 +237,11 @@ Be precise and consider the user's intent carefully.`
     options: IntentClassificationOptions
   ): Promise<QueryIntent> {
     // Validate intent type
-    const validTypes = ['memory_chat', 'tool_execution', 'hybrid', 'knowledge_search', 'conversation']
+    const validTypes = ['memory_chat', 'tool_execution', 'hybrid', 'knowledge_search', 'conversation', 'unknown']
     if (!classification.type || !validTypes.includes(classification.type)) {
-      logger.warn(`Invalid intent type: ${classification.type}, defaulting to conversation`)
-      classification.type = 'conversation'
-      classification.confidence = 0.5
+      logger.warn(`Invalid intent type: ${classification.type}, defaulting to unknown`)
+      classification.type = 'unknown'
+      classification.confidence = 0.3
     }
 
     // Validate confidence
@@ -309,7 +314,7 @@ Be precise and consider the user's intent carefully.`
    * Get available intent types
    */
   getAvailableIntentTypes(): string[] {
-    return ['memory_chat', 'tool_execution', 'hybrid', 'knowledge_search', 'conversation']
+    return ['memory_chat', 'tool_execution', 'hybrid', 'knowledge_search', 'conversation', 'unknown']
   }
 
   /**
@@ -321,7 +326,8 @@ Be precise and consider the user's intent carefully.`
       tool_execution: 'Direct tool usage or computational tasks',
       hybrid: 'Tool execution combined with memory context',
       knowledge_search: 'Search existing knowledge/memories',
-      conversation: 'General chat without specific intent'
+      conversation: 'General chat without specific intent',
+      unknown: 'Queries that cannot be clearly classified'
     }
   }
 }

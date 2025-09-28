@@ -186,6 +186,25 @@ make_request "POST" "$API_BASE/classify-batch" '{
 
 echo ""
 
+# Test 8.5: Challenging Ambiguous Queries
+print_status "=== Test 8.5: Challenging Ambiguous Queries ==="
+make_request "POST" "$API_BASE/classify-batch" '{
+    "queries": [
+        "Can you help me with something?",
+        "Remember that I like coffee and then find me a cafe",
+        "What can you calculate and what do you remember?",
+        "asdfghjkl",
+        "Help me with everything"
+    ],
+    "options": {
+        "model": "openai",
+        "temperature": 0.1,
+        "includeAvailableTools": true
+    }
+}' "Classify challenging ambiguous queries"
+
+echo ""
+
 # Test 9: Run Comprehensive Test
 print_status "=== Test 9: Run Comprehensive Test Suite ==="
 make_request "POST" "$API_BASE/test" "" "Run comprehensive test with sample queries"
@@ -235,6 +254,45 @@ make_request "POST" "$API_BASE/classify" '{
 
 echo ""
 
+# Test 13: Test Ambiguous Query
+print_status "=== Test 13: Test Ambiguous Query ==="
+make_request "POST" "$API_BASE/classify" '{
+    "query": "Can you help me with something?",
+    "options": {
+        "model": "openai",
+        "temperature": 0.1,
+        "includeAvailableTools": true
+    }
+}' "Classify an ambiguous query that should be unknown"
+
+echo ""
+
+# Test 14: Test Complex Hybrid Query
+print_status "=== Test 14: Test Complex Hybrid Query ==="
+make_request "POST" "$API_BASE/classify" '{
+    "query": "Remember that I like coffee and then find me a cafe nearby",
+    "options": {
+        "model": "openai",
+        "temperature": 0.1,
+        "includeAvailableTools": true
+    }
+}' "Classify a complex hybrid query (memory + tool execution)"
+
+echo ""
+
+# Test 15: Test Gibberish/Unknown Query
+print_status "=== Test 15: Test Gibberish/Unknown Query ==="
+make_request "POST" "$API_BASE/classify" '{
+    "query": "asdfghjkl qwerty",
+    "options": {
+        "model": "openai",
+        "temperature": 0.1,
+        "includeAvailableTools": true
+    }
+}' "Classify gibberish that should be unknown"
+
+echo ""
+
 print_status "=========================================="
 print_success "Intent Classifier API Testing Complete!"
 print_status "=========================================="
@@ -254,6 +312,7 @@ echo "  ✓ memory_chat (conversation with memory context)"
 echo "  ✓ hybrid (tools + memory context)"
 echo "  ✓ knowledge_search (searching stored knowledge)"
 echo "  ✓ conversation (general chat)"
+echo "  ✓ unknown (ambiguous, unclear, or gibberish queries)"
 
 echo ""
 print_status "Features tested:"
