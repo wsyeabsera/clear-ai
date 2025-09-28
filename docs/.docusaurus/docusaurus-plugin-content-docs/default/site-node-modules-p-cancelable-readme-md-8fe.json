@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/p-cancelable/readme",
+  "title": "p-cancelable",
+  "description": "Create a promise that can be canceled",
+  "source": "@site/node_modules/p-cancelable/readme.md",
+  "sourceDirName": "node_modules/p-cancelable",
+  "slug": "/node_modules/p-cancelable/",
+  "permalink": "/Clear-AI/node_modules/p-cancelable/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/p-cancelable/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

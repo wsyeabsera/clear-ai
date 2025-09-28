@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/d3-format/README",
+  "title": "d3-format",
+  "description": "Ever noticed how sometimes JavaScript doesn’t display numbers the way you expect? Like, you tried to print tenths with a simple loop:",
+  "source": "@site/node_modules/d3-format/README.md",
+  "sourceDirName": "node_modules/d3-format",
+  "slug": "/node_modules/d3-format/",
+  "permalink": "/Clear-AI/node_modules/d3-format/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/d3-format/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/algoliasearch-helper/README",
+  "title": "README",
+  "description": "Coming from V1 (or js client v2)? Read the migration guide to the new version of the Helper.",
+  "source": "@site/node_modules/algoliasearch-helper/README.md",
+  "sourceDirName": "node_modules/algoliasearch-helper",
+  "slug": "/node_modules/algoliasearch-helper/",
+  "permalink": "/Clear-AI/node_modules/algoliasearch-helper/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/algoliasearch-helper/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

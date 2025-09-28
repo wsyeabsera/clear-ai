@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/serve-handler/node_modules/path-to-regexp/Readme",
+  "title": "Path-to-RegExp",
+  "description": "Turn a path string such as /user/:name into a regular expression.",
+  "source": "@site/node_modules/serve-handler/node_modules/path-to-regexp/Readme.md",
+  "sourceDirName": "node_modules/serve-handler/node_modules/path-to-regexp",
+  "slug": "/node_modules/serve-handler/node_modules/path-to-regexp/",
+  "permalink": "/Clear-AI/node_modules/serve-handler/node_modules/path-to-regexp/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/serve-handler/node_modules/path-to-regexp/Readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

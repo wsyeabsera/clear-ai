@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/jsesc/README",
+  "title": "jsesc",
+  "description": "Given some data, jsesc returns a stringified representation of that data. jsesc is similar to JSON.stringify() except:",
+  "source": "@site/node_modules/jsesc/README.md",
+  "sourceDirName": "node_modules/jsesc",
+  "slug": "/node_modules/jsesc/",
+  "permalink": "/Clear-AI/node_modules/jsesc/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/jsesc/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

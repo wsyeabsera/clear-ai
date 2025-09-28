@@ -1,0 +1,20 @@
+{
+  "id": "api/server/tools",
+  "title": "Tool Execution APIs",
+  "description": "The Tool Execution APIs provide comprehensive functionality for registering, managing, and executing tools in the Clear AI system. These APIs support both individual tool execution and complex multi-tool workflows.",
+  "source": "@site/api/server/tools.md",
+  "sourceDirName": "api/server",
+  "slug": "/api/server/tools",
+  "permalink": "/Clear-AI/api/server/tools",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/api/server/tools.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "apiSidebar",
+  "previous": {
+    "title": "API Reference Overview",
+    "permalink": "/Clear-AI/api/overview"
+  }
+}

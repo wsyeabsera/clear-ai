@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/big.js/README",
+  "title": "big.js",
+  "description": "A small, fast JavaScript library for arbitrary-precision decimal arithmetic.",
+  "source": "@site/node_modules/big.js/README.md",
+  "sourceDirName": "node_modules/big.js",
+  "slug": "/node_modules/big.js/",
+  "permalink": "/Clear-AI/node_modules/big.js/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/big.js/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

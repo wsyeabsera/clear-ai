@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/isobject/README",
+  "title": "isobject [![NPM version](https://img.shields.io/npm/v/isobject.svg?style=flat)](https://www.npmjs.com/package/isobject) [![NPM monthly downloads](https://img.shields.io/npm/dm/isobject.svg?style=flat)](https://npmjs.org/package/isobject)  [![NPM total downloads](https://img.shields.io/npm/dt/isobject.svg?style=flat)](https://npmjs.org/package/isobject) [![Linux Build Status](https://img.shields.io/travis/jonschlinkert/isobject.svg?style=flat&label=Travis)](https://travis-ci.org/jonschlinkert/isobject)",
+  "description": "Returns true if the value is an object and not an array or null.",
+  "source": "@site/node_modules/isobject/README.md",
+  "sourceDirName": "node_modules/isobject",
+  "slug": "/node_modules/isobject/",
+  "permalink": "/Clear-AI/node_modules/isobject/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/isobject/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

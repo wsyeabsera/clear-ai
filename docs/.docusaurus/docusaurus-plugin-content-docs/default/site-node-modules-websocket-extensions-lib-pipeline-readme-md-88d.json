@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/websocket-extensions/lib/pipeline/README",
+  "title": "Extension pipelining",
+  "description": "websocket-extensions models the extension negotiation and processing pipeline",
+  "source": "@site/node_modules/websocket-extensions/lib/pipeline/README.md",
+  "sourceDirName": "node_modules/websocket-extensions/lib/pipeline",
+  "slug": "/node_modules/websocket-extensions/lib/pipeline/",
+  "permalink": "/Clear-AI/node_modules/websocket-extensions/lib/pipeline/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/websocket-extensions/lib/pipeline/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/forwarded/HISTORY",
+  "title": "0.2.0 / 2021-05-31",
+  "description": "* Use req.socket over deprecated req.connection",
+  "source": "@site/node_modules/forwarded/HISTORY.md",
+  "sourceDirName": "node_modules/forwarded",
+  "slug": "/node_modules/forwarded/HISTORY",
+  "permalink": "/Clear-AI/node_modules/forwarded/HISTORY",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/forwarded/HISTORY.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

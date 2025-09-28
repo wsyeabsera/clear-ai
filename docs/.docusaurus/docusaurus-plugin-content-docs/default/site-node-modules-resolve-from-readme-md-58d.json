@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/resolve-from/readme",
+  "title": "resolve-from [![Build Status](https://travis-ci.org/sindresorhus/resolve-from.svg?branch=master)](https://travis-ci.org/sindresorhus/resolve-from)",
+  "description": "Resolve the path of a module like require.resolve() but from a given path",
+  "source": "@site/node_modules/resolve-from/readme.md",
+  "sourceDirName": "node_modules/resolve-from",
+  "slug": "/node_modules/resolve-from/",
+  "permalink": "/Clear-AI/node_modules/resolve-from/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/resolve-from/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

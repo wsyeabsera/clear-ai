@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@types/debug/README",
+  "title": "Installation",
+  "description": "npm install --save @types/debug",
+  "source": "@site/node_modules/@types/debug/README.md",
+  "sourceDirName": "node_modules/@types/debug",
+  "slug": "/node_modules/@types/debug/",
+  "permalink": "/Clear-AI/node_modules/@types/debug/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@types/debug/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

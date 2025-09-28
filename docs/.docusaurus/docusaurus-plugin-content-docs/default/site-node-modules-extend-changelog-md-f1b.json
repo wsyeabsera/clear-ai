@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/extend/CHANGELOG",
+  "title": "3.0.2 / 2018-07-19",
+  "description": "* [Fix] Prevent merging proto property (#48)",
+  "source": "@site/node_modules/extend/CHANGELOG.md",
+  "sourceDirName": "node_modules/extend",
+  "slug": "/node_modules/extend/CHANGELOG",
+  "permalink": "/Clear-AI/node_modules/extend/CHANGELOG",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/extend/CHANGELOG.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

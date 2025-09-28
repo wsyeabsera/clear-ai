@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/is-regexp/readme",
+  "title": "is-regexp [![Build Status](https://travis-ci.org/sindresorhus/is-regexp.svg?branch=master)](https://travis-ci.org/sindresorhus/is-regexp)",
+  "description": "Check whether a variable is a regular expression",
+  "source": "@site/node_modules/is-regexp/readme.md",
+  "sourceDirName": "node_modules/is-regexp",
+  "slug": "/node_modules/is-regexp/",
+  "permalink": "/Clear-AI/node_modules/is-regexp/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/is-regexp/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

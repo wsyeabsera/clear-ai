@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-spread/README",
+  "title": "@babel/plugin-transform-spread",
+  "description": "Compile ES2015 spread to ES5",
+  "source": "@site/node_modules/@babel/plugin-transform-spread/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-spread",
+  "slug": "/node_modules/@babel/plugin-transform-spread/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-spread/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-spread/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

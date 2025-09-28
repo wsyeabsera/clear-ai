@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/dom-serializer/README",
+  "title": "dom-serializer [![Build Status](https://travis-ci.com/cheeriojs/dom-serializer.svg?branch=master)](https://travis-ci.com/cheeriojs/dom-serializer)",
+  "description": "Renders a domhandler DOM node or an array of domhandler DOM nodes to a string.",
+  "source": "@site/node_modules/dom-serializer/README.md",
+  "sourceDirName": "node_modules/dom-serializer",
+  "slug": "/node_modules/dom-serializer/",
+  "permalink": "/Clear-AI/node_modules/dom-serializer/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/dom-serializer/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

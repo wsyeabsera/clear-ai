@@ -1,0 +1,37 @@
+{
+  "id": "blog/2019-05-28-first-blog-post",
+  "title": "First Blog Post",
+  "description": "Lorem ipsum dolor sit amet...",
+  "source": "@site/blog/2019-05-28-first-blog-post.md",
+  "sourceDirName": "blog",
+  "slug": "/blog/first-blog-post",
+  "permalink": "/Clear-AI/blog/first-blog-post",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/blog/2019-05-28-first-blog-post.md",
+  "tags": [
+    {
+      "inline": true,
+      "label": "hola",
+      "permalink": "/Clear-AI/tags/hola"
+    },
+    {
+      "inline": true,
+      "label": "docusaurus",
+      "permalink": "/Clear-AI/tags/docusaurus"
+    }
+  ],
+  "version": "current",
+  "frontMatter": {
+    "slug": "first-blog-post",
+    "title": "First Blog Post",
+    "authors": [
+      "slorber",
+      "yangshun"
+    ],
+    "tags": [
+      "hola",
+      "docusaurus"
+    ]
+  }
+}

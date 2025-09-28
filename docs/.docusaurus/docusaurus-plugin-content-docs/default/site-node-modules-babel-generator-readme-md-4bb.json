@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/generator/README",
+  "title": "@babel/generator",
+  "description": "Turns an AST into code.",
+  "source": "@site/node_modules/@babel/generator/README.md",
+  "sourceDirName": "node_modules/@babel/generator",
+  "slug": "/node_modules/@babel/generator/",
+  "permalink": "/Clear-AI/node_modules/@babel/generator/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/generator/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

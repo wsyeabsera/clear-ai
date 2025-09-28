@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/ansi-escapes/readme",
+  "title": "ansi-escapes",
+  "description": "ANSI escape codes for manipulating the terminal",
+  "source": "@site/node_modules/ansi-escapes/readme.md",
+  "sourceDirName": "node_modules/ansi-escapes",
+  "slug": "/node_modules/ansi-escapes/",
+  "permalink": "/Clear-AI/node_modules/ansi-escapes/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/ansi-escapes/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

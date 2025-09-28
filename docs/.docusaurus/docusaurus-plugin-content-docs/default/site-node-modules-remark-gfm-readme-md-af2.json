@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/remark-gfm/readme",
+  "title": "remark-gfm",
+  "description": "Build",
+  "source": "@site/node_modules/remark-gfm/readme.md",
+  "sourceDirName": "node_modules/remark-gfm",
+  "slug": "/node_modules/remark-gfm/",
+  "permalink": "/Clear-AI/node_modules/remark-gfm/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/remark-gfm/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

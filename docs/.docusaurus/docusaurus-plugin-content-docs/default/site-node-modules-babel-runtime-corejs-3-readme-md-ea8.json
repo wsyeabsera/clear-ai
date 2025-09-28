@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/runtime-corejs3/README",
+  "title": "@babel/runtime-corejs3",
+  "description": "babel's modular runtime helpers with core-js@3 polyfilling",
+  "source": "@site/node_modules/@babel/runtime-corejs3/README.md",
+  "sourceDirName": "node_modules/@babel/runtime-corejs3",
+  "slug": "/node_modules/@babel/runtime-corejs3/",
+  "permalink": "/Clear-AI/node_modules/@babel/runtime-corejs3/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/runtime-corejs3/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/globals/readme",
+  "title": "globals",
+  "description": "Global identifiers from different JavaScript environments",
+  "source": "@site/node_modules/globals/readme.md",
+  "sourceDirName": "node_modules/globals",
+  "slug": "/node_modules/globals/",
+  "permalink": "/Clear-AI/node_modules/globals/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/globals/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

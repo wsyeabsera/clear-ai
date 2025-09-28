@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/template/README",
+  "title": "@babel/template",
+  "description": "Generate an AST from a string template.",
+  "source": "@site/node_modules/@babel/template/README.md",
+  "sourceDirName": "node_modules/@babel/template",
+  "slug": "/node_modules/@babel/template/",
+  "permalink": "/Clear-AI/node_modules/@babel/template/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/template/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

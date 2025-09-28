@@ -1,0 +1,24 @@
+{
+  "id": "tutorials/building-your-first-tool",
+  "title": "Building Your First Tool",
+  "description": "This tutorial will walk you through creating your first custom tool for the Clear AI system. We'll build a simple \"weather\" tool that fetches weather information from an API and integrates it with the MCP system.",
+  "source": "@site/tutorials/building-your-first-tool.md",
+  "sourceDirName": "tutorials",
+  "slug": "/tutorials/building-your-first-tool",
+  "permalink": "/Clear-AI/tutorials/building-your-first-tool",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/tutorials/building-your-first-tool.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Shared Package",
+    "permalink": "/Clear-AI/packages/shared"
+  },
+  "next": {
+    "title": "Creating Workflows with LangGraph",
+    "permalink": "/Clear-AI/tutorials/creating-workflows"
+  }
+}

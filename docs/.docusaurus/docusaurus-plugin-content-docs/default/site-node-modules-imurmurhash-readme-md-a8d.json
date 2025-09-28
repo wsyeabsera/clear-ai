@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/imurmurhash/README",
+  "title": "iMurmurHash.js",
+  "description": "An incremental implementation of the MurmurHash3 (32-bit) hashing algorithm for JavaScript based on Gary Court's implementation with kazuyukitanimura's modifications.",
+  "source": "@site/node_modules/imurmurhash/README.md",
+  "sourceDirName": "node_modules/imurmurhash",
+  "slug": "/node_modules/imurmurhash/",
+  "permalink": "/Clear-AI/node_modules/imurmurhash/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/imurmurhash/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

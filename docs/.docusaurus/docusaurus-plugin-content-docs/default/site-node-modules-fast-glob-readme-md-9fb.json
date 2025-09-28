@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/fast-glob/README",
+  "title": "fast-glob",
+  "description": "It's a very fast and efficient glob library for Node.js.",
+  "source": "@site/node_modules/fast-glob/README.md",
+  "sourceDirName": "node_modules/fast-glob",
+  "slug": "/node_modules/fast-glob/",
+  "permalink": "/Clear-AI/node_modules/fast-glob/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/fast-glob/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

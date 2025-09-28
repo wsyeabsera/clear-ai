@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-syntax-typescript/README",
+  "title": "@babel/plugin-syntax-typescript",
+  "description": "Allow parsing of TypeScript syntax",
+  "source": "@site/node_modules/@babel/plugin-syntax-typescript/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-syntax-typescript",
+  "slug": "/node_modules/@babel/plugin-syntax-typescript/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-syntax-typescript/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-syntax-typescript/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

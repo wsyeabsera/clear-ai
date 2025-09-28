@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/katex/contrib/mathtex-script-type/README",
+  "title": "math/tex Custom Script Type Extension",
+  "description": "This is an extension to automatically display code inside script tags with type=math/tex using KaTeX.",
+  "source": "@site/node_modules/katex/contrib/mathtex-script-type/README.md",
+  "sourceDirName": "node_modules/katex/contrib/mathtex-script-type",
+  "slug": "/node_modules/katex/contrib/mathtex-script-type/",
+  "permalink": "/Clear-AI/node_modules/katex/contrib/mathtex-script-type/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/katex/contrib/mathtex-script-type/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

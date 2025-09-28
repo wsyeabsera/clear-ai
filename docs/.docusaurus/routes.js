@@ -74,15 +74,15 @@ export default [
   },
   {
     path: '/Clear-AI/',
-    component: ComponentCreator('/Clear-AI/', 'e2b'),
+    component: ComponentCreator('/Clear-AI/', '969'),
     routes: [
       {
         path: '/Clear-AI/',
-        component: ComponentCreator('/Clear-AI/', '17d'),
+        component: ComponentCreator('/Clear-AI/', 'bdd'),
         routes: [
           {
             path: '/Clear-AI/',
-            component: ComponentCreator('/Clear-AI/', 'ab6'),
+            component: ComponentCreator('/Clear-AI/', '91f'),
             routes: [
               {
                 path: '/Clear-AI/api/overview',
@@ -201,6 +201,11 @@ export default [
                 component: ComponentCreator('/Clear-AI/tutorials/creating-workflows', '24c'),
                 exact: true,
                 sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/Clear-AI/',
+                component: ComponentCreator('/Clear-AI/', '136'),
+                exact: true
               }
             ]
           }

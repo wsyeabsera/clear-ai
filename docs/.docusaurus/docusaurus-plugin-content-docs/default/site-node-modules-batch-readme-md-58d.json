@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/batch/Readme",
+  "title": "batch",
+  "description": "Simple async batch with concurrency control and progress reporting.",
+  "source": "@site/node_modules/batch/Readme.md",
+  "sourceDirName": "node_modules/batch",
+  "slug": "/node_modules/batch/",
+  "permalink": "/Clear-AI/node_modules/batch/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/batch/Readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

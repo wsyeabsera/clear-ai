@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-destructuring/README",
+  "title": "@babel/plugin-transform-destructuring",
+  "description": "Compile ES2015 destructuring to ES5",
+  "source": "@site/node_modules/@babel/plugin-transform-destructuring/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-destructuring",
+  "slug": "/node_modules/@babel/plugin-transform-destructuring/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-destructuring/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-destructuring/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

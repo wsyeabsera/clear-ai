@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/utility-types/README",
+  "title": "README",
+  "description": "Collection of utility types, complementing TypeScript built-in mapped types and aliases (think \"lodash\" for static types).",
+  "source": "@site/node_modules/utility-types/README.md",
+  "sourceDirName": "node_modules/utility-types",
+  "slug": "/node_modules/utility-types/",
+  "permalink": "/Clear-AI/node_modules/utility-types/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/utility-types/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

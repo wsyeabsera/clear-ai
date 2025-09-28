@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/flat/README",
+  "title": "flat [![Build Status](https://secure.travis-ci.org/hughsk/flat.png?branch=master)](http://travis-ci.org/hughsk/flat)",
+  "description": "Take a nested Javascript object and flatten it, or unflatten an object with",
+  "source": "@site/node_modules/flat/README.md",
+  "sourceDirName": "node_modules/flat",
+  "slug": "/node_modules/flat/",
+  "permalink": "/Clear-AI/node_modules/flat/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/flat/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

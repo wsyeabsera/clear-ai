@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/babel-plugin-dynamic-import-node/README",
+  "title": "babel-plugin-dynamic-import-node",
+  "description": "Babel plugin to transpile import() to a deferred require(), for node. Matches the proposed spec.",
+  "source": "@site/node_modules/babel-plugin-dynamic-import-node/README.md",
+  "sourceDirName": "node_modules/babel-plugin-dynamic-import-node",
+  "slug": "/node_modules/babel-plugin-dynamic-import-node/",
+  "permalink": "/Clear-AI/node_modules/babel-plugin-dynamic-import-node/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/babel-plugin-dynamic-import-node/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

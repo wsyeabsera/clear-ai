@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/katex/src/metrics/README",
+  "title": "README",
+  "description": "How to generate new metrics",
+  "source": "@site/node_modules/katex/src/metrics/README.md",
+  "sourceDirName": "node_modules/katex/src/metrics",
+  "slug": "/node_modules/katex/src/metrics/",
+  "permalink": "/Clear-AI/node_modules/katex/src/metrics/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/katex/src/metrics/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

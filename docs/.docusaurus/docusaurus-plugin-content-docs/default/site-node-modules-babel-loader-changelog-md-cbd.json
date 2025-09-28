@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/babel-loader/CHANGELOG",
+  "title": "Changelog",
+  "description": "For changes in version v7.0.0 and up please go to release",
+  "source": "@site/node_modules/babel-loader/CHANGELOG.md",
+  "sourceDirName": "node_modules/babel-loader",
+  "slug": "/node_modules/babel-loader/CHANGELOG",
+  "permalink": "/Clear-AI/node_modules/babel-loader/CHANGELOG",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/babel-loader/CHANGELOG.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

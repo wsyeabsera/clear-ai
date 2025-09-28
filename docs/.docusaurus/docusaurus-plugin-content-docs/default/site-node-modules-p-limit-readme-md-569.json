@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/p-limit/readme",
+  "title": "p-limit",
+  "description": "Run multiple promise-returning & async functions with limited concurrency",
+  "source": "@site/node_modules/p-limit/readme.md",
+  "sourceDirName": "node_modules/p-limit",
+  "slug": "/node_modules/p-limit/",
+  "permalink": "/Clear-AI/node_modules/p-limit/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/p-limit/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

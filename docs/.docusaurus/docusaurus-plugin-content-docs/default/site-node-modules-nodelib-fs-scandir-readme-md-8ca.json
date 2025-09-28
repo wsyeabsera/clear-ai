@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@nodelib/fs.scandir/README",
+  "title": "@nodelib/fs.scandir",
+  "description": "List files and directories inside the specified directory.",
+  "source": "@site/node_modules/@nodelib/fs.scandir/README.md",
+  "sourceDirName": "node_modules/@nodelib/fs.scandir",
+  "slug": "/node_modules/@nodelib/fs.scandir/",
+  "permalink": "/Clear-AI/node_modules/@nodelib/fs.scandir/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@nodelib/fs.scandir/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

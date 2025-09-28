@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@docusaurus/theme-classic/README",
+  "title": "Docusaurus Theme Classic",
+  "description": "The classic theme for Docusaurus.",
+  "source": "@site/node_modules/@docusaurus/theme-classic/README.md",
+  "sourceDirName": "node_modules/@docusaurus/theme-classic",
+  "slug": "/node_modules/@docusaurus/theme-classic/",
+  "permalink": "/Clear-AI/node_modules/@docusaurus/theme-classic/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@docusaurus/theme-classic/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

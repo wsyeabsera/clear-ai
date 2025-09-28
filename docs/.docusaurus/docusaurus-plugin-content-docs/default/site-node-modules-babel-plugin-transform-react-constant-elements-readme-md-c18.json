@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-react-constant-elements/README",
+  "title": "@babel/plugin-transform-react-constant-elements",
+  "description": "Treat React JSX elements as value types and hoist them to the highest scope",
+  "source": "@site/node_modules/@babel/plugin-transform-react-constant-elements/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-react-constant-elements",
+  "slug": "/node_modules/@babel/plugin-transform-react-constant-elements/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-react-constant-elements/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-react-constant-elements/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

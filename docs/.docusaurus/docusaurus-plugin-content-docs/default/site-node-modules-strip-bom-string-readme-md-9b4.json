@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/strip-bom-string/README",
+  "title": "strip-bom-string [![NPM version](https://img.shields.io/npm/v/strip-bom-string.svg?style=flat)](https://www.npmjs.com/package/strip-bom-string) [![NPM monthly downloads](https://img.shields.io/npm/dm/strip-bom-string.svg?style=flat)](https://npmjs.org/package/strip-bom-string)  [![NPM total downloads](https://img.shields.io/npm/dt/strip-bom-string.svg?style=flat)](https://npmjs.org/package/strip-bom-string) [![Linux Build Status](https://img.shields.io/travis/jonschlinkert/strip-bom-string.svg?style=flat&label=Travis)](https://travis-ci.org/jonschlinkert/strip-bom-string)",
+  "description": "Strip a byte order mark (BOM) from a string.",
+  "source": "@site/node_modules/strip-bom-string/README.md",
+  "sourceDirName": "node_modules/strip-bom-string",
+  "slug": "/node_modules/strip-bom-string/",
+  "permalink": "/Clear-AI/node_modules/strip-bom-string/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/strip-bom-string/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

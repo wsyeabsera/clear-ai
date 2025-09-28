@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/find-up/readme",
+  "title": "find-up",
+  "description": "Find a file or directory by walking up parent directories",
+  "source": "@site/node_modules/find-up/readme.md",
+  "sourceDirName": "node_modules/find-up",
+  "slug": "/node_modules/find-up/",
+  "permalink": "/Clear-AI/node_modules/find-up/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/find-up/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

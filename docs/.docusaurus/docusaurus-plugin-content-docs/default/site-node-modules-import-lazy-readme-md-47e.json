@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/import-lazy/readme",
+  "title": "import-lazy [![Build Status](https://travis-ci.org/sindresorhus/import-lazy.svg?branch=master)](https://travis-ci.org/sindresorhus/import-lazy)",
+  "description": "Import a module lazily",
+  "source": "@site/node_modules/import-lazy/readme.md",
+  "sourceDirName": "node_modules/import-lazy",
+  "slug": "/node_modules/import-lazy/",
+  "permalink": "/Clear-AI/node_modules/import-lazy/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/import-lazy/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

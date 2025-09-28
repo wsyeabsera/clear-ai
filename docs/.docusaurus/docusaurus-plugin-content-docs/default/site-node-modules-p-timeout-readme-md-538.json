@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/p-timeout/readme",
+  "title": "p-timeout [![Build Status](https://travis-ci.org/sindresorhus/p-timeout.svg?branch=master)](https://travis-ci.org/sindresorhus/p-timeout)",
+  "description": "Timeout a promise after a specified amount of time",
+  "source": "@site/node_modules/p-timeout/readme.md",
+  "sourceDirName": "node_modules/p-timeout",
+  "slug": "/node_modules/p-timeout/",
+  "permalink": "/Clear-AI/node_modules/p-timeout/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/p-timeout/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

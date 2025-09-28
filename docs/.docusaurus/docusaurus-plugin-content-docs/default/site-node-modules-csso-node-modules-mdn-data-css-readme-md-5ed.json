@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/csso/node_modules/mdn-data/css/readme",
+  "title": "MDN CSS data",
+  "description": "This folder contains data about the different features of the CSS language.",
+  "source": "@site/node_modules/csso/node_modules/mdn-data/css/readme.md",
+  "sourceDirName": "node_modules/csso/node_modules/mdn-data/css",
+  "slug": "/node_modules/csso/node_modules/mdn-data/css/",
+  "permalink": "/Clear-AI/node_modules/csso/node_modules/mdn-data/css/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/csso/node_modules/mdn-data/css/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

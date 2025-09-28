@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/regjsparser/README",
+  "title": "RegJSParser",
+  "description": "Parsing the JavaScript's RegExp in JavaScript.",
+  "source": "@site/node_modules/regjsparser/README.md",
+  "sourceDirName": "node_modules/regjsparser",
+  "slug": "/node_modules/regjsparser/",
+  "permalink": "/Clear-AI/node_modules/regjsparser/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/regjsparser/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

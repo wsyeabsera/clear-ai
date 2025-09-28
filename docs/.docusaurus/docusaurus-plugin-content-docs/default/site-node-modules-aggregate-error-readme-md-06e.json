@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/aggregate-error/readme",
+  "title": "aggregate-error [![Build Status](https://travis-ci.org/sindresorhus/aggregate-error.svg?branch=master)](https://travis-ci.org/sindresorhus/aggregate-error)",
+  "description": "Create an error from multiple errors",
+  "source": "@site/node_modules/aggregate-error/readme.md",
+  "sourceDirName": "node_modules/aggregate-error",
+  "slug": "/node_modules/aggregate-error/",
+  "permalink": "/Clear-AI/node_modules/aggregate-error/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/aggregate-error/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

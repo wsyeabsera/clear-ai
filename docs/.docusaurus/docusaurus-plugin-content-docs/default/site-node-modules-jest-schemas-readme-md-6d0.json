@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@jest/schemas/README",
+  "title": "@jest/schemas",
+  "description": "Experimental and currently incomplete module for JSON schemas for Jest's configuration.",
+  "source": "@site/node_modules/@jest/schemas/README.md",
+  "sourceDirName": "node_modules/@jest/schemas",
+  "slug": "/node_modules/@jest/schemas/",
+  "permalink": "/Clear-AI/node_modules/@jest/schemas/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@jest/schemas/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

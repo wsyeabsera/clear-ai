@@ -1,0 +1,34 @@
+{
+  "id": "blog/2019-05-29-long-blog-post",
+  "title": "Long Blog Post",
+  "description": "This is the summary of a very long blog post,",
+  "source": "@site/blog/2019-05-29-long-blog-post.md",
+  "sourceDirName": "blog",
+  "slug": "/blog/long-blog-post",
+  "permalink": "/Clear-AI/blog/long-blog-post",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/blog/2019-05-29-long-blog-post.md",
+  "tags": [
+    {
+      "inline": true,
+      "label": "hello",
+      "permalink": "/Clear-AI/tags/hello"
+    },
+    {
+      "inline": true,
+      "label": "docusaurus",
+      "permalink": "/Clear-AI/tags/docusaurus"
+    }
+  ],
+  "version": "current",
+  "frontMatter": {
+    "slug": "long-blog-post",
+    "title": "Long Blog Post",
+    "authors": "yangshun",
+    "tags": [
+      "hello",
+      "docusaurus"
+    ]
+  }
+}

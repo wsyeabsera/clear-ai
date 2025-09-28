@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/relateurl/README",
+  "title": "relateurl [![NPM Version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][david-image]][david-url]",
+  "description": "Minify URLs by converting them from absolute to relative.",
+  "source": "@site/node_modules/relateurl/README.md",
+  "sourceDirName": "node_modules/relateurl",
+  "slug": "/node_modules/relateurl/",
+  "permalink": "/Clear-AI/node_modules/relateurl/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/relateurl/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

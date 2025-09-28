@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/kolorist/README",
+  "title": "kolorist",
+  "description": "Tiny library to put colors into stdin/stdout",
+  "source": "@site/node_modules/kolorist/README.md",
+  "sourceDirName": "node_modules/kolorist",
+  "slug": "/node_modules/kolorist/",
+  "permalink": "/Clear-AI/node_modules/kolorist/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/kolorist/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

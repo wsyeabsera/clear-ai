@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/get-stream/readme",
+  "title": "get-stream",
+  "description": "Get a stream as a string, buffer, or array",
+  "source": "@site/node_modules/get-stream/readme.md",
+  "sourceDirName": "node_modules/get-stream",
+  "slug": "/node_modules/get-stream/",
+  "permalink": "/Clear-AI/node_modules/get-stream/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/get-stream/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

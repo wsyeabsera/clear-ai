@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/roughjs/README",
+  "title": "Rough.js",
+  "description": "Rough.js is a small (\\<9 kB) graphics library that lets you draw in a sketchy, hand-drawn-like, style.",
+  "source": "@site/node_modules/roughjs/README.md",
+  "sourceDirName": "node_modules/roughjs",
+  "slug": "/node_modules/roughjs/",
+  "permalink": "/Clear-AI/node_modules/roughjs/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/roughjs/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

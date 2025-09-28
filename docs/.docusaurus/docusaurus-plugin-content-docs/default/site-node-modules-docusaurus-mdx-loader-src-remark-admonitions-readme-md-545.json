@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@docusaurus/mdx-loader/src/remark/admonitions/README",
+  "title": "Docusaurus admonitions",
+  "description": "Code from remark-admonitions (MIT license) has been copied to this folder, and highly customized for Docusaurus needs.",
+  "source": "@site/node_modules/@docusaurus/mdx-loader/src/remark/admonitions/README.md",
+  "sourceDirName": "node_modules/@docusaurus/mdx-loader/src/remark/admonitions",
+  "slug": "/node_modules/@docusaurus/mdx-loader/src/remark/admonitions/",
+  "permalink": "/Clear-AI/node_modules/@docusaurus/mdx-loader/src/remark/admonitions/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@docusaurus/mdx-loader/src/remark/admonitions/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

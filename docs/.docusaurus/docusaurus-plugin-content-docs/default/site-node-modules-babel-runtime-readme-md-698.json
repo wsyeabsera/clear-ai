@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/runtime/README",
+  "title": "@babel/runtime",
+  "description": "babel's modular runtime helpers",
+  "source": "@site/node_modules/@babel/runtime/README.md",
+  "sourceDirName": "node_modules/@babel/runtime",
+  "slug": "/node_modules/@babel/runtime/",
+  "permalink": "/Clear-AI/node_modules/@babel/runtime/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/runtime/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

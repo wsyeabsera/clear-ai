@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/xdg-basedir/readme",
+  "title": "xdg-basedir",
+  "description": "Get XDG Base Directory paths",
+  "source": "@site/node_modules/xdg-basedir/readme.md",
+  "sourceDirName": "node_modules/xdg-basedir",
+  "slug": "/node_modules/xdg-basedir/",
+  "permalink": "/Clear-AI/node_modules/xdg-basedir/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/xdg-basedir/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

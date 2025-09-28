@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/lodash-es/release",
+  "title": "release",
+  "description": "npm run build",
+  "source": "@site/node_modules/lodash-es/release.md",
+  "sourceDirName": "node_modules/lodash-es",
+  "slug": "/node_modules/lodash-es/release",
+  "permalink": "/Clear-AI/node_modules/lodash-es/release",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/lodash-es/release.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

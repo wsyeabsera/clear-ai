@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/d3-axis/README",
+  "title": "d3-axis",
+  "description": "The axis component renders human-readable reference marks for scales. This alleviates one of the more tedious tasks in visualizing data.",
+  "source": "@site/node_modules/d3-axis/README.md",
+  "sourceDirName": "node_modules/d3-axis",
+  "slug": "/node_modules/d3-axis/",
+  "permalink": "/Clear-AI/node_modules/d3-axis/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/d3-axis/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

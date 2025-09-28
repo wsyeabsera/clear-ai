@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/throttleit/readme",
+  "title": "throttleit",
+  "description": "Throttle a function to limit its execution rate",
+  "source": "@site/node_modules/throttleit/readme.md",
+  "sourceDirName": "node_modules/throttleit",
+  "slug": "/node_modules/throttleit/",
+  "permalink": "/Clear-AI/node_modules/throttleit/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/throttleit/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

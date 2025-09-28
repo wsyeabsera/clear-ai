@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/delaunator/README",
+  "title": "Delaunator [![Build Status](https://app.travis-ci.com/mapbox/delaunator.svg?branch=main)](https://app.travis-ci.com/mapbox/delaunator) [![](https://img.shields.io/badge/simply-awesome-brightgreen.svg)](https://github.com/mourner/projects) [![](https://badgen.net/bundlephobia/minzip/delaunator)](https://unpkg.com/delaunator)",
+  "description": "An incredibly fast and robust JavaScript library for",
+  "source": "@site/node_modules/delaunator/README.md",
+  "sourceDirName": "node_modules/delaunator",
+  "slug": "/node_modules/delaunator/",
+  "permalink": "/Clear-AI/node_modules/delaunator/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/delaunator/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

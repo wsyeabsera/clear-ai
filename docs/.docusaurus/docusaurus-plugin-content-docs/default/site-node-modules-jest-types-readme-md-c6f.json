@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@jest/types/README",
+  "title": "@jest/types",
+  "description": "This package contains shared types of Jest's packages.",
+  "source": "@site/node_modules/@jest/types/README.md",
+  "sourceDirName": "node_modules/@jest/types",
+  "slug": "/node_modules/@jest/types/",
+  "permalink": "/Clear-AI/node_modules/@jest/types/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@jest/types/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-dynamic-import/README",
+  "title": "@babel/plugin-transform-dynamic-import",
+  "description": "Transform import() expressions",
+  "source": "@site/node_modules/@babel/plugin-transform-dynamic-import/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-dynamic-import",
+  "slug": "/node_modules/@babel/plugin-transform-dynamic-import/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-dynamic-import/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-dynamic-import/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/bundle-name/readme",
+  "title": "bundle-name",
+  "description": "Get bundle name from a bundle identifier (macOS): com.apple.Safari → Safari",
+  "source": "@site/node_modules/bundle-name/readme.md",
+  "sourceDirName": "node_modules/bundle-name",
+  "slug": "/node_modules/bundle-name/",
+  "permalink": "/Clear-AI/node_modules/bundle-name/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/bundle-name/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

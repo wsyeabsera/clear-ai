@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/spdy/README",
+  "title": "SPDY Server for node.js",
+  "description": "Build Status",
+  "source": "@site/node_modules/spdy/README.md",
+  "sourceDirName": "node_modules/spdy",
+  "slug": "/node_modules/spdy/",
+  "permalink": "/Clear-AI/node_modules/spdy/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/spdy/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

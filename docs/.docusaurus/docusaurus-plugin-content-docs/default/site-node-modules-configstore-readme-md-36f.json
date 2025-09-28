@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/configstore/readme",
+  "title": "configstore",
+  "description": "Easily load and persist config without having to think about where and how",
+  "source": "@site/node_modules/configstore/readme.md",
+  "sourceDirName": "node_modules/configstore",
+  "slug": "/node_modules/configstore/",
+  "permalink": "/Clear-AI/node_modules/configstore/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/configstore/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

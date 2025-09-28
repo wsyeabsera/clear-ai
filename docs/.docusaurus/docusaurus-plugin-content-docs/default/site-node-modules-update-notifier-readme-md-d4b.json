@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/update-notifier/readme",
+  "title": "update-notifier",
+  "description": "Update notifications for your CLI app",
+  "source": "@site/node_modules/update-notifier/readme.md",
+  "sourceDirName": "node_modules/update-notifier",
+  "slug": "/node_modules/update-notifier/",
+  "permalink": "/Clear-AI/node_modules/update-notifier/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/update-notifier/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-typeof-symbol/README",
+  "title": "@babel/plugin-transform-typeof-symbol",
+  "description": "This transformer wraps all typeof expressions with a method that replicates native behaviour. (ie. returning “symbol” for symbols)",
+  "source": "@site/node_modules/@babel/plugin-transform-typeof-symbol/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-typeof-symbol",
+  "slug": "/node_modules/@babel/plugin-transform-typeof-symbol/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-typeof-symbol/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-typeof-symbol/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

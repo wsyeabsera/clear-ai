@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@docusaurus/plugin-content-blog/README",
+  "title": "@docusaurus/plugin-content-blog",
+  "description": "Blog plugin for Docusaurus.",
+  "source": "@site/node_modules/@docusaurus/plugin-content-blog/README.md",
+  "sourceDirName": "node_modules/@docusaurus/plugin-content-blog",
+  "slug": "/node_modules/@docusaurus/plugin-content-blog/",
+  "permalink": "/Clear-AI/node_modules/@docusaurus/plugin-content-blog/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@docusaurus/plugin-content-blog/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-modules-systemjs/README",
+  "title": "@babel/plugin-transform-modules-systemjs",
+  "description": "This plugin transforms ES2015 modules to SystemJS",
+  "source": "@site/node_modules/@babel/plugin-transform-modules-systemjs/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-modules-systemjs",
+  "slug": "/node_modules/@babel/plugin-transform-modules-systemjs/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-modules-systemjs/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-modules-systemjs/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

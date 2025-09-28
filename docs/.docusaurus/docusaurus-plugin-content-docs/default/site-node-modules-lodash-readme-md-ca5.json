@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/lodash/README",
+  "title": "lodash v4.17.21",
+  "description": "The Lodash library exported as Node.js modules.",
+  "source": "@site/node_modules/lodash/README.md",
+  "sourceDirName": "node_modules/lodash",
+  "slug": "/node_modules/lodash/",
+  "permalink": "/Clear-AI/node_modules/lodash/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/lodash/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

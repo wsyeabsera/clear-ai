@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@nodelib/fs.walk/README",
+  "title": "@nodelib/fs.walk",
+  "description": "A library for efficiently walking a directory recursively.",
+  "source": "@site/node_modules/@nodelib/fs.walk/README.md",
+  "sourceDirName": "node_modules/@nodelib/fs.walk",
+  "slug": "/node_modules/@nodelib/fs.walk/",
+  "permalink": "/Clear-AI/node_modules/@nodelib/fs.walk/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@nodelib/fs.walk/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

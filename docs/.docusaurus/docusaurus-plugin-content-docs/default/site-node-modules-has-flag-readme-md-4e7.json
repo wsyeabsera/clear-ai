@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/has-flag/readme",
+  "title": "has-flag [![Build Status](https://travis-ci.org/sindresorhus/has-flag.svg?branch=master)](https://travis-ci.org/sindresorhus/has-flag)",
+  "description": "Check if argv has a specific flag",
+  "source": "@site/node_modules/has-flag/readme.md",
+  "sourceDirName": "node_modules/has-flag",
+  "slug": "/node_modules/has-flag/",
+  "permalink": "/Clear-AI/node_modules/has-flag/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/has-flag/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

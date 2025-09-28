@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@jridgewell/remapping/README",
+  "title": "@jridgewell/remapping",
+  "description": "Remap sequential sourcemaps through transformations to point at the original source code",
+  "source": "@site/node_modules/@jridgewell/remapping/README.md",
+  "sourceDirName": "node_modules/@jridgewell/remapping",
+  "slug": "/node_modules/@jridgewell/remapping/",
+  "permalink": "/Clear-AI/node_modules/@jridgewell/remapping/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@jridgewell/remapping/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

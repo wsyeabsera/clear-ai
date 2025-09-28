@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/points-on-curve/README",
+  "title": "points-on-curve",
+  "description": "This package calculate the points on a curve with a certain tolerance. It can also simplify the shape to use fewer points.",
+  "source": "@site/node_modules/points-on-curve/README.md",
+  "sourceDirName": "node_modules/points-on-curve",
+  "slug": "/node_modules/points-on-curve/",
+  "permalink": "/Clear-AI/node_modules/points-on-curve/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/points-on-curve/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

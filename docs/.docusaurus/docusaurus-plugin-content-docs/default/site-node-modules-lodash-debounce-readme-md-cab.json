@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/lodash.debounce/README",
+  "title": "lodash.debounce v4.0.8",
+  "description": "The lodash method _.debounce exported as a Node.js module.",
+  "source": "@site/node_modules/lodash.debounce/README.md",
+  "sourceDirName": "node_modules/lodash.debounce",
+  "slug": "/node_modules/lodash.debounce/",
+  "permalink": "/Clear-AI/node_modules/lodash.debounce/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/lodash.debounce/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

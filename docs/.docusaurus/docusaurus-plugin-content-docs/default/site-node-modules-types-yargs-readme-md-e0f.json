@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@types/yargs/README",
+  "title": "Installation",
+  "description": "npm install --save @types/yargs",
+  "source": "@site/node_modules/@types/yargs/README.md",
+  "sourceDirName": "node_modules/@types/yargs",
+  "slug": "/node_modules/@types/yargs/",
+  "permalink": "/Clear-AI/node_modules/@types/yargs/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@types/yargs/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

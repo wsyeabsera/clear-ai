@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/jest-util/Readme",
+  "title": "@jest/utils",
+  "description": "This packages is a collection of utilities and helper functions",
+  "source": "@site/node_modules/jest-util/Readme.md",
+  "sourceDirName": "node_modules/jest-util",
+  "slug": "/node_modules/jest-util/",
+  "permalink": "/Clear-AI/node_modules/jest-util/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/jest-util/Readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

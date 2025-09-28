@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/common-path-prefix/README",
+  "title": "common-path-prefix",
+  "description": "Computes the longest prefix string that is common to each path, excluding the base component. Tested with Node.js 8 and above.",
+  "source": "@site/node_modules/common-path-prefix/README.md",
+  "sourceDirName": "node_modules/common-path-prefix",
+  "slug": "/node_modules/common-path-prefix/",
+  "permalink": "/Clear-AI/node_modules/common-path-prefix/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/common-path-prefix/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

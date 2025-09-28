@@ -1,0 +1,24 @@
+{
+  "id": "getting-started/installation",
+  "title": "Installation",
+  "description": "This guide will walk you through setting up Clear AI on your local development machine. We'll cover everything from prerequisites to running your first development server.",
+  "source": "@site/getting-started/installation.md",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/installation",
+  "permalink": "/Clear-AI/getting-started/installation",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/getting-started/installation.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Welcome to Clear AI",
+    "permalink": "/Clear-AI/intro"
+  },
+  "next": {
+    "title": "Quick Start Guide",
+    "permalink": "/Clear-AI/getting-started/quick-start"
+  }
+}

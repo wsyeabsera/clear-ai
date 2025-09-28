@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/webpackbar/node_modules/wrap-ansi/readme",
+  "title": "wrap-ansi [![Build Status](https://travis-ci.com/chalk/wrap-ansi.svg?branch=master)](https://travis-ci.com/chalk/wrap-ansi) [![Coverage Status](https://coveralls.io/repos/github/chalk/wrap-ansi/badge.svg?branch=master)](https://coveralls.io/github/chalk/wrap-ansi?branch=master)",
+  "description": "Wordwrap a string with ANSI escape codes",
+  "source": "@site/node_modules/webpackbar/node_modules/wrap-ansi/readme.md",
+  "sourceDirName": "node_modules/webpackbar/node_modules/wrap-ansi",
+  "slug": "/node_modules/webpackbar/node_modules/wrap-ansi/",
+  "permalink": "/Clear-AI/node_modules/webpackbar/node_modules/wrap-ansi/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/webpackbar/node_modules/wrap-ansi/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

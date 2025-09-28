@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/latest-version/readme",
+  "title": "latest-version",
+  "description": "Get the latest version of an npm package",
+  "source": "@site/node_modules/latest-version/readme.md",
+  "sourceDirName": "node_modules/latest-version",
+  "slug": "/node_modules/latest-version/",
+  "permalink": "/Clear-AI/node_modules/latest-version/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/latest-version/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

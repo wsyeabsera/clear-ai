@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/eslint-scope/README",
+  "title": "ESLint Scope",
+  "description": "ESLint Scope is the ECMAScript scope analyzer used in ESLint. It is a fork of escope.",
+  "source": "@site/node_modules/eslint-scope/README.md",
+  "sourceDirName": "node_modules/eslint-scope",
+  "slug": "/node_modules/eslint-scope/",
+  "permalink": "/Clear-AI/node_modules/eslint-scope/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/eslint-scope/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

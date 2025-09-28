@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/ansi-regex/readme",
+  "title": "ansi-regex",
+  "description": "Regular expression for matching ANSI escape codes",
+  "source": "@site/node_modules/ansi-regex/readme.md",
+  "sourceDirName": "node_modules/ansi-regex",
+  "slug": "/node_modules/ansi-regex/",
+  "permalink": "/Clear-AI/node_modules/ansi-regex/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/ansi-regex/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

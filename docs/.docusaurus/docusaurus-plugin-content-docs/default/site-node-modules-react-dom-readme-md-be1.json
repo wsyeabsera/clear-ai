@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/react-dom/README",
+  "title": "react-dom",
+  "description": "This package serves as the entry point to the DOM and server renderers for React. It is intended to be paired with the generic React package, which is shipped as react to npm.",
+  "source": "@site/node_modules/react-dom/README.md",
+  "sourceDirName": "node_modules/react-dom",
+  "slug": "/node_modules/react-dom/",
+  "permalink": "/Clear-AI/node_modules/react-dom/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/react-dom/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

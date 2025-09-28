@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/postcss-minify-font-values/README",
+  "title": "postcss-minify-font-values [![Build Status][ci-img]][ci]",
+  "description": "Minify font declarations with PostCSS.",
+  "source": "@site/node_modules/postcss-minify-font-values/README.md",
+  "sourceDirName": "node_modules/postcss-minify-font-values",
+  "slug": "/node_modules/postcss-minify-font-values/",
+  "permalink": "/Clear-AI/node_modules/postcss-minify-font-values/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/postcss-minify-font-values/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

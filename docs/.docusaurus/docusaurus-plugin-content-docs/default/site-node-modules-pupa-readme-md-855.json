@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/pupa/readme",
+  "title": "pupa",
+  "description": "Simple micro templating",
+  "source": "@site/node_modules/pupa/readme.md",
+  "sourceDirName": "node_modules/pupa",
+  "slug": "/node_modules/pupa/",
+  "permalink": "/Clear-AI/node_modules/pupa/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/pupa/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/cacheable-request/README",
+  "title": "README",
+  "description": "Wrap native HTTP requests with RFC compliant cache support",
+  "source": "@site/node_modules/cacheable-request/README.md",
+  "sourceDirName": "node_modules/cacheable-request",
+  "slug": "/node_modules/cacheable-request/",
+  "permalink": "/Clear-AI/node_modules/cacheable-request/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/cacheable-request/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

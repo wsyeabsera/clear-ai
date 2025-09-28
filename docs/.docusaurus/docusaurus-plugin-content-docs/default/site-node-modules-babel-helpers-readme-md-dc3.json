@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/helpers/README",
+  "title": "@babel/helpers",
+  "description": "Collection of helper functions used by Babel transforms.",
+  "source": "@site/node_modules/@babel/helpers/README.md",
+  "sourceDirName": "node_modules/@babel/helpers",
+  "slug": "/node_modules/@babel/helpers/",
+  "permalink": "/Clear-AI/node_modules/@babel/helpers/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/helpers/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

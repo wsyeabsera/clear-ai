@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/types/README",
+  "title": "@babel/types",
+  "description": "Babel Types is a Lodash-esque utility library for AST nodes",
+  "source": "@site/node_modules/@babel/types/README.md",
+  "sourceDirName": "node_modules/@babel/types",
+  "slug": "/node_modules/@babel/types/",
+  "permalink": "/Clear-AI/node_modules/@babel/types/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/types/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

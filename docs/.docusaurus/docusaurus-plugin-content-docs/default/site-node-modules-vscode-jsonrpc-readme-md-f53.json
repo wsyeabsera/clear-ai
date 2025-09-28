@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/vscode-jsonrpc/README",
+  "title": "VSCode JSON RPC",
+  "description": "NPM Version",
+  "source": "@site/node_modules/vscode-jsonrpc/README.md",
+  "sourceDirName": "node_modules/vscode-jsonrpc",
+  "slug": "/node_modules/vscode-jsonrpc/",
+  "permalink": "/Clear-AI/node_modules/vscode-jsonrpc/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/vscode-jsonrpc/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

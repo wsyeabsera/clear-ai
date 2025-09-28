@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-for-of/README",
+  "title": "@babel/plugin-transform-for-of",
+  "description": "Compile ES2015 for...of to ES5",
+  "source": "@site/node_modules/@babel/plugin-transform-for-of/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-for-of",
+  "slug": "/node_modules/@babel/plugin-transform-for-of/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-for-of/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-for-of/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

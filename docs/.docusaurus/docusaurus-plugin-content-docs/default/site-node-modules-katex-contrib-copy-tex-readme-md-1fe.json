@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/katex/contrib/copy-tex/README",
+  "title": "Copy-tex extension",
+  "description": "This extension modifies the copy/paste behavior in any browser supporting the",
+  "source": "@site/node_modules/katex/contrib/copy-tex/README.md",
+  "sourceDirName": "node_modules/katex/contrib/copy-tex",
+  "slug": "/node_modules/katex/contrib/copy-tex/",
+  "permalink": "/Clear-AI/node_modules/katex/contrib/copy-tex/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/katex/contrib/copy-tex/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

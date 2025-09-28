@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/react-loadable/README",
+  "title": "README",
+  "description": "IMPORTANT: this is a minimalistic fork to solve the componentWillMount warning for the facebook/docusaurus project.",
+  "source": "@site/node_modules/react-loadable/README.md",
+  "sourceDirName": "node_modules/react-loadable",
+  "slug": "/node_modules/react-loadable/",
+  "permalink": "/Clear-AI/node_modules/react-loadable/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/react-loadable/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

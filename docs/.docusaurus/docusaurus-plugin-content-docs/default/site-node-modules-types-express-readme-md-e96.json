@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@types/express/README",
+  "title": "Installation",
+  "description": "npm install --save @types/express",
+  "source": "@site/node_modules/@types/express/README.md",
+  "sourceDirName": "node_modules/@types/express",
+  "slug": "/node_modules/@types/express/",
+  "permalink": "/Clear-AI/node_modules/@types/express/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@types/express/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

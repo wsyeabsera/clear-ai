@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-async-to-generator/README",
+  "title": "@babel/plugin-transform-async-to-generator",
+  "description": "Turn async functions into ES2015 generators",
+  "source": "@site/node_modules/@babel/plugin-transform-async-to-generator/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-async-to-generator",
+  "slug": "/node_modules/@babel/plugin-transform-async-to-generator/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-async-to-generator/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-async-to-generator/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

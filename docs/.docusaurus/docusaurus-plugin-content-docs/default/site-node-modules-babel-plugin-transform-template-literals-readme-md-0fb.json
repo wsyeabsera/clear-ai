@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-template-literals/README",
+  "title": "@babel/plugin-transform-template-literals",
+  "description": "Compile ES2015 template literals to ES5",
+  "source": "@site/node_modules/@babel/plugin-transform-template-literals/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-template-literals",
+  "slug": "/node_modules/@babel/plugin-transform-template-literals/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-template-literals/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-template-literals/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/statuses/HISTORY",
+  "title": "2.0.1 / 2021-01-03",
+  "description": "* Fix returning values from Object.prototype",
+  "source": "@site/node_modules/statuses/HISTORY.md",
+  "sourceDirName": "node_modules/statuses",
+  "slug": "/node_modules/statuses/HISTORY",
+  "permalink": "/Clear-AI/node_modules/statuses/HISTORY",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/statuses/HISTORY.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

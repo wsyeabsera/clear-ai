@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/thunky/README",
+  "title": "thunky",
+  "description": "Delay the evaluation of a paramless async function and cache the result (see thunk).",
+  "source": "@site/node_modules/thunky/README.md",
+  "sourceDirName": "node_modules/thunky",
+  "slug": "/node_modules/thunky/",
+  "permalink": "/Clear-AI/node_modules/thunky/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/thunky/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

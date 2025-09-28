@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/http-errors/HISTORY",
+  "title": "2.0.0 / 2021-12-17",
+  "description": "* Drop support for Node.js 0.6",
+  "source": "@site/node_modules/http-errors/HISTORY.md",
+  "sourceDirName": "node_modules/http-errors",
+  "slug": "/node_modules/http-errors/HISTORY",
+  "permalink": "/Clear-AI/node_modules/http-errors/HISTORY",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/http-errors/HISTORY.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

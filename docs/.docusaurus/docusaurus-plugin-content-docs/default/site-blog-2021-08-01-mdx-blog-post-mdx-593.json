@@ -1,0 +1,30 @@
+{
+  "id": "blog/2021-08-01-mdx-blog-post",
+  "title": "MDX Blog Post",
+  "description": "Blog posts support Docusaurus Markdown features, such as MDX.",
+  "source": "@site/blog/2021-08-01-mdx-blog-post.mdx",
+  "sourceDirName": "blog",
+  "slug": "/blog/mdx-blog-post",
+  "permalink": "/Clear-AI/blog/mdx-blog-post",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/blog/2021-08-01-mdx-blog-post.mdx",
+  "tags": [
+    {
+      "inline": true,
+      "label": "docusaurus",
+      "permalink": "/Clear-AI/tags/docusaurus"
+    }
+  ],
+  "version": "current",
+  "frontMatter": {
+    "slug": "mdx-blog-post",
+    "title": "MDX Blog Post",
+    "authors": [
+      "slorber"
+    ],
+    "tags": [
+      "docusaurus"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/repeat-string/README",
+  "title": "repeat-string [![NPM version](https://img.shields.io/npm/v/repeat-string.svg?style=flat)](https://www.npmjs.com/package/repeat-string) [![NPM monthly downloads](https://img.shields.io/npm/dm/repeat-string.svg?style=flat)](https://npmjs.org/package/repeat-string)  [![NPM total downloads](https://img.shields.io/npm/dt/repeat-string.svg?style=flat)](https://npmjs.org/package/repeat-string) [![Linux Build Status](https://img.shields.io/travis/jonschlinkert/repeat-string.svg?style=flat&label=Travis)](https://travis-ci.org/jonschlinkert/repeat-string)",
+  "description": "Repeat the given string n times. Fastest implementation for repeating a string.",
+  "source": "@site/node_modules/repeat-string/README.md",
+  "sourceDirName": "node_modules/repeat-string",
+  "slug": "/node_modules/repeat-string/",
+  "permalink": "/Clear-AI/node_modules/repeat-string/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/repeat-string/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

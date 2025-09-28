@@ -1,0 +1,20 @@
+{
+  "id": "api/overview",
+  "title": "API Reference Overview",
+  "description": "This section provides comprehensive documentation for all APIs in the Clear AI system. The APIs are organized by package and functionality, making it easy to find the information you need.",
+  "source": "@site/api/overview.md",
+  "sourceDirName": "api",
+  "slug": "/api/overview",
+  "permalink": "/Clear-AI/api/overview",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/api/overview.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "apiSidebar",
+  "next": {
+    "title": "Tool Execution APIs",
+    "permalink": "/Clear-AI/api/server/tools"
+  }
+}

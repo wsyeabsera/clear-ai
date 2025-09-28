@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/is-ci/README",
+  "title": "is-ci",
+  "description": "Returns true if the current environment is a Continuous Integration",
+  "source": "@site/node_modules/is-ci/README.md",
+  "sourceDirName": "node_modules/is-ci",
+  "slug": "/node_modules/is-ci/",
+  "permalink": "/Clear-AI/node_modules/is-ci/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/is-ci/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

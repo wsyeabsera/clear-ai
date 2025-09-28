@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/helper-plugin-utils/README",
+  "title": "@babel/helper-plugin-utils",
+  "description": "General utilities for plugins to use",
+  "source": "@site/node_modules/@babel/helper-plugin-utils/README.md",
+  "sourceDirName": "node_modules/@babel/helper-plugin-utils",
+  "slug": "/node_modules/@babel/helper-plugin-utils/",
+  "permalink": "/Clear-AI/node_modules/@babel/helper-plugin-utils/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/helper-plugin-utils/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

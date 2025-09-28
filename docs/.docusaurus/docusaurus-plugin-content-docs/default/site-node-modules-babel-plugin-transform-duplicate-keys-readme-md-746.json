@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-duplicate-keys/README",
+  "title": "@babel/plugin-transform-duplicate-keys",
+  "description": "Compile objects with duplicate keys to valid strict ES5",
+  "source": "@site/node_modules/@babel/plugin-transform-duplicate-keys/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-duplicate-keys",
+  "slug": "/node_modules/@babel/plugin-transform-duplicate-keys/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-duplicate-keys/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-duplicate-keys/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/core-util-is/README",
+  "title": "core-util-is",
+  "description": "The util.is* functions introduced in Node v0.12.",
+  "source": "@site/node_modules/core-util-is/README.md",
+  "sourceDirName": "node_modules/core-util-is",
+  "slug": "/node_modules/core-util-is/",
+  "permalink": "/Clear-AI/node_modules/core-util-is/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/core-util-is/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

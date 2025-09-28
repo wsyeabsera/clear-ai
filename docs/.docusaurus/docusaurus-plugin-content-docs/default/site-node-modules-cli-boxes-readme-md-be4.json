@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/cli-boxes/readme",
+  "title": "cli-boxes",
+  "description": "Boxes for use in the terminal",
+  "source": "@site/node_modules/cli-boxes/readme.md",
+  "sourceDirName": "node_modules/cli-boxes",
+  "slug": "/node_modules/cli-boxes/",
+  "permalink": "/Clear-AI/node_modules/cli-boxes/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/cli-boxes/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/decompress-response/node_modules/mimic-response/readme",
+  "title": "mimic-response [![Build Status](https://travis-ci.com/sindresorhus/mimic-response.svg?branch=master)](https://travis-ci.com/sindresorhus/mimic-response)",
+  "description": "Mimic a Node.js HTTP response stream",
+  "source": "@site/node_modules/decompress-response/node_modules/mimic-response/readme.md",
+  "sourceDirName": "node_modules/decompress-response/node_modules/mimic-response",
+  "slug": "/node_modules/decompress-response/node_modules/mimic-response/",
+  "permalink": "/Clear-AI/node_modules/decompress-response/node_modules/mimic-response/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/decompress-response/node_modules/mimic-response/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

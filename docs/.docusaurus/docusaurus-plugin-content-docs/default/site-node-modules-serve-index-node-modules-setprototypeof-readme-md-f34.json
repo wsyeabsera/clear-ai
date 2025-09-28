@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/serve-index/node_modules/setprototypeof/README",
+  "title": "Polyfill for Object.setPrototypeOf",
+  "description": "A simple cross platform implementation to set the prototype of an instianted object.  Supports all modern browsers and at least back to IE8.",
+  "source": "@site/node_modules/serve-index/node_modules/setprototypeof/README.md",
+  "sourceDirName": "node_modules/serve-index/node_modules/setprototypeof",
+  "slug": "/node_modules/serve-index/node_modules/setprototypeof/",
+  "permalink": "/Clear-AI/node_modules/serve-index/node_modules/setprototypeof/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/serve-index/node_modules/setprototypeof/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/json-schema/README",
+  "title": "README",
+  "description": "This is a historical repository for the early development of the JSON Schema specification and implementation. This package is considered \"finished\": it holds the earlier draft specification and a simple, efficient, lightweight implementation of the original core elements of JSON Schema. This repository does not house the latest specifications nor does it implement the latest versions of JSON Schema. This package seeks to maintain the stability (in behavior and size) of this original implementation for the sake of the numerous packages that rely on it. For the latest JSON Schema specifications and implementations, please visit the JSON Schema site (or the respository).",
+  "source": "@site/node_modules/json-schema/README.md",
+  "sourceDirName": "node_modules/json-schema",
+  "slug": "/node_modules/json-schema/",
+  "permalink": "/Clear-AI/node_modules/json-schema/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/json-schema/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

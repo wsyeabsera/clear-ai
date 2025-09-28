@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/color-name/README",
+  "title": "README",
+  "description": "A JSON with color names and its values. Based on http://dev.w3.org/csswg/css-color/#named-colors.",
+  "source": "@site/node_modules/color-name/README.md",
+  "sourceDirName": "node_modules/color-name",
+  "slug": "/node_modules/color-name/",
+  "permalink": "/Clear-AI/node_modules/color-name/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/color-name/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

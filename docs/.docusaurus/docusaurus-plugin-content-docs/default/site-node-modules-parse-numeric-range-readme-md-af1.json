@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/parse-numeric-range/README",
+  "title": "node-parse-numeric-range",
+  "description": "Parses expressions like 1-10,20-30. Returns an energetic (as opposed to lazy) array.",
+  "source": "@site/node_modules/parse-numeric-range/README.md",
+  "sourceDirName": "node_modules/parse-numeric-range",
+  "slug": "/node_modules/parse-numeric-range/",
+  "permalink": "/Clear-AI/node_modules/parse-numeric-range/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/parse-numeric-range/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "README",
+  "title": "Website",
+  "description": "This website is built using Docusaurus, a modern static website generator.",
+  "source": "@site/docs/README.md",
+  "sourceDirName": ".",
+  "slug": "/",
+  "permalink": "/Clear-AI/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

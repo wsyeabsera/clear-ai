@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/indent-string/readme",
+  "title": "indent-string [![Build Status](https://travis-ci.org/sindresorhus/indent-string.svg?branch=master)](https://travis-ci.org/sindresorhus/indent-string)",
+  "description": "Indent each line in a string",
+  "source": "@site/node_modules/indent-string/readme.md",
+  "sourceDirName": "node_modules/indent-string",
+  "slug": "/node_modules/indent-string/",
+  "permalink": "/Clear-AI/node_modules/indent-string/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/indent-string/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/tapable/README",
+  "title": "Tapable",
+  "description": "The tapable package exposes many Hook classes, which can be used to create hooks for plugins.",
+  "source": "@site/node_modules/tapable/README.md",
+  "sourceDirName": "node_modules/tapable",
+  "slug": "/node_modules/tapable/",
+  "permalink": "/Clear-AI/node_modules/tapable/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/tapable/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

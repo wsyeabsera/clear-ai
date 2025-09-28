@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/package-json/readme",
+  "title": "package-json",
+  "description": "Get metadata of a package from the npm registry",
+  "source": "@site/node_modules/package-json/readme.md",
+  "sourceDirName": "node_modules/package-json",
+  "slug": "/node_modules/package-json/",
+  "permalink": "/Clear-AI/node_modules/package-json/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/package-json/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

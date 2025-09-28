@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@ai-sdk/react/README",
+  "title": "AI SDK: React provider",
+  "description": "React UI components for the AI SDK:",
+  "source": "@site/node_modules/@ai-sdk/react/README.md",
+  "sourceDirName": "node_modules/@ai-sdk/react",
+  "slug": "/node_modules/@ai-sdk/react/",
+  "permalink": "/Clear-AI/node_modules/@ai-sdk/react/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@ai-sdk/react/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

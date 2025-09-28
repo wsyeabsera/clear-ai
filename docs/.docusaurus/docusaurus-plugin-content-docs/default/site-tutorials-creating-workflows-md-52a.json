@@ -1,0 +1,20 @@
+{
+  "id": "tutorials/creating-workflows",
+  "title": "Creating Workflows with LangGraph",
+  "description": "This tutorial will teach you how to create sophisticated AI workflows using LangGraph in Clear AI. We'll build a multi-step workflow that processes user data, makes API calls, and generates reports.",
+  "source": "@site/tutorials/creating-workflows.md",
+  "sourceDirName": "tutorials",
+  "slug": "/tutorials/creating-workflows",
+  "permalink": "/Clear-AI/tutorials/creating-workflows",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/tutorials/creating-workflows.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Building Your First Tool",
+    "permalink": "/Clear-AI/tutorials/building-your-first-tool"
+  }
+}

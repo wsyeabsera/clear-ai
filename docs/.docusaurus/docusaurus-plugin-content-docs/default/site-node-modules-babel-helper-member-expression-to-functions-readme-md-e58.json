@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/helper-member-expression-to-functions/README",
+  "title": "@babel/helper-member-expression-to-functions",
+  "description": "Helper function to replace certain member expressions with function calls",
+  "source": "@site/node_modules/@babel/helper-member-expression-to-functions/README.md",
+  "sourceDirName": "node_modules/@babel/helper-member-expression-to-functions",
+  "slug": "/node_modules/@babel/helper-member-expression-to-functions/",
+  "permalink": "/Clear-AI/node_modules/@babel/helper-member-expression-to-functions/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/helper-member-expression-to-functions/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

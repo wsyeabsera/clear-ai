@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/serialize-javascript/README",
+  "title": "Serialize JavaScript",
+  "description": "Serialize JavaScript to a superset of JSON that includes regular expressions, dates and functions.",
+  "source": "@site/node_modules/serialize-javascript/README.md",
+  "sourceDirName": "node_modules/serialize-javascript",
+  "slug": "/node_modules/serialize-javascript/",
+  "permalink": "/Clear-AI/node_modules/serialize-javascript/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/serialize-javascript/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

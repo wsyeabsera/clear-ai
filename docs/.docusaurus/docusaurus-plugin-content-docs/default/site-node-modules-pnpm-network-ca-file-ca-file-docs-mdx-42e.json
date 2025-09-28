@@ -1,0 +1,21 @@
+{
+  "id": "node_modules/@pnpm/network.ca-file/ca-file.docs",
+  "title": "ca-file.docs",
+  "description": "A component for reading the certificate authority data from a text file",
+  "source": "@site/node_modules/@pnpm/network.ca-file/ca-file.docs.mdx",
+  "sourceDirName": "node_modules/@pnpm/network.ca-file",
+  "slug": "/node_modules/@pnpm/network.ca-file/ca-file.docs",
+  "permalink": "/Clear-AI/node_modules/@pnpm/network.ca-file/ca-file.docs",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@pnpm/network.ca-file/ca-file.docs.mdx",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "labels": [
+      "ca",
+      "certificate authority"
+    ],
+    "description": "A component for reading the certificate authority data from a text file"
+  }
+}

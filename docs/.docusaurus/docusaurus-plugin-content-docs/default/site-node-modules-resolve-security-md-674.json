@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/resolve/SECURITY",
+  "title": "Security",
+  "description": "Please email @ljharb or see https://tidelift.com/security if you have a potential security vulnerability to report.",
+  "source": "@site/node_modules/resolve/SECURITY.md",
+  "sourceDirName": "node_modules/resolve",
+  "slug": "/node_modules/resolve/SECURITY",
+  "permalink": "/Clear-AI/node_modules/resolve/SECURITY",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/resolve/SECURITY.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

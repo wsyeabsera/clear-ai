@@ -1,0 +1,18 @@
+{
+  "id": "tutorial-basics/congratulations",
+  "title": "Congratulations!",
+  "description": "You have just learned the basics of Docusaurus and made some changes to the initial template.",
+  "source": "@site/tutorial-basics/congratulations.md",
+  "sourceDirName": "tutorial-basics",
+  "slug": "/tutorial-basics/congratulations",
+  "permalink": "/Clear-AI/tutorial-basics/congratulations",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/tutorial-basics/congratulations.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 6,
+  "frontMatter": {
+    "sidebar_position": 6
+  }
+}

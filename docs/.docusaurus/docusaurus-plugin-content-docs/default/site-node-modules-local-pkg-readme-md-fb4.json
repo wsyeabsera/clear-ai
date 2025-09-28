@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/local-pkg/README",
+  "title": "local-pkg",
+  "description": "NPM version",
+  "source": "@site/node_modules/local-pkg/README.md",
+  "sourceDirName": "node_modules/local-pkg",
+  "slug": "/node_modules/local-pkg/",
+  "permalink": "/Clear-AI/node_modules/local-pkg/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/local-pkg/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

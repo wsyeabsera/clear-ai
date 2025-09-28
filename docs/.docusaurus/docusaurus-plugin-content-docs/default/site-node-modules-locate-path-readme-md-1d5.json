@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/locate-path/readme",
+  "title": "locate-path",
+  "description": "Get the first path that exists on disk of multiple paths",
+  "source": "@site/node_modules/locate-path/readme.md",
+  "sourceDirName": "node_modules/locate-path",
+  "slug": "/node_modules/locate-path/",
+  "permalink": "/Clear-AI/node_modules/locate-path/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/locate-path/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

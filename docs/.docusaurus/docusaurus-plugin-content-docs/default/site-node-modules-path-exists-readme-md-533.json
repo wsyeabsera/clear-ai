@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/path-exists/readme",
+  "title": "path-exists",
+  "description": "Check if a path exists",
+  "source": "@site/node_modules/path-exists/readme.md",
+  "sourceDirName": "node_modules/path-exists",
+  "slug": "/node_modules/path-exists/",
+  "permalink": "/Clear-AI/node_modules/path-exists/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/path-exists/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

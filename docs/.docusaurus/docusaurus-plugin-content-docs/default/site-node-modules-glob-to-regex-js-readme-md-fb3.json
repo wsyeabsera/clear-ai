@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/glob-to-regex.js/README",
+  "title": "glob-to-regex.js",
+  "description": "Transform GLOB patterns to JavaScript regular expressions for fast file path matching.",
+  "source": "@site/node_modules/glob-to-regex.js/README.md",
+  "sourceDirName": "node_modules/glob-to-regex.js",
+  "slug": "/node_modules/glob-to-regex.js/",
+  "permalink": "/Clear-AI/node_modules/glob-to-regex.js/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/glob-to-regex.js/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

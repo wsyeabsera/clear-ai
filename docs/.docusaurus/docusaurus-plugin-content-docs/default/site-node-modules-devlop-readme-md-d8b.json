@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/devlop/readme",
+  "title": "devlop",
+  "description": "Build",
+  "source": "@site/node_modules/devlop/readme.md",
+  "sourceDirName": "node_modules/devlop",
+  "slug": "/node_modules/devlop/",
+  "permalink": "/Clear-AI/node_modules/devlop/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/devlop/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

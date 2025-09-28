@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/parent-module/readme",
+  "title": "parent-module [![Build Status](https://travis-ci.org/sindresorhus/parent-module.svg?branch=master)](https://travis-ci.org/sindresorhus/parent-module)",
+  "description": "Get the path of the parent module",
+  "source": "@site/node_modules/parent-module/readme.md",
+  "sourceDirName": "node_modules/parent-module",
+  "slug": "/node_modules/parent-module/",
+  "permalink": "/Clear-AI/node_modules/parent-module/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/parent-module/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

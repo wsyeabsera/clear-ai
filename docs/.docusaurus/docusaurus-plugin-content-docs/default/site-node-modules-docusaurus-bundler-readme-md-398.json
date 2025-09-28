@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@docusaurus/bundler/README",
+  "title": "@docusaurus/bundler",
+  "description": "Docusaurus util package to abstract the current bundler.",
+  "source": "@site/node_modules/@docusaurus/bundler/README.md",
+  "sourceDirName": "node_modules/@docusaurus/bundler",
+  "slug": "/node_modules/@docusaurus/bundler/",
+  "permalink": "/Clear-AI/node_modules/@docusaurus/bundler/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@docusaurus/bundler/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

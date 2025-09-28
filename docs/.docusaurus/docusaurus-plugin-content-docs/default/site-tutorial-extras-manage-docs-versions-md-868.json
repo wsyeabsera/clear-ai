@@ -1,0 +1,18 @@
+{
+  "id": "tutorial-extras/manage-docs-versions",
+  "title": "Manage Docs Versions",
+  "description": "Docusaurus can manage multiple versions of your docs.",
+  "source": "@site/tutorial-extras/manage-docs-versions.md",
+  "sourceDirName": "tutorial-extras",
+  "slug": "/tutorial-extras/manage-docs-versions",
+  "permalink": "/Clear-AI/tutorial-extras/manage-docs-versions",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/tutorial-extras/manage-docs-versions.md",
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "sidebar_position": 1
+  }
+}

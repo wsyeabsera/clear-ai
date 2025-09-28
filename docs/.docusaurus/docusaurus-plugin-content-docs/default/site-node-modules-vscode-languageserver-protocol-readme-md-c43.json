@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/vscode-languageserver-protocol/README",
+  "title": "VSCode Language Server - Protocol Module",
+  "description": "NPM Version",
+  "source": "@site/node_modules/vscode-languageserver-protocol/README.md",
+  "sourceDirName": "node_modules/vscode-languageserver-protocol",
+  "slug": "/node_modules/vscode-languageserver-protocol/",
+  "permalink": "/Clear-AI/node_modules/vscode-languageserver-protocol/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/vscode-languageserver-protocol/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

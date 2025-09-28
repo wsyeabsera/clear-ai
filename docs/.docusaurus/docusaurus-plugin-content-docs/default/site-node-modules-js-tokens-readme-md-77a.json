@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/js-tokens/README",
+  "title": "Overview [![Build Status](https://travis-ci.org/lydell/js-tokens.svg?branch=master)](https://travis-ci.org/lydell/js-tokens)",
+  "description": "A regex that tokenizes JavaScript.",
+  "source": "@site/node_modules/js-tokens/README.md",
+  "sourceDirName": "node_modules/js-tokens",
+  "slug": "/node_modules/js-tokens/",
+  "permalink": "/Clear-AI/node_modules/js-tokens/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/js-tokens/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

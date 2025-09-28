@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/clean-stack/readme",
+  "title": "clean-stack [![Build Status](https://travis-ci.org/sindresorhus/clean-stack.svg?branch=master)](https://travis-ci.org/sindresorhus/clean-stack)",
+  "description": "Clean up error stack traces",
+  "source": "@site/node_modules/clean-stack/readme.md",
+  "sourceDirName": "node_modules/clean-stack",
+  "slug": "/node_modules/clean-stack/",
+  "permalink": "/Clear-AI/node_modules/clean-stack/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/clean-stack/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@docusaurus/plugin-content-docs/src/sidebars/README",
+  "title": "Sidebars",
+  "description": "This part is very complicated and hard to navigate. Sidebars are loaded through the following steps:",
+  "source": "@site/node_modules/@docusaurus/plugin-content-docs/src/sidebars/README.md",
+  "sourceDirName": "node_modules/@docusaurus/plugin-content-docs/src/sidebars",
+  "slug": "/node_modules/@docusaurus/plugin-content-docs/src/sidebars/",
+  "permalink": "/Clear-AI/node_modules/@docusaurus/plugin-content-docs/src/sidebars/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@docusaurus/plugin-content-docs/src/sidebars/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

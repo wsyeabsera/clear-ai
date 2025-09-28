@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/vscode-languageserver/README",
+  "title": "VSCode Language Server",
+  "description": "NPM Version",
+  "source": "@site/node_modules/vscode-languageserver/README.md",
+  "sourceDirName": "node_modules/vscode-languageserver",
+  "slug": "/node_modules/vscode-languageserver/",
+  "permalink": "/Clear-AI/node_modules/vscode-languageserver/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/vscode-languageserver/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

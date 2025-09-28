@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/tree-dump/README",
+  "title": "tree-dump",
+  "description": "Prints a tree structure to the console. Can print a binary tree or a tree with any number of children.",
+  "source": "@site/node_modules/tree-dump/README.md",
+  "sourceDirName": "node_modules/tree-dump",
+  "slug": "/node_modules/tree-dump/",
+  "permalink": "/Clear-AI/node_modules/tree-dump/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/tree-dump/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

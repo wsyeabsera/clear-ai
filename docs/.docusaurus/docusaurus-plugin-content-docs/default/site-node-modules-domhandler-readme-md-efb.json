@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/domhandler/readme",
+  "title": "domhandler [![Build Status](https://travis-ci.com/fb55/domhandler.svg?branch=master)](https://travis-ci.com/fb55/domhandler)",
+  "description": "The DOM handler creates a tree containing all nodes of a page.",
+  "source": "@site/node_modules/domhandler/readme.md",
+  "sourceDirName": "node_modules/domhandler",
+  "slug": "/node_modules/domhandler/",
+  "permalink": "/Clear-AI/node_modules/domhandler/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/domhandler/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@xtuc/long/README",
+  "title": "long.js",
+  "description": "A Long class for representing a 64 bit two's-complement integer value derived from the Closure Library",
+  "source": "@site/node_modules/@xtuc/long/README.md",
+  "sourceDirName": "node_modules/@xtuc/long",
+  "slug": "/node_modules/@xtuc/long/",
+  "permalink": "/Clear-AI/node_modules/@xtuc/long/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@xtuc/long/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

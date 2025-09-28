@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-runtime/README",
+  "title": "@babel/plugin-transform-runtime",
+  "description": "Externalise references to helpers and builtins, automatically polyfilling your code without polluting globals",
+  "source": "@site/node_modules/@babel/plugin-transform-runtime/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-runtime",
+  "slug": "/node_modules/@babel/plugin-transform-runtime/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-runtime/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-runtime/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

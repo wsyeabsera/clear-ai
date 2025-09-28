@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/postcss-minify-params/README",
+  "title": "postcss-minify-params [![Build Status][ci-img]][ci]",
+  "description": "Minify at-rule params with PostCSS.",
+  "source": "@site/node_modules/postcss-minify-params/README.md",
+  "sourceDirName": "node_modules/postcss-minify-params",
+  "slug": "/node_modules/postcss-minify-params/",
+  "permalink": "/Clear-AI/node_modules/postcss-minify-params/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/postcss-minify-params/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

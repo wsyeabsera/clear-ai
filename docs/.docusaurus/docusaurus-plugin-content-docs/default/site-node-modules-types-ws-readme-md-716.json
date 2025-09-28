@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@types/ws/README",
+  "title": "Installation",
+  "description": "npm install --save @types/ws",
+  "source": "@site/node_modules/@types/ws/README.md",
+  "sourceDirName": "node_modules/@types/ws",
+  "slug": "/node_modules/@types/ws/",
+  "permalink": "/Clear-AI/node_modules/@types/ws/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@types/ws/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

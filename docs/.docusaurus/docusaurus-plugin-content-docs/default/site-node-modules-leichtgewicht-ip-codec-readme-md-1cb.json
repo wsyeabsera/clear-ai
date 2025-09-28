@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@leichtgewicht/ip-codec/Readme",
+  "title": "@leichtgewicht/ip-codec",
+  "description": "Small package to encode or decode IP addresses from buffers to strings.",
+  "source": "@site/node_modules/@leichtgewicht/ip-codec/Readme.md",
+  "sourceDirName": "node_modules/@leichtgewicht/ip-codec",
+  "slug": "/node_modules/@leichtgewicht/ip-codec/",
+  "permalink": "/Clear-AI/node_modules/@leichtgewicht/ip-codec/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@leichtgewicht/ip-codec/Readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

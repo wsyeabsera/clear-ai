@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/vscode-languageserver-types/README",
+  "title": "VSCode Language Server Types",
+  "description": "NPM Version",
+  "source": "@site/node_modules/vscode-languageserver-types/README.md",
+  "sourceDirName": "node_modules/vscode-languageserver-types",
+  "slug": "/node_modules/vscode-languageserver-types/",
+  "permalink": "/Clear-AI/node_modules/vscode-languageserver-types/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/vscode-languageserver-types/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

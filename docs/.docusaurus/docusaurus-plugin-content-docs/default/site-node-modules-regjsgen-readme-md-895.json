@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/regjsgen/README",
+  "title": "regjsgen [![Build status][ci-img]][ci] [![Code coverage status][codecov-img]][codecov]",
+  "description": "Generate regular expressions from regjsparser’s AST.",
+  "source": "@site/node_modules/regjsgen/README.md",
+  "sourceDirName": "node_modules/regjsgen",
+  "slug": "/node_modules/regjsgen/",
+  "permalink": "/Clear-AI/node_modules/regjsgen/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/regjsgen/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

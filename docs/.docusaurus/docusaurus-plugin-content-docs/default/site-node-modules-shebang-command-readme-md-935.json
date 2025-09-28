@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/shebang-command/readme",
+  "title": "shebang-command [![Build Status](https://travis-ci.org/kevva/shebang-command.svg?branch=master)](https://travis-ci.org/kevva/shebang-command)",
+  "description": "Get the command from a shebang",
+  "source": "@site/node_modules/shebang-command/readme.md",
+  "sourceDirName": "node_modules/shebang-command",
+  "slug": "/node_modules/shebang-command/",
+  "permalink": "/Clear-AI/node_modules/shebang-command/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/shebang-command/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

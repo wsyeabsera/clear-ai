@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/events/security",
+  "title": "Security Policy",
+  "description": "Supported Versions",
+  "source": "@site/node_modules/events/security.md",
+  "sourceDirName": "node_modules/events",
+  "slug": "/node_modules/events/security",
+  "permalink": "/Clear-AI/node_modules/events/security",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/events/security.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

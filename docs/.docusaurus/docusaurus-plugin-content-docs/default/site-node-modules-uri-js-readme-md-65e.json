@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/uri-js/README",
+  "title": "URI.js",
+  "description": "URI.js is an RFC 3986 compliant, scheme extendable URI parsing/validating/resolving library for all JavaScript environments (browsers, Node.js, etc).",
+  "source": "@site/node_modules/uri-js/README.md",
+  "sourceDirName": "node_modules/uri-js",
+  "slug": "/node_modules/uri-js/",
+  "permalink": "/Clear-AI/node_modules/uri-js/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/uri-js/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

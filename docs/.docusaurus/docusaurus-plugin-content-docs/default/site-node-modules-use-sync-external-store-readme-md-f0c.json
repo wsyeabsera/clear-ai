@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/use-sync-external-store/README",
+  "title": "use-sync-external-store",
+  "description": "Backwards-compatible shim for React.useSyncExternalStore. Works with any React that supports Hooks.",
+  "source": "@site/node_modules/use-sync-external-store/README.md",
+  "sourceDirName": "node_modules/use-sync-external-store",
+  "slug": "/node_modules/use-sync-external-store/",
+  "permalink": "/Clear-AI/node_modules/use-sync-external-store/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/use-sync-external-store/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

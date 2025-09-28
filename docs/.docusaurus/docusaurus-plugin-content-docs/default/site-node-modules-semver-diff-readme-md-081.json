@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/semver-diff/readme",
+  "title": "semver-diff",
+  "description": "Get the diff type of two semver versions: 0.0.1 0.0.2 → patch",
+  "source": "@site/node_modules/semver-diff/readme.md",
+  "sourceDirName": "node_modules/semver-diff",
+  "slug": "/node_modules/semver-diff/",
+  "permalink": "/Clear-AI/node_modules/semver-diff/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/semver-diff/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

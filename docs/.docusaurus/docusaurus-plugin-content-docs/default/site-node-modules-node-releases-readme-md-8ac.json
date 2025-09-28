@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/node-releases/README",
+  "title": "Node.js releases data",
+  "description": "All data is located in data directory.",
+  "source": "@site/node_modules/node-releases/README.md",
+  "sourceDirName": "node_modules/node-releases",
+  "slug": "/node_modules/node-releases/",
+  "permalink": "/Clear-AI/node_modules/node-releases/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/node-releases/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

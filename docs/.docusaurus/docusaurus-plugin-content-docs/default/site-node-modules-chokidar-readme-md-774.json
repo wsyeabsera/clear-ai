@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/chokidar/README",
+  "title": "Chokidar [![Weekly downloads](https://img.shields.io/npm/dw/chokidar.svg)](https://github.com/paulmillr/chokidar) [![Yearly downloads](https://img.shields.io/npm/dy/chokidar.svg)](https://github.com/paulmillr/chokidar)",
+  "description": "Minimal and efficient cross-platform file watching library",
+  "source": "@site/node_modules/chokidar/README.md",
+  "sourceDirName": "node_modules/chokidar",
+  "slug": "/node_modules/chokidar/",
+  "permalink": "/Clear-AI/node_modules/chokidar/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/chokidar/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

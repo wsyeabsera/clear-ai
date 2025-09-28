@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/langium/README",
+  "title": "Langium",
+  "description": "Langium is a language engineering tool with built-in support for the Language Server Protocol. It has a simple and direct integration with the VS Code extension API.",
+  "source": "@site/node_modules/langium/README.md",
+  "sourceDirName": "node_modules/langium",
+  "slug": "/node_modules/langium/",
+  "permalink": "/Clear-AI/node_modules/langium/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/langium/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

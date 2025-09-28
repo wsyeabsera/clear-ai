@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/lines-and-columns/README",
+  "title": "lines-and-columns",
+  "description": "Maps lines and columns to character offsets and back. This is useful for parsers",
+  "source": "@site/node_modules/lines-and-columns/README.md",
+  "sourceDirName": "node_modules/lines-and-columns",
+  "slug": "/node_modules/lines-and-columns/",
+  "permalink": "/Clear-AI/node_modules/lines-and-columns/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/lines-and-columns/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

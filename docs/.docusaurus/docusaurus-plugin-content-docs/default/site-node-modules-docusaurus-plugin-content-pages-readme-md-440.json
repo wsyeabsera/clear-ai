@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@docusaurus/plugin-content-pages/README",
+  "title": "@docusaurus/plugin-content-pages",
+  "description": "Pages plugin for Docusaurus.",
+  "source": "@site/node_modules/@docusaurus/plugin-content-pages/README.md",
+  "sourceDirName": "node_modules/@docusaurus/plugin-content-pages",
+  "slug": "/node_modules/@docusaurus/plugin-content-pages/",
+  "permalink": "/Clear-AI/node_modules/@docusaurus/plugin-content-pages/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@docusaurus/plugin-content-pages/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/webpack/SECURITY",
+  "title": "Reporting Security Issues",
+  "description": "If you discover a security issue in webpack, please report it by sending an",
+  "source": "@site/node_modules/webpack/SECURITY.md",
+  "sourceDirName": "node_modules/webpack",
+  "slug": "/node_modules/webpack/SECURITY",
+  "permalink": "/Clear-AI/node_modules/webpack/SECURITY",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/webpack/SECURITY.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

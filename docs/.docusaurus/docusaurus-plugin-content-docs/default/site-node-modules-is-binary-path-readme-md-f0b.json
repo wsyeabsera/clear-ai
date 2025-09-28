@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/is-binary-path/readme",
+  "title": "is-binary-path [![Build Status](https://travis-ci.org/sindresorhus/is-binary-path.svg?branch=master)](https://travis-ci.org/sindresorhus/is-binary-path)",
+  "description": "Check if a file path is a binary file",
+  "source": "@site/node_modules/is-binary-path/readme.md",
+  "sourceDirName": "node_modules/is-binary-path",
+  "slug": "/node_modules/is-binary-path/",
+  "permalink": "/Clear-AI/node_modules/is-binary-path/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/is-binary-path/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

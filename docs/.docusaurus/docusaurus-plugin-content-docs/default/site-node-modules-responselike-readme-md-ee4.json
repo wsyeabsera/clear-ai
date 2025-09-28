@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/responselike/readme",
+  "title": "responselike",
+  "description": "A response-like object for mocking a Node.js HTTP response stream",
+  "source": "@site/node_modules/responselike/readme.md",
+  "sourceDirName": "node_modules/responselike",
+  "slug": "/node_modules/responselike/",
+  "permalink": "/Clear-AI/node_modules/responselike/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/responselike/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

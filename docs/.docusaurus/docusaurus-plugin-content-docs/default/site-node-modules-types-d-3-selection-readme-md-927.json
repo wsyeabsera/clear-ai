@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@types/d3-selection/README",
+  "title": "Installation",
+  "description": "npm install --save @types/d3-selection",
+  "source": "@site/node_modules/@types/d3-selection/README.md",
+  "sourceDirName": "node_modules/@types/d3-selection",
+  "slug": "/node_modules/@types/d3-selection/",
+  "permalink": "/Clear-AI/node_modules/@types/d3-selection/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@types/d3-selection/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

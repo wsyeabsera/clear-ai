@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/is-npm/readme",
+  "title": "is-npm",
+  "description": "Check if your code is running as an npm, yarn, pnpm, or bun script",
+  "source": "@site/node_modules/is-npm/readme.md",
+  "sourceDirName": "node_modules/is-npm",
+  "slug": "/node_modules/is-npm/",
+  "permalink": "/Clear-AI/node_modules/is-npm/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/is-npm/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

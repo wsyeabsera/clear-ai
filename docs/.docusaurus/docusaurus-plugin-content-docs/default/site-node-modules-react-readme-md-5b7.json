@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/react/README",
+  "title": "react",
+  "description": "React is a JavaScript library for creating user interfaces.",
+  "source": "@site/node_modules/react/README.md",
+  "sourceDirName": "node_modules/react",
+  "slug": "/node_modules/react/",
+  "permalink": "/Clear-AI/node_modules/react/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/react/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

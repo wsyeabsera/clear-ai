@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-modules-amd/README",
+  "title": "@babel/plugin-transform-modules-amd",
+  "description": "This plugin transforms ES2015 modules to AMD",
+  "source": "@site/node_modules/@babel/plugin-transform-modules-amd/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-modules-amd",
+  "slug": "/node_modules/@babel/plugin-transform-modules-amd/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-modules-amd/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-modules-amd/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

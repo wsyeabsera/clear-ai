@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@docusaurus/preset-classic/README",
+  "title": "@docusaurus/preset-classic",
+  "description": "Classic preset for Docusaurus.",
+  "source": "@site/node_modules/@docusaurus/preset-classic/README.md",
+  "sourceDirName": "node_modules/@docusaurus/preset-classic",
+  "slug": "/node_modules/@docusaurus/preset-classic/",
+  "permalink": "/Clear-AI/node_modules/@docusaurus/preset-classic/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@docusaurus/preset-classic/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

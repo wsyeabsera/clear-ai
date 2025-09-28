@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/import-fresh/readme",
+  "title": "import-fresh",
+  "description": "Import a module while bypassing the cache",
+  "source": "@site/node_modules/import-fresh/readme.md",
+  "sourceDirName": "node_modules/import-fresh",
+  "slug": "/node_modules/import-fresh/",
+  "permalink": "/Clear-AI/node_modules/import-fresh/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/import-fresh/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

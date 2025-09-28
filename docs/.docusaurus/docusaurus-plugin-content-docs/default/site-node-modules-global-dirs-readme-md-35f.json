@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/global-dirs/readme",
+  "title": "global-dirs",
+  "description": "Get the directory of globally installed packages and binaries",
+  "source": "@site/node_modules/global-dirs/readme.md",
+  "sourceDirName": "node_modules/global-dirs",
+  "slug": "/node_modules/global-dirs/",
+  "permalink": "/Clear-AI/node_modules/global-dirs/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/global-dirs/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

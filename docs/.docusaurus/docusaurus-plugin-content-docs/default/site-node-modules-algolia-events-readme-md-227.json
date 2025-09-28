@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@algolia/events/Readme",
+  "title": "events [![Build Status](https://travis-ci.org/Gozala/events.png?branch=master)](https://travis-ci.org/Gozala/events)",
+  "description": "Algolia's fork of Node's event emitter for all engines.",
+  "source": "@site/node_modules/@algolia/events/Readme.md",
+  "sourceDirName": "node_modules/@algolia/events",
+  "slug": "/node_modules/@algolia/events/",
+  "permalink": "/Clear-AI/node_modules/@algolia/events/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@algolia/events/Readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

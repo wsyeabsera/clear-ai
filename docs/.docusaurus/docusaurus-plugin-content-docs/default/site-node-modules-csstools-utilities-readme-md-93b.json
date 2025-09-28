@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@csstools/utilities/README",
+  "title": "Utilities",
+  "description": "Helpers that we use in many PostCSS plugins.",
+  "source": "@site/node_modules/@csstools/utilities/README.md",
+  "sourceDirName": "node_modules/@csstools/utilities",
+  "slug": "/node_modules/@csstools/utilities/",
+  "permalink": "/Clear-AI/node_modules/@csstools/utilities/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@csstools/utilities/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

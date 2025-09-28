@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-syntax-dynamic-import/README",
+  "title": "@babel/plugin-syntax-dynamic-import",
+  "description": "Allow parsing of import()",
+  "source": "@site/node_modules/@babel/plugin-syntax-dynamic-import/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-syntax-dynamic-import",
+  "slug": "/node_modules/@babel/plugin-syntax-dynamic-import/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-syntax-dynamic-import/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-syntax-dynamic-import/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

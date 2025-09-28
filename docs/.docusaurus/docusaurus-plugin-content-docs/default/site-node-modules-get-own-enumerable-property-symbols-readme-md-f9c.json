@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/get-own-enumerable-property-symbols/README",
+  "title": "get-own-enumerable-property-symbols [![Build Status](https://travis-ci.org/mightyiam/get-own-enumerable-property-symbols.svg?branch=master)](https://travis-ci.org/mightyiam/get-own-enumerable-property-symbols)",
+  "description": "Returns an array of all enumerable symbol properties found directly upon a given object.",
+  "source": "@site/node_modules/get-own-enumerable-property-symbols/README.md",
+  "sourceDirName": "node_modules/get-own-enumerable-property-symbols",
+  "slug": "/node_modules/get-own-enumerable-property-symbols/",
+  "permalink": "/Clear-AI/node_modules/get-own-enumerable-property-symbols/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/get-own-enumerable-property-symbols/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

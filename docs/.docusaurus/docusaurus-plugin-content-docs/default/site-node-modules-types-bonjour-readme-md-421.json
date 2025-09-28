@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@types/bonjour/README",
+  "title": "Installation",
+  "description": "npm install --save @types/bonjour",
+  "source": "@site/node_modules/@types/bonjour/README.md",
+  "sourceDirName": "node_modules/@types/bonjour",
+  "slug": "/node_modules/@types/bonjour/",
+  "permalink": "/Clear-AI/node_modules/@types/bonjour/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@types/bonjour/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

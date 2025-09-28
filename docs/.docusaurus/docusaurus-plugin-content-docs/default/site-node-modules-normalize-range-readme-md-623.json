@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/normalize-range/readme",
+  "title": "normalize-range",
+  "description": "Utility for normalizing a numeric range, with a wrapping function useful for polar coordinates.",
+  "source": "@site/node_modules/normalize-range/readme.md",
+  "sourceDirName": "node_modules/normalize-range",
+  "slug": "/node_modules/normalize-range/",
+  "permalink": "/Clear-AI/node_modules/normalize-range/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/normalize-range/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/body-parser/node_modules/iconv-lite/Changelog",
+  "title": "0.4.24 / 2018-08-22",
+  "description": "* Added MIK encoding (#196, by @Ivan-Kalatchev)",
+  "source": "@site/node_modules/body-parser/node_modules/iconv-lite/Changelog.md",
+  "sourceDirName": "node_modules/body-parser/node_modules/iconv-lite",
+  "slug": "/node_modules/body-parser/node_modules/iconv-lite/Changelog",
+  "permalink": "/Clear-AI/node_modules/body-parser/node_modules/iconv-lite/Changelog",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/body-parser/node_modules/iconv-lite/Changelog.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

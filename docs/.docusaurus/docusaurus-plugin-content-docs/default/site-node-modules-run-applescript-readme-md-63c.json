@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/run-applescript/readme",
+  "title": "run-applescript",
+  "description": "Run AppleScript and get the result",
+  "source": "@site/node_modules/run-applescript/readme.md",
+  "sourceDirName": "node_modules/run-applescript",
+  "slug": "/node_modules/run-applescript/",
+  "permalink": "/Clear-AI/node_modules/run-applescript/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/run-applescript/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

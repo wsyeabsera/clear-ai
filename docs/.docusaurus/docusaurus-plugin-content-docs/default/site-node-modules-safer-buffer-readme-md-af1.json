@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/safer-buffer/Readme",
+  "title": "safer-buffer [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![javascript style guide][standard-image]][standard-url] [![Security Responsible Disclosure][secuirty-image]][secuirty-url]",
+  "description": "[travis-image]//travis-ci.org/ChALkeR/safer-buffer.svg?branch=master",
+  "source": "@site/node_modules/safer-buffer/Readme.md",
+  "sourceDirName": "node_modules/safer-buffer",
+  "slug": "/node_modules/safer-buffer/",
+  "permalink": "/Clear-AI/node_modules/safer-buffer/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/safer-buffer/Readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

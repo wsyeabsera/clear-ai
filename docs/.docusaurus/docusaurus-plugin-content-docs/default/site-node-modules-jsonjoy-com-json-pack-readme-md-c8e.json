@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@jsonjoy.com/json-pack/README",
+  "title": "json-pack",
+  "description": "The fastest JSON serialization and deserialization library for JavaScript, Node.js, browser.",
+  "source": "@site/node_modules/@jsonjoy.com/json-pack/README.md",
+  "sourceDirName": "node_modules/@jsonjoy.com/json-pack",
+  "slug": "/node_modules/@jsonjoy.com/json-pack/",
+  "permalink": "/Clear-AI/node_modules/@jsonjoy.com/json-pack/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@jsonjoy.com/json-pack/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

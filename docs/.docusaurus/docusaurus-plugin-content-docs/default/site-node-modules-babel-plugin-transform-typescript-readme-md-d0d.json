@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-typescript/README",
+  "title": "@babel/plugin-transform-typescript",
+  "description": "Transform TypeScript into ES.next",
+  "source": "@site/node_modules/@babel/plugin-transform-typescript/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-typescript",
+  "slug": "/node_modules/@babel/plugin-transform-typescript/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-typescript/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-typescript/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

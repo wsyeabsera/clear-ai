@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@docusaurus/plugin-debug/README",
+  "title": "@docusaurus/plugin-debug",
+  "description": "Debug plugin for Docusaurus.",
+  "source": "@site/node_modules/@docusaurus/plugin-debug/README.md",
+  "sourceDirName": "node_modules/@docusaurus/plugin-debug",
+  "slug": "/node_modules/@docusaurus/plugin-debug/",
+  "permalink": "/Clear-AI/node_modules/@docusaurus/plugin-debug/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@docusaurus/plugin-debug/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

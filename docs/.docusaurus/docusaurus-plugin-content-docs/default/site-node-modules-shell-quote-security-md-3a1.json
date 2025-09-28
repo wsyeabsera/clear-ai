@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/shell-quote/security",
+  "title": "Security Policy",
+  "description": "Supported Versions",
+  "source": "@site/node_modules/shell-quote/security.md",
+  "sourceDirName": "node_modules/shell-quote",
+  "slug": "/node_modules/shell-quote/security",
+  "permalink": "/Clear-AI/node_modules/shell-quote/security",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/shell-quote/security.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

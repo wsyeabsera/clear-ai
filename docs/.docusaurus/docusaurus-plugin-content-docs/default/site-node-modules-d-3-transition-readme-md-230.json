@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/d3-transition/README",
+  "title": "d3-transition",
+  "description": "A transition is a selection-like interface for animating changes to the DOM. Instead of applying changes instantaneously, transitions smoothly interpolate the DOM from its current state to the desired target state over a given duration.",
+  "source": "@site/node_modules/d3-transition/README.md",
+  "sourceDirName": "node_modules/d3-transition",
+  "slug": "/node_modules/d3-transition/",
+  "permalink": "/Clear-AI/node_modules/d3-transition/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/d3-transition/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

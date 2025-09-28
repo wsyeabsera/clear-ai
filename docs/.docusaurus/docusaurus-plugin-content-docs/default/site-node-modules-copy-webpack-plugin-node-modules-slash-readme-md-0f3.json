@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/copy-webpack-plugin/node_modules/slash/readme",
+  "title": "slash",
+  "description": "Convert Windows backslash paths to slash paths: foo\\\\bar ➔ foo/bar",
+  "source": "@site/node_modules/copy-webpack-plugin/node_modules/slash/readme.md",
+  "sourceDirName": "node_modules/copy-webpack-plugin/node_modules/slash",
+  "slug": "/node_modules/copy-webpack-plugin/node_modules/slash/",
+  "permalink": "/Clear-AI/node_modules/copy-webpack-plugin/node_modules/slash/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/copy-webpack-plugin/node_modules/slash/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

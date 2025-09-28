@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/watchpack/README",
+  "title": "watchpack",
+  "description": "Wrapper library for directory and file watching.",
+  "source": "@site/node_modules/watchpack/README.md",
+  "sourceDirName": "node_modules/watchpack",
+  "slug": "/node_modules/watchpack/",
+  "permalink": "/Clear-AI/node_modules/watchpack/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/watchpack/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

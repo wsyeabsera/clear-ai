@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@jridgewell/source-map/README",
+  "title": "@jridgewell/source-map",
+  "description": "Packages @jridgewell/trace-mapping and @jridgewell/gen-mapping into the familiar source-map API",
+  "source": "@site/node_modules/@jridgewell/source-map/README.md",
+  "sourceDirName": "node_modules/@jridgewell/source-map",
+  "slug": "/node_modules/@jridgewell/source-map/",
+  "permalink": "/Clear-AI/node_modules/@jridgewell/source-map/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@jridgewell/source-map/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/boolbase/README",
+  "title": "README",
+  "description": "This very simple module provides two basic functions, one that always returns true (trueFunc) and one that always returns false (falseFunc).",
+  "source": "@site/node_modules/boolbase/README.md",
+  "sourceDirName": "node_modules/boolbase",
+  "slug": "/node_modules/boolbase/",
+  "permalink": "/Clear-AI/node_modules/boolbase/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/boolbase/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

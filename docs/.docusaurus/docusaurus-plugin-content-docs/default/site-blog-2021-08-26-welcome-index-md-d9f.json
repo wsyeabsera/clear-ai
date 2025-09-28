@@ -1,0 +1,43 @@
+{
+  "id": "blog/2021-08-26-welcome/index",
+  "title": "Welcome",
+  "description": "Docusaurus blogging features are powered by the blog plugin.",
+  "source": "@site/blog/2021-08-26-welcome/index.md",
+  "sourceDirName": "blog/2021-08-26-welcome",
+  "slug": "/blog/2021-08-26-welcome/welcome",
+  "permalink": "/Clear-AI/blog/2021-08-26-welcome/welcome",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/blog/2021-08-26-welcome/index.md",
+  "tags": [
+    {
+      "inline": true,
+      "label": "facebook",
+      "permalink": "/Clear-AI/tags/facebook"
+    },
+    {
+      "inline": true,
+      "label": "hello",
+      "permalink": "/Clear-AI/tags/hello"
+    },
+    {
+      "inline": true,
+      "label": "docusaurus",
+      "permalink": "/Clear-AI/tags/docusaurus"
+    }
+  ],
+  "version": "current",
+  "frontMatter": {
+    "slug": "welcome",
+    "title": "Welcome",
+    "authors": [
+      "slorber",
+      "yangshun"
+    ],
+    "tags": [
+      "facebook",
+      "hello",
+      "docusaurus"
+    ]
+  }
+}

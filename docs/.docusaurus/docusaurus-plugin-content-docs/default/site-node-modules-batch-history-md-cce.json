@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/batch/History",
+  "title": "0.6.1 / 2017-05-16",
+  "description": "* fix process.nextTick detection in Node.js",
+  "source": "@site/node_modules/batch/History.md",
+  "sourceDirName": "node_modules/batch",
+  "slug": "/node_modules/batch/History",
+  "permalink": "/Clear-AI/node_modules/batch/History",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/batch/History.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

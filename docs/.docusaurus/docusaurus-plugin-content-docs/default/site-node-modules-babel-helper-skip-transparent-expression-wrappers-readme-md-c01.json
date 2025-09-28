@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/helper-skip-transparent-expression-wrappers/README",
+  "title": "@babel/helper-skip-transparent-expression-wrappers",
+  "description": "Helper which skips types and parentheses",
+  "source": "@site/node_modules/@babel/helper-skip-transparent-expression-wrappers/README.md",
+  "sourceDirName": "node_modules/@babel/helper-skip-transparent-expression-wrappers",
+  "slug": "/node_modules/@babel/helper-skip-transparent-expression-wrappers/",
+  "permalink": "/Clear-AI/node_modules/@babel/helper-skip-transparent-expression-wrappers/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/helper-skip-transparent-expression-wrappers/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@ai-sdk/gateway/README",
+  "title": "AI SDK - Gateway Provider",
+  "description": "The Gateway provider for the AI SDK allows the use of a wide variety of AI models and providers.",
+  "source": "@site/node_modules/@ai-sdk/gateway/README.md",
+  "sourceDirName": "node_modules/@ai-sdk/gateway",
+  "slug": "/node_modules/@ai-sdk/gateway/",
+  "permalink": "/Clear-AI/node_modules/@ai-sdk/gateway/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@ai-sdk/gateway/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

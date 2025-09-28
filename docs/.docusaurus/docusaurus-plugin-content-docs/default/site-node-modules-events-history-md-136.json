@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/events/History",
+  "title": "3.3.0",
+  "description": "- Support EventTarget emitters in events.once from Node.js 12.11.0.",
+  "source": "@site/node_modules/events/History.md",
+  "sourceDirName": "node_modules/events",
+  "slug": "/node_modules/events/History",
+  "permalink": "/Clear-AI/node_modules/events/History",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/events/History.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

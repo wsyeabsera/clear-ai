@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-transform-block-scoping/README",
+  "title": "@babel/plugin-transform-block-scoping",
+  "description": "Compile ES2015 block scoping (const and let) to ES5",
+  "source": "@site/node_modules/@babel/plugin-transform-block-scoping/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-transform-block-scoping",
+  "slug": "/node_modules/@babel/plugin-transform-block-scoping/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-transform-block-scoping/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-transform-block-scoping/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

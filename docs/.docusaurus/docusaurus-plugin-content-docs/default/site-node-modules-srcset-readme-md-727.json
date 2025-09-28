@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/srcset/readme",
+  "title": "srcset",
+  "description": "Parse and stringify the HTML `` srcset attribute.",
+  "source": "@site/node_modules/srcset/readme.md",
+  "sourceDirName": "node_modules/srcset",
+  "slug": "/node_modules/srcset/",
+  "permalink": "/Clear-AI/node_modules/srcset/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/srcset/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

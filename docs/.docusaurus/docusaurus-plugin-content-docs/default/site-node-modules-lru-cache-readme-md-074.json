@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/lru-cache/README",
+  "title": "lru cache",
+  "description": "A cache object that deletes the least-recently-used items.",
+  "source": "@site/node_modules/lru-cache/README.md",
+  "sourceDirName": "node_modules/lru-cache",
+  "slug": "/node_modules/lru-cache/",
+  "permalink": "/Clear-AI/node_modules/lru-cache/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/lru-cache/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

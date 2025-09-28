@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/@babel/plugin-syntax-import-assertions/README",
+  "title": "@babel/plugin-syntax-import-assertions",
+  "description": "Allow parsing of the module assertion attributes in the import statement",
+  "source": "@site/node_modules/@babel/plugin-syntax-import-assertions/README.md",
+  "sourceDirName": "node_modules/@babel/plugin-syntax-import-assertions",
+  "slug": "/node_modules/@babel/plugin-syntax-import-assertions/",
+  "permalink": "/Clear-AI/node_modules/@babel/plugin-syntax-import-assertions/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/@babel/plugin-syntax-import-assertions/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/default-browser-id/readme",
+  "title": "default-browser-id",
+  "description": "Get the bundle identifier of the default browser (macOS)\\",
+  "source": "@site/node_modules/default-browser-id/readme.md",
+  "sourceDirName": "node_modules/default-browser-id",
+  "slug": "/node_modules/default-browser-id/",
+  "permalink": "/Clear-AI/node_modules/default-browser-id/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/default-browser-id/readme.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

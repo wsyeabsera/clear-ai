@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/mime/README",
+  "title": "mime",
+  "description": "Comprehensive MIME type mapping API based on mime-db module.",
+  "source": "@site/node_modules/mime/README.md",
+  "sourceDirName": "node_modules/mime",
+  "slug": "/node_modules/mime/",
+  "permalink": "/Clear-AI/node_modules/mime/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/mime/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

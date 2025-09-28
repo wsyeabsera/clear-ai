@@ -8,7 +8,7 @@
           "label": "Next",
           "isLast": true,
           "path": "/Clear-AI/",
-          "mainDocId": "intro",
+          "mainDocId": "README",
           "docs": [
             {
               "id": "api/overview",
@@ -64,6 +64,10 @@
               "id": "packages/shared",
               "path": "/Clear-AI/packages/shared",
               "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "README",
+              "path": "/Clear-AI/"
             },
             {
               "id": "tutorial-basics/congratulations",

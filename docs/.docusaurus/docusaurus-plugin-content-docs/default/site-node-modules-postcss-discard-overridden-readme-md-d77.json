@@ -1,0 +1,15 @@
+{
+  "id": "node_modules/postcss-discard-overridden/README",
+  "title": "PostCSS Discard Overridden",
+  "description": "[PostCSS] plugin to discard overridden @keyframes or @counter-style.",
+  "source": "@site/node_modules/postcss-discard-overridden/README.md",
+  "sourceDirName": "node_modules/postcss-discard-overridden",
+  "slug": "/node_modules/postcss-discard-overridden/",
+  "permalink": "/Clear-AI/node_modules/postcss-discard-overridden/",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/node_modules/postcss-discard-overridden/README.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}
