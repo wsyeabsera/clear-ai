@@ -1,324 +1,292 @@
-# Clear-AI: Unified Memory + Tool Execution + Chat Interface
+# clear-ai
 
-A comprehensive AI framework that combines memory management, tool execution, and conversational interfaces into a single, intelligent system.
+Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration. Perfect for CLI tools, APIs, and server applications.
 
-## 🚀 Project Overview
-
-Clear-AI is designed to provide a ChatGPT-like experience with advanced memory capabilities and seamless tool execution. The system intelligently classifies user queries and routes them through the appropriate execution path, whether that's pure conversation, tool execution, or a hybrid approach.
-
-## 🏗️ Architecture
-
-### Current System Components
-
-- **Memory System**: Episodic (Neo4j) + Semantic (Pinecone) memory with Ollama embeddings
-- **Tool Execution**: LangChain-based tool execution with MCP support
-- **Client Interface**: React-based UI with theme system
-- **Shared Package**: Common types, services, and utilities
-
-### Proposed Unified Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Client Interface                         │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐ │
-│  │   Chat Window   │  │  Memory Panel   │  │ Tool Status  │ │
-│  │                 │  │                 │  │              │ │
-│  └─────────────────┘  └─────────────────┘  └──────────────┘ │
-└─────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-┌─────────────────────────────────────────────────────────────┐
-│                 Unified Chat Endpoint                       │
-│              `/api/chat/execute`                            │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐ │
-│  │ Intent Classifier│  │ Memory Context  │  │Tool Executor │ │
-│  │                 │  │   Retrieval     │  │              │ │
-│  └─────────────────┘  └─────────────────┘  └──────────────┘ │
-└─────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Backend Services                         │
-│  ┌─────────────────┐  ┌─────────────────┐  ┌──────────────┐ │
-│  │ Memory Service  │  │ Tool Execution  │  │ LLM Service  │ │
-│  │ (Neo4j/Pinecone)│  │ (LangChain/MCP) │  │(OpenAI/Ollama)│ │
-│  └─────────────────┘  └─────────────────┘  └──────────────┘ │
-└─────────────────────────────────────────────────────────────┘
-```
-
-## 🎯 Implementation Plan
-
-### Phase 1: Intent Classification System
-
-**Location**: `packages/shared/src/services/IntentClassifierService.ts`
-
-Create an intelligent classifier that determines execution type based on user queries:
-
-```typescript
-export interface QueryIntent {
-  type: 'memory_chat' | 'tool_execution' | 'hybrid' | 'knowledge_search' | 'conversation'
-  confidence: number
-  requiredTools?: string[]
-  memoryContext?: boolean
-  parameters?: Record<string, any>
-}
-```
-
-**Intent Types**:
-- **`memory_chat`**: Pure conversation with memory context
-- **`tool_execution`**: Direct tool usage (e.g., "Calculate 5 + 3")
-- **`hybrid`**: Tool execution with memory context
-- **`knowledge_search`**: Search existing memories/knowledge
-- **`conversation`**: General chat without specific intent
-
-### Phase 2: Unified Chat Endpoint
-
-**Location**: `packages/server/src/routes/chatRoutes.ts`
-
-Create a single intelligent endpoint that handles all types of queries:
-
-```typescript
-// POST /api/chat/execute
-{
-  userId: string
-  sessionId: string
-  message: string
-  options?: {
-    includeMemory?: boolean
-    autoExecuteTools?: boolean
-    model?: string
-    temperature?: number
-  }
-}
-```
-
-**Response Structure**:
-```typescript
-{
-  success: boolean
-  data: {
-    response: string
-    intent: QueryIntent
-    executedTools?: ToolExecutionResult[]
-    memoryContext?: MemoryContext
-    conversationHistory?: ChatMessage[]
-    storedMemory?: EpisodicMemory
-  }
-}
-```
-
-### Phase 3: ChatGPT-like Client Interface
-
-**Location**: `packages/client/src/pages/ChatInterface.tsx`
-
-Build a comprehensive chat interface with:
-
-- **Message History**: Scrollable chat interface with message types
-- **Memory Indicators**: Visual cues showing memory usage
-- **Tool Execution Status**: Real-time feedback on tool execution
-- **Context Panel**: Sidebar with relevant memories and tool results
-- **Typing Indicators**: Show AI processing status
-- **Streaming Responses**: Real-time response streaming
-
-### Phase 4: Enhanced Memory Integration
-
-**Features**:
-- Automatic memory storage for every interaction
-- Intelligent context retrieval for each query
-- Memory summarization for long conversations
-- Cross-session memory persistence
-- Memory search and filtering
-
-### Phase 5: Advanced Tool Execution
-
-**Features**:
-- Natural language parameter extraction
-- Multi-tool workflow execution
-- Error handling and retry logic
-- Tool result integration into responses
-- Tool execution history storage
-
-## 🔧 Technical Implementation
-
-### 1. Intent Classification Service
-
-```typescript
-// packages/shared/src/services/IntentClassifierService.ts
-export class IntentClassifierService {
-  async classifyQuery(query: string, context?: any): Promise<QueryIntent> {
-    // Use LLM to analyze query intent
-    // Return structured intent classification
-  }
-}
-```
-
-### 2. Unified Chat Controller
-
-```typescript
-// packages/server/src/controllers/chatController.ts
-export class ChatController {
-  async executeQuery(req: Request, res: Response) {
-    // 1. Classify intent
-    // 2. Retrieve memory context
-    // 3. Execute tools if needed
-    // 4. Generate response
-    // 5. Store conversation
-    // 6. Return enriched response
-  }
-}
-```
-
-### 3. Chat Interface Component
-
-```typescript
-// packages/client/src/pages/ChatInterface.tsx
-export const ChatInterface = () => {
-  // State management for messages, memory, tools
-  // WebSocket connection for real-time updates
-  // UI components for different message types
-}
-```
-
-## 📋 Development Steps
-
-### Step 1: Create Intent Classifier
-- [ ] Define intent types and interfaces
-- [ ] Implement LLM-based classification
-- [ ] Add confidence scoring
-- [ ] Create unit tests
-
-### Step 2: Build Unified Endpoint
-- [ ] Create chat routes and controller
-- [ ] Integrate intent classification
-- [ ] Add memory context retrieval
-- [ ] Implement tool execution flow
-- [ ] Add response generation
-
-### Step 3: Create Chat Interface
-- [ ] Design chat UI components
-- [ ] Implement message history
-- [ ] Add memory context panel
-- [ ] Create tool execution indicators
-- [ ] Add streaming response support
-
-### Step 4: Integrate Memory System
-- [ ] Connect episodic memory storage
-- [ ] Implement semantic memory retrieval
-- [ ] Add memory summarization
-- [ ] Create memory search functionality
-
-### Step 5: Add Tool Execution
-- [ ] Integrate existing tool execution service
-- [ ] Add natural language parameter extraction
-- [ ] Implement multi-tool workflows
-- [ ] Add tool result visualization
-
-### Step 6: Advanced Features
-- [ ] Add file upload support
-- [ ] Implement image analysis
-- [ ] Create conversation export
-- [ ] Add memory management UI
-
-## 🎨 User Experience Features
-
-### ChatGPT-like Interface
-- **Natural Conversation**: Seamless back-and-forth dialogue
-- **Memory Awareness**: "Based on our previous discussion..."
-- **Tool Integration**: "I'll calculate that for you using the calculator tool"
-- **Context Preservation**: Maintains conversation context across sessions
-
-### Visual Feedback
-- **Memory Indicators**: Show when memory is being retrieved/stored
-- **Tool Execution Status**: Real-time feedback on tool operations
-- **Processing Indicators**: Typing animations and status messages
-- **Context Panel**: Sidebar showing relevant memories and tool results
-
-### Advanced Capabilities
-- **Multi-Tool Workflows**: "First get the weather, then suggest activities"
-- **Memory Search**: "What did we discuss about Python last week?"
-- **Knowledge Storage**: Automatically store important information
-- **Conversation History**: Full conversation history with search
-
-## 🔌 API Endpoints
-
-### Primary Endpoint
-```
-POST /api/chat/execute
-```
-
-### Supporting Endpoints
-```
-GET  /api/chat/history/:userId/:sessionId
-POST /api/chat/search
-GET  /api/chat/memory/:userId
-DELETE /api/chat/memory/:userId
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 18+
-- Neo4j Database
-- Ollama (for local embeddings)
-- OpenAI API Key (optional)
-
-### Installation
-```bash
-# Clone repository
-git clone <repository-url>
-cd Clear-AI
-
-# Install dependencies
-yarn install
-
-# Setup environment
-cp packages/server/env.example packages/server/.env
-# Edit .env with your credentials
-
-# Build shared package
-yarn build:shared
-
-# Start development servers
-yarn dev:server
-yarn dev:client
-```
-
-### Quick Start
-1. Navigate to `http://localhost:5173/chat`
-2. Start chatting with the AI
-3. Try commands like:
-   - "Calculate 5 + 3"
-   - "Remember that I like Python programming"
-   - "What did we discuss about machine learning?"
+[![npm version](https://badge.fury.io/js/clear-ai.svg)](https://badge.fury.io/js/clear-ai)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
+[![Documentation](https://img.shields.io/badge/Documentation-Clear%20AI-blue)](https://wsyeabsera.github.io/clear-ai/docs/intro)
 
 ## 📚 Documentation
 
-- [Memory System Quick Reference](MEMORY_QUICK_REFERENCE.md)
-- [Tool Execution API](packages/server/TOOL_EXECUTION_API.md)
-- [Client Components](packages/client/README.md)
-- [Shared Services](packages/shared/README.md)
+**📖 [Full Documentation](https://wsyeabsera.github.io/clear-ai/docs/intro)** - Complete guides, API reference, and examples
+
+- [Getting Started](https://wsyeabsera.github.io/clear-ai/docs/intro)
+- [Architecture Overview](https://wsyeabsera.github.io/clear-ai/docs/architecture/overview)
+- [API Reference](https://wsyeabsera.github.io/clear-ai/docs/api/overview)
+- [Package Guides](https://wsyeabsera.github.io/clear-ai/docs/packages/client)
+
+## 🚀 Quick Start
+
+```bash
+npm install clear-ai
+```
+
+```typescript
+import { ClearAI } from "clear-ai";
+
+// Initialize the framework for CLI usage
+const ai = new ClearAI({
+  llm: {
+    openaiApiKey: "your-key",
+    ollamaBaseUrl: "http://localhost:11434",
+  },
+  server: {
+    port: 3001,
+  },
+});
+
+// Start everything
+await ai.init();
+
+// Access services
+const mcpServer = ai.getMCP();
+const llmService = ai.getLLM();
+const toolService = ai.getTools();
+```
+
+## 📦 What's Included
+
+### MCP (Model Context Protocol) - `clear-ai-mcp-basic`
+
+- **MCPServer** - Full MCP protocol implementation
+- **ToolRegistry** - Dynamic tool registration and management
+- **Built-in Tools** - API calls, JSON processing, file operations
+
+### Shared Services - `clear-ai-shared`
+
+- **SimpleLangChainService** - Multi-provider LLM integration
+- **ToolExecutionService** - Tool registration and execution
+- **SimpleWorkflowService** - Workflow orchestration
+- **Logger** - Structured logging utilities
+
+### Server - `clear-ai-server`
+
+- **Express API** - RESTful endpoints for tool execution
+- **Workflow Execution** - LangGraph workflow orchestration
+- **Health Monitoring** - System health and status endpoints
+
+### Client - `@clear-ai/client` (Private - Local Development Only)
+
+- **React Components** - Pre-built UI components with Storybook
+- **Theme System** - Multiple visual themes
+- **Web Interface** - Browser-based tool execution interface
+
+## 🎯 Usage Examples
+
+### Basic Tool Execution
+
+```typescript
+import { MCPServer, ToolRegistry } from "clear-ai-mcp-basic";
+
+const server = new MCPServer();
+const tools = server.getToolRegistry();
+
+// Execute an API call
+const result = await tools.executeTool("api_call", {
+  url: "https://api.example.com/users/1",
+  method: "GET",
+});
+```
+
+### LLM Integration
+
+```typescript
+import { SimpleLangChainService } from "clear-ai-shared";
+
+const llm = new SimpleLangChainService({
+  openaiApiKey: "your-key",
+  ollamaBaseUrl: "http://localhost:11434",
+});
+
+const response = await llm.complete("Hello, world!", {
+  model: "ollama",
+  temperature: 0.7,
+});
+```
+
+### Workflow Execution
+
+```typescript
+import { SimpleWorkflowService, ToolExecutionService } from "clear-ai-shared";
+
+const toolService = new ToolExecutionService(llmConfig);
+const workflow = new SimpleWorkflowService(llmConfig, toolService);
+
+const result = await workflow.executeWorkflow(
+  "Get weather data and format it nicely"
+);
+```
+
+### Server API
+
+```typescript
+import { createServer } from "clear-ai-server";
+
+const server = createServer({
+  port: 3001,
+  mcpConfig: { tools: ["api_call", "json_reader"] },
+  llmConfig: { openaiApiKey: "your-key" },
+});
+
+await server.start();
+```
+
+### CLI Application
+
+```typescript
+import { ClearAI, MCPServer } from "clear-ai-core";
+
+async function main() {
+  const ai = new ClearAI({
+    llm: { openaiApiKey: process.env.OPENAI_API_KEY },
+    server: { port: 3001 },
+  });
+
+  await ai.init();
+
+  // Use the MCP server for tool execution
+  const mcpServer = ai.getMCP();
+  const result = await mcpServer.getToolRegistry().executeTool("api_call", {
+    url: "https://api.example.com/data",
+    method: "GET",
+  });
+
+  console.log("Result:", result);
+}
+
+main().catch(console.error);
+```
+
+## 🏗️ Architecture
+
+```
+clear-ai-core
+├── clear-ai-mcp-basic # Model Context Protocol
+├── clear-ai-shared    # Shared services & utilities
+├── clear-ai-server    # Express API server
+└── @clear-ai/client   # React web interface (private)
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+```bash
+# LLM Configuration
+OPENAI_API_KEY=your-key
+OLLAMA_BASE_URL=http://localhost:11434
+MISTRAL_API_KEY=your-key
+GROQ_API_KEY=your-key
+
+# Langfuse (Observability)
+LANGFUSE_SECRET_KEY=your-key
+LANGFUSE_PUBLIC_KEY=your-key
+LANGFUSE_BASE_URL=https://cloud.langfuse.com
+
+# Server Configuration
+PORT=3001
+NODE_ENV=production
+```
+
+### Framework Configuration
+
+```typescript
+const config: ClearAIConfig = {
+  mcp: {
+    tools: ["api_call", "json_reader", "file_reader"],
+  },
+  llm: {
+    openaiApiKey: process.env.OPENAI_API_KEY,
+    ollamaBaseUrl: process.env.OLLAMA_BASE_URL,
+    langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY,
+  },
+  server: {
+    port: 3001,
+    cors: { origin: ["http://localhost:3000"] },
+  },
+};
+```
+
+## 🛠️ Development
+
+### Prerequisites
+
+- Node.js >= 18.0.0
+- npm >= 10.0.0
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/wsyeabsera/clear-ai.git
+cd clear-ai
+
+# Install dependencies
+npm install
+
+# Build all packages
+npm run build
+
+# Start development servers
+npm run dev
+```
+
+### Available Scripts
+
+- `npm run dev` - Start all packages in development mode
+- `npm run build` - Build all packages
+- `npm run lint` - Run ESLint on all packages
+- `npm run type-check` - Run TypeScript type checking
+- `npm run clean` - Clean all build artifacts
+
+## 📚 Documentation
+
+- **[Getting Started](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/getting-started/quick-start.md)** - Quick start guide
+- **[API Reference](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/api/overview.md)** - Complete API documentation
+- **[Tutorials](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/tutorials/building-your-first-tool.md)** - Step-by-step tutorials
+- **[Architecture](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/architecture/overview.md)** - System architecture overview
+
+## 📖 Documentation Access
+
+### From NPM
+When you install the package, you can access documentation via:
+```bash
+npm docs clear-ai-core
+# or
+npm home clear-ai-core
+```
+
+### Direct Links
+- **Main Documentation**: https://wsyeabsera.github.io/Clear-AI/
+- **Getting Started**: https://wsyeabsera.github.io/Clear-AI/docs/intro
+- **API Reference**: https://wsyeabsera.github.io/Clear-AI/docs/api/overview
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Implement your changes
-4. Add tests
-5. Submit a pull request
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
-## 📄 License
+## 📝 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 🙏 Acknowledgments
 
-For support and questions:
-- Create an issue in the repository
-- Check the documentation
-- Review the examples in the `examples/` directory
+- [LangChain](https://langchain.com/) - LLM framework
+- [Model Context Protocol](https://modelcontextprotocol.io/) - Tool protocol
+- [Express.js](https://expressjs.com/) - Web framework
+- [React](https://reactjs.org/) - UI library
+
+## 📞 Support
+
+- 📖 **Documentation**: [GitHub Docs](https://github.com/wsyeabsera/clear-ai/tree/main/research/docs)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/wsyeabsera/clear-ai/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/wsyeabsera/clear-ai/discussions)
 
 ---
 
-**Status**: 🚧 In Development
-
-This README outlines the implementation plan for the unified memory + tool execution + chat interface. The system is designed to provide a ChatGPT-like experience with advanced memory capabilities and seamless tool execution.
+Made with ❤️ by the Clear AI Team
