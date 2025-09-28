@@ -7,7 +7,7 @@ import {
 } from '@clear-ai/shared';
 import { initializeMemoryService } from './memoryController';
 import dotenv from 'dotenv';
-dotenv.config({path: './.env'});
+dotenv.config({path: './packages/server/.env'});
 
 export const memoryChatController = {
   // Initialize memory service for chat

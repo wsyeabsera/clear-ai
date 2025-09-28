@@ -78,8 +78,8 @@ export const agentController = {
           indexName: process.env.PINECONE_INDEX_NAME || 'clear-ai-memories'
         },
         embedding: {
-          model: process.env.EMBEDDING_MODEL || 'nomic-embed-text',
-          dimensions: parseInt(process.env.EMBEDDING_DIMENSIONS || '768')
+          model: process.env.MEMORY_EMBEDDING_MODEL || 'nomic-embed-text',
+          dimensions: parseInt(process.env.MEMORY_EMBEDDING_DIMENSIONS || '768')
         }
       };
 

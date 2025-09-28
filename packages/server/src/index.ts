@@ -24,7 +24,7 @@ import { ToolRegistry } from 'clear-ai-mcp-basic'
 import { MemoryServiceConfig, CoreKeysAndModels } from 'clear-ai-shared'
 
 // Load environment variables
-dotenv.config({ path: './.env' })
+dotenv.config({ path: './packages/server/.env' })
 
 const app = express()
 const PORT = parseInt(process.env.PORT || '3001', 10)
@@ -158,8 +158,14 @@ const startServer = async () => {
 
       await initializeAgentService(memoryConfig, langchainConfig, toolRegistry);
       console.log('✅ Agent Service initialized successfully');
+
+      // Initialize Memory Service
+      console.log('🧠 Initializing Memory Service...');
+      const { initializeMemoryService } = await import('./controllers/memoryController');
+      await initializeMemoryService(memoryConfig, langchainConfig);
+      console.log('✅ Memory Service initialized successfully');
     } catch (error) {
-      console.error('❌ Failed to initialize Agent Service:', error);
+      console.error('❌ Failed to initialize services:', error);
       // Don't exit the server, just log the error
     }
   })

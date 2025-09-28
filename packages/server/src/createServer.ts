@@ -23,7 +23,7 @@ import { errorHandler } from './middleware/errorHandler';
 import { setupSwagger } from './config/swagger';
 
 // Load environment variables
-dotenv.config({ path: '.env' });
+dotenv.config({ path: './packages/server/.env' });
 
 export interface CreateServerOptions {
   port?: number;

@@ -14,10 +14,13 @@ Clear AI is a powerful TypeScript framework that combines multiple cutting-edge 
 - **Hot Reload**: Lightning-fast development with instant feedback
 
 ### 🤖 **AI & LLM Integration**
+- **Unified Agent System**: **NEW!** Single interface combining memory, tools, and conversation
+- **Smart Intent Classification**: **NEW!** Automatic routing between conversation, tools, and memory
 - **Multiple LLM Providers**: Support for OpenAI, Ollama, Mistral, and Groq
 - **Tool Execution**: Dynamic tool registration and execution with parameter validation
 - **Workflow Orchestration**: LangGraph-powered workflows for complex AI tasks
 - **Natural Language Processing**: Convert natural language queries into tool executions
+- **Comprehensive Testing**: **NEW!** Automated test suite for validation and performance
 
 ### 🛠️ **Developer Experience**
 - **CLI-First Design**: Built for command-line tools and server applications
