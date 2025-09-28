@@ -1,7 +1,7 @@
 {
   "id": "packages/mcp-basic",
-  "title": "MCP Basic Package",
-  "description": "The MCP Basic package (@clear-ai/mcp-basic) implements the Model Context Protocol (MCP) server with essential tools for API calls, JSON processing, file operations, and parallel execution. It serves as the foundation for tool execution in the Clear AI system.",
+  "title": "🧠 MCP Basic Package - Intelligent MCP Server",
+  "description": "The MCP Basic package (@clear-ai/mcp-basic) implements the Intelligent Model Context Protocol (MCP) server with advanced tools and intelligence capabilities. It serves as the intelligent foundation for tool execution in the Clear AI system with 8.5/10 intelligence score.",
   "source": "@site/docs/packages/mcp-basic.md",
   "sourceDirName": "packages",
   "slug": "/packages/mcp-basic",
@@ -14,11 +14,11 @@
   "frontMatter": {},
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Server Package",
+    "title": "🧠 Server Package - Intelligent AI Server",
     "permalink": "/clear-ai/docs/packages/server"
   },
   "next": {
-    "title": "Shared Package",
+    "title": "🧠 Shared Package - Advanced AI Intelligence",
     "permalink": "/clear-ai/docs/packages/shared"
   }
 }

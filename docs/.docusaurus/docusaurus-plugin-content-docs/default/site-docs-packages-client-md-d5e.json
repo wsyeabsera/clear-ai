@@ -1,7 +1,7 @@
 {
   "id": "packages/client",
-  "title": "Client Package",
-  "description": "The Clear AI client is a modern React application that provides the user interface for interacting with the AI-powered tool execution system. Built with TypeScript, Vite, and Tailwind CSS, it offers a responsive, themeable, and highly interactive experience.",
+  "title": "🧠 Client Package - Intelligent AI Client",
+  "description": "The Clear AI client is a modern React application that provides the intelligent user interface for interacting with the AI-powered tool execution system. Built with TypeScript, Vite, and Tailwind CSS, it offers advanced intelligence features, memory visualization, and sophisticated relationship analysis with 8.5/10 intelligence score.",
   "source": "@site/docs/packages/client.md",
   "sourceDirName": "packages",
   "slug": "/packages/client",
@@ -18,7 +18,7 @@
     "permalink": "/clear-ai/docs/agent-intelligence"
   },
   "next": {
-    "title": "Server Package",
+    "title": "🧠 Server Package - Intelligent AI Server",
     "permalink": "/clear-ai/docs/packages/server"
   }
 }

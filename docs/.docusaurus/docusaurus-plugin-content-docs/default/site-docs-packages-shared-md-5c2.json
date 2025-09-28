@@ -1,7 +1,7 @@
 {
   "id": "packages/shared",
-  "title": "Shared Package",
-  "description": "The Shared package (@clear-ai/shared) contains common code used across all packages in the Clear AI monorepo. It provides type definitions, utility functions, constants, and services that ensure consistency and reduce code duplication throughout the system.",
+  "title": "🧠 Shared Package - Advanced AI Intelligence",
+  "description": "The Shared package (@clear-ai/shared) is the Advanced AI Intelligence Package containing common code used across all packages in the Clear AI monorepo. It provides exceptional intelligence capabilities with 8.5/10 intelligence score, including advanced memory integration, relationship analysis, and sophisticated reasoning.",
   "source": "@site/docs/packages/shared.md",
   "sourceDirName": "packages",
   "slug": "/packages/shared",
@@ -14,7 +14,7 @@
   "frontMatter": {},
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "MCP Basic Package",
+    "title": "🧠 MCP Basic Package - Intelligent MCP Server",
     "permalink": "/clear-ai/docs/packages/mcp-basic"
   },
   "next": {

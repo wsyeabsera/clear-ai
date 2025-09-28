@@ -1,7 +1,7 @@
 {
   "id": "packages/server",
-  "title": "Server Package",
-  "description": "The Clear AI server is a comprehensive Express.js API that provides the backend services for the entire system. Built with TypeScript and featuring extensive middleware, it handles tool execution, workflow orchestration, LLM integration, and user management.",
+  "title": "🧠 Server Package - Intelligent AI Server",
+  "description": "The Clear AI server is a comprehensive Express.js API that provides the backend services for the entire system with exceptional intelligence capabilities. Built with TypeScript and featuring advanced memory integration, it handles intelligent agent processing, memory management, relationship analysis, and sophisticated tool execution.",
   "source": "@site/docs/packages/server.md",
   "sourceDirName": "packages",
   "slug": "/packages/server",
@@ -14,11 +14,11 @@
   "frontMatter": {},
   "sidebar": "tutorialSidebar",
   "previous": {
-    "title": "Client Package",
+    "title": "🧠 Client Package - Intelligent AI Client",
     "permalink": "/clear-ai/docs/packages/client"
   },
   "next": {
-    "title": "MCP Basic Package",
+    "title": "🧠 MCP Basic Package - Intelligent MCP Server",
     "permalink": "/clear-ai/docs/packages/mcp-basic"
   }
 }
