@@ -2,6 +2,8 @@
 
 This section provides comprehensive documentation for all APIs in the Clear AI system. The APIs are organized by package and functionality, making it easy to find the information you need.
 
+> **Note**: Clear AI is designed primarily for CLI tools and server applications. The client APIs are optional and available for web-based interfaces and development environments.
+
 ## API Organization
 
 ### Server APIs
@@ -11,10 +13,10 @@ This section provides comprehensive documentation for all APIs in the Clear AI s
 - **MCP APIs** - Model Context Protocol integration (coming soon)
 - **User Management APIs** - User CRUD operations (coming soon)
 
-### Client APIs
-- **Service APIs** - Frontend service layer (coming soon)
-- **Component APIs** - React component interfaces (coming soon)
-- **Hook APIs** - Custom React hooks (coming soon)
+### Client APIs (Optional)
+- **Service APIs** - Frontend service layer for React applications
+- **Component APIs** - React component interfaces and props
+- **Hook APIs** - Custom React hooks for AI functionality
 
 ### MCP Tool APIs
 - **API Call Tool** - HTTP API requests (coming soon)

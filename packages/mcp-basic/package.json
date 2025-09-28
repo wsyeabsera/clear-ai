@@ -4,18 +4,46 @@
   "description": "MCP Server with basic tools for API calls, JSON reading, and file operations",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "tools",
+    "api",
+    "json",
+    "file-operations",
+    "typescript"
+  ],
+  "author": "Clear AI Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wsyeabsera/clear-ai.git",
+    "directory": "packages/mcp-basic"
+  },
+  "homepage": "https://github.com/wsyeabsera/clear-ai/tree/main/packages/mcp-basic",
+  "bugs": {
+    "url": "https://github.com/wsyeabsera/clear-ai/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@clear-ai/shared": "*",
+    "@clear-ai/shared": "^1.0.0",
     "@modelcontextprotocol/sdk": "^0.5.0",
-    "@types/axios": "^0.9.36",
     "axios": "^1.6.0",
     "zod": "^3.22.4",
     "zod-to-json-schema": "^3.24.6"
@@ -26,5 +54,17 @@
     "@typescript-eslint/parser": "^6.14.0",
     "eslint": "^8.55.0",
     "typescript": "^5.3.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js",
+      "require": "./dist/tools/index.js"
+    }
   }
 }

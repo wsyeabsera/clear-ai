@@ -1,18 +1,44 @@
 {
   "name": "@clear-ai/shared",
   "version": "1.0.0",
-  "description": "Shared utilities and types for Clear AI",
+  "description": "Shared utilities, types, and services for Clear AI",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
+  "keywords": [
+    "ai",
+    "langchain",
+    "workflows",
+    "llm",
+    "types",
+    "utilities",
+    "typescript",
+    "shared"
+  ],
+  "author": "Clear AI Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clear-ai/clear-ai.git",
+    "directory": "packages/shared"
+  },
+  "homepage": "https://clear-ai-docs.example.com/docs/packages/shared",
+  "bugs": {
+    "url": "https://github.com/clear-ai/clear-ai/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit",
-    "lint": "eslint src --ext .ts,.tsx"
+    "lint": "eslint src --ext .ts,.tsx",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
@@ -34,6 +60,21 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
+    },
+    "./services": {
+      "types": "./dist/services/index.d.ts",
+      "import": "./dist/services/index.js",
+      "require": "./dist/services/index.js"
+    },
+    "./workflows": {
+      "types": "./dist/workflows/index.d.ts",
+      "import": "./dist/workflows/index.js",
+      "require": "./dist/workflows/index.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js",
+      "require": "./dist/types.js"
     }
   }
 }

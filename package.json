@@ -1,39 +1,127 @@
 {
-  "name": "clear-ai-monorepo",
+  "name": "@clear-ai/core",
   "version": "1.0.0",
-  "description": "Monorepo for Clear AI TypeScript projects",
+  "description": "Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration",
   "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "ai",
+    "mcp",
+    "model-context-protocol",
+    "langchain",
+    "workflows",
+    "tools",
+    "typescript",
+    "express",
+    "react",
+    "llm"
+  ],
+  "author": "Clear AI Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wsyeabsera/clear-ai.git"
+  },
+  "homepage": "https://github.com/wsyeabsera/clear-ai#readme",
+  "bugs": {
+    "url": "https://github.com/wsyeabsera/clear-ai/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./mcp": {
+      "types": "./dist/mcp/index.d.ts",
+      "import": "./dist/mcp/index.js",
+      "require": "./dist/mcp/index.js"
+    },
+    "./shared": {
+      "types": "./dist/shared/index.d.ts",
+      "import": "./dist/shared/index.js",
+      "require": "./dist/shared/index.js"
+    },
+    "./server": {
+      "types": "./dist/server/index.d.ts",
+      "import": "./dist/server/index.js",
+      "require": "./dist/server/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
     "dev": "turbo run dev",
     "dev:server": "yarn build:shared && cd packages/mcp-basic && yarn build && cd ../server && yarn dev",
-    "dev:client": "cd packages/client && yarn dev",
     "dev:mcp": "cd packages/mcp-basic && yarn dev",
-    "build": "turbo run build",
+    "dev:client": "cd packages/client && yarn dev",
+    "build": "yarn build:packages && yarn build:unified",
+    "build:packages": "turbo run build",
+    "build:unified": "yarn build:create-dist && yarn build:copy-files",
+    "build:create-dist": "mkdir -p dist/mcp dist/shared dist/server",
+    "build:copy-files": "cp -r packages/mcp-basic/dist/* dist/mcp/ && cp -r packages/shared/dist/* dist/shared/ && cp -r packages/server/dist/* dist/server/",
     "build:shared": "cd packages/shared && yarn build",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "clean": "turbo run clean && rm -rf node_modules",
+    "clean": "turbo run clean && rm -rf node_modules dist",
     "type-check": "turbo run type-check",
     "setup": "yarn install && yarn build:shared",
+    "prepublishOnly": "yarn build",
     "kill-ports": "bash scripts/kill-ports.sh",
     "kill-dev": "bash scripts/kill-ports.sh --dev",
     "kill-all": "bash scripts/kill-ports.sh --all"
   },
+  "dependencies": {
+    "@clear-ai/mcp-basic": "*",
+    "@clear-ai/shared": "*",
+    "@clear-ai/server": "*",
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "@langchain/core": "^0.3.77",
+    "@langchain/groq": "^0.2.4",
+    "@langchain/langgraph": "^0.4.9",
+    "@langchain/mistralai": "^0.2.1",
+    "@langchain/ollama": "^0.2.4",
+    "@langchain/openai": "^0.6.13",
+    "axios": "^1.6.0",
+    "zod": "^3.22.4",
+    "zod-to-json-schema": "^3.24.6",
+    "jsonrepair": "^3.13.1",
+    "langchain": "^0.3.34",
+    "langfuse": "^3.38.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  },
   "devDependencies": {
     "@types/node": "^20.10.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
+    "concurrently": "^8.2.2",
     "eslint": "^8.55.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "tsx": "^4.6.0",
     "turbo": "^1.11.0",
     "typescript": "^5.3.0"
   },
-  "packageManager": "yarn@1.22.22",
-  "engines": {
-    "node": ">=18.0.0"
-  }
+  "packageManager": "yarn@1.22.22"
 }

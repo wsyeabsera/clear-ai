@@ -1,3 +1,7 @@
+// Export the createServer function for programmatic usage
+export { createServer, CreateServerOptions } from './createServer';
+
+// Default server instance for direct usage
 import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
@@ -142,6 +146,5 @@ startServer().then((server) => {
   console.error('❌ Failed to start server:', error)
   process.exit(1)
 })
-
 
 export default app

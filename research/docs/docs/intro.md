@@ -1,10 +1,10 @@
 # Welcome to Clear AI
 
-Welcome to the Clear AI documentation! This comprehensive guide will help you understand, build, and extend our modern TypeScript monorepo for AI-powered applications.
+Welcome to the Clear AI documentation! This comprehensive guide will help you understand, build, and extend our modern TypeScript framework for AI-powered CLI tools, APIs, and server applications.
 
 ## What is Clear AI?
 
-Clear AI is a sophisticated monorepo that combines multiple cutting-edge technologies to create a powerful platform for building AI applications with tool execution and workflow orchestration capabilities. Think of it as your Swiss Army knife for AI development.
+Clear AI is a powerful TypeScript framework that combines multiple cutting-edge technologies to create a unified platform for building AI applications with tool execution and workflow orchestration capabilities. Perfect for CLI tools, APIs, and server applications - think of it as your Swiss Army knife for AI development.
 
 ## Key Features
 
@@ -20,33 +20,41 @@ Clear AI is a sophisticated monorepo that combines multiple cutting-edge technol
 - **Natural Language Processing**: Convert natural language queries into tool executions
 
 ### 🛠️ **Developer Experience**
-- **Component Library**: Pre-built React components with Storybook documentation
-- **Theme System**: Multiple themes (Default, NeoWave, Techno, OldSchool, Alien)
+- **CLI-First Design**: Built for command-line tools and server applications
+- **TypeScript Everywhere**: End-to-end type safety across all packages
 - **API Documentation**: Comprehensive Swagger/OpenAPI documentation
 - **Testing**: Built-in testing infrastructure with Vitest
 
 ### 📦 **Package Ecosystem**
-- **Client**: React frontend with Vite, TypeScript, and Tailwind CSS
+- **Core Framework**: Unified package with all functionality
 - **Server**: Express.js API with comprehensive middleware and routing
 - **MCP Basic**: Model Context Protocol server with essential tools
 - **Shared**: Common types, utilities, and services across all packages
+- **Client**: Optional React web interface for development and testing
 
 ## Quick Start
 
 If you're eager to get started, here's the fastest way to run Clear AI:
 
 ```bash
-# Clone and install
-git clone <repository-url>
-cd clear-ai
-npm install
+# Install the package
+npm install @clear-ai/core
 
-# Start all services
-npm run dev
+# Use in your CLI application
+```
+
+```typescript
+import { ClearAI } from '@clear-ai/core';
+
+const ai = new ClearAI({
+  llm: { openaiApiKey: 'your-key' },
+  server: { port: 3001 }
+});
+
+await ai.init();
 ```
 
 This will start:
-- **Client**: http://localhost:3000
 - **Server**: http://localhost:3001
 - **API Docs**: http://localhost:3001/api-docs
 

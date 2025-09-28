@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { toolService, ToolInfo } from '../services/toolService'
 import { Table, TableColumn } from '../components/Table'
 import Button from '../components/Button'
-import { useTheme } from '@/themes';
+import { useTheme } from '../themes';
 
 export const AvailableTools: React.FC = () => {
   const [tools, setTools] = useState<ToolInfo[]>([])
@@ -36,13 +36,9 @@ export const AvailableTools: React.FC = () => {
       try {
         setLoading(true)
         setError(null)
-        const response = await toolService.getTools()
-
-        if (response.success && response.data) {
-          setTools(response.data)
-        } else {
-          setError(response.error || 'Failed to fetch tools')
-        }
+        const tools = await toolService.getTools()
+        console.log('Tools:', tools)
+        setTools(tools)
       } catch (err) {
         setError('An unexpected error occurred')
         console.error('Error fetching tools:', err)
@@ -59,13 +55,8 @@ export const AvailableTools: React.FC = () => {
       try {
         setLoading(true)
         setError(null)
-        const response = await toolService.getTools()
-
-        if (response.success && response.data) {
-          setTools(response.data)
-        } else {
-          setError(response.error || 'Failed to fetch tools')
-        }
+        const tools = await toolService.getTools()
+        setTools(tools)
       } catch (err) {
         setError('An unexpected error occurred')
         console.error('Error fetching tools:', err)

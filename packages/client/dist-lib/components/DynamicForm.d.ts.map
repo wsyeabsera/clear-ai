@@ -1,0 +1,1 @@
+{"version":3,"file":"DynamicForm.d.ts","sourceRoot":"","sources":["../../src/components/DynamicForm.tsx"],"names":[],"mappings":"AAAA,OAAO,KAA8B,MAAM,OAAO,CAAC;AAKnD,UAAU,gBAAgB;IACxB,MAAM,EAAE,GAAG,CAAC;IACZ,QAAQ,EAAE,CAAC,IAAI,EAAE,GAAG,KAAK,IAAI,CAAC;IAC9B,OAAO,CAAC,EAAE,OAAO,CAAC;CACnB;AAED,eAAO,MAAM,WAAW,EAAE,KAAK,CAAC,EAAE,CAAC,gBAAgB,CAiOlD,CAAC"}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from '../themes/ThemeProvider';
+import { useTheme } from '../themes';
 
 export interface TableColumn<T = any> {
   key: string;
@@ -168,7 +168,7 @@ export const Table = <T extends Record<string, any>>({
             </tr>
           </thead>
           <tbody className="table-body">
-            {dataSource.length === 0 ? (
+            {!dataSource || !Array.isArray(dataSource) || dataSource.length === 0 ? (
               <tr className="table-empty-row">
                 <td className="table-empty-cell" colSpan={columns.length}>
                   <div className="table-empty-content">

@@ -1,268 +1,267 @@
-# Clear AI Monorepo
+# @clear-ai/core
 
-A modern TypeScript monorepo for building scalable web applications with shared code, type safety, and efficient development workflows.
+Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration. Perfect for CLI tools, APIs, and server applications.
+
+[![npm version](https://badge.fury.io/js/%40clear-ai%2Fcore.svg)](https://badge.fury.io/js/%40clear-ai%2Fcore)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%230074c1.svg)](http://www.typescriptlang.org/)
+
+## 🚀 Quick Start
+
+```bash
+npm install @clear-ai/core
+```
+
+```typescript
+import { ClearAI } from "@clear-ai/core";
+
+// Initialize the framework for CLI usage
+const ai = new ClearAI({
+  llm: {
+    openaiApiKey: "your-key",
+    ollamaBaseUrl: "http://localhost:11434",
+  },
+  server: {
+    port: 3001,
+  },
+});
+
+// Start everything
+await ai.init();
+
+// Access services
+const mcpServer = ai.getMCP();
+const llmService = ai.getLLM();
+const toolService = ai.getTools();
+```
+
+## 📦 What's Included
+
+### MCP (Model Context Protocol) - `@clear-ai/mcp`
+
+- **MCPServer** - Full MCP protocol implementation
+- **ToolRegistry** - Dynamic tool registration and management
+- **Built-in Tools** - API calls, JSON processing, file operations
+
+### Shared Services - `@clear-ai/shared`
+
+- **SimpleLangChainService** - Multi-provider LLM integration
+- **ToolExecutionService** - Tool registration and execution
+- **SimpleWorkflowService** - Workflow orchestration
+- **Logger** - Structured logging utilities
+
+### Server - `@clear-ai/server`
+
+- **Express API** - RESTful endpoints for tool execution
+- **Workflow Execution** - LangGraph workflow orchestration
+- **Health Monitoring** - System health and status endpoints
+
+### Client - `@clear-ai/client` (Optional)
+
+- **React Components** - Pre-built UI components with Storybook
+- **Theme System** - Multiple visual themes
+- **Web Interface** - Browser-based tool execution interface
+
+## 🎯 Usage Examples
+
+### Basic Tool Execution
+
+```typescript
+import { MCPServer, ToolRegistry } from "@clear-ai/mcp";
+
+const server = new MCPServer();
+const tools = server.getToolRegistry();
+
+// Execute an API call
+const result = await tools.executeTool("api_call", {
+  url: "https://api.example.com/users/1",
+  method: "GET",
+});
+```
+
+### LLM Integration
+
+```typescript
+import { SimpleLangChainService } from "@clear-ai/shared";
+
+const llm = new SimpleLangChainService({
+  openaiApiKey: "your-key",
+  ollamaBaseUrl: "http://localhost:11434",
+});
+
+const response = await llm.complete("Hello, world!", {
+  model: "ollama",
+  temperature: 0.7,
+});
+```
+
+### Workflow Execution
+
+```typescript
+import { SimpleWorkflowService, ToolExecutionService } from "@clear-ai/shared";
+
+const toolService = new ToolExecutionService(llmConfig);
+const workflow = new SimpleWorkflowService(llmConfig, toolService);
+
+const result = await workflow.executeWorkflow(
+  "Get weather data and format it nicely"
+);
+```
+
+### Server API
+
+```typescript
+import { createServer } from "@clear-ai/server";
+
+const server = createServer({
+  port: 3001,
+  mcpConfig: { tools: ["api_call", "json_reader"] },
+  llmConfig: { openaiApiKey: "your-key" },
+});
+
+await server.start();
+```
+
+### CLI Application
+
+```typescript
+import { ClearAI, MCPServer } from "@clear-ai/core";
+
+async function main() {
+  const ai = new ClearAI({
+    llm: { openaiApiKey: process.env.OPENAI_API_KEY },
+    server: { port: 3001 },
+  });
+
+  await ai.init();
+
+  // Use the MCP server for tool execution
+  const mcpServer = ai.getMCP();
+  const result = await mcpServer.getToolRegistry().executeTool("api_call", {
+    url: "https://api.example.com/data",
+    method: "GET",
+  });
+
+  console.log("Result:", result);
+}
+
+main().catch(console.error);
+```
 
 ## 🏗️ Architecture
 
-This monorepo contains three main packages:
+```
+@clear-ai/core
+├── @clear-ai/mcp      # Model Context Protocol
+├── @clear-ai/shared   # Shared services & utilities
+├── @clear-ai/server   # Express API server
+└── @clear-ai/client   # React web interface (optional)
+```
 
-- **`@clear-ai/shared`** - Shared types, utilities, and constants used across all packages
-- **`@clear-ai/client`** - React frontend application with Vite and TypeScript
-- **`@clear-ai/server`** - Node.js backend API with Express and TypeScript
+## 🔧 Configuration
 
-## 🚀 Quick Start
+### Environment Variables
+
+```bash
+# LLM Configuration
+OPENAI_API_KEY=your-key
+OLLAMA_BASE_URL=http://localhost:11434
+MISTRAL_API_KEY=your-key
+GROQ_API_KEY=your-key
+
+# Langfuse (Observability)
+LANGFUSE_SECRET_KEY=your-key
+LANGFUSE_PUBLIC_KEY=your-key
+LANGFUSE_BASE_URL=https://cloud.langfuse.com
+
+# Server Configuration
+PORT=3001
+NODE_ENV=production
+```
+
+### Framework Configuration
+
+```typescript
+const config: ClearAIConfig = {
+  mcp: {
+    tools: ["api_call", "json_reader", "file_reader"],
+  },
+  llm: {
+    openaiApiKey: process.env.OPENAI_API_KEY,
+    ollamaBaseUrl: process.env.OLLAMA_BASE_URL,
+    langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY,
+  },
+  server: {
+    port: 3001,
+    cors: { origin: ["http://localhost:3000"] },
+  },
+};
+```
+
+## 🛠️ Development
 
 ### Prerequisites
 
 - Node.js >= 18.0.0
 - npm >= 10.0.0
 
-### Installation
+### Setup
 
-1. Clone the repository and install dependencies:
 ```bash
+# Clone the repository
+git clone https://github.com/wsyeabsera/clear-ai.git
+cd clear-ai
+
+# Install dependencies
 npm install
-```
 
-2. Start all applications in development mode:
-```bash
-npm run dev
-```
-
-This will start:
-- Client application on http://localhost:3000
-- Server API on http://localhost:3001
-
-## 📦 Packages
-
-### Shared Package (`@clear-ai/shared`)
-
-Contains common types, utilities, and constants used across the entire application.
-
-**Features:**
-- Common TypeScript types and interfaces
-- Utility functions (date formatting, validation, etc.)
-- Application constants and configuration
-- API response types
-
-**Usage:**
-```typescript
-import { User, ApiResponse, formatDate } from '@clear-ai/shared'
-```
-
-### Client Package (`@clear-ai/client`)
-
-Modern React application built with Vite, TypeScript, and Tailwind CSS.
-
-**Features:**
-- React 18 with TypeScript
-- Vite for fast development and building
-- React Router for navigation
-- Tailwind CSS for styling
-- Axios for API requests
-- Hot reload and fast refresh
-
-**Development:**
-```bash
-cd packages/client
-npm run dev
-```
-
-**Build:**
-```bash
+# Build all packages
 npm run build
-```
 
-### Server Package (`@clear-ai/server`)
-
-Express.js API server with TypeScript, featuring RESTful endpoints and middleware.
-
-**Features:**
-- Express.js with TypeScript
-- RESTful API endpoints
-- Middleware for validation and error handling
-- CORS and security headers
-- Request logging with Morgan
-- Environment configuration
-
-**Development:**
-```bash
-cd packages/server
+# Start development servers
 npm run dev
 ```
-
-**Build:**
-```bash
-npm run build
-npm start
-```
-
-## 🛠️ Development
 
 ### Available Scripts
-
-From the root directory:
 
 - `npm run dev` - Start all packages in development mode
 - `npm run build` - Build all packages
 - `npm run lint` - Run ESLint on all packages
 - `npm run type-check` - Run TypeScript type checking
-- `npm run clean` - Clean all build artifacts and node_modules
+- `npm run clean` - Clean all build artifacts
 
-### Package-Specific Scripts
+## 📚 Documentation
 
-Each package has its own set of scripts. Navigate to the package directory and run:
-
-**Shared:**
-- `npm run build` - Build the shared package
-- `npm run dev` - Watch mode for development
-
-**Client:**
-- `npm run dev` - Start Vite dev server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-
-**Server:**
-- `npm run dev` - Start with tsx watch mode
-- `npm run build` - Build TypeScript to JavaScript
-- `npm start` - Start production server
-
-## 🔧 Configuration
-
-### Environment Variables
-
-**Server** (copy `packages/server/env.example` to `.env`):
-```
-NODE_ENV=development
-PORT=3001
-API_URL=http://localhost:3001
-```
-
-**Client** (create `.env` in `packages/client`):
-```
-VITE_API_URL=http://localhost:3001
-```
-
-### TypeScript Configuration
-
-Each package has its own `tsconfig.json` optimized for its specific use case:
-- **Shared**: CommonJS modules with declaration files
-- **Client**: ES modules with React JSX
-- **Server**: CommonJS modules with Node.js types
-
-## 📁 Project Structure
-
-```
-clear-ai-monorepo/
-├── packages/
-│   ├── shared/                 # Shared utilities and types
-│   │   ├── src/
-│   │   │   ├── types.ts        # Common TypeScript types
-│   │   │   ├── utils.ts        # Utility functions
-│   │   │   ├── constants.ts    # Application constants
-│   │   │   └── index.ts        # Main export file
-│   │   ├── package.json
-│   │   └── tsconfig.json
-│   │
-│   ├── client/                 # React frontend
-│   │   ├── src/
-│   │   │   ├── components/     # React components
-│   │   │   ├── pages/          # Page components
-│   │   │   ├── services/       # API services
-│   │   │   ├── styles/         # CSS and styles
-│   │   │   ├── App.tsx
-│   │   │   └── main.tsx
-│   │   ├── index.html
-│   │   ├── package.json
-│   │   ├── tsconfig.json
-│   │   ├── vite.config.ts
-│   │   └── tailwind.config.js
-│   │
-│   └── server/                 # Express backend
-│       ├── src/
-│       │   ├── controllers/    # Route controllers
-│       │   ├── middleware/     # Express middleware
-│       │   ├── routes/         # API routes
-│       │   ├── services/       # Business logic
-│       │   └── index.ts
-│       ├── package.json
-│       ├── tsconfig.json
-│       └── env.example
-│
-├── package.json               # Root package.json with workspaces
-├── turbo.json                 # Turbo build configuration
-├── .eslintrc.js              # ESLint configuration
-├── .gitignore
-└── README.md
-```
-
-## 🚀 Deployment
-
-### Building for Production
-
-1. Build all packages:
-```bash
-npm run build
-```
-
-2. The built files will be in:
-   - `packages/shared/dist/` - Shared package
-   - `packages/client/dist/` - Client build
-   - `packages/server/dist/` - Server build
-
-### Docker (Optional)
-
-You can containerize the applications using Docker. Example Dockerfiles:
-
-**Server:**
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY packages/server/dist ./dist
-COPY packages/server/package.json ./
-RUN npm ci --only=production
-EXPOSE 3001
-CMD ["node", "dist/index.js"]
-```
-
-**Client:**
-```dockerfile
-FROM nginx:alpine
-COPY packages/client/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
-```
+- **[Getting Started](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/getting-started/quick-start.md)** - Quick start guide
+- **[API Reference](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/api/overview.md)** - Complete API documentation
+- **[Tutorials](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/tutorials/building-your-first-tool.md)** - Step-by-step tutorials
+- **[Architecture](https://github.com/wsyeabsera/clear-ai/blob/main/research/docs/docs/architecture/overview.md)** - System architecture overview
 
 ## 🤝 Contributing
 
-1. Create a feature branch from `main`
-2. Make your changes
-3. Run tests and linting: `npm run lint && npm run type-check`
-4. Build all packages: `npm run build`
-5. Submit a pull request
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
 ## 📝 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Troubleshooting
+## 🙏 Acknowledgments
 
-### Common Issues
+- [LangChain](https://langchain.com/) - LLM framework
+- [Model Context Protocol](https://modelcontextprotocol.io/) - Tool protocol
+- [Express.js](https://expressjs.com/) - Web framework
+- [React](https://reactjs.org/) - UI library
 
-**Port already in use:**
-- Client runs on port 3000
-- Server runs on port 3001
-- Change ports in package.json scripts or environment variables
+## 📞 Support
 
-**TypeScript errors:**
-- Run `npm run type-check` to see all type errors
-- Ensure all packages are built: `npm run build`
+- 📖 **Documentation**: [GitHub Docs](https://github.com/wsyeabsera/clear-ai/tree/main/research/docs)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/wsyeabsera/clear-ai/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/wsyeabsera/clear-ai/discussions)
 
-**Dependencies issues:**
-- Clean and reinstall: `npm run clean && npm install`
-- Check workspace dependencies are properly linked
+---
 
-**Hot reload not working:**
-- Restart the development servers
-- Check file watchers are not exhausted (especially on Linux)
-# clear-ai
+Made with ❤️ by the Clear AI Team
