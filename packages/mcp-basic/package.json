@@ -15,6 +15,7 @@
   "dependencies": {
     "@clear-ai/shared": "*",
     "@modelcontextprotocol/sdk": "^0.5.0",
+    "@types/axios": "^0.9.36",
     "axios": "^1.6.0",
     "zod": "^3.22.4",
     "zod-to-json-schema": "^3.24.6"

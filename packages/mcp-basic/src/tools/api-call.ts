@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { ZodTool } from '../types';
 
 const ApiCallSchema = z.object({
@@ -27,7 +27,7 @@ export const apiCallTool: ZodTool = {
     const { url, method, headers, body, timeout } = ApiCallSchema.parse(args);
     
     try {
-      const response: AxiosResponse = await axios({
+      const response = await axios({
         method,
         url,
         headers: {

@@ -8,6 +8,7 @@ import { healthRoutes } from './routes/healthRoutes'
 import { mcpRoutes } from './routes/mcpRoutes'
 import { langchainRoutes } from './routes/langchainRoutes'
 import { toolExecutionRoutes } from './routes/toolExecutionRoutes'
+import { langGraphRoutes } from './routes/langGraphRoutes'
 import { errorHandler } from './middleware/errorHandler'
 import { setupSwagger } from './config/swagger'
 
@@ -40,6 +41,7 @@ app.use('/api/users', userRoutes)
 app.use('/api/mcp', mcpRoutes)
 app.use('/api/langchain', langchainRoutes)
 app.use('/api/tools', toolExecutionRoutes)
+app.use('/api/langgraph', langGraphRoutes)
 
 // Error handling middleware
 app.use(errorHandler)
