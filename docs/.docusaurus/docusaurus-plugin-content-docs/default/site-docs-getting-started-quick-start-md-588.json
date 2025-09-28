@@ -1,0 +1,24 @@
+{
+  "id": "getting-started/quick-start",
+  "title": "Quick Start Guide",
+  "description": "Welcome to Clear AI! This quick start guide will get you up and running in just a few minutes. We'll walk through the essential steps to install the package and run your first AI-powered CLI tool.",
+  "source": "@site/docs/getting-started/quick-start.md",
+  "sourceDirName": "getting-started",
+  "slug": "/getting-started/quick-start",
+  "permalink": "/Clear-AI/docs/getting-started/quick-start",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/getting-started/quick-start.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Installation",
+    "permalink": "/Clear-AI/docs/getting-started/installation"
+  },
+  "next": {
+    "title": "Development Guide",
+    "permalink": "/Clear-AI/docs/getting-started/development"
+  }
+}

@@ -81,8 +81,8 @@
     "kill-ports": "bash scripts/kill-ports.sh",
     "kill-dev": "bash scripts/kill-ports.sh --dev",
     "kill-all": "bash scripts/kill-ports.sh --all",
-    "docs:build": "cd research/docs && npm install && npm run build",
-    "docs:dev": "cd research/docs && npm install && npm start",
+    "docs:build": "cd docs && npm install && npm run build",
+    "docs:dev": "cd docs && npm install && npm start",
     "docs:deploy": "bash scripts/deploy-docs.sh"
   },
   "dependencies": {

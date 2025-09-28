@@ -1,0 +1,20 @@
+{
+  "id": "intro",
+  "title": "Welcome to Clear AI",
+  "description": "Welcome to the Clear AI documentation! This comprehensive guide will help you understand, build, and extend our modern TypeScript framework for AI-powered CLI tools, APIs, and server applications.",
+  "source": "@site/docs/intro.md",
+  "sourceDirName": ".",
+  "slug": "/intro",
+  "permalink": "/Clear-AI/docs/intro",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/intro.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "Installation",
+    "permalink": "/Clear-AI/docs/getting-started/installation"
+  }
+}

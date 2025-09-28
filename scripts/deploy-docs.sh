@@ -8,7 +8,7 @@ set -e
 echo "🚀 Deploying Clear AI Documentation..."
 
 # Navigate to docs directory
-cd research/docs
+cd docs
 
 # Install dependencies if node_modules doesn't exist
 if [ ! -d "node_modules" ]; then
@@ -23,7 +23,7 @@ npm run build
 echo "✅ Documentation built successfully!"
 echo ""
 echo "📚 Your documentation is ready to deploy:"
-echo "   📁 Build directory: research/docs/build"
+echo "   📁 Build directory: docs/build"
 echo ""
 echo "🌐 Deployment options:"
 echo "   1. Vercel: https://vercel.com (recommended)"
