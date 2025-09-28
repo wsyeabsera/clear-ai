@@ -104,6 +104,23 @@ export const alienTheme: Theme = {
       shadow: '0 0 40px rgba(0, 255, 136, 0.5)',
       background: 'rgba(0, 255, 136, 0.12)',
     },
+    patterns: {
+      dots: 'radial-gradient(circle, #00FF88 1px, transparent 1px)',
+      grid: 'linear-gradient(#00FF88 1px, transparent 1px), linear-gradient(90deg, #00FF88 1px, transparent 1px)',
+      lines: 'repeating-linear-gradient(45deg, transparent, transparent 2px, #00FF88 2px, #00FF88 4px)',
+      waves: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #00FF88 2px, #00FF88 4px)',
+      hexagons: 'radial-gradient(circle at 50% 50%, #00FF88 1px, transparent 1px)',
+      triangles: 'conic-gradient(from 0deg at 50% 50%, #00FF88 0deg, transparent 120deg)',
+      circles: 'radial-gradient(circle, #00FF88 1px, transparent 1px)',
+      squares: 'linear-gradient(90deg, #00FF88 1px, transparent 1px), linear-gradient(#00FF88 1px, transparent 1px)',
+    },
+    backgroundAnimations: {
+      floating: 'floating 6s ease-in-out infinite',
+      rotating: 'rotating 8s linear infinite',
+      pulsing: 'pulsing 2s ease-in-out infinite',
+      morphing: 'morphing 10s ease-in-out infinite',
+      flowing: 'flowing 12s linear infinite',
+    },
   },
   typography: {
     fontFamily: {

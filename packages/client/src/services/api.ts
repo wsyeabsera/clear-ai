@@ -1,10 +1,10 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import axios from 'axios'
 import { ApiResponse, ToolExecutionRequest } from '@clear-ai/shared'
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+const API_BASE_URL = process.env.VITE_API_URL || 'http://localhost:3001'
 
 class ApiClient {
-  private client: AxiosInstance
+  private client: any
 
   constructor() {
     this.client = axios.create({
@@ -17,11 +17,11 @@ class ApiClient {
 
     // Add request interceptor for logging
     this.client.interceptors.request.use(
-      (config) => {
+      (config: any) => {
         console.log(`Making ${config.method?.toUpperCase()} request to ${config.url}`)
         return config
       },
-      (error) => {
+      (error: any) => {
         console.error('Request error:', error)
         return Promise.reject(error)
       }
@@ -29,11 +29,11 @@ class ApiClient {
 
     // Add response interceptor for error handling
     this.client.interceptors.response.use(
-      (response) => {
+      (response: any) => {
         console.log(`Response received from ${response.config.url}:`, response.status)
         return response
       },
-      (error) => {
+      (error: any) => {
         console.error('Response error:', error.response?.data || error.message)
         return Promise.reject(error)
       }
@@ -43,7 +43,7 @@ class ApiClient {
   // Generic GET request
   async get<T>(endpoint: string): Promise<ApiResponse<T>> {
     try {
-      const response: AxiosResponse<ApiResponse<T>> = await this.client.get(endpoint)
+      const response: any = await this.client.get(endpoint)
       return response.data
     } catch (error: any) {
       return this.handleError(error, 'GET', endpoint)
@@ -53,7 +53,7 @@ class ApiClient {
   // Generic POST request
   async post<T>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
     try {
-      const response: AxiosResponse<ApiResponse<T>> = await this.client.post(endpoint, data)
+      const response: any = await this.client.post(endpoint, data)
       return response.data
     } catch (error: any) {
       return this.handleError(error, 'POST', endpoint)
@@ -63,7 +63,7 @@ class ApiClient {
   // Generic PUT request
   async put<T>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
     try {
-      const response: AxiosResponse<ApiResponse<T>> = await this.client.put(endpoint, data)
+      const response: any = await this.client.put(endpoint, data)
       return response.data
     } catch (error: any) {
       return this.handleError(error, 'PUT', endpoint)
@@ -73,7 +73,7 @@ class ApiClient {
   // Generic DELETE request
   async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
     try {
-      const response: AxiosResponse<ApiResponse<T>> = await this.client.delete(endpoint)
+      const response: any = await this.client.delete(endpoint)
       return response.data
     } catch (error: any) {
       return this.handleError(error, 'DELETE', endpoint)

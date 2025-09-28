@@ -14,7 +14,8 @@
     "allowSyntheticDefaultImports": true,
     "emitDeclarationOnly": false,
     "declarationMap": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "composite": true
   },
   "include": [
     "src/**/*"

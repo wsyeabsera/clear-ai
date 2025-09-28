@@ -104,6 +104,23 @@ export const oldschoolTheme: Theme = {
       shadow: '6px 6px 12px rgba(0, 0, 0, 0.25)',
       background: 'rgba(184, 134, 11, 0.05)',
     },
+    patterns: {
+      dots: 'radial-gradient(circle, #D97706 1px, transparent 1px)',
+      grid: 'linear-gradient(#D97706 1px, transparent 1px), linear-gradient(90deg, #D97706 1px, transparent 1px)',
+      lines: 'repeating-linear-gradient(45deg, transparent, transparent 2px, #D97706 2px, #D97706 4px)',
+      waves: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #D97706 2px, #D97706 4px)',
+      hexagons: 'radial-gradient(circle at 50% 50%, #D97706 1px, transparent 1px)',
+      triangles: 'conic-gradient(from 0deg at 50% 50%, #D97706 0deg, transparent 120deg)',
+      circles: 'radial-gradient(circle, #D97706 1px, transparent 1px)',
+      squares: 'linear-gradient(90deg, #D97706 1px, transparent 1px), linear-gradient(#D97706 1px, transparent 1px)',
+    },
+    backgroundAnimations: {
+      floating: 'floating 6s ease-in-out infinite',
+      rotating: 'rotating 8s linear infinite',
+      pulsing: 'pulsing 2s ease-in-out infinite',
+      morphing: 'morphing 10s ease-in-out infinite',
+      flowing: 'flowing 12s linear infinite',
+    },
   },
   typography: {
     fontFamily: {
