@@ -8,6 +8,8 @@ This section provides comprehensive documentation for all APIs in the Clear AI s
 
 ### Server APIs
 - **[Tool Execution APIs](/docs/api/server/tools)** - Tool registration and execution
+- **[Memory System APIs](/docs/api/server/memory)** - Episodic and semantic memory management
+- **[Memory Chat APIs](/docs/api/server/memory-chat)** - Memory-aware conversational interface
 - **Health APIs** - System health and status endpoints (coming soon)
 - **LangGraph APIs** - Workflow orchestration (coming soon)
 - **MCP APIs** - Model Context Protocol integration (coming soon)

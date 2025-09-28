@@ -11,6 +11,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/installation',
         'getting-started/quick-start',
         'getting-started/development',
+        'getting-started/memory-setup',
       ],
     },
     {
@@ -18,6 +19,15 @@ const sidebars: SidebarsConfig = {
       label: 'Architecture',
       items: [
         'architecture/overview',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Features',
+      items: [
+        'features/memory-system',
+        'features/component-library',
+        'features/theme-system',
       ],
     },
     {
@@ -38,6 +48,13 @@ const sidebars: SidebarsConfig = {
         'tutorials/creating-workflows',
       ],
     },
+    {
+      type: 'category',
+      label: 'Reference',
+      items: [
+        'reference/memory-quick-reference',
+      ],
+    },
   ],
 
   // API Reference sidebar
@@ -48,6 +65,8 @@ const sidebars: SidebarsConfig = {
       label: 'Server APIs',
       items: [
         'api/server/tools',
+        'api/server/memory',
+        'api/server/memory-chat',
       ],
     },
   ],
