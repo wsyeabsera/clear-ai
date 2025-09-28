@@ -11,9 +11,25 @@
           "mainDocId": "README",
           "docs": [
             {
+              "id": "api/client/services",
+              "path": "/clear-ai/docs/api/client/services"
+            },
+            {
+              "id": "api/mcp/api-call",
+              "path": "/clear-ai/docs/api/mcp/api-call"
+            },
+            {
               "id": "api/overview",
               "path": "/clear-ai/docs/api/overview",
               "sidebar": "apiSidebar"
+            },
+            {
+              "id": "api/server/health",
+              "path": "/clear-ai/docs/api/server/health"
+            },
+            {
+              "id": "api/server/langgraph",
+              "path": "/clear-ai/docs/api/server/langgraph"
             },
             {
               "id": "api/server/tools",
@@ -24,6 +40,14 @@
               "id": "architecture/overview",
               "path": "/clear-ai/docs/architecture/overview",
               "sidebar": "tutorialSidebar"
+            },
+            {
+              "id": "features/component-library",
+              "path": "/clear-ai/docs/features/component-library"
+            },
+            {
+              "id": "features/theme-system",
+              "path": "/clear-ai/docs/features/theme-system"
             },
             {
               "id": "getting-started/development",

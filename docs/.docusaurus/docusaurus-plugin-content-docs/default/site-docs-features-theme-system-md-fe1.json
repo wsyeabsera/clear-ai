@@ -1,0 +1,15 @@
+{
+  "id": "features/theme-system",
+  "title": "Theme System",
+  "description": "Clear AI includes a comprehensive theming system that allows you to customize the appearance and behavior of your AI applications.",
+  "source": "@site/docs/features/theme-system.md",
+  "sourceDirName": "features",
+  "slug": "/features/theme-system",
+  "permalink": "/clear-ai/docs/features/theme-system",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/theme-system.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

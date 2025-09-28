@@ -1,0 +1,15 @@
+{
+  "id": "api/mcp/api-call",
+  "title": "MCP API Call Tool",
+  "description": "The MCP (Model Context Protocol) API Call Tool provides HTTP API request capabilities for AI agents and workflows.",
+  "source": "@site/docs/api/mcp/api-call.md",
+  "sourceDirName": "api/mcp",
+  "slug": "/api/mcp/api-call",
+  "permalink": "/clear-ai/docs/api/mcp/api-call",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/api/mcp/api-call.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

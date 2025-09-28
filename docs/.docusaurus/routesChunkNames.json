@@ -199,26 +199,42 @@
     "sidebar": "814f3328",
     "content": "d9f32620"
   },
-  "/clear-ai/docs-482": {
+  "/clear-ai/docs-09f": {
     "__comp": "5e95c892",
     "__context": {
       "plugin": "aba21aa0"
     }
   },
-  "/clear-ai/docs-27f": {
+  "/clear-ai/docs-853": {
     "__comp": "a7bd4aaa",
     "__props": "25e3e6ca"
   },
-  "/clear-ai/docs-6b5": {
+  "/clear-ai/docs-eb6": {
     "__comp": "a94703ab"
   },
   "/clear-ai/docs/-434": {
     "__comp": "17896441",
     "content": "23374ca6"
   },
+  "/clear-ai/docs/api/client/services-3a9": {
+    "__comp": "17896441",
+    "content": "f10b60b0"
+  },
+  "/clear-ai/docs/api/mcp/api-call-c4c": {
+    "__comp": "17896441",
+    "content": "255b7487"
+  },
   "/clear-ai/docs/api/overview-9db": {
     "__comp": "17896441",
     "content": "65df3d35"
+  },
+  "/clear-ai/docs/api/server/health-e03": {
+    "__comp": "17896441",
+    "content": "6394b4d5"
+  },
+  "/clear-ai/docs/api/server/langgraph-4e5": {
+    "__comp": "17896441",
+    "content": "bbef23f0"
   },
   "/clear-ai/docs/api/server/tools-87b": {
     "__comp": "17896441",
@@ -227,6 +243,14 @@
   "/clear-ai/docs/architecture/overview-60d": {
     "__comp": "17896441",
     "content": "0b1ac180"
+  },
+  "/clear-ai/docs/features/component-library-1e9": {
+    "__comp": "17896441",
+    "content": "1f5dc6b6"
+  },
+  "/clear-ai/docs/features/theme-system-b76": {
+    "__comp": "17896441",
+    "content": "fe1b7220"
   },
   "/clear-ai/docs/getting-started/development-2de": {
     "__comp": "17896441",

@@ -1,0 +1,15 @@
+{
+  "id": "api/client/services",
+  "title": "Client Service APIs",
+  "description": "The Client Service APIs provide frontend service layer functionality for React applications using Clear AI.",
+  "source": "@site/docs/api/client/services.md",
+  "sourceDirName": "api/client",
+  "slug": "/api/client/services",
+  "permalink": "/clear-ai/docs/api/client/services",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/api/client/services.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

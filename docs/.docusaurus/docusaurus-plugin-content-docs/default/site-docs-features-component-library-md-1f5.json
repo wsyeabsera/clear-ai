@@ -1,0 +1,15 @@
+{
+  "id": "features/component-library",
+  "title": "Component Library",
+  "description": "Clear AI provides a comprehensive React component library designed for building AI-powered applications with consistent design and functionality.",
+  "source": "@site/docs/features/component-library.md",
+  "sourceDirName": "features",
+  "slug": "/features/component-library",
+  "permalink": "/clear-ai/docs/features/component-library",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/features/component-library.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}

@@ -74,15 +74,15 @@ export default [
   },
   {
     path: '/clear-ai/docs',
-    component: ComponentCreator('/clear-ai/docs', '482'),
+    component: ComponentCreator('/clear-ai/docs', '09f'),
     routes: [
       {
         path: '/clear-ai/docs',
-        component: ComponentCreator('/clear-ai/docs', '27f'),
+        component: ComponentCreator('/clear-ai/docs', '853'),
         routes: [
           {
             path: '/clear-ai/docs',
-            component: ComponentCreator('/clear-ai/docs', '6b5'),
+            component: ComponentCreator('/clear-ai/docs', 'eb6'),
             routes: [
               {
                 path: '/clear-ai/docs/',
@@ -90,10 +90,30 @@ export default [
                 exact: true
               },
               {
+                path: '/clear-ai/docs/api/client/services',
+                component: ComponentCreator('/clear-ai/docs/api/client/services', '3a9'),
+                exact: true
+              },
+              {
+                path: '/clear-ai/docs/api/mcp/api-call',
+                component: ComponentCreator('/clear-ai/docs/api/mcp/api-call', 'c4c'),
+                exact: true
+              },
+              {
                 path: '/clear-ai/docs/api/overview',
                 component: ComponentCreator('/clear-ai/docs/api/overview', '9db'),
                 exact: true,
                 sidebar: "apiSidebar"
+              },
+              {
+                path: '/clear-ai/docs/api/server/health',
+                component: ComponentCreator('/clear-ai/docs/api/server/health', 'e03'),
+                exact: true
+              },
+              {
+                path: '/clear-ai/docs/api/server/langgraph',
+                component: ComponentCreator('/clear-ai/docs/api/server/langgraph', '4e5'),
+                exact: true
               },
               {
                 path: '/clear-ai/docs/api/server/tools',
@@ -106,6 +126,16 @@ export default [
                 component: ComponentCreator('/clear-ai/docs/architecture/overview', '60d'),
                 exact: true,
                 sidebar: "tutorialSidebar"
+              },
+              {
+                path: '/clear-ai/docs/features/component-library',
+                component: ComponentCreator('/clear-ai/docs/features/component-library', '1e9'),
+                exact: true
+              },
+              {
+                path: '/clear-ai/docs/features/theme-system',
+                component: ComponentCreator('/clear-ai/docs/features/theme-system', 'b76'),
+                exact: true
               },
               {
                 path: '/clear-ai/docs/getting-started/development',

@@ -1,0 +1,15 @@
+{
+  "id": "api/server/health",
+  "title": "Health APIs",
+  "description": "The Health APIs provide system health monitoring and status information for the Clear AI server.",
+  "source": "@site/docs/api/server/health.md",
+  "sourceDirName": "api/server",
+  "slug": "/api/server/health",
+  "permalink": "/clear-ai/docs/api/server/health",
+  "draft": false,
+  "unlisted": false,
+  "editUrl": "https://github.com/wsyeabsera/clear-ai/tree/main/research/docs/docs/api/server/health.md",
+  "tags": [],
+  "version": "current",
+  "frontMatter": {}
+}
