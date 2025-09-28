@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../themes';
-import { ChatLayout, ModelSelector } from '../components';
+import { ChatLayout, ModelSelector, DataManagerModal } from '../components';
 import { apiService } from '../services/api';
+import Button from '../components/Button';
 
 export const Chat: React.FC = () => {
   const { theme } = useTheme();
@@ -9,6 +10,7 @@ export const Chat: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'disconnected'>('connecting');
   const [selectedModel, setSelectedModel] = useState<string>('openai');
+  const [isDataManagerOpen, setIsDataManagerOpen] = useState(false);
 
   // Hardcoded user ID as requested
   const userId = 'clear-ai-user-001';
@@ -173,6 +175,14 @@ export const Chat: React.FC = () => {
             disabled={isLoading || connectionStatus !== 'connected'}
           />
           
+          <Button
+            onClick={() => setIsDataManagerOpen(true)}
+            variant="ghost"
+            size="sm"
+          >
+            📊 Data
+          </Button>
+
           <div style={userInfoStyles}>
             User: {userId}
           </div>
@@ -193,6 +203,13 @@ export const Chat: React.FC = () => {
         onSendMessage={handleSendMessage}
         isLoading={isLoading}
         error={error || undefined}
+      />
+
+      {/* Data Manager Modal */}
+      <DataManagerModal
+        userId={userId}
+        isOpen={isDataManagerOpen}
+        onClose={() => setIsDataManagerOpen(false)}
       />
     </div>
   );

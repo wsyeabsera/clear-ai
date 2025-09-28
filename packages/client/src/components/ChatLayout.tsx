@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from '../themes';
 import { ChatMessage, ChatInput, ChatSidebar } from './index';
 import type { ChatMessageProps } from './ChatMessage';
-import type { ChatSession } from './ChatSidebar';
+import { useSessionManager } from '../hooks/useSessionManager';
+import type { ChatMessage as DBChatMessage } from '../services/indexedDB';
 
 export interface ChatLayoutProps {
-  userId?: string;
+  userId: string;
   onSendMessage?: (message: string, sessionId: string) => Promise<{
     content: string;
     metadata?: {
@@ -20,37 +21,48 @@ export interface ChatLayoutProps {
 }
 
 export const ChatLayout: React.FC<ChatLayoutProps> = ({
+  userId,
   onSendMessage,
   isLoading = false,
   error,
 }) => {
   const { theme } = useTheme();
-  const [messages, setMessages] = useState<ChatMessageProps[]>([]);
-  const [sessions, setSessions] = useState<ChatSession[]>([]);
-  const [currentSessionId, setCurrentSessionId] = useState<string>('');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [currentPrompt, setCurrentPrompt] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Use session manager for persistent storage
+  const {
+    sessions,
+    currentSession,
+    messages: dbMessages,
+    isLoading: sessionLoading,
+    error: sessionError,
+    createSession,
+    selectSession,
+    deleteSession,
+    addMessage,
+    updateMessage,
+  } = useSessionManager({ userId, autoInitialize: true });
+
+  // Convert DB messages to ChatMessageProps format
+  const messages: ChatMessageProps[] = dbMessages
+    .filter((msg: DBChatMessage) => msg.role === 'user' || msg.role === 'assistant')
+    .map((msg: DBChatMessage) => ({
+      id: msg.id,
+      content: msg.content,
+      role: msg.role as 'user' | 'assistant',
+      timestamp: msg.timestamp,
+      metadata: msg.metadata,
+      fullResponseData: msg.fullResponseData,
+      isLoading: msg.isLoading,
+      error: msg.error,
+    }));
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
-
-  // Initialize with a default session
-  useEffect(() => {
-    if (sessions.length === 0) {
-      const defaultSession: ChatSession = {
-        id: `session-${Date.now()}`,
-        title: 'New Chat',
-        lastMessage: 'Start a conversation...',
-        timestamp: new Date(),
-        messageCount: 0,
-      };
-      setSessions([defaultSession]);
-      setCurrentSessionId(defaultSession.id);
-    }
-  }, [sessions.length]);
 
   const layoutStyles = {
     display: 'flex',
@@ -138,62 +150,53 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
 
 
   const handleSendMessage = async (message: string) => {
-    if (!message.trim() || !currentSessionId) return;
+    if (!message.trim()) return;
 
-    // Add user message immediately
-    const userMessage: ChatMessageProps = {
-      id: `msg-${Date.now()}-user`,
-      content: message,
-      role: 'user',
-      timestamp: new Date(),
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-
-    // Add loading message for assistant
-    const loadingMessage: ChatMessageProps = {
-      id: `msg-${Date.now()}-loading`,
-      content: '',
-      role: 'assistant',
-      timestamp: new Date(),
-      isLoading: true,
-    };
-
-    setMessages(prev => [...prev, loadingMessage]);
+    // Ensure we have a current session
+    let sessionId = currentSession?.id;
+    if (!sessionId) {
+      try {
+        const newSession = await createSession();
+        sessionId = newSession.id;
+      } catch (error) {
+        console.error('Failed to create session:', error);
+        return;
+      }
+    }
 
     try {
+      // Add user message to database
+      await addMessage({
+        content: message,
+        role: 'user',
+      });
+
+      // Add loading message for assistant
+      const loadingMessage = await addMessage({
+        content: '',
+        role: 'assistant',
+        isLoading: true,
+      });
+
       // Call the onSendMessage prop if provided
       if (onSendMessage) {
-        const result = await onSendMessage(message, currentSessionId);
+        const result = await onSendMessage(message, sessionId);
         
-        // Replace loading message with actual AI response
-        const assistantMessage: ChatMessageProps = {
-          id: `msg-${Date.now()}-assistant`,
+        // Update loading message with actual AI response
+        await updateMessage(loadingMessage.id, {
           content: result.content,
-          role: 'assistant',
-          timestamp: new Date(),
           metadata: result.metadata,
           fullResponseData: result.fullResponseData,
-        };
-
-        setMessages(prev => {
-          const filtered = prev.filter(msg => msg.id !== loadingMessage.id);
-          return [...filtered, assistantMessage];
+          isLoading: false,
         });
-
-        // Update session
-        updateSession(currentSessionId, message, result.content);
         
         // Clear the prompt after sending
         setCurrentPrompt('');
       } else {
         // Default behavior - simulate AI response
-        setTimeout(() => {
-          const assistantMessage: ChatMessageProps = {
-            id: `msg-${Date.now()}-assistant`,
+        setTimeout(async () => {
+          await updateMessage(loadingMessage.id, {
             content: `I received your message: "${message}". This is a placeholder response. Please integrate with the AI agent API to get real responses.`,
-            role: 'assistant',
-            timestamp: new Date(),
             metadata: {
               intent: {
                 type: 'general_query',
@@ -201,84 +204,51 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
               },
               reasoning: 'This is a placeholder response. The actual AI agent integration is pending.',
             },
-          };
-
-          setMessages(prev => {
-            const filtered = prev.filter(msg => msg.id !== loadingMessage.id);
-            return [...filtered, assistantMessage];
+            isLoading: false,
           });
-
-          // Update session
-          updateSession(currentSessionId, message, assistantMessage.content);
           
           // Clear the prompt after sending
           setCurrentPrompt('');
         }, 1000);
       }
     } catch (error) {
-      // Replace loading message with error
-      const errorMessage: ChatMessageProps = {
-        id: `msg-${Date.now()}-error`,
-        content: '',
-        role: 'assistant',
-        timestamp: new Date(),
-        error: error instanceof Error ? error.message : 'An error occurred',
-      };
-
-      setMessages(prev => {
-        const filtered = prev.filter(msg => msg.id !== loadingMessage.id);
-        return [...filtered, errorMessage];
-      });
+      // Update loading message with error
+      try {
+        const loadingMessage = messages.find(msg => msg.isLoading);
+        if (loadingMessage) {
+          await updateMessage(loadingMessage.id, {
+            content: '',
+            error: error instanceof Error ? error.message : 'An error occurred',
+            isLoading: false,
+          });
+        }
+      } catch (updateError) {
+        console.error('Failed to update message with error:', updateError);
+      }
     }
   };
 
-  const updateSession = (sessionId: string, userMessage: string, assistantResponse: string) => {
-    setSessions(prev => prev.map(session => {
-      if (session.id === sessionId) {
-        return {
-          ...session,
-          title: session.title === 'New Chat' ? userMessage.slice(0, 50) + (userMessage.length > 50 ? '...' : '') : session.title,
-          lastMessage: assistantResponse.slice(0, 100) + (assistantResponse.length > 100 ? '...' : ''),
-          timestamp: new Date(),
-          messageCount: session.messageCount + 2, // User + Assistant
-        };
-      }
-      return session;
-    }));
+  const handleSessionSelect = async (sessionId: string) => {
+    try {
+      await selectSession(sessionId);
+    } catch (error) {
+      console.error('Failed to select session:', error);
+    }
   };
 
-  const handleSessionSelect = (sessionId: string) => {
-    setCurrentSessionId(sessionId);
-    // In a real app, you'd load messages for this session
-    // For now, we'll just clear messages when switching sessions
-    setMessages([]);
+  const handleNewSession = async () => {
+    try {
+      await createSession();
+    } catch (error) {
+      console.error('Failed to create new session:', error);
+    }
   };
 
-  const handleNewSession = () => {
-    const newSession: ChatSession = {
-      id: `session-${Date.now()}`,
-      title: 'New Chat',
-      lastMessage: 'Start a conversation...',
-      timestamp: new Date(),
-      messageCount: 0,
-    };
-    
-    setSessions(prev => [newSession, ...prev]);
-    setCurrentSessionId(newSession.id);
-    setMessages([]);
-  };
-
-  const handleDeleteSession = (sessionId: string) => {
-    setSessions(prev => prev.filter(session => session.id !== sessionId));
-    
-    if (sessionId === currentSessionId) {
-      const remainingSessions = sessions.filter(session => session.id !== sessionId);
-      if (remainingSessions.length > 0) {
-        setCurrentSessionId(remainingSessions[0].id);
-        setMessages([]);
-      } else {
-        handleNewSession();
-      }
+  const handleDeleteSession = async (sessionId: string) => {
+    try {
+      await deleteSession(sessionId);
+    } catch (error) {
+      console.error('Failed to delete session:', error);
     }
   };
 
@@ -287,7 +257,7 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
     <div style={layoutStyles}>
       <ChatSidebar
         sessions={sessions}
-        currentSessionId={currentSessionId}
+        currentSessionId={currentSession?.id}
         onSessionSelect={handleSessionSelect}
         onNewSession={handleNewSession}
         onDeleteSession={handleDeleteSession}
@@ -341,8 +311,8 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
         <div style={inputAreaStyles}>
           <ChatInput
             onSendMessage={handleSendMessage}
-            disabled={isLoading}
-            placeholder={error ? 'Error occurred. Try again...' : 'Type your message...'}
+            disabled={isLoading || sessionLoading}
+            placeholder={error || sessionError ? 'Error occurred. Try again...' : 'Type your message...'}
             value={currentPrompt}
             onChange={setCurrentPrompt}
             showPromptSelector={true}
