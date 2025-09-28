@@ -29,7 +29,7 @@ export default {
     "experimental_router": "browser"
   },
   "url": "https://wsyeabsera.github.io",
-  "baseUrl": "/Clear-AI/",
+  "baseUrl": "/clear-ai/",
   "organizationName": "wsyeabsera",
   "projectName": "Clear-AI",
   "onBrokenLinks": "warn",

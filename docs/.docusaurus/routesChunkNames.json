@@ -1,5 +1,5 @@
 {
-  "/Clear-AI/blog-85d": {
+  "/clear-ai/blog-c74": {
     "__comp": "a6aa9e1f",
     "__context": {
       "plugin": "36994c47"
@@ -19,16 +19,16 @@
         "content": "925b3f96"
       }
     ],
-    "__props": "b5ec349e"
+    "__props": "6f15e62a"
   },
-  "/Clear-AI/blog/archive-108": {
+  "/clear-ai/blog/archive-1f6": {
     "__comp": "9e4087bc",
     "__context": {
       "plugin": "36994c47"
     },
-    "__props": "d710e886"
+    "__props": "b3ff9298"
   },
-  "/Clear-AI/blog/authors-7a8": {
+  "/clear-ai/blog/authors-dba": {
     "__comp": "621db11d",
     "__context": {
       "data": {
@@ -37,9 +37,9 @@
       "plugin": "36994c47"
     },
     "sidebar": "814f3328",
-    "__props": "0288771a"
+    "__props": "bfcaa0b0"
   },
-  "/Clear-AI/blog/authors/all-sebastien-lorber-articles-85c": {
+  "/clear-ai/blog/authors/all-sebastien-lorber-articles-1e4": {
     "__comp": "33fc5bb8",
     "__context": {
       "data": {
@@ -59,9 +59,9 @@
       }
     ],
     "sidebar": "814f3328",
-    "__props": "658c4b38"
+    "__props": "a0cec750"
   },
-  "/Clear-AI/blog/authors/yangshun-752": {
+  "/clear-ai/blog/authors/yangshun-cd0": {
     "__comp": "33fc5bb8",
     "__context": {
       "data": {
@@ -81,9 +81,9 @@
       }
     ],
     "sidebar": "814f3328",
-    "__props": "e12e9828"
+    "__props": "3d26f4b8"
   },
-  "/Clear-AI/blog/first-blog-post-320": {
+  "/clear-ai/blog/first-blog-post-170": {
     "__comp": "ccc49370",
     "__context": {
       "data": {
@@ -94,7 +94,7 @@
     "sidebar": "814f3328",
     "content": "e273c56f"
   },
-  "/Clear-AI/blog/long-blog-post-bd5": {
+  "/clear-ai/blog/long-blog-post-1b8": {
     "__comp": "ccc49370",
     "__context": {
       "data": {
@@ -105,7 +105,7 @@
     "sidebar": "814f3328",
     "content": "73664a40"
   },
-  "/Clear-AI/blog/mdx-blog-post-710": {
+  "/clear-ai/blog/mdx-blog-post-d7f": {
     "__comp": "ccc49370",
     "__context": {
       "data": {
@@ -116,15 +116,15 @@
     "sidebar": "814f3328",
     "content": "59362658"
   },
-  "/Clear-AI/blog/tags-082": {
+  "/clear-ai/blog/tags-34c": {
     "__comp": "01a85c17",
     "__context": {
       "plugin": "36994c47"
     },
     "sidebar": "814f3328",
-    "__props": "08c4f6fb"
+    "__props": "9fddb7ec"
   },
-  "/Clear-AI/blog/tags/docusaurus-0f5": {
+  "/clear-ai/blog/tags/docusaurus-c7e": {
     "__comp": "6875c492",
     "__context": {
       "plugin": "36994c47"
@@ -144,9 +144,9 @@
         "content": "925b3f96"
       }
     ],
-    "__props": "05dbc0c7"
+    "__props": "274d2845"
   },
-  "/Clear-AI/blog/tags/facebook-5c8": {
+  "/clear-ai/blog/tags/facebook-952": {
     "__comp": "6875c492",
     "__context": {
       "plugin": "36994c47"
@@ -157,9 +157,9 @@
         "content": "7661071f"
       }
     ],
-    "__props": "288f0d90"
+    "__props": "3acaa7e3"
   },
-  "/Clear-AI/blog/tags/hello-428": {
+  "/clear-ai/blog/tags/hello-062": {
     "__comp": "6875c492",
     "__context": {
       "plugin": "36994c47"
@@ -173,9 +173,9 @@
         "content": "8717b14a"
       }
     ],
-    "__props": "b9ee75f7"
+    "__props": "d3d021b8"
   },
-  "/Clear-AI/blog/tags/hola-527": {
+  "/clear-ai/blog/tags/hola-c61": {
     "__comp": "6875c492",
     "__context": {
       "plugin": "36994c47"
@@ -186,9 +186,9 @@
         "content": "925b3f96"
       }
     ],
-    "__props": "d7133338"
+    "__props": "a424a12e"
   },
-  "/Clear-AI/blog/welcome-8b8": {
+  "/clear-ai/blog/welcome-0e7": {
     "__comp": "ccc49370",
     "__context": {
       "data": {
@@ -199,108 +199,108 @@
     "sidebar": "814f3328",
     "content": "d9f32620"
   },
-  "/Clear-AI/docs-e1d": {
+  "/clear-ai/docs-482": {
     "__comp": "5e95c892",
     "__context": {
       "plugin": "aba21aa0"
     }
   },
-  "/Clear-AI/docs-9be": {
+  "/clear-ai/docs-27f": {
     "__comp": "a7bd4aaa",
-    "__props": "fcd73a04"
+    "__props": "25e3e6ca"
   },
-  "/Clear-AI/docs-5f6": {
+  "/clear-ai/docs-6b5": {
     "__comp": "a94703ab"
   },
-  "/Clear-AI/docs/-ea0": {
+  "/clear-ai/docs/-434": {
     "__comp": "17896441",
     "content": "23374ca6"
   },
-  "/Clear-AI/docs/api/overview-b65": {
+  "/clear-ai/docs/api/overview-9db": {
     "__comp": "17896441",
     "content": "65df3d35"
   },
-  "/Clear-AI/docs/api/server/tools-5cc": {
+  "/clear-ai/docs/api/server/tools-87b": {
     "__comp": "17896441",
     "content": "da4b9305"
   },
-  "/Clear-AI/docs/architecture/overview-3f2": {
+  "/clear-ai/docs/architecture/overview-60d": {
     "__comp": "17896441",
     "content": "0b1ac180"
   },
-  "/Clear-AI/docs/getting-started/development-d20": {
+  "/clear-ai/docs/getting-started/development-2de": {
     "__comp": "17896441",
     "content": "0aa62002"
   },
-  "/Clear-AI/docs/getting-started/installation-4fe": {
+  "/clear-ai/docs/getting-started/installation-ce2": {
     "__comp": "17896441",
     "content": "54f44165"
   },
-  "/Clear-AI/docs/getting-started/quick-start-099": {
+  "/clear-ai/docs/getting-started/quick-start-9b3": {
     "__comp": "17896441",
     "content": "588bd741"
   },
-  "/Clear-AI/docs/intro-678": {
+  "/clear-ai/docs/intro-320": {
     "__comp": "17896441",
     "content": "0e384e19"
   },
-  "/Clear-AI/docs/packages/client-eb6": {
+  "/clear-ai/docs/packages/client-1ab": {
     "__comp": "17896441",
     "content": "d5e52200"
   },
-  "/Clear-AI/docs/packages/mcp-basic-2d2": {
+  "/clear-ai/docs/packages/mcp-basic-edf": {
     "__comp": "17896441",
     "content": "e47a3f68"
   },
-  "/Clear-AI/docs/packages/server-760": {
+  "/clear-ai/docs/packages/server-ad9": {
     "__comp": "17896441",
     "content": "8ebdddd1"
   },
-  "/Clear-AI/docs/packages/shared-97a": {
+  "/clear-ai/docs/packages/shared-39b": {
     "__comp": "17896441",
     "content": "5c296ff7"
   },
-  "/Clear-AI/docs/tutorial-basics/congratulations-084": {
+  "/clear-ai/docs/tutorial-basics/congratulations-08b": {
     "__comp": "17896441",
     "content": "822bd8ab"
   },
-  "/Clear-AI/docs/tutorial-basics/create-a-blog-post-9e0": {
+  "/clear-ai/docs/tutorial-basics/create-a-blog-post-ff4": {
     "__comp": "17896441",
     "content": "533a09ca"
   },
-  "/Clear-AI/docs/tutorial-basics/create-a-document-23e": {
+  "/clear-ai/docs/tutorial-basics/create-a-document-2ca": {
     "__comp": "17896441",
     "content": "1e4232ab"
   },
-  "/Clear-AI/docs/tutorial-basics/create-a-page-f57": {
+  "/clear-ai/docs/tutorial-basics/create-a-page-db4": {
     "__comp": "17896441",
     "content": "5c868d36"
   },
-  "/Clear-AI/docs/tutorial-basics/deploy-your-site-83e": {
+  "/clear-ai/docs/tutorial-basics/deploy-your-site-5f4": {
     "__comp": "17896441",
     "content": "f55d3e7a"
   },
-  "/Clear-AI/docs/tutorial-basics/markdown-features-740": {
+  "/clear-ai/docs/tutorial-basics/markdown-features-7bc": {
     "__comp": "17896441",
     "content": "18c41134"
   },
-  "/Clear-AI/docs/tutorial-extras/manage-docs-versions-1ff": {
+  "/clear-ai/docs/tutorial-extras/manage-docs-versions-a10": {
     "__comp": "17896441",
     "content": "dff1c289"
   },
-  "/Clear-AI/docs/tutorial-extras/translate-your-site-a8b": {
+  "/clear-ai/docs/tutorial-extras/translate-your-site-28b": {
     "__comp": "17896441",
     "content": "e44a2883"
   },
-  "/Clear-AI/docs/tutorials/building-your-first-tool-17d": {
+  "/clear-ai/docs/tutorials/building-your-first-tool-f9f": {
     "__comp": "17896441",
     "content": "65b9696f"
   },
-  "/Clear-AI/docs/tutorials/creating-workflows-ad6": {
+  "/clear-ai/docs/tutorials/creating-workflows-b95": {
     "__comp": "17896441",
     "content": "cd6311b9"
   },
-  "/Clear-AI/-628": {
+  "/clear-ai/-cca": {
     "__comp": "1df93b7f",
     "__context": {
       "plugin": "a7456010"

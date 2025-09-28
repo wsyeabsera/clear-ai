@@ -5,7 +5,7 @@
   "source": "@site/docs/packages/mcp-basic.md",
   "sourceDirName": "packages",
   "slug": "/packages/mcp-basic",
-  "permalink": "/Clear-AI/docs/packages/mcp-basic",
+  "permalink": "/clear-ai/docs/packages/mcp-basic",
   "draft": false,
   "unlisted": false,
   "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/packages/mcp-basic.md",
@@ -15,10 +15,10 @@
   "sidebar": "tutorialSidebar",
   "previous": {
     "title": "Server Package",
-    "permalink": "/Clear-AI/docs/packages/server"
+    "permalink": "/clear-ai/docs/packages/server"
   },
   "next": {
     "title": "Shared Package",
-    "permalink": "/Clear-AI/docs/packages/shared"
+    "permalink": "/clear-ai/docs/packages/shared"
   }
 }

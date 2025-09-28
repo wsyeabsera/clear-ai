@@ -3,207 +3,207 @@ import ComponentCreator from '@docusaurus/ComponentCreator';
 
 export default [
   {
-    path: '/Clear-AI/blog',
-    component: ComponentCreator('/Clear-AI/blog', '85d'),
+    path: '/clear-ai/blog',
+    component: ComponentCreator('/clear-ai/blog', 'c74'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/archive',
-    component: ComponentCreator('/Clear-AI/blog/archive', '108'),
+    path: '/clear-ai/blog/archive',
+    component: ComponentCreator('/clear-ai/blog/archive', '1f6'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/authors',
-    component: ComponentCreator('/Clear-AI/blog/authors', '7a8'),
+    path: '/clear-ai/blog/authors',
+    component: ComponentCreator('/clear-ai/blog/authors', 'dba'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/authors/all-sebastien-lorber-articles',
-    component: ComponentCreator('/Clear-AI/blog/authors/all-sebastien-lorber-articles', '85c'),
+    path: '/clear-ai/blog/authors/all-sebastien-lorber-articles',
+    component: ComponentCreator('/clear-ai/blog/authors/all-sebastien-lorber-articles', '1e4'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/authors/yangshun',
-    component: ComponentCreator('/Clear-AI/blog/authors/yangshun', '752'),
+    path: '/clear-ai/blog/authors/yangshun',
+    component: ComponentCreator('/clear-ai/blog/authors/yangshun', 'cd0'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/first-blog-post',
-    component: ComponentCreator('/Clear-AI/blog/first-blog-post', '320'),
+    path: '/clear-ai/blog/first-blog-post',
+    component: ComponentCreator('/clear-ai/blog/first-blog-post', '170'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/long-blog-post',
-    component: ComponentCreator('/Clear-AI/blog/long-blog-post', 'bd5'),
+    path: '/clear-ai/blog/long-blog-post',
+    component: ComponentCreator('/clear-ai/blog/long-blog-post', '1b8'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/mdx-blog-post',
-    component: ComponentCreator('/Clear-AI/blog/mdx-blog-post', '710'),
+    path: '/clear-ai/blog/mdx-blog-post',
+    component: ComponentCreator('/clear-ai/blog/mdx-blog-post', 'd7f'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/tags',
-    component: ComponentCreator('/Clear-AI/blog/tags', '082'),
+    path: '/clear-ai/blog/tags',
+    component: ComponentCreator('/clear-ai/blog/tags', '34c'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/tags/docusaurus',
-    component: ComponentCreator('/Clear-AI/blog/tags/docusaurus', '0f5'),
+    path: '/clear-ai/blog/tags/docusaurus',
+    component: ComponentCreator('/clear-ai/blog/tags/docusaurus', 'c7e'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/tags/facebook',
-    component: ComponentCreator('/Clear-AI/blog/tags/facebook', '5c8'),
+    path: '/clear-ai/blog/tags/facebook',
+    component: ComponentCreator('/clear-ai/blog/tags/facebook', '952'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/tags/hello',
-    component: ComponentCreator('/Clear-AI/blog/tags/hello', '428'),
+    path: '/clear-ai/blog/tags/hello',
+    component: ComponentCreator('/clear-ai/blog/tags/hello', '062'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/tags/hola',
-    component: ComponentCreator('/Clear-AI/blog/tags/hola', '527'),
+    path: '/clear-ai/blog/tags/hola',
+    component: ComponentCreator('/clear-ai/blog/tags/hola', 'c61'),
     exact: true
   },
   {
-    path: '/Clear-AI/blog/welcome',
-    component: ComponentCreator('/Clear-AI/blog/welcome', '8b8'),
+    path: '/clear-ai/blog/welcome',
+    component: ComponentCreator('/clear-ai/blog/welcome', '0e7'),
     exact: true
   },
   {
-    path: '/Clear-AI/docs',
-    component: ComponentCreator('/Clear-AI/docs', 'e1d'),
+    path: '/clear-ai/docs',
+    component: ComponentCreator('/clear-ai/docs', '482'),
     routes: [
       {
-        path: '/Clear-AI/docs',
-        component: ComponentCreator('/Clear-AI/docs', '9be'),
+        path: '/clear-ai/docs',
+        component: ComponentCreator('/clear-ai/docs', '27f'),
         routes: [
           {
-            path: '/Clear-AI/docs',
-            component: ComponentCreator('/Clear-AI/docs', '5f6'),
+            path: '/clear-ai/docs',
+            component: ComponentCreator('/clear-ai/docs', '6b5'),
             routes: [
               {
-                path: '/Clear-AI/docs/',
-                component: ComponentCreator('/Clear-AI/docs/', 'ea0'),
+                path: '/clear-ai/docs/',
+                component: ComponentCreator('/clear-ai/docs/', '434'),
                 exact: true
               },
               {
-                path: '/Clear-AI/docs/api/overview',
-                component: ComponentCreator('/Clear-AI/docs/api/overview', 'b65'),
+                path: '/clear-ai/docs/api/overview',
+                component: ComponentCreator('/clear-ai/docs/api/overview', '9db'),
                 exact: true,
                 sidebar: "apiSidebar"
               },
               {
-                path: '/Clear-AI/docs/api/server/tools',
-                component: ComponentCreator('/Clear-AI/docs/api/server/tools', '5cc'),
+                path: '/clear-ai/docs/api/server/tools',
+                component: ComponentCreator('/clear-ai/docs/api/server/tools', '87b'),
                 exact: true,
                 sidebar: "apiSidebar"
               },
               {
-                path: '/Clear-AI/docs/architecture/overview',
-                component: ComponentCreator('/Clear-AI/docs/architecture/overview', '3f2'),
+                path: '/clear-ai/docs/architecture/overview',
+                component: ComponentCreator('/clear-ai/docs/architecture/overview', '60d'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/getting-started/development',
-                component: ComponentCreator('/Clear-AI/docs/getting-started/development', 'd20'),
+                path: '/clear-ai/docs/getting-started/development',
+                component: ComponentCreator('/clear-ai/docs/getting-started/development', '2de'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/getting-started/installation',
-                component: ComponentCreator('/Clear-AI/docs/getting-started/installation', '4fe'),
+                path: '/clear-ai/docs/getting-started/installation',
+                component: ComponentCreator('/clear-ai/docs/getting-started/installation', 'ce2'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/getting-started/quick-start',
-                component: ComponentCreator('/Clear-AI/docs/getting-started/quick-start', '099'),
+                path: '/clear-ai/docs/getting-started/quick-start',
+                component: ComponentCreator('/clear-ai/docs/getting-started/quick-start', '9b3'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/intro',
-                component: ComponentCreator('/Clear-AI/docs/intro', '678'),
+                path: '/clear-ai/docs/intro',
+                component: ComponentCreator('/clear-ai/docs/intro', '320'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/packages/client',
-                component: ComponentCreator('/Clear-AI/docs/packages/client', 'eb6'),
+                path: '/clear-ai/docs/packages/client',
+                component: ComponentCreator('/clear-ai/docs/packages/client', '1ab'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/packages/mcp-basic',
-                component: ComponentCreator('/Clear-AI/docs/packages/mcp-basic', '2d2'),
+                path: '/clear-ai/docs/packages/mcp-basic',
+                component: ComponentCreator('/clear-ai/docs/packages/mcp-basic', 'edf'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/packages/server',
-                component: ComponentCreator('/Clear-AI/docs/packages/server', '760'),
+                path: '/clear-ai/docs/packages/server',
+                component: ComponentCreator('/clear-ai/docs/packages/server', 'ad9'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/packages/shared',
-                component: ComponentCreator('/Clear-AI/docs/packages/shared', '97a'),
+                path: '/clear-ai/docs/packages/shared',
+                component: ComponentCreator('/clear-ai/docs/packages/shared', '39b'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/tutorial-basics/congratulations',
-                component: ComponentCreator('/Clear-AI/docs/tutorial-basics/congratulations', '084'),
+                path: '/clear-ai/docs/tutorial-basics/congratulations',
+                component: ComponentCreator('/clear-ai/docs/tutorial-basics/congratulations', '08b'),
                 exact: true
               },
               {
-                path: '/Clear-AI/docs/tutorial-basics/create-a-blog-post',
-                component: ComponentCreator('/Clear-AI/docs/tutorial-basics/create-a-blog-post', '9e0'),
+                path: '/clear-ai/docs/tutorial-basics/create-a-blog-post',
+                component: ComponentCreator('/clear-ai/docs/tutorial-basics/create-a-blog-post', 'ff4'),
                 exact: true
               },
               {
-                path: '/Clear-AI/docs/tutorial-basics/create-a-document',
-                component: ComponentCreator('/Clear-AI/docs/tutorial-basics/create-a-document', '23e'),
+                path: '/clear-ai/docs/tutorial-basics/create-a-document',
+                component: ComponentCreator('/clear-ai/docs/tutorial-basics/create-a-document', '2ca'),
                 exact: true
               },
               {
-                path: '/Clear-AI/docs/tutorial-basics/create-a-page',
-                component: ComponentCreator('/Clear-AI/docs/tutorial-basics/create-a-page', 'f57'),
+                path: '/clear-ai/docs/tutorial-basics/create-a-page',
+                component: ComponentCreator('/clear-ai/docs/tutorial-basics/create-a-page', 'db4'),
                 exact: true
               },
               {
-                path: '/Clear-AI/docs/tutorial-basics/deploy-your-site',
-                component: ComponentCreator('/Clear-AI/docs/tutorial-basics/deploy-your-site', '83e'),
+                path: '/clear-ai/docs/tutorial-basics/deploy-your-site',
+                component: ComponentCreator('/clear-ai/docs/tutorial-basics/deploy-your-site', '5f4'),
                 exact: true
               },
               {
-                path: '/Clear-AI/docs/tutorial-basics/markdown-features',
-                component: ComponentCreator('/Clear-AI/docs/tutorial-basics/markdown-features', '740'),
+                path: '/clear-ai/docs/tutorial-basics/markdown-features',
+                component: ComponentCreator('/clear-ai/docs/tutorial-basics/markdown-features', '7bc'),
                 exact: true
               },
               {
-                path: '/Clear-AI/docs/tutorial-extras/manage-docs-versions',
-                component: ComponentCreator('/Clear-AI/docs/tutorial-extras/manage-docs-versions', '1ff'),
+                path: '/clear-ai/docs/tutorial-extras/manage-docs-versions',
+                component: ComponentCreator('/clear-ai/docs/tutorial-extras/manage-docs-versions', 'a10'),
                 exact: true
               },
               {
-                path: '/Clear-AI/docs/tutorial-extras/translate-your-site',
-                component: ComponentCreator('/Clear-AI/docs/tutorial-extras/translate-your-site', 'a8b'),
+                path: '/clear-ai/docs/tutorial-extras/translate-your-site',
+                component: ComponentCreator('/clear-ai/docs/tutorial-extras/translate-your-site', '28b'),
                 exact: true
               },
               {
-                path: '/Clear-AI/docs/tutorials/building-your-first-tool',
-                component: ComponentCreator('/Clear-AI/docs/tutorials/building-your-first-tool', '17d'),
+                path: '/clear-ai/docs/tutorials/building-your-first-tool',
+                component: ComponentCreator('/clear-ai/docs/tutorials/building-your-first-tool', 'f9f'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               },
               {
-                path: '/Clear-AI/docs/tutorials/creating-workflows',
-                component: ComponentCreator('/Clear-AI/docs/tutorials/creating-workflows', 'ad6'),
+                path: '/clear-ai/docs/tutorials/creating-workflows',
+                component: ComponentCreator('/clear-ai/docs/tutorials/creating-workflows', 'b95'),
                 exact: true,
                 sidebar: "tutorialSidebar"
               }
@@ -214,8 +214,8 @@ export default [
     ]
   },
   {
-    path: '/Clear-AI/',
-    component: ComponentCreator('/Clear-AI/', '628'),
+    path: '/clear-ai/',
+    component: ComponentCreator('/clear-ai/', 'cca'),
     exact: true
   },
   {

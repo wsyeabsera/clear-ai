@@ -1,5 +1,5 @@
 {
-  "permalink": "/Clear-AI/blog/welcome",
+  "permalink": "/clear-ai/blog/welcome",
   "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/blog/2021-08-26-welcome/index.md",
   "source": "@site/blog/2021-08-26-welcome/index.md",
   "title": "Welcome",
@@ -9,19 +9,19 @@
     {
       "inline": false,
       "label": "Facebook",
-      "permalink": "/Clear-AI/blog/tags/facebook",
+      "permalink": "/clear-ai/blog/tags/facebook",
       "description": "Facebook tag description"
     },
     {
       "inline": false,
       "label": "Hello",
-      "permalink": "/Clear-AI/blog/tags/hello",
+      "permalink": "/clear-ai/blog/tags/hello",
       "description": "Hello tag description"
     },
     {
       "inline": false,
       "label": "Docusaurus",
-      "permalink": "/Clear-AI/blog/tags/docusaurus",
+      "permalink": "/clear-ai/blog/tags/docusaurus",
       "description": "Docusaurus tag description"
     }
   ],
@@ -33,7 +33,7 @@
       "title": "Docusaurus maintainer",
       "url": "https://sebastienlorber.com",
       "page": {
-        "permalink": "/Clear-AI/blog/authors/all-sebastien-lorber-articles"
+        "permalink": "/clear-ai/blog/authors/all-sebastien-lorber-articles"
       },
       "socials": {
         "x": "https://x.com/sebastienlorber",
@@ -49,7 +49,7 @@
       "title": "Ex-Meta Staff Engineer, Co-founder GreatFrontEnd",
       "url": "https://linkedin.com/in/yangshun",
       "page": {
-        "permalink": "/Clear-AI/blog/authors/yangshun"
+        "permalink": "/clear-ai/blog/authors/yangshun"
       },
       "socials": {
         "x": "https://x.com/yangshunz",
@@ -77,6 +77,6 @@
   "unlisted": false,
   "nextItem": {
     "title": "MDX Blog Post",
-    "permalink": "/Clear-AI/blog/mdx-blog-post"
+    "permalink": "/clear-ai/blog/mdx-blog-post"
   }
 }

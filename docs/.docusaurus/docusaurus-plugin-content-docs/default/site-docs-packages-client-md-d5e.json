@@ -5,7 +5,7 @@
   "source": "@site/docs/packages/client.md",
   "sourceDirName": "packages",
   "slug": "/packages/client",
-  "permalink": "/Clear-AI/docs/packages/client",
+  "permalink": "/clear-ai/docs/packages/client",
   "draft": false,
   "unlisted": false,
   "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/packages/client.md",
@@ -15,10 +15,10 @@
   "sidebar": "tutorialSidebar",
   "previous": {
     "title": "Architecture Overview",
-    "permalink": "/Clear-AI/docs/architecture/overview"
+    "permalink": "/clear-ai/docs/architecture/overview"
   },
   "next": {
     "title": "Server Package",
-    "permalink": "/Clear-AI/docs/packages/server"
+    "permalink": "/clear-ai/docs/packages/server"
   }
 }

@@ -5,7 +5,7 @@
   "source": "@site/docs/tutorials/building-your-first-tool.md",
   "sourceDirName": "tutorials",
   "slug": "/tutorials/building-your-first-tool",
-  "permalink": "/Clear-AI/docs/tutorials/building-your-first-tool",
+  "permalink": "/clear-ai/docs/tutorials/building-your-first-tool",
   "draft": false,
   "unlisted": false,
   "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/tutorials/building-your-first-tool.md",
@@ -15,10 +15,10 @@
   "sidebar": "tutorialSidebar",
   "previous": {
     "title": "Shared Package",
-    "permalink": "/Clear-AI/docs/packages/shared"
+    "permalink": "/clear-ai/docs/packages/shared"
   },
   "next": {
     "title": "Creating Workflows with LangGraph",
-    "permalink": "/Clear-AI/docs/tutorials/creating-workflows"
+    "permalink": "/clear-ai/docs/tutorials/creating-workflows"
   }
 }

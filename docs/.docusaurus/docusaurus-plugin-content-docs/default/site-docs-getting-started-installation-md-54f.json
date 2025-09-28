@@ -5,7 +5,7 @@
   "source": "@site/docs/getting-started/installation.md",
   "sourceDirName": "getting-started",
   "slug": "/getting-started/installation",
-  "permalink": "/Clear-AI/docs/getting-started/installation",
+  "permalink": "/clear-ai/docs/getting-started/installation",
   "draft": false,
   "unlisted": false,
   "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/docs/getting-started/installation.md",
@@ -15,10 +15,10 @@
   "sidebar": "tutorialSidebar",
   "previous": {
     "title": "Welcome to Clear AI",
-    "permalink": "/Clear-AI/docs/intro"
+    "permalink": "/clear-ai/docs/intro"
   },
   "next": {
     "title": "Quick Start Guide",
-    "permalink": "/Clear-AI/docs/getting-started/quick-start"
+    "permalink": "/clear-ai/docs/getting-started/quick-start"
   }
 }

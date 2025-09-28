@@ -1,5 +1,5 @@
 {
-  "permalink": "/Clear-AI/blog/long-blog-post",
+  "permalink": "/clear-ai/blog/long-blog-post",
   "editUrl": "https://github.com/wsyeabsera/Clear-AI/tree/main/research/docs/blog/2019-05-29-long-blog-post.md",
   "source": "@site/blog/2019-05-29-long-blog-post.md",
   "title": "Long Blog Post",
@@ -9,13 +9,13 @@
     {
       "inline": false,
       "label": "Hello",
-      "permalink": "/Clear-AI/blog/tags/hello",
+      "permalink": "/clear-ai/blog/tags/hello",
       "description": "Hello tag description"
     },
     {
       "inline": false,
       "label": "Docusaurus",
-      "permalink": "/Clear-AI/blog/tags/docusaurus",
+      "permalink": "/clear-ai/blog/tags/docusaurus",
       "description": "Docusaurus tag description"
     }
   ],
@@ -27,7 +27,7 @@
       "title": "Ex-Meta Staff Engineer, Co-founder GreatFrontEnd",
       "url": "https://linkedin.com/in/yangshun",
       "page": {
-        "permalink": "/Clear-AI/blog/authors/yangshun"
+        "permalink": "/clear-ai/blog/authors/yangshun"
       },
       "socials": {
         "x": "https://x.com/yangshunz",
@@ -51,10 +51,10 @@
   "unlisted": false,
   "prevItem": {
     "title": "MDX Blog Post",
-    "permalink": "/Clear-AI/blog/mdx-blog-post"
+    "permalink": "/clear-ai/blog/mdx-blog-post"
   },
   "nextItem": {
     "title": "First Blog Post",
-    "permalink": "/Clear-AI/blog/first-blog-post"
+    "permalink": "/clear-ai/blog/first-blog-post"
   }
 }
