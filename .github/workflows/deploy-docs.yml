@@ -33,6 +33,8 @@ jobs:
         ls -la docs/
         echo "Package.json exists:"
         test -f docs/package.json && echo "✅ docs/package.json found" || echo "❌ docs/package.json missing"
+        echo "Docusaurus config:"
+        cat docs/docusaurus.config.ts | grep -E "(projectName|baseUrl)"
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
