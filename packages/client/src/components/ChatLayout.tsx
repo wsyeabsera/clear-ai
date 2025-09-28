@@ -228,6 +228,24 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
     }
   };
 
+  const handleConfirmAction = async () => {
+    try {
+      // Send confirmation message
+      await handleSendMessage('yes');
+    } catch (error) {
+      console.error('Failed to confirm action:', error);
+    }
+  };
+
+  const handleCancelAction = async () => {
+    try {
+      // Send cancellation message
+      await handleSendMessage('no');
+    } catch (error) {
+      console.error('Failed to cancel action:', error);
+    }
+  };
+
   const handleSessionSelect = async (sessionId: string) => {
     try {
       await selectSession(sessionId);
@@ -301,6 +319,8 @@ export const ChatLayout: React.FC<ChatLayoutProps> = ({
                 <ChatMessage
                   key={message.id}
                   {...message}
+                  onConfirmAction={handleConfirmAction}
+                  onCancelAction={handleCancelAction}
                 />
               ))}
               <div ref={messagesEndRef} />

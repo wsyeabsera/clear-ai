@@ -59,6 +59,18 @@ export interface AgentExecutionOptions {
   previousIntents?: QueryIntent[]
 }
 
+export interface PendingAction {
+  id: string
+  userId: string
+  sessionId: string
+  originalQuery: string
+  intent: QueryIntent
+  requiredTools: string[]
+  toolArgs: Record<string, any>[]
+  confirmationMessage: string
+  timestamp: number
+}
+
 /**
  * Agent service configuration
  */
@@ -81,6 +93,7 @@ export class AgentService {
   private relationshipAnalyzer: RelationshipAnalysisService
   private enhancedSemanticService: EnhancedSemanticService
   private config: AgentServiceConfig
+  private pendingActions: Map<string, PendingAction> = new Map()
 
   constructor(config: AgentServiceConfig) {
     this.config = config
@@ -200,6 +213,10 @@ export class AgentService {
 
         case 'conversation':
           response = await this.handleConversation(query, memoryContext, executionOptions)
+          break
+
+        case 'confirmation_request':
+          response = await this.handleConfirmationRequest(query, intent, executionOptions)
           break
 
         case 'unknown':
@@ -527,6 +544,45 @@ export class AgentService {
     const toolResults: ToolExecutionResult[] = []
 
     try {
+      // Check if this tool execution needs confirmation
+      if (intent.needsConfirmation && intent.confirmationMessage) {
+        // Store the pending action for later execution
+        const pendingActionId = `${options.userId || 'anonymous'}-${options.sessionId || 'default'}-${Date.now()}`
+        const toolArgs: Record<string, any>[] = []
+        
+        // Extract tool arguments for each required tool
+        if (intent.requiredTools && intent.requiredTools.length > 0) {
+          for (const toolName of intent.requiredTools) {
+            try {
+              const args = await this.extractToolArgs(query, toolName)
+              toolArgs.push({ toolName, args })
+            } catch (error) {
+              logger.warn(`Failed to extract args for tool ${toolName}:`, error)
+              toolArgs.push({ toolName, args: {} })
+            }
+          }
+        }
+        
+        const pendingAction: PendingAction = {
+          id: pendingActionId,
+          userId: options.userId || 'anonymous',
+          sessionId: options.sessionId || 'default',
+          originalQuery: query,
+          intent,
+          requiredTools: intent.requiredTools || [],
+          toolArgs,
+          confirmationMessage: intent.confirmationMessage,
+          timestamp: Date.now()
+        }
+        
+        this.pendingActions.set(pendingActionId, pendingAction)
+        
+        return {
+          response: `🤔 ${intent.confirmationMessage}\n\nWould you like me to perform this action for you?`,
+          toolResults: []
+        }
+      }
+
       // Execute required tools
       if (intent.requiredTools && intent.requiredTools.length > 0) {
         for (const toolName of intent.requiredTools) {
@@ -652,6 +708,78 @@ export class AgentService {
   }
 
   /**
+   * Handle confirmation requests
+   */
+  private async handleConfirmationRequest(
+    query: string,
+    intent: QueryIntent,
+    options: AgentExecutionOptions
+  ): Promise<string> {
+    // Check if this is a positive confirmation (yes, do it, proceed, etc.)
+    const positiveConfirmations = ['yes', 'y', 'do it', 'proceed', 'go ahead', 'execute', 'confirm', 'ok', 'okay', 'sure']
+    const negativeConfirmations = ['no', 'n', 'cancel', 'stop', 'abort', 'don\'t', 'dont', 'nevermind', 'never mind']
+    
+    const queryLower = query.toLowerCase().trim()
+    const isPositive = positiveConfirmations.some(conf => queryLower.includes(conf))
+    const isNegative = negativeConfirmations.some(conf => queryLower.includes(conf))
+    
+    if (isPositive) {
+      // User confirmed - find and execute the pending action
+      const pendingAction = this.findPendingAction(options.userId, options.sessionId)
+      
+      if (pendingAction) {
+        try {
+          // Execute the pending action
+          const toolResults: ToolExecutionResult[] = []
+          
+          for (const toolArg of pendingAction.toolArgs) {
+            try {
+              const tool = this.toolRegistry.getTool(toolArg.toolName)
+              if (!tool) {
+                throw new Error(`Tool '${toolArg.toolName}' not found`)
+              }
+              const result = await tool.execute(toolArg.args)
+              
+              toolResults.push({
+                success: true,
+                toolName: toolArg.toolName,
+                result,
+                executionTime: 0
+              })
+            } catch (error) {
+              toolResults.push({
+                success: false,
+                toolName: toolArg.toolName,
+                error: error instanceof Error ? error.message : 'Unknown error',
+                executionTime: 0
+              })
+            }
+          }
+          
+          // Generate response based on tool results
+          const response = await this.generateToolResponse(pendingAction.originalQuery, toolResults, options)
+          
+          // Clean up the pending action
+          this.pendingActions.delete(pendingAction.id)
+          
+          return `✅ ${response}`
+        } catch (error) {
+          logger.error('Failed to execute pending action:', error)
+          return `❌ I encountered an error while executing the action: ${error instanceof Error ? error.message : 'Unknown error'}`
+        }
+      } else {
+        return "❌ I don't have any pending actions to execute. Please make a new request that requires confirmation."
+      }
+    } else if (isNegative) {
+      // User declined - clean up any pending actions
+      this.clearPendingActions(options.userId, options.sessionId)
+      return "❌ Understood. I won't proceed with the action. Is there anything else I can help you with?"
+    } else {
+      return "I'm not sure if you're confirming or declining. Please respond with 'yes' to proceed or 'no' to cancel."
+    }
+  }
+
+  /**
    * Handle unknown queries
    */
   private async handleUnknownQuery(
@@ -674,6 +802,43 @@ export class AgentService {
     })
 
     return response.content
+  }
+
+  /**
+   * Find the most recent pending action for a user/session
+   */
+  private findPendingAction(userId?: string, sessionId?: string): PendingAction | null {
+    const userKey = userId || 'anonymous'
+    const sessionKey = sessionId || 'default'
+    
+    // Find the most recent pending action for this user/session
+    let mostRecent: PendingAction | null = null
+    let mostRecentTime = 0
+    
+    for (const [id, action] of this.pendingActions) {
+      if (action.userId === userKey && action.sessionId === sessionKey) {
+        if (action.timestamp > mostRecentTime) {
+          mostRecent = action
+          mostRecentTime = action.timestamp
+        }
+      }
+    }
+    
+    return mostRecent
+  }
+
+  /**
+   * Clear all pending actions for a user/session
+   */
+  private clearPendingActions(userId?: string, sessionId?: string): void {
+    const userKey = userId || 'anonymous'
+    const sessionKey = sessionId || 'default'
+    
+    for (const [id, action] of this.pendingActions) {
+      if (action.userId === userKey && action.sessionId === sessionKey) {
+        this.pendingActions.delete(id)
+      }
+    }
   }
 
   /**

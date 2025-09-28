@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTheme } from '../themes';
 import { JsonModal } from './JsonModal';
+import { ConfirmationButtons } from './ConfirmationButtons';
 
 export interface ChatMessageProps {
   id: string;
@@ -18,6 +19,8 @@ export interface ChatMessageProps {
     memoryContext?: any[];
   };
   fullResponseData?: any; // Complete API response for JSON modal
+  onConfirmAction?: () => void;
+  onCancelAction?: () => void;
 }
 
 export const ChatMessage: React.FC<ChatMessageProps> = ({
@@ -27,7 +30,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
   isLoading = false,
   error,
   metadata,
-  fullResponseData
+  fullResponseData,
+  onConfirmAction,
+  onCancelAction
 }) => {
   const { theme } = useTheme();
   const [showMetadata, setShowMetadata] = useState(false);
@@ -35,6 +40,12 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
 
   const isUser = role === 'user';
   const isAssistant = role === 'assistant';
+
+  // Check if this is a confirmation request
+  const isConfirmationRequest = isAssistant && 
+    content.includes('Would you like me to perform this action for you?') &&
+    onConfirmAction && 
+    onCancelAction;
 
   const messageStyles = {
     display: 'flex',
@@ -153,6 +164,13 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
         ) : (
           <>
             {content}
+            {isConfirmationRequest && (
+              <ConfirmationButtons
+                onConfirm={onConfirmAction!}
+                onCancel={onCancelAction!}
+                isLoading={isLoading}
+              />
+            )}
             {isAssistant && metadata && (
               <>
                 <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>

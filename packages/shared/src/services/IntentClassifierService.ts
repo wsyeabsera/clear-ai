@@ -6,12 +6,14 @@ import { parseLLMJsonResponse } from '../utils'
  * Query intent classification result
  */
 export interface QueryIntent {
-  type: 'memory_chat' | 'tool_execution' | 'hybrid' | 'knowledge_search' | 'conversation' | 'unknown'
+  type: 'memory_chat' | 'tool_execution' | 'hybrid' | 'knowledge_search' | 'conversation' | 'confirmation_request' | 'unknown'
   confidence: number
   requiredTools?: string[]
   memoryContext?: boolean
   parameters?: Record<string, any>
   reasoning?: string
+  needsConfirmation?: boolean
+  confirmationMessage?: string
 }
 
 /**
@@ -162,7 +164,12 @@ Your task is to classify user queries into one of these intent types:
    - Questions that don't fit other categories
    - Examples: "Hello", "How are you?", "Tell me a joke"
 
-6. **unknown**: Queries that cannot be clearly classified
+6. **confirmation_request**: User is responding to a confirmation prompt
+   - User confirming or rejecting a proposed action
+   - Responses like "yes", "no", "do it", "cancel", "proceed"
+   - Examples: "Yes, do it", "No, don't do that", "Go ahead", "Cancel"
+
+7. **unknown**: Queries that cannot be clearly classified
    - Ambiguous or unclear requests
    - Queries that don't fit any category
    - Examples: "What?", "I don't understand", "Help me with something"
@@ -175,8 +182,10 @@ For each query, respond with a JSON object containing:
 - requiredTools: array of tool names if applicable
 - memoryContext: boolean indicating if memory context is needed
 - reasoning: brief explanation of your classification
+- needsConfirmation: boolean indicating if this query should trigger a confirmation request
+- confirmationMessage: string with the confirmation message to show the user (only if needsConfirmation is true)
 
-Be precise and consider the user's intent carefully.`
+Be precise and consider the user's intent carefully. For tool execution queries that involve significant actions (API calls, file modifications, data changes), set needsConfirmation to true and provide a clear confirmation message.`
   }
 
   /**
