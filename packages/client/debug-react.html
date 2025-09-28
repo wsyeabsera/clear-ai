@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug React App</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        // Simple test to see if we can load the React app
+        console.log('Loading React app...');
+        
+        // Try to load the main.tsx
+        fetch('/src/main.tsx')
+            .then(response => {
+                console.log('Main.tsx response:', response.status);
+                return response.text();
+            })
+            .then(text => {
+                console.log('Main.tsx content length:', text.length);
+                console.log('First 200 chars:', text.substring(0, 200));
+            })
+            .catch(error => {
+                console.error('Error loading main.tsx:', error);
+            });
+            
+        // Try to load the App.tsx
+        fetch('/src/App.tsx')
+            .then(response => {
+                console.log('App.tsx response:', response.status);
+                return response.text();
+            })
+            .then(text => {
+                console.log('App.tsx content length:', text.length);
+                console.log('First 200 chars:', text.substring(0, 200));
+            })
+            .catch(error => {
+                console.error('Error loading App.tsx:', error);
+            });
+    </script>
+</body>
+</html>

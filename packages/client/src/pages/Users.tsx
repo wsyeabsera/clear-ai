@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { User } from '@clear-ai/shared'
 import { userService } from '../services/userService'
 import { Table, TableColumn } from '../components/Table'
-import { useTheme } from '@/themes';
+import { useTheme } from '../themes';
 
 export const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>([])
@@ -14,12 +14,8 @@ export const Users: React.FC = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true)
-        const response = await userService.getUsers()
-        if (response.success && response.data) {
-          setUsers(response.data)
-        } else {
-          setError(response.error || 'Failed to fetch users')
-        }
+        const users = await userService.getUsers()
+        setUsers(users)
       } catch (err) {
         setError('An unexpected error occurred')
       } finally {

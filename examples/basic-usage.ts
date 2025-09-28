@@ -8,10 +8,7 @@
  * 4. Use the server API
  */
 
-import { ClearAI } from '@clear-ai/core';
-import { MCPServer, ToolRegistry } from '@clear-ai/mcp';
-import { SimpleLangChainService, ToolExecutionService, SimpleWorkflowService } from '@clear-ai/shared';
-import { createServer } from '@clear-ai/server';
+import { ClearAI, MCPServer, ToolRegistry, SimpleLangChainService, ToolExecutionService, SimpleWorkflowService, createServer } from '@clear-ai/core';
 
 async function basicExample() {
   console.log('🚀 Clear AI Basic Usage Example\n');

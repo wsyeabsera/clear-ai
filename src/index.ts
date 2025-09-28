@@ -8,6 +8,7 @@
 // Re-export everything from subpackages directly from their dist files
 export * from '../packages/shared/dist/index';
 export * from '../packages/server/dist/index';
+export { createServer, CreateServerOptions } from '../packages/server/dist/createServer';
 
 // Re-export specific items from mcp-basic package to avoid conflicts
 export { MCPServer, ToolRegistry } from '../packages/mcp-basic/dist/index';

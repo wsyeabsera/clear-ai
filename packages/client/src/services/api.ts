@@ -1,126 +1,159 @@
-import axios from 'axios'
-import { ApiResponse, ToolExecutionRequest } from '@clear-ai/shared'
+/**
+ * API Service for Clear AI Client
+ *
+ * Provides typed API communication with Clear AI servers
+ */
 
-const API_BASE_URL = process.env.VITE_API_URL || 'http://localhost:3001'
+import axios from 'axios';
 
-class ApiClient {
-  private client: any
+// Type definitions for axios
+type AxiosInstance = ReturnType<typeof axios.create>;
+type AxiosResponse<T = any> = {
+  data: T;
+  status: number;
+  statusText: string;
+  headers: any;
+  config: any;
+  request?: any;
+};
 
-  constructor() {
+export interface ServerHealth {
+  status: string;
+  timestamp: string;
+  uptime: number;
+  version: string;
+}
+
+export interface MCPTool {
+  name: string;
+  description: string;
+  status: string;
+  inputSchema?: any;
+}
+
+export interface LLMModel {
+  name: string;
+  provider: string;
+  status: string;
+}
+
+export interface WorkflowResult {
+  success: boolean;
+  result: any;
+  steps: any[];
+  duration: number;
+}
+
+export class ClearAIApiService {
+  public client: AxiosInstance;
+
+  constructor(baseURL: string = import.meta.env.VITE_API_URL || 'http://localhost:3001') {
     this.client = axios.create({
-      baseURL: API_BASE_URL,
+      baseURL,
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
       },
-    })
-
-    // Add request interceptor for logging
-    this.client.interceptors.request.use(
-      (config: any) => {
-        console.log(`Making ${config.method?.toUpperCase()} request to ${config.url}`)
-        return config
-      },
-      (error: any) => {
-        console.error('Request error:', error)
-        return Promise.reject(error)
-      }
-    )
+    });
 
     // Add response interceptor for error handling
     this.client.interceptors.response.use(
-      (response: any) => {
-        console.log(`Response received from ${response.config.url}:`, response.status)
-        return response
-      },
+      (response: any) => response,
       (error: any) => {
-        console.error('Response error:', error.response?.data || error.message)
-        return Promise.reject(error)
+        if (error.code === 'ECONNREFUSED') {
+          throw new Error(`Cannot connect to server at ${baseURL}. Make sure the server is running.`);
+        }
+        throw new Error(error.response?.data?.message || error.message || 'Request failed');
       }
-    )
+    );
   }
 
-  // Generic GET request
-  async get<T>(endpoint: string): Promise<ApiResponse<T>> {
-    try {
-      const response: any = await this.client.get(endpoint)
-      return response.data
-    } catch (error: any) {
-      return this.handleError(error, 'GET', endpoint)
-    }
+  /**
+   * Check server health
+   */
+  async getHealth(): Promise<ServerHealth> {
+    const response: AxiosResponse<ServerHealth> = await this.client.get('/api/health');
+    return response.data;
   }
 
-  // Generic POST request
-  async post<T>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
-    try {
-      const response: any = await this.client.post(endpoint, data)
-      return response.data
-    } catch (error: any) {
-      return this.handleError(error, 'POST', endpoint)
-    }
+  /**
+   * Get available MCP tools
+   */
+  async getTools(): Promise<MCPTool[]> {
+    const response: AxiosResponse<MCPTool[]> = await this.client.get('/api/mcp/tools');
+    return response.data;
   }
 
-  // Generic PUT request
-  async put<T>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
-    try {
-      const response: any = await this.client.put(endpoint, data)
-      return response.data
-    } catch (error: any) {
-      return this.handleError(error, 'PUT', endpoint)
-    }
+  /**
+   * Get MCP tool schemas
+   */
+  async getToolSchemas(): Promise<{ success: boolean; data?: any[]; error?: string }> {
+    const response: AxiosResponse<{ success: boolean; data?: any[]; error?: string }> = await this.client.get('/api/mcp/schemas');
+    return response.data;
   }
 
-  // Generic DELETE request
-  async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
-    try {
-      const response: any = await this.client.delete(endpoint)
-      return response.data
-    } catch (error: any) {
-      return this.handleError(error, 'DELETE', endpoint)
-    }
+  /**
+   * Execute an MCP tool
+   */
+  async executeTool(toolName: string, data: any = {}): Promise<any> {
+    const response = await this.client.post(`/api/mcp/tools/${toolName}/execute`, data);
+    return response.data;
   }
 
-  // Health check
-  async healthCheck(): Promise<ApiResponse<{ status: string; timestamp: string }>> {
-    return this.get('/api/health')
+  /**
+   * Complete a prompt using LLM
+   */
+  async completePrompt(prompt: string, options: {
+    model?: string;
+    temperature?: number;
+  } = {}): Promise<string> {
+    const response = await this.client.post('/api/langchain/complete', {
+      prompt,
+      model: options.model || 'ollama',
+      temperature: options.temperature || 0.7,
+    });
+    const data = response.data as any;
+    return data.content || data;
   }
 
-  // MCP Tools
-  async getTools(): Promise<ApiResponse<Array<{ name: string; description: string }>>> {
-    return this.get('/api/mcp/tools')
+  /**
+   * Get available LLM models
+   */
+  async getModels(): Promise<LLMModel[]> {
+    const response: AxiosResponse<LLMModel[]> = await this.client.get('/api/langchain/models');
+    return response.data;
   }
 
-  async getToolSchemas(): Promise<ApiResponse<Array<any>>> {
-    return this.get('/api/mcp/schemas')
+  /**
+   * Execute a workflow
+   */
+  async executeWorkflow(description: string, options: {
+    model?: string;
+  } = {}): Promise<WorkflowResult> {
+    const response = await this.client.post('/api/langgraph/execute', {
+      description,
+      model: options.model || 'ollama',
+    });
+    return response.data as WorkflowResult;
   }
 
-  async getToolSchema(toolName: string): Promise<ApiResponse<any>> {
-    return this.get(`/api/mcp/schemas/${toolName}`)
+  /**
+   * Update server URL
+   */
+  setBaseURL(url: string): void {
+    this.client.defaults.baseURL = url;
   }
 
-  async executeTool(toolName: string, toolArguments?: Record<string, any>): Promise<ApiResponse<any>> {
-    const request: ToolExecutionRequest = { toolName, arguments: toolArguments || {} }
-    return this.post('/api/mcp/execute', request)
-  }
-
-  // Error handling
-  private handleError(error: any, method: string, endpoint: string): ApiResponse<any> {
-    const errorMessage = error.response?.data?.error || error.message || 'Unknown error occurred'
-    const statusCode = error.response?.status || 500
-
-    console.error(`API Error [${method} ${endpoint}]:`, {
-      status: statusCode,
-      message: errorMessage,
-      details: error.response?.data
-    })
-
-    return {
-      success: false,
-      error: errorMessage,
-    }
+  /**
+   * Get current server URL
+   */
+  getBaseURL(): string {
+    return this.client.defaults.baseURL || '';
   }
 }
 
-// Export singleton instance
-export const apiClient = new ApiClient()
-export default apiClient
+// Default instance
+export const apiService = new ClearAIApiService();
+
+// Export the client instance for direct use
+export const apiClient = apiService;

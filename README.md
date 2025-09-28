@@ -1,6 +1,6 @@
 # @clear-ai/core
 
-Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration.
+Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration. Perfect for CLI tools, APIs, and server applications.
 
 [![npm version](https://badge.fury.io/js/%40clear-ai%2Fcore.svg)](https://badge.fury.io/js/%40clear-ai%2Fcore)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -13,122 +13,139 @@ npm install @clear-ai/core
 ```
 
 ```typescript
-import { ClearAI } from '@clear-ai/core';
+import { ClearAI } from "@clear-ai/core";
 
-// Initialize the framework
+// Initialize the framework for CLI usage
 const ai = new ClearAI({
   llm: {
-    openaiApiKey: 'your-key',
-    ollamaBaseUrl: 'http://localhost:11434'
+    openaiApiKey: "your-key",
+    ollamaBaseUrl: "http://localhost:11434",
   },
   server: {
-    port: 3001
-  }
+    port: 3001,
+  },
 });
 
 // Start everything
 await ai.init();
+
+// Access services
+const mcpServer = ai.getMCP();
+const llmService = ai.getLLM();
+const toolService = ai.getTools();
 ```
 
 ## 📦 What's Included
 
 ### MCP (Model Context Protocol) - `@clear-ai/mcp`
+
 - **MCPServer** - Full MCP protocol implementation
 - **ToolRegistry** - Dynamic tool registration and management
 - **Built-in Tools** - API calls, JSON processing, file operations
 
 ### Shared Services - `@clear-ai/shared`
+
 - **SimpleLangChainService** - Multi-provider LLM integration
 - **ToolExecutionService** - Tool registration and execution
 - **SimpleWorkflowService** - Workflow orchestration
 - **Logger** - Structured logging utilities
 
 ### Server - `@clear-ai/server`
+
 - **Express API** - RESTful endpoints for tool execution
 - **Workflow Execution** - LangGraph workflow orchestration
 - **Health Monitoring** - System health and status endpoints
 
-### Client - `@clear-ai/client`
-- **React Components** - Pre-built UI components
-- **Hooks** - Custom React hooks for AI functionality
-- **Services** - Frontend service layer
+### Client - `@clear-ai/client` (Optional)
+
+- **React Components** - Pre-built UI components with Storybook
+- **Theme System** - Multiple visual themes
+- **Web Interface** - Browser-based tool execution interface
 
 ## 🎯 Usage Examples
 
 ### Basic Tool Execution
 
 ```typescript
-import { MCPServer, ToolRegistry } from '@clear-ai/mcp';
+import { MCPServer, ToolRegistry } from "@clear-ai/mcp";
 
 const server = new MCPServer();
 const tools = server.getToolRegistry();
 
 // Execute an API call
-const result = await tools.executeTool('api_call', {
-  url: 'https://api.example.com/users/1',
-  method: 'GET'
+const result = await tools.executeTool("api_call", {
+  url: "https://api.example.com/users/1",
+  method: "GET",
 });
 ```
 
 ### LLM Integration
 
 ```typescript
-import { SimpleLangChainService } from '@clear-ai/shared';
+import { SimpleLangChainService } from "@clear-ai/shared";
 
 const llm = new SimpleLangChainService({
-  openaiApiKey: 'your-key',
-  ollamaBaseUrl: 'http://localhost:11434'
+  openaiApiKey: "your-key",
+  ollamaBaseUrl: "http://localhost:11434",
 });
 
-const response = await llm.complete('Hello, world!', {
-  model: 'ollama',
-  temperature: 0.7
+const response = await llm.complete("Hello, world!", {
+  model: "ollama",
+  temperature: 0.7,
 });
 ```
 
 ### Workflow Execution
 
 ```typescript
-import { SimpleWorkflowService, ToolExecutionService } from '@clear-ai/shared';
+import { SimpleWorkflowService, ToolExecutionService } from "@clear-ai/shared";
 
 const toolService = new ToolExecutionService(llmConfig);
 const workflow = new SimpleWorkflowService(llmConfig, toolService);
 
 const result = await workflow.executeWorkflow(
-  'Get weather data and format it nicely'
+  "Get weather data and format it nicely"
 );
 ```
 
 ### Server API
 
 ```typescript
-import { createServer } from '@clear-ai/server';
+import { createServer } from "@clear-ai/server";
 
 const server = createServer({
   port: 3001,
-  mcpConfig: { tools: ['api_call', 'json_reader'] },
-  llmConfig: { openaiApiKey: 'your-key' }
+  mcpConfig: { tools: ["api_call", "json_reader"] },
+  llmConfig: { openaiApiKey: "your-key" },
 });
 
 await server.start();
 ```
 
-### React Components
+### CLI Application
 
 ```typescript
-import { Button, Card, ToolExecutionForm } from '@clear-ai/client';
+import { ClearAI, MCPServer } from "@clear-ai/core";
 
-function MyApp() {
-  return (
-    <Card>
-      <ToolExecutionForm
-        onExecute={(tool, args) => {
-          // Handle tool execution
-        }}
-      />
-    </Card>
-  );
+async function main() {
+  const ai = new ClearAI({
+    llm: { openaiApiKey: process.env.OPENAI_API_KEY },
+    server: { port: 3001 },
+  });
+
+  await ai.init();
+
+  // Use the MCP server for tool execution
+  const mcpServer = ai.getMCP();
+  const result = await mcpServer.getToolRegistry().executeTool("api_call", {
+    url: "https://api.example.com/data",
+    method: "GET",
+  });
+
+  console.log("Result:", result);
 }
+
+main().catch(console.error);
 ```
 
 ## 🏗️ Architecture
@@ -138,7 +155,7 @@ function MyApp() {
 ├── @clear-ai/mcp      # Model Context Protocol
 ├── @clear-ai/shared   # Shared services & utilities
 ├── @clear-ai/server   # Express API server
-└── @clear-ai/client   # React components
+└── @clear-ai/client   # React web interface (optional)
 ```
 
 ## 🔧 Configuration
@@ -167,17 +184,17 @@ NODE_ENV=production
 ```typescript
 const config: ClearAIConfig = {
   mcp: {
-    tools: ['api_call', 'json_reader', 'file_reader']
+    tools: ["api_call", "json_reader", "file_reader"],
   },
   llm: {
     openaiApiKey: process.env.OPENAI_API_KEY,
     ollamaBaseUrl: process.env.OLLAMA_BASE_URL,
-    langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY
+    langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY,
   },
   server: {
     port: 3001,
-    cors: { origin: ['http://localhost:3000'] }
-  }
+    cors: { origin: ["http://localhost:3000"] },
+  },
 };
 ```
 

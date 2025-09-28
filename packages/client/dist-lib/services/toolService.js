@@ -4,13 +4,21 @@ exports.toolService = void 0;
 const api_1 = require("./api");
 exports.toolService = {
     async getTools() {
-        return api_1.apiClient.getTools();
+        const response = await api_1.apiClient.getTools();
+        // The API returns the data directly, not wrapped
+        return response || [];
     },
     async getToolSchemas() {
-        return api_1.apiClient.getToolSchemas();
-    },
-    async getToolSchema(toolName) {
-        return api_1.apiClient.getToolSchema(toolName);
+        try {
+            const response = await api_1.apiClient.getToolSchemas();
+            return response;
+        }
+        catch (error) {
+            return {
+                success: false,
+                error: error.message || 'Failed to load tool schemas'
+            };
+        }
     },
     async executeTool(toolName, toolArguments) {
         return api_1.apiClient.executeTool(toolName, toolArguments);

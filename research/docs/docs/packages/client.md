@@ -2,6 +2,8 @@
 
 The Clear AI client is a modern React application that provides the user interface for interacting with the AI-powered tool execution system. Built with TypeScript, Vite, and Tailwind CSS, it offers a responsive, themeable, and highly interactive experience.
 
+> **Note**: The client package is available as a separate package (`@clear-ai/client`) and is not included in the core CLI-focused package. It's designed for web applications and development environments.
+
 ## Overview
 
 The client package (`@clear-ai/client`) is the frontend of the Clear AI system. It provides:

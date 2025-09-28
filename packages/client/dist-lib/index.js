@@ -1,30 +1,12 @@
 "use strict";
 /**
- * @clear-ai/client - React components and utilities
+ * Clear AI Client Package
+ *
+ * This package provides CLI tools for managing Clear AI framework instances.
+ * The web interface is a separate React app that runs independently.
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-// Export components
-__exportStar(require("./components"), exports);
-// Export services
-__exportStar(require("./services/api"), exports);
-__exportStar(require("./services/toolService"), exports);
-__exportStar(require("./services/userService"), exports);
-// Export themes
-__exportStar(require("./themes"), exports);
-// Export hooks (if any exist)
-// export * from './hooks';
+exports.version = void 0;
+// Version info
+exports.version = '1.0.0';
 //# sourceMappingURL=index.js.map

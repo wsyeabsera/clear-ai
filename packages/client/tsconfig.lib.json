@@ -21,6 +21,7 @@
   "include": [
     "src/components/**/*",
     "src/services/**/*",
+    "src/utils/**/*",
     "src/hooks/**/*",
     "src/themes/**/*",
     "src/index.ts"

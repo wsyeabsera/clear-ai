@@ -50,33 +50,34 @@ const Input = ({ type = 'text', placeholder, value, disabled = false, required =
         color: theme.colors.status.error,
         marginLeft: '0.25rem',
     };
-    // Convert styles object to CSS string for inline styles
+    // Use the styles object directly for inline styles (React expects camelCase)
     const inputInlineStyles = Object.entries(inputStyles).reduce((acc, [key, value]) => {
         if (typeof value === 'object' && value !== null) {
+            // Handle nested objects (like &:focus, &::placeholder) - skip these for inline styles
             return acc;
         }
-        const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
-        acc[cssKey] = String(value);
+        // Keep camelCase for React inline styles
+        acc[key] = String(value);
         return acc;
     }, {});
     const labelInlineStyles = Object.entries(labelStyles).reduce((acc, [key, value]) => {
-        const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
-        acc[cssKey] = String(value);
+        // Keep camelCase for React inline styles
+        acc[key] = String(value);
         return acc;
     }, {});
     const errorInlineStyles = Object.entries(errorStyles).reduce((acc, [key, value]) => {
-        const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
-        acc[cssKey] = String(value);
+        // Keep camelCase for React inline styles
+        acc[key] = String(value);
         return acc;
     }, {});
     const helpInlineStyles = Object.entries(helpStyles).reduce((acc, [key, value]) => {
-        const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
-        acc[cssKey] = String(value);
+        // Keep camelCase for React inline styles
+        acc[key] = String(value);
         return acc;
     }, {});
     const requiredInlineStyles = Object.entries(requiredStyles).reduce((acc, [key, value]) => {
-        const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
-        acc[cssKey] = String(value);
+        // Keep camelCase for React inline styles
+        acc[key] = String(value);
         return acc;
     }, {});
     const handleChange = (e) => {

@@ -1,111 +1,105 @@
 "use strict";
+/**
+ * API Service for Clear AI Client
+ *
+ * Provides typed API communication with Clear AI servers
+ */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.apiClient = void 0;
+exports.apiClient = exports.apiService = exports.ClearAIApiService = void 0;
 const axios_1 = __importDefault(require("axios"));
-const API_BASE_URL = process.env.VITE_API_URL || 'http://localhost:3001';
-class ApiClient {
-    constructor() {
+class ClearAIApiService {
+    constructor(baseURL = 'http://localhost:3001') {
         this.client = axios_1.default.create({
-            baseURL: API_BASE_URL,
+            baseURL,
             timeout: 10000,
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-        // Add request interceptor for logging
-        this.client.interceptors.request.use((config) => {
-            console.log(`Making ${config.method?.toUpperCase()} request to ${config.url}`);
-            return config;
-        }, (error) => {
-            console.error('Request error:', error);
-            return Promise.reject(error);
-        });
         // Add response interceptor for error handling
-        this.client.interceptors.response.use((response) => {
-            console.log(`Response received from ${response.config.url}:`, response.status);
-            return response;
-        }, (error) => {
-            console.error('Response error:', error.response?.data || error.message);
-            return Promise.reject(error);
+        this.client.interceptors.response.use((response) => response, (error) => {
+            if (error.code === 'ECONNREFUSED') {
+                throw new Error(`Cannot connect to server at ${baseURL}. Make sure the server is running.`);
+            }
+            throw new Error(error.response?.data?.message || error.message || 'Request failed');
         });
     }
-    // Generic GET request
-    async get(endpoint) {
-        try {
-            const response = await this.client.get(endpoint);
-            return response.data;
-        }
-        catch (error) {
-            return this.handleError(error, 'GET', endpoint);
-        }
+    /**
+     * Check server health
+     */
+    async getHealth() {
+        const response = await this.client.get('/api/health');
+        return response.data;
     }
-    // Generic POST request
-    async post(endpoint, data) {
-        try {
-            const response = await this.client.post(endpoint, data);
-            return response.data;
-        }
-        catch (error) {
-            return this.handleError(error, 'POST', endpoint);
-        }
-    }
-    // Generic PUT request
-    async put(endpoint, data) {
-        try {
-            const response = await this.client.put(endpoint, data);
-            return response.data;
-        }
-        catch (error) {
-            return this.handleError(error, 'PUT', endpoint);
-        }
-    }
-    // Generic DELETE request
-    async delete(endpoint) {
-        try {
-            const response = await this.client.delete(endpoint);
-            return response.data;
-        }
-        catch (error) {
-            return this.handleError(error, 'DELETE', endpoint);
-        }
-    }
-    // Health check
-    async healthCheck() {
-        return this.get('/api/health');
-    }
-    // MCP Tools
+    /**
+     * Get available MCP tools
+     */
     async getTools() {
-        return this.get('/api/mcp/tools');
+        const response = await this.client.get('/api/mcp/tools');
+        return response.data;
     }
+    /**
+     * Get MCP tool schemas
+     */
     async getToolSchemas() {
-        return this.get('/api/mcp/schemas');
+        const response = await this.client.get('/api/mcp/schemas');
+        return response.data;
     }
-    async getToolSchema(toolName) {
-        return this.get(`/api/mcp/schemas/${toolName}`);
+    /**
+     * Execute an MCP tool
+     */
+    async executeTool(toolName, data = {}) {
+        const response = await this.client.post(`/api/mcp/tools/${toolName}/execute`, data);
+        return response.data;
     }
-    async executeTool(toolName, toolArguments) {
-        const request = { toolName, arguments: toolArguments || {} };
-        return this.post('/api/mcp/execute', request);
-    }
-    // Error handling
-    handleError(error, method, endpoint) {
-        const errorMessage = error.response?.data?.error || error.message || 'Unknown error occurred';
-        const statusCode = error.response?.status || 500;
-        console.error(`API Error [${method} ${endpoint}]:`, {
-            status: statusCode,
-            message: errorMessage,
-            details: error.response?.data
+    /**
+     * Complete a prompt using LLM
+     */
+    async completePrompt(prompt, options = {}) {
+        const response = await this.client.post('/api/langchain/complete', {
+            prompt,
+            model: options.model || 'ollama',
+            temperature: options.temperature || 0.7,
         });
-        return {
-            success: false,
-            error: errorMessage,
-        };
+        const data = response.data;
+        return data.content || data;
+    }
+    /**
+     * Get available LLM models
+     */
+    async getModels() {
+        const response = await this.client.get('/api/langchain/models');
+        return response.data;
+    }
+    /**
+     * Execute a workflow
+     */
+    async executeWorkflow(description, options = {}) {
+        const response = await this.client.post('/api/langgraph/execute', {
+            description,
+            model: options.model || 'ollama',
+        });
+        return response.data;
+    }
+    /**
+     * Update server URL
+     */
+    setBaseURL(url) {
+        this.client.defaults.baseURL = url;
+    }
+    /**
+     * Get current server URL
+     */
+    getBaseURL() {
+        return this.client.defaults.baseURL || '';
     }
 }
-// Export singleton instance
-exports.apiClient = new ApiClient();
-exports.default = exports.apiClient;
+exports.ClearAIApiService = ClearAIApiService;
+// Default instance
+exports.apiService = new ClearAIApiService();
+// Export the client instance for direct use
+exports.apiClient = exports.apiService;
 //# sourceMappingURL=api.js.map

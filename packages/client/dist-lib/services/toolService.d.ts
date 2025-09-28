@@ -1,4 +1,3 @@
-import { ApiResponse } from '@clear-ai/shared';
 export interface ToolInfo {
     name: string;
     description: string;
@@ -10,9 +9,12 @@ export interface ToolSchema {
     outputSchema?: any;
 }
 export declare const toolService: {
-    getTools(): Promise<ApiResponse<ToolInfo[]>>;
-    getToolSchemas(): Promise<ApiResponse<ToolSchema[]>>;
-    getToolSchema(toolName: string): Promise<ApiResponse<ToolSchema>>;
-    executeTool(toolName: string, toolArguments?: Record<string, any>): Promise<ApiResponse<any>>;
+    getTools(): Promise<ToolInfo[]>;
+    getToolSchemas(): Promise<{
+        success: boolean;
+        data?: ToolSchema[];
+        error?: string;
+    }>;
+    executeTool(toolName: string, toolArguments?: Record<string, any>): Promise<any>;
 };
 //# sourceMappingURL=toolService.d.ts.map

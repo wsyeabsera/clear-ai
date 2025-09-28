@@ -26,18 +26,6 @@ const Button = ({ children, variant = 'primary', size = 'md', disabled = false, 
                     backgroundColor: theme.colors.primary.main,
                     color: theme.colors.primary.contrast,
                     boxShadow: theme.effects.shadow.sm,
-                    '&:hover': !disabled ? {
-                        backgroundColor: theme.colors.primary.dark,
-                        boxShadow: theme.effects.shadow.md,
-                        transform: 'translateY(-1px)',
-                    } : {},
-                    '&:active': !disabled ? {
-                        transform: 'translateY(0px)',
-                        boxShadow: theme.effects.shadow.sm,
-                    } : {},
-                    '&:focus': {
-                        boxShadow: `0 0 0 3px ${theme.colors.primary.main}33`,
-                    },
                 };
             case 'secondary':
                 return {
@@ -45,18 +33,6 @@ const Button = ({ children, variant = 'primary', size = 'md', disabled = false, 
                     backgroundColor: theme.colors.secondary.main,
                     color: theme.colors.secondary.contrast,
                     boxShadow: theme.effects.shadow.sm,
-                    '&:hover': !disabled ? {
-                        backgroundColor: theme.colors.secondary.dark,
-                        boxShadow: theme.effects.shadow.md,
-                        transform: 'translateY(-1px)',
-                    } : {},
-                    '&:active': !disabled ? {
-                        transform: 'translateY(0px)',
-                        boxShadow: theme.effects.shadow.sm,
-                    } : {},
-                    '&:focus': {
-                        boxShadow: `0 0 0 3px ${theme.colors.secondary.main}33`,
-                    },
                 };
             case 'outline':
                 return {
@@ -64,31 +40,12 @@ const Button = ({ children, variant = 'primary', size = 'md', disabled = false, 
                     backgroundColor: 'transparent',
                     color: theme.colors.primary.main,
                     border: `2px solid ${theme.colors.primary.main}`,
-                    '&:hover': !disabled ? {
-                        backgroundColor: theme.colors.interactive.hover,
-                        boxShadow: theme.effects.shadow.sm,
-                    } : {},
-                    '&:active': !disabled ? {
-                        backgroundColor: theme.colors.interactive.active,
-                    } : {},
-                    '&:focus': {
-                        boxShadow: `0 0 0 3px ${theme.colors.primary.main}33`,
-                    },
                 };
             case 'ghost':
                 return {
                     ...baseStyles,
                     backgroundColor: 'transparent',
                     color: theme.colors.primary.main,
-                    '&:hover': !disabled ? {
-                        backgroundColor: theme.colors.interactive.hover,
-                    } : {},
-                    '&:active': !disabled ? {
-                        backgroundColor: theme.colors.interactive.active,
-                    } : {},
-                    '&:focus': {
-                        boxShadow: `0 0 0 3px ${theme.colors.primary.main}33`,
-                    },
                 };
             default:
                 return baseStyles;
@@ -122,14 +79,14 @@ const Button = ({ children, variant = 'primary', size = 'md', disabled = false, 
         ...getVariantStyles(),
         ...getSizeStyles(),
     };
-    // Convert styles object to CSS string for inline styles
+    // Use the styles object directly for inline styles (React expects camelCase)
     const inlineStyles = Object.entries(buttonStyles).reduce((acc, [key, value]) => {
         if (typeof value === 'object' && value !== null) {
-            // Handle nested objects (like &:hover)
+            // Handle nested objects (like &:hover) - skip these for inline styles
             return acc;
         }
-        const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
-        acc[cssKey] = String(value);
+        // Keep camelCase for React inline styles
+        acc[key] = String(value);
         return acc;
     }, {});
     return ((0, jsx_runtime_1.jsx)("button", { style: inlineStyles, disabled: disabled, onClick: onClick, type: type, className: className, children: children }));

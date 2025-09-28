@@ -25,19 +25,19 @@ const Card = ({ children, title, shadow = true, clickable = false, onClick, clas
         marginBottom: '1rem',
         fontFamily: theme.typography.fontFamily.primary,
     };
-    // Convert styles object to CSS string for inline styles
+    // Use the styles object directly for inline styles (React expects camelCase)
     const inlineStyles = Object.entries(cardStyles).reduce((acc, [key, value]) => {
         if (typeof value === 'object' && value !== null) {
-            // Handle nested objects (like &:hover)
+            // Handle nested objects (like &:hover) - skip these for inline styles
             return acc;
         }
-        const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
-        acc[cssKey] = String(value);
+        // Keep camelCase for React inline styles
+        acc[key] = String(value);
         return acc;
     }, {});
     const titleInlineStyles = Object.entries(titleStyles).reduce((acc, [key, value]) => {
-        const cssKey = key.replace(/[A-Z]/g, match => `-${match.toLowerCase()}`);
-        acc[cssKey] = String(value);
+        // Keep camelCase for React inline styles
+        acc[key] = String(value);
         return acc;
     }, {});
     return ((0, jsx_runtime_1.jsxs)("div", { style: inlineStyles, className: className, onClick: onClick, children: [title && ((0, jsx_runtime_1.jsx)("h3", { style: titleInlineStyles, children: title })), children] }));

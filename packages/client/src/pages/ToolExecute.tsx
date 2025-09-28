@@ -4,8 +4,8 @@ import { DynamicForm } from '../components/DynamicForm';
 import Button from '../components/Button';
 import Select from '../components/Select';
 import { toolService, ToolSchema } from '../services/toolService';
-import { TextArea } from '@/components';
-import { useTheme } from '@/themes';
+import { TextArea } from '../components';
+import { useTheme } from '../themes';
 
 export const ToolExecute: React.FC = () => {
   const [schemas, setSchemas] = useState<ToolSchema[]>([]);
@@ -23,18 +23,23 @@ export const ToolExecute: React.FC = () => {
     try {
       setLoading(true);
       setError('');
+      console.log('Loading tool schemas...');
       const response = await toolService.getToolSchemas();
+      console.log('Tool schemas response:', response);
       
       if (response.success && response.data) {
+        console.log('Setting schemas:', response.data);
         setSchemas(response.data);
         if (response.data.length > 0) {
           setSelectedTool(response.data[0].name);
           setCurrentSchema(response.data[0]);
         }
       } else {
+        console.error('Failed to load schemas:', response.error);
         setError(response.error || 'Failed to load tool schemas');
       }
     } catch (err: any) {
+      console.error('Error loading schemas:', err);
       setError(err.message || 'Failed to load tool schemas');
     } finally {
       setLoading(false);

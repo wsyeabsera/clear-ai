@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Card, Input, ThemeSwitcher } from '../components';
-import { useTheme } from '@/themes';
+import { useTheme } from '../themes';
 
 const Components: React.FC = () => {
   const [formData, setFormData] = useState({

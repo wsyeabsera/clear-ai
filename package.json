@@ -2,6 +2,7 @@
   "name": "@clear-ai/core",
   "version": "1.0.0",
   "description": "Clear AI - A modern TypeScript framework for building AI-powered applications with tool execution and workflow orchestration",
+  "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -63,6 +64,7 @@
     "dev": "turbo run dev",
     "dev:server": "yarn build:shared && cd packages/mcp-basic && yarn build && cd ../server && yarn dev",
     "dev:mcp": "cd packages/mcp-basic && yarn dev",
+    "dev:client": "cd packages/client && yarn dev",
     "build": "yarn build:packages && yarn build:unified",
     "build:packages": "turbo run build",
     "build:unified": "yarn build:create-dist && yarn build:copy-files",

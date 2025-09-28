@@ -1,9 +1,8 @@
 /**
- * @clear-ai/client - React components and utilities
+ * Clear AI Client Package
+ *
+ * This package provides CLI tools for managing Clear AI framework instances.
+ * The web interface is a separate React app that runs independently.
  */
-export * from './components';
-export * from './services/api';
-export * from './services/toolService';
-export * from './services/userService';
-export * from './themes';
+export declare const version = "1.0.0";
 //# sourceMappingURL=index.d.ts.map

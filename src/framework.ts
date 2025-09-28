@@ -3,8 +3,8 @@
  */
 
 import { MCPServer } from '../packages/mcp-basic/dist/index';
-import { SimpleLangChainService, ToolExecutionService } from '../packages/shared/dist/index';
-// import { createServer } from './server'; // Server package doesn't export createServer
+import { SimpleLangChainService, ToolExecutionService, SimpleWorkflowService } from '../packages/shared/dist/index';
+import { createServer, CreateServerOptions } from '../packages/server/dist/createServer';
 
 export interface ClearAIConfig {
   mcp?: {
@@ -32,7 +32,7 @@ export class ClearAI {
   private mcpServer?: MCPServer;
   private langchainService?: SimpleLangChainService;
   private toolService?: ToolExecutionService;
-  // private workflowService?: SimpleWorkflowService; // Not available in current exports
+  private workflowService?: SimpleWorkflowService;
   private server?: any;
 
   constructor(private config: ClearAIConfig = {}) {}
@@ -97,22 +97,29 @@ export class ClearAI {
   /**
    * Initialize the workflow service
    */
-  // async initWorkflows(): Promise<SimpleWorkflowService> {
-  //   if (!this.workflowService) {
-  //     const llm = await this.initLLM();
-  //     const tools = await this.initTools();
-  //     this.workflowService = new SimpleWorkflowService(llm, tools);
-  //   }
-  //   return this.workflowService;
-  // }
+  async initWorkflows(): Promise<SimpleWorkflowService> {
+    if (!this.workflowService) {
+      const llm = await this.initLLM();
+      const tools = await this.initTools();
+      this.workflowService = new SimpleWorkflowService(llm, tools);
+    }
+    return this.workflowService;
+  }
 
   /**
    * Initialize the server
    */
   async initServer(): Promise<any> {
-    // Server initialization would need to be implemented
-    // For now, return a placeholder
-    return null;
+    if (!this.server && this.config.server) {
+      const serverOptions: CreateServerOptions = {
+        port: this.config.server.port,
+        cors: this.config.server.cors,
+        mcpConfig: this.config.mcp,
+        llmConfig: this.config.llm
+      };
+      this.server = createServer(serverOptions);
+    }
+    return this.server;
   }
 
   /**
@@ -123,6 +130,7 @@ export class ClearAI {
       this.initMCP(),
       this.initLLM(),
       this.initTools(),
+      this.initWorkflows(),
       this.initServer()
     ]);
   }
@@ -151,9 +159,9 @@ export class ClearAI {
   /**
    * Get the workflow service
    */
-  // getWorkflows(): SimpleWorkflowService | undefined {
-  //   return this.workflowService;
-  // }
+  getWorkflows(): SimpleWorkflowService | undefined {
+    return this.workflowService;
+  }
 
   /**
    * Get the server
