@@ -1,7 +1,7 @@
 {
   "name": "clear-ai-mcp-basic",
-  "version": "1.0.0",
-  "description": "MCP Server with basic tools for API calls, JSON reading, and file operations",
+  "version": "1.1.0",
+  "description": "Intelligent MCP Server - Model Context Protocol server with advanced tools and intelligence capabilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

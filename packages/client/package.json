@@ -1,7 +1,7 @@
 {
   "name": "@clear-ai/client",
-  "version": "1.0.0",
-  "description": "Clear AI Client Application - Admin Panel CLI",
+  "version": "1.1.0",
+  "description": "Intelligent AI Client - React-based admin panel and CLI with advanced intelligence features and memory integration",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {

@@ -1,7 +1,7 @@
 {
   "name": "clear-ai-shared",
-  "version": "1.0.0",
-  "description": "Shared utilities, types, and services for Clear AI",
+  "version": "1.1.0",
+  "description": "Advanced AI Intelligence Package - Shared utilities, types, and services for Clear AI with exceptional intelligence capabilities",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [

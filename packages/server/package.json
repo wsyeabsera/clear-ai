@@ -1,7 +1,7 @@
 {
   "name": "clear-ai-server",
-  "version": "1.0.0",
-  "description": "Clear AI Server Application with Express API and tool execution",
+  "version": "1.1.0",
+  "description": "Intelligent AI Server - Express API server with exceptional intelligence capabilities and advanced memory integration",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
