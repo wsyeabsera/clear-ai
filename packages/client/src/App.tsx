@@ -5,6 +5,7 @@ import { AvailableTools } from './pages/AvailableTools'
 import { Users } from './pages/Users'
 import { ToolExecute } from './pages/ToolExecute'
 import Components from './pages/Components'
+import Chat from './pages/Chat'
 import { ThemeProvider, useTheme } from './themes'
 
 function AppContent() {
@@ -210,6 +211,7 @@ function AppContent() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="/available-tools" element={<AvailableTools />} />
           <Route path="/tool-execute" element={<ToolExecute />} />
           <Route path="/users" element={<Users />} />

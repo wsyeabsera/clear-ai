@@ -57,6 +57,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   Home
                 </Link>
                 <Link
+                  to="/chat"
+                  className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                  style={{
+                    borderBottomColor: isActive('/chat') ? theme.colors.primary.main : 'transparent',
+                    color: isActive('/chat') ? theme.colors.text.primary : theme.colors.text.secondary,
+                  }}
+                >
+                  Chat
+                </Link>
+                <Link
                   to="/available-tools"
                   className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                   style={{

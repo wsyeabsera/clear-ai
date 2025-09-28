@@ -22,6 +22,11 @@ export interface LLMModel {
     provider: string;
     status: string;
 }
+export interface AvailableModels {
+    available: string[];
+    current: string;
+    count: number;
+}
 export interface WorkflowResult {
     success: boolean;
     result: any;
@@ -63,11 +68,26 @@ export declare class ClearAIApiService {
      */
     getModels(): Promise<LLMModel[]>;
     /**
+     * Get available models for agent
+     */
+    getAvailableModels(): Promise<AvailableModels>;
+    /**
      * Execute a workflow
      */
     executeWorkflow(description: string, options?: {
         model?: string;
     }): Promise<WorkflowResult>;
+    /**
+     * Execute an intelligent agent query
+     */
+    executeAgentQuery(query: string, options?: {
+        userId?: string;
+        sessionId?: string;
+        includeMemoryContext?: boolean;
+        includeReasoning?: boolean;
+        model?: string;
+        temperature?: number;
+    }): Promise<any>;
     /**
      * Update server URL
      */
