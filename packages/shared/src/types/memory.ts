@@ -35,11 +35,27 @@ export interface SemanticMemory {
     source: string;
     lastAccessed: Date;
     accessCount: number;
+    // New fields for semantic extraction
+    extractionMetadata?: {
+      sourceMemoryIds: string[]; // IDs of episodic memories this was extracted from
+      extractionTimestamp: Date;
+      extractionConfidence: number;
+      keywords: string[];
+      processingTime: number;
+    };
   };
   relationships: {
     similar?: string[]; // IDs of similar concepts
     parent?: string | undefined; // ID of parent concept
     children?: string[]; // IDs of child concepts
+    // New relationship types from semantic extraction
+    related?: string[]; // IDs of related concepts
+    causes?: string[]; // IDs of concepts this causes
+    causedBy?: string[]; // IDs of concepts that cause this
+    partOf?: string[]; // IDs of concepts this is part of
+    hasParts?: string[]; // IDs of concepts that are parts of this
+    opposite?: string[]; // IDs of opposite concepts
+    instanceOf?: string[]; // IDs of concepts this is an instance of
   };
 }
 
@@ -103,6 +119,14 @@ export interface MemoryServiceConfig {
     model: string;
     dimensions: number;
   };
+  semanticExtraction: {
+    enabled: boolean;
+    minConfidence: number;
+    maxConceptsPerMemory: number;
+    enableRelationshipExtraction: boolean;
+    categories: string[];
+    batchSize: number;
+  };
 }
 
 export interface MemoryService {
@@ -140,5 +164,18 @@ export interface MemoryService {
   getMemoryStats(userId: string): Promise<{
     episodic: { count: number; oldest: Date | null; newest: Date | null };
     semantic: { count: number; categories: string[] };
+  }>;
+
+  // Semantic extraction operations
+  extractSemanticFromEpisodic(userId: string, sessionId?: string): Promise<{
+    extractedConcepts: number;
+    extractedRelationships: number;
+    processingTime: number;
+  }>;
+  getSemanticExtractionStats(userId: string): Promise<{
+    totalExtractions: number;
+    averageConfidence: number;
+    conceptsByCategory: Record<string, number>;
+    lastExtraction: Date | null;
   }>;
 }

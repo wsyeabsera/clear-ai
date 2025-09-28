@@ -11,11 +11,13 @@ import {
 import { Neo4jMemoryService } from './Neo4jMemoryService';
 import { PineconeMemoryService } from './PineconeMemoryService';
 import { SimpleLangChainService, CoreKeysAndModels } from './SimpleLangChainService';
+import { SemanticExtractorService, SemanticExtractionConfig } from './SemanticExtractorService';
 
 export class MemoryContextService implements MemoryService {
   private neo4jService: Neo4jMemoryService;
   private pineconeService: PineconeMemoryService;
   private langchainService: SimpleLangChainService;
+  private semanticExtractor: SemanticExtractorService;
   private config: MemoryServiceConfig;
 
   constructor(config: MemoryServiceConfig, langchainConfig: CoreKeysAndModels) {
@@ -23,6 +25,15 @@ export class MemoryContextService implements MemoryService {
     this.neo4jService = new Neo4jMemoryService(config.neo4j);
     this.pineconeService = new PineconeMemoryService(config.pinecone);
     this.langchainService = new SimpleLangChainService(langchainConfig);
+
+    // Initialize semantic extractor with configuration
+    const extractionConfig: SemanticExtractionConfig = {
+      minConfidence: config.semanticExtraction.minConfidence,
+      maxConceptsPerMemory: config.semanticExtraction.maxConceptsPerMemory,
+      enableRelationshipExtraction: config.semanticExtraction.enableRelationshipExtraction,
+      categories: config.semanticExtraction.categories
+    };
+    this.semanticExtractor = new SemanticExtractorService(extractionConfig);
   }
 
   async initialize(): Promise<void> {
@@ -140,13 +151,17 @@ export class MemoryContextService implements MemoryService {
       .join(' ');
 
     let semanticMemories: SemanticMemory[] = [];
-    if (recentContent) {
-      const semanticResult = await this.pineconeService.searchSemanticMemories({
-        userId,
-        query: recentContent,
-        limit: 20
-      });
-      semanticMemories = semanticResult.memories;
+    if (recentContent && this.pineconeService) {
+      try {
+        const semanticResult = await this.pineconeService.searchSemanticMemories({
+          userId,
+          query: recentContent,
+          limit: 20
+        });
+        semanticMemories = semanticResult.memories;
+      } catch (error) {
+        console.warn('Failed to search semantic memories:', error);
+      }
     }
 
     // Calculate context window
@@ -424,6 +439,173 @@ Current query: ${currentQuery}
         semantic: uniqueSemantic
       }
     };
+  }
+
+  // Semantic extraction operations
+  async extractSemanticFromEpisodic(userId: string, sessionId?: string): Promise<{
+    extractedConcepts: number;
+    extractedRelationships: number;
+    processingTime: number;
+  }> {
+    if (!this.config.semanticExtraction.enabled) {
+      throw new Error('Semantic extraction is disabled in configuration');
+    }
+
+    if (!this.pineconeService) {
+      throw new Error('Pinecone service not available for semantic extraction');
+    }
+
+    try {
+      // Get episodic memories for the user (and optionally specific session)
+      const query: MemorySearchQuery = {
+        userId,
+        query: '',
+        type: 'episodic',
+        limit: 100 // Process up to 100 recent memories
+      };
+
+      if (sessionId) {
+        query.filters = { ...query.filters, tags: [sessionId] };
+      }
+
+      const episodicMemories = await this.searchEpisodicMemories(query);
+
+      if (episodicMemories.length === 0) {
+        return {
+          extractedConcepts: 0,
+          extractedRelationships: 0,
+          processingTime: 0
+        };
+      }
+
+      // Extract semantic information using LLM
+      const extractionResult = await this.semanticExtractor.extractSemanticInfo(episodicMemories, this.langchainService);
+
+      if (extractionResult.concepts.length === 0) {
+        return {
+          extractedConcepts: 0,
+          extractedRelationships: 0,
+          processingTime: extractionResult.processingTime
+        };
+      }
+
+      // Convert extracted concepts to semantic memories
+      const semanticMemories = this.semanticExtractor.convertToSemanticMemories(
+        extractionResult.concepts,
+        userId
+      );
+
+      // Add extraction metadata to each semantic memory
+      semanticMemories.forEach((memory, index) => {
+        const concept = extractionResult.concepts[index];
+        memory.metadata.extractionMetadata = {
+          sourceMemoryIds: [concept.sourceMemoryId],
+          extractionTimestamp: new Date(),
+          extractionConfidence: concept.confidence,
+          keywords: concept.keywords,
+          processingTime: extractionResult.processingTime
+        };
+      });
+
+      // Store semantic memories in Pinecone
+      const storedMemories: SemanticMemory[] = [];
+      for (const memory of semanticMemories) {
+        try {
+          const stored = await this.pineconeService.storeSemanticMemory(memory);
+          storedMemories.push(stored);
+        } catch (error) {
+          console.error(`Failed to store semantic memory for concept "${memory.concept}":`, error);
+        }
+      }
+
+      // Build relationships between semantic memories
+      if (extractionResult.relationships.length > 0) {
+        const relationshipUpdates = this.semanticExtractor.buildSemanticRelationships(
+          storedMemories,
+          extractionResult.relationships
+        );
+
+        // Apply relationship updates
+        for (const [memoryId, updates] of relationshipUpdates) {
+          try {
+            await this.pineconeService.updateSemanticMemory(memoryId, updates);
+          } catch (error) {
+            console.error(`Failed to update relationships for memory ${memoryId}:`, error);
+          }
+        }
+      }
+
+      console.log(`✅ Semantic extraction completed: ${storedMemories.length} concepts, ${extractionResult.relationships.length} relationships`);
+
+      return {
+        extractedConcepts: storedMemories.length,
+        extractedRelationships: extractionResult.relationships.length,
+        processingTime: extractionResult.processingTime
+      };
+    } catch (error) {
+      console.error('Failed to extract semantic information from episodic memories:', error);
+      throw error;
+    }
+  }
+
+  async getSemanticExtractionStats(userId: string): Promise<{
+    totalExtractions: number;
+    averageConfidence: number;
+    conceptsByCategory: Record<string, number>;
+    lastExtraction: Date | null;
+  }> {
+    if (!this.pineconeService) {
+      throw new Error('Pinecone service not available');
+    }
+
+    try {
+      // Search for semantic memories with extraction metadata
+      const searchResult = await this.pineconeService.searchSemanticMemories({
+        userId,
+        query: '',
+        threshold: 0
+      });
+
+      const extractedMemories = searchResult.memories.filter(
+        memory => memory.metadata.extractionMetadata
+      );
+
+      if (extractedMemories.length === 0) {
+        return {
+          totalExtractions: 0,
+          averageConfidence: 0,
+          conceptsByCategory: {},
+          lastExtraction: null
+        };
+      }
+
+      // Calculate statistics
+      const totalConfidence = extractedMemories.reduce(
+        (sum, memory) => sum + memory.metadata.confidence, 0
+      );
+      const averageConfidence = totalConfidence / extractedMemories.length;
+
+      const conceptsByCategory = extractedMemories.reduce((acc, memory) => {
+        const category = memory.metadata.category;
+        acc[category] = (acc[category] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+
+      const lastExtraction = extractedMemories
+        .map(memory => memory.metadata.extractionMetadata?.extractionTimestamp)
+        .filter(Boolean)
+        .sort((a, b) => b!.getTime() - a!.getTime())[0] || null;
+
+      return {
+        totalExtractions: extractedMemories.length,
+        averageConfidence,
+        conceptsByCategory,
+        lastExtraction
+      };
+    } catch (error) {
+      console.error('Failed to get semantic extraction stats:', error);
+      throw error;
+    }
   }
 
   async close(): Promise<void> {

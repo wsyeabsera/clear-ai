@@ -6,6 +6,8 @@ import {
   ApiResponse
 } from '@clear-ai/shared';
 import { initializeMemoryService } from './memoryController';
+import dotenv from 'dotenv';
+dotenv.config({path: './packages/server/.env'});
 
 export const memoryChatController = {
   // Initialize memory service for chat
@@ -15,17 +17,25 @@ export const memoryChatController = {
         neo4j: {
           uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
           username: process.env.NEO4J_USERNAME || 'neo4j',
-          password: process.env.NEO4J_PASSWORD || 'password',
+          password: process.env.NEO4J_PASSWORD || 'samplepassword',
           database: process.env.NEO4J_DATABASE || 'neo4j'
         },
         pinecone: {
           apiKey: process.env.PINECONE_API_KEY || '',
-          environment: process.env.PINECONE_ENVIRONMENT || '',
+          environment: process.env.PINECONE_ENVIRONMENT || 'clear-ai',
           indexName: process.env.PINECONE_INDEX_NAME || 'clear-ai-memories'
         },
         embedding: {
           model: process.env.MEMORY_EMBEDDING_MODEL || 'nomic-embed-text',
           dimensions: parseInt(process.env.MEMORY_EMBEDDING_DIMENSIONS || '768')
+        },
+        semanticExtraction: {
+          enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+          minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+          maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+          enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+          categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+          batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
         }
       };
 
@@ -85,7 +95,7 @@ export const memoryChatController = {
           neo4j: {
             uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
             username: process.env.NEO4J_USERNAME || 'neo4j',
-            password: process.env.NEO4J_PASSWORD || 'password',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
             database: process.env.NEO4J_DATABASE || 'neo4j'
           },
           pinecone: {
@@ -96,6 +106,14 @@ export const memoryChatController = {
           embedding: {
             model: process.env.MEMORY_EMBEDDING_MODEL || 'nomic-embed-text',
             dimensions: parseInt(process.env.MEMORY_EMBEDDING_DIMENSIONS || '768')
+          },
+          semanticExtraction: {
+            enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+            minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+            maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+            enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+            categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+            batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
           }
         },
         {
@@ -187,7 +205,7 @@ export const memoryChatController = {
           neo4j: {
             uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
             username: process.env.NEO4J_USERNAME || 'neo4j',
-            password: process.env.NEO4J_PASSWORD || 'password',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
             database: process.env.NEO4J_DATABASE || 'neo4j'
           },
           pinecone: {
@@ -198,6 +216,14 @@ export const memoryChatController = {
           embedding: {
             model: process.env.MEMORY_EMBEDDING_MODEL || 'nomic-embed-text',
             dimensions: parseInt(process.env.MEMORY_EMBEDDING_DIMENSIONS || '768')
+          },
+          semanticExtraction: {
+            enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+            minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+            maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+            enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+            categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+            batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
           }
         },
         {
@@ -271,7 +297,7 @@ export const memoryChatController = {
           neo4j: {
             uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
             username: process.env.NEO4J_USERNAME || 'neo4j',
-            password: process.env.NEO4J_PASSWORD || 'password',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
             database: process.env.NEO4J_DATABASE || 'neo4j'
           },
           pinecone: {
@@ -282,6 +308,14 @@ export const memoryChatController = {
           embedding: {
             model: process.env.MEMORY_EMBEDDING_MODEL || 'nomic-embed-text',
             dimensions: parseInt(process.env.MEMORY_EMBEDDING_DIMENSIONS || '768')
+          },
+          semanticExtraction: {
+            enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+            minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+            maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+            enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+            categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+            batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
           }
         },
         {
@@ -365,7 +399,7 @@ export const memoryChatController = {
           neo4j: {
             uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
             username: process.env.NEO4J_USERNAME || 'neo4j',
-            password: process.env.NEO4J_PASSWORD || 'password',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
             database: process.env.NEO4J_DATABASE || 'neo4j'
           },
           pinecone: {
@@ -376,6 +410,14 @@ export const memoryChatController = {
           embedding: {
             model: process.env.MEMORY_EMBEDDING_MODEL || 'nomic-embed-text',
             dimensions: parseInt(process.env.MEMORY_EMBEDDING_DIMENSIONS || '768')
+          },
+          semanticExtraction: {
+            enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+            minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+            maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+            enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+            categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+            batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
           }
         },
         {
@@ -428,6 +470,162 @@ export const memoryChatController = {
         error: 'Failed to store knowledge',
         message: error instanceof Error ? error.message : 'Unknown error',
         tools: ['MemoryContextService.storeSemanticMemory']
+      };
+      res.status(500).json(response);
+    }
+  },
+
+  // Extract semantic information from episodic memories
+  async extractSemanticMemories(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId, sessionId } = req.body;
+
+      if (!userId) {
+        const response: ApiResponse = {
+          success: false,
+          error: 'Missing required fields',
+          message: 'userId is required',
+          tools: ['MemoryContextService.extractSemanticFromEpisodic']
+        };
+        res.status(400).json(response);
+        return;
+      }
+
+      const memoryService = await initializeMemoryService(
+        {
+          neo4j: {
+            uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
+            username: process.env.NEO4J_USERNAME || 'neo4j',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
+            database: process.env.NEO4J_DATABASE || 'neo4j'
+          },
+          pinecone: {
+            apiKey: process.env.PINECONE_API_KEY || '',
+            environment: process.env.PINECONE_ENVIRONMENT || '',
+            indexName: process.env.PINECONE_INDEX_NAME || 'clear-ai-memories'
+          },
+          embedding: {
+            model: process.env.MEMORY_EMBEDDING_MODEL || 'nomic-embed-text',
+            dimensions: parseInt(process.env.MEMORY_EMBEDDING_DIMENSIONS || '768')
+          },
+          semanticExtraction: {
+            enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+            minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+            maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+            enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+            categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+            batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
+          }
+        },
+        {
+          langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+          langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+          langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com',
+          openaiApiKey: process.env.OPENAI_API_KEY || '',
+          openaiModel: 'gpt-3.5-turbo',
+          mistralApiKey: process.env.MISTRAL_API_KEY || '',
+          mistralModel: 'mistral-small',
+          groqApiKey: process.env.GROQ_API_KEY || '',
+          groqModel: 'llama3-8b-8192',
+          ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+          ollamaModel: 'mistral'
+        }
+      );
+
+      const result = await memoryService.extractSemanticFromEpisodic(userId, sessionId);
+
+      const response: ApiResponse = {
+        success: true,
+        data: result,
+        message: `Semantic extraction completed: ${result.extractedConcepts} concepts, ${result.extractedRelationships} relationships`,
+        tools: ['MemoryContextService.extractSemanticFromEpisodic']
+      };
+      res.json(response);
+    } catch (error) {
+      console.error('Semantic extraction error:', error);
+      const response: ApiResponse = {
+        success: false,
+        error: 'Failed to extract semantic memories',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        tools: ['MemoryContextService.extractSemanticFromEpisodic']
+      };
+      res.status(500).json(response);
+    }
+  },
+
+  // Get semantic extraction statistics
+  async getSemanticExtractionStats(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId } = req.params;
+
+      if (!userId) {
+        const response: ApiResponse = {
+          success: false,
+          error: 'Missing required fields',
+          message: 'userId is required',
+          tools: ['MemoryContextService.getSemanticExtractionStats']
+        };
+        res.status(400).json(response);
+        return;
+      }
+
+      const memoryService = await initializeMemoryService(
+        {
+          neo4j: {
+            uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
+            username: process.env.NEO4J_USERNAME || 'neo4j',
+            password: process.env.NEO4J_PASSWORD || 'samplepassword',
+            database: process.env.NEO4J_DATABASE || 'neo4j'
+          },
+          pinecone: {
+            apiKey: process.env.PINECONE_API_KEY || '',
+            environment: process.env.PINECONE_ENVIRONMENT || '',
+            indexName: process.env.PINECONE_INDEX_NAME || 'clear-ai-memories'
+          },
+          embedding: {
+            model: process.env.MEMORY_EMBEDDING_MODEL || 'nomic-embed-text',
+            dimensions: parseInt(process.env.MEMORY_EMBEDDING_DIMENSIONS || '768')
+          },
+          semanticExtraction: {
+            enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+            minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+            maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+            enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+            categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+            batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
+          }
+        },
+        {
+          langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+          langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+          langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com',
+          openaiApiKey: process.env.OPENAI_API_KEY || '',
+          openaiModel: 'gpt-3.5-turbo',
+          mistralApiKey: process.env.MISTRAL_API_KEY || '',
+          mistralModel: 'mistral-small',
+          groqApiKey: process.env.GROQ_API_KEY || '',
+          groqModel: 'llama3-8b-8192',
+          ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+          ollamaModel: 'mistral'
+        }
+      );
+
+      const stats = await memoryService.getSemanticExtractionStats(userId);
+
+      const response: ApiResponse = {
+        success: true,
+        data: stats,
+        message: 'Semantic extraction statistics retrieved successfully',
+        tools: ['MemoryContextService.getSemanticExtractionStats']
+      };
+      res.json(response);
+    } catch (error) {
+      console.error('Semantic extraction stats error:', error);
+      const response: ApiResponse = {
+        success: false,
+        error: 'Failed to get semantic extraction statistics',
+        message: error instanceof Error ? error.message : 'Unknown error',
+        tools: ['MemoryContextService.getSemanticExtractionStats']
       };
       res.status(500).json(response);
     }

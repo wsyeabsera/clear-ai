@@ -52,11 +52,11 @@
     "@langchain/mistralai": "^0.2.1",
     "@langchain/ollama": "^0.2.4",
     "@langchain/openai": "^0.6.13",
+    "@pinecone-database/pinecone": "^6.1.2",
     "jsonrepair": "^3.13.1",
     "langchain": "^0.3.34",
     "langfuse": "^3.38.5",
     "neo4j-driver": "^5.15.0",
-    "@pinecone-database/pinecone": "^1.1.0",
     "uuid": "^9.0.1"
   },
   "exports": {

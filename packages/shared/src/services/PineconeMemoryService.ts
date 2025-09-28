@@ -12,13 +12,18 @@ export class PineconeMemoryService {
     this.config = config;
     
     // Only initialize Pinecone client if we have valid credentials
-    if (config.apiKey && config.apiKey !== '' && config.environment && config.environment !== '') {
-      this.pinecone = new Pinecone({
-        apiKey: config.apiKey,
-        environment: config.environment
-      });
+    if (config.apiKey && config.apiKey !== '') {
+      try {
+        this.pinecone = new Pinecone({
+          apiKey: config.apiKey
+        });
+        console.log('✅ Pinecone client initialized successfully');
+      } catch (error) {
+        console.error('❌ Failed to initialize Pinecone client:', error);
+        this.pinecone = null as any;
+      }
     } else {
-      console.log('⚠️ Pinecone credentials not provided, Pinecone client not initialized');
+      console.log('⚠️ Pinecone API key not provided, Pinecone client not initialized');
       this.pinecone = null as any;
     }
   }
@@ -36,19 +41,30 @@ export class PineconeMemoryService {
       this.index = this.pinecone.index(this.config.indexName);
       
       // Check if index exists, create if not
-      const indexList = await this.pinecone.listIndexes();
-      const indexExists = (indexList as any).indexes?.some((index: any) => index.name === this.config.indexName);
-      
-      if (!indexExists) {
-        console.log(`Creating Pinecone index: ${this.config.indexName}`);
-        await this.pinecone.createIndex({
-          name: this.config.indexName,
-          dimension: 768, // Nomic embed text dimension
-          metric: 'cosine'
-        });
+      try {
+        const indexList = await this.pinecone.listIndexes();
+        const indexExists = (indexList as any).indexes?.some((index: any) => index.name === this.config.indexName);
         
-        // Wait for index to be ready
-        await this.waitForIndexReady();
+        if (!indexExists) {
+          console.log(`Creating Pinecone index: ${this.config.indexName}`);
+          await this.pinecone.createIndex({
+            name: this.config.indexName,
+            dimension: 768, // Nomic embed text dimension
+            metric: 'cosine',
+            spec: {
+              serverless: {
+                cloud: 'aws',
+                region: 'us-east-1'
+              }
+            }
+          });
+
+          // Wait for index to be ready
+          await this.waitForIndexReady();
+        }
+      } catch (error) {
+        console.log(`Index ${this.config.indexName} may already exist or there was an error checking:`, error);
+        // Continue anyway - the index might exist
       }
       
       console.log('Pinecone memory service initialized successfully');
@@ -134,9 +150,10 @@ export class PineconeMemoryService {
           category: memory.metadata.category,
           confidence: memory.metadata.confidence,
           source: memory.metadata.source,
-          lastAccessed: memory.metadata.lastAccessed.toISOString(),
+          lastAccessed: new Date(memory.metadata.lastAccessed).toISOString(),
           accessCount: memory.metadata.accessCount,
-          relationships: JSON.stringify(memory.relationships)
+          relationships: JSON.stringify(memory.relationships),
+          extractionMetadata: memory.metadata.extractionMetadata ? JSON.stringify(memory.metadata.extractionMetadata) : "{}"
         }
       }]);
 
@@ -173,7 +190,8 @@ export class PineconeMemoryService {
           confidence: metadata.confidence,
           source: metadata.source,
           lastAccessed: new Date(metadata.lastAccessed),
-          accessCount: metadata.accessCount
+          accessCount: metadata.accessCount,
+          extractionMetadata: metadata.extractionMetadata ? JSON.parse(metadata.extractionMetadata) : undefined
         },
         relationships: JSON.parse(metadata.relationships)
       };
@@ -231,7 +249,8 @@ export class PineconeMemoryService {
               confidence: metadata.confidence,
               source: metadata.source,
               lastAccessed: new Date(metadata.lastAccessed),
-              accessCount: metadata.accessCount
+              accessCount: metadata.accessCount,
+              extractionMetadata: metadata.extractionMetadata ? JSON.parse(metadata.extractionMetadata) : undefined
             },
             relationships: JSON.parse(metadata.relationships)
           });
@@ -282,9 +301,10 @@ export class PineconeMemoryService {
           category: updated.metadata.category,
           confidence: updated.metadata.confidence,
           source: updated.metadata.source,
-          lastAccessed: updated.metadata.lastAccessed.toISOString(),
+          lastAccessed: new Date(updated.metadata.lastAccessed).toISOString(),
           accessCount: updated.metadata.accessCount,
-          relationships: JSON.stringify(updated.relationships)
+          relationships: JSON.stringify(updated.relationships),
+          extractionMetadata: updated.metadata.extractionMetadata ? JSON.stringify(updated.metadata.extractionMetadata) : "{}"
         }
       }]);
 
@@ -349,7 +369,8 @@ export class PineconeMemoryService {
               confidence: metadata.confidence,
               source: metadata.source,
               lastAccessed: new Date(metadata.lastAccessed),
-              accessCount: metadata.accessCount
+              accessCount: metadata.accessCount,
+              extractionMetadata: metadata.extractionMetadata ? JSON.parse(metadata.extractionMetadata) : undefined
             },
             relationships: JSON.parse(metadata.relationships)
           });
@@ -390,7 +411,7 @@ export class PineconeMemoryService {
     try {
       // Get all memories for the user
       const searchResult = await this.index.query({
-        vector: new Array(1536).fill(0), // Dummy vector for metadata-only search
+        vector: new Array(768).fill(0), // Dummy vector for metadata-only search (768 = nomic-embed-text dimension)
         filter: { userId: { $eq: userId } },
         topK: 10000, // Large number to get all
         includeMetadata: true

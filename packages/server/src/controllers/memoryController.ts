@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { 
-  MemoryContextService, 
-  MemoryServiceConfig, 
+import {
+  MemoryContextService,
+  MemoryServiceConfig,
   CoreKeysAndModels,
   EpisodicMemory,
   SemanticMemory,
@@ -36,15 +36,26 @@ export const memoryController = {
   async storeEpisodicMemory(req: Request, res: Response): Promise<void> {
     try {
       const service = getMemoryService();
-      const memory = await service.storeEpisodicMemory(req.body);
-      
+
+      // Convert timestamp string to Date object if needed
+      // Also ensure nested objects are properly handled for Neo4j
+      const memoryData = {
+        ...req.body,
+        timestamp: req.body.timestamp ? new Date(req.body.timestamp) : new Date(),
+        context: req.body.context || {},
+        metadata: req.body.metadata || {},
+        relationships: req.body.relationships || {}
+      };
+
+      const memory = await service.storeEpisodicMemory(memoryData);
+
       const response: ApiResponse<EpisodicMemory> = {
         success: true,
         data: memory,
         message: 'Episodic memory stored successfully',
         tools: ['MemoryContextService.storeEpisodicMemory']
       };
-      
+
       res.status(201).json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -62,7 +73,7 @@ export const memoryController = {
       const { id } = req.params;
       const service = getMemoryService();
       const memory = await service.getEpisodicMemory(id!);
-      
+
       if (!memory) {
         const response: ApiResponse = {
           success: false,
@@ -73,14 +84,14 @@ export const memoryController = {
         res.status(404).json(response);
         return;
       }
-      
+
       const response: ApiResponse<EpisodicMemory> = {
         success: true,
         data: memory,
         message: 'Episodic memory retrieved successfully',
         tools: ['MemoryContextService.getEpisodicMemory']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -103,17 +114,17 @@ export const memoryController = {
         limit: req.body.limit || 20,
         threshold: req.body.threshold
       };
-      
+
       const service = getMemoryService();
       const memories = await service.searchEpisodicMemories(query);
-      
+
       const response: ApiResponse<EpisodicMemory[]> = {
         success: true,
         data: memories,
         message: `Found ${memories.length} episodic memories`,
         tools: ['MemoryContextService.searchEpisodicMemories']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -130,17 +141,17 @@ export const memoryController = {
     try {
       const { id } = req.params;
       const updates = req.body;
-      
+
       const service = getMemoryService();
       const memory = await service.updateEpisodicMemory(id!, updates);
-      
+
       const response: ApiResponse<EpisodicMemory> = {
         success: true,
         data: memory,
         message: 'Episodic memory updated successfully',
         tools: ['MemoryContextService.updateEpisodicMemory']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -158,7 +169,7 @@ export const memoryController = {
       const { id } = req.params;
       const service = getMemoryService();
       const deleted = await service.deleteEpisodicMemory(id!);
-      
+
       if (!deleted) {
         const response: ApiResponse = {
           success: false,
@@ -169,14 +180,14 @@ export const memoryController = {
         res.status(404).json(response);
         return;
       }
-      
+
       const response: ApiResponse = {
         success: true,
         data: { deleted: true },
         message: 'Episodic memory deleted successfully',
         tools: ['MemoryContextService.deleteEpisodicMemory']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -194,14 +205,14 @@ export const memoryController = {
     try {
       const service = getMemoryService();
       const memory = await service.storeSemanticMemory(req.body);
-      
+
       const response: ApiResponse<SemanticMemory> = {
         success: true,
         data: memory,
         message: 'Semantic memory stored successfully',
         tools: ['MemoryContextService.storeSemanticMemory']
       };
-      
+
       res.status(201).json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -219,7 +230,7 @@ export const memoryController = {
       const { id } = req.params;
       const service = getMemoryService();
       const memory = await service.getSemanticMemory(id!);
-      
+
       if (!memory) {
         const response: ApiResponse = {
           success: false,
@@ -230,14 +241,14 @@ export const memoryController = {
         res.status(404).json(response);
         return;
       }
-      
+
       const response: ApiResponse<SemanticMemory> = {
         success: true,
         data: memory,
         message: 'Semantic memory retrieved successfully',
         tools: ['MemoryContextService.getSemanticMemory']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -260,17 +271,17 @@ export const memoryController = {
         limit: req.body.limit || 20,
         threshold: req.body.threshold
       };
-      
+
       const service = getMemoryService();
       const memories = await service.searchSemanticMemories(query);
-      
+
       const response: ApiResponse<SemanticMemory[]> = {
         success: true,
         data: memories,
         message: `Found ${memories.length} semantic memories`,
         tools: ['MemoryContextService.searchSemanticMemories']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -287,17 +298,17 @@ export const memoryController = {
     try {
       const { id } = req.params;
       const updates = req.body;
-      
+
       const service = getMemoryService();
       const memory = await service.updateSemanticMemory(id!, updates);
-      
+
       const response: ApiResponse<SemanticMemory> = {
         success: true,
         data: memory,
         message: 'Semantic memory updated successfully',
         tools: ['MemoryContextService.updateSemanticMemory']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -315,7 +326,7 @@ export const memoryController = {
       const { id } = req.params;
       const service = getMemoryService();
       const deleted = await service.deleteSemanticMemory(id!);
-      
+
       if (!deleted) {
         const response: ApiResponse = {
           success: false,
@@ -326,14 +337,14 @@ export const memoryController = {
         res.status(404).json(response);
         return;
       }
-      
+
       const response: ApiResponse = {
         success: true,
         data: { deleted: true },
         message: 'Semantic memory deleted successfully',
         tools: ['MemoryContextService.deleteSemanticMemory']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -352,14 +363,14 @@ export const memoryController = {
       const { userId, sessionId } = req.params;
       const service = getMemoryService();
       const context = await service.getMemoryContext(userId!, sessionId!);
-      
+
       const response: ApiResponse<MemoryContext> = {
         success: true,
         data: context,
         message: 'Memory context retrieved successfully',
         tools: ['MemoryContextService.getMemoryContext']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -382,17 +393,17 @@ export const memoryController = {
         limit: req.body.limit || 20,
         threshold: req.body.threshold
       };
-      
+
       const service = getMemoryService();
       const results = await service.searchMemories(query);
-      
+
       const response: ApiResponse<MemorySearchResult> = {
         success: true,
         data: results,
         message: `Found ${results.episodic.memories.length} episodic and ${results.semantic.memories.length} semantic memories`,
         tools: ['MemoryContextService.searchMemories']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -411,14 +422,14 @@ export const memoryController = {
       const { sourceId, targetId, relationshipType } = req.body;
       const service = getMemoryService();
       const created = await service.createMemoryRelationship(sourceId, targetId, relationshipType);
-      
+
       const response: ApiResponse = {
         success: true,
         data: { created },
         message: 'Memory relationship created successfully',
         tools: ['MemoryContextService.createMemoryRelationship']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -437,14 +448,14 @@ export const memoryController = {
       const { relationshipType } = req.query;
       const service = getMemoryService();
       const related = await service.getRelatedMemories(memoryId!, relationshipType as string);
-      
+
       const response: ApiResponse = {
         success: true,
         data: related,
         message: `Found ${related.episodic.length} episodic and ${related.semantic.length} semantic related memories`,
         tools: ['MemoryContextService.getRelatedMemories']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -463,14 +474,14 @@ export const memoryController = {
       const { userId } = req.params;
       const service = getMemoryService();
       const cleared = await service.clearUserMemories(userId!);
-      
+
       const response: ApiResponse = {
         success: true,
         data: { cleared },
         message: 'User memories cleared successfully',
         tools: ['MemoryContextService.clearUserMemories']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -488,14 +499,14 @@ export const memoryController = {
       const { userId } = req.params;
       const service = getMemoryService();
       const stats = await service.getMemoryStats(userId!);
-      
+
       const response: ApiResponse = {
         success: true,
         data: stats,
         message: 'Memory statistics retrieved successfully',
         tools: ['MemoryContextService.getMemoryStats']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {
@@ -514,14 +525,14 @@ export const memoryController = {
       const { userId, sessionId, query } = req.body;
       const service = getMemoryService();
       const enhanced = await service.enhanceContextWithMemories(userId, sessionId, query);
-      
+
       const response: ApiResponse = {
         success: true,
         data: enhanced,
         message: 'Context enhanced with memories successfully',
         tools: ['MemoryContextService.enhanceContextWithMemories']
       };
-      
+
       res.json(response);
     } catch (error) {
       const response: ApiResponse = {

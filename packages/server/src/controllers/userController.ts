@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { User, ApiResponse } from '@clear-ai/shared'
+import { User, ApiResponse } from 'clear-ai-shared'
 import { userService } from '../services/userService'
 
 export const userController = {

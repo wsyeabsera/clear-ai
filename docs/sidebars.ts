@@ -25,7 +25,9 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Features',
       items: [
+        'features/new-features-overview',
         'features/memory-system-overview',
+        'features/testing-framework',
         'features/neo4j-integration',
         'features/pinecone-vectors',
         'features/ollama-embeddings',
@@ -69,9 +71,13 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Server APIs',
       items: [
+        'api/server/agent',
+        'api/server/intent-classifier',
         'api/server/tools',
         'api/server/memory',
         'api/server/memory-chat',
+        'api/server/health',
+        'api/server/langgraph',
       ],
     },
   ],

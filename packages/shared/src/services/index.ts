@@ -14,5 +14,22 @@ export { MemoryContextService } from './MemoryContextService';
 export { Neo4jMemoryService } from './Neo4jMemoryService';
 export { PineconeMemoryService } from './PineconeMemoryService';
 
+// Export Intent Classification service
+export {
+  IntentClassifierService,
+  QueryIntent,
+  IntentClassificationOptions,
+  ToolRegistry
+} from './IntentClassifierService';
+
+// Export Agent service
+export {
+  AgentService,
+  AgentExecutionResult,
+  AgentExecutionOptions,
+  AgentServiceConfig,
+  AgentToolRegistry
+} from './AgentService';
+
 // Export Memory types
 export * from '../types/memory';

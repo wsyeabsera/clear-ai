@@ -7,11 +7,13 @@ This section provides comprehensive documentation for all APIs in the Clear AI s
 ## API Organization
 
 ### Server APIs
+- **[Agent APIs](/docs/api/server/agent)** - **NEW!** Unified agent interface combining memory, tools, and conversation
+- **[Intent Classifier APIs](/docs/api/server/intent-classifier)** - **NEW!** Smart routing system for query classification
 - **[Tool Execution APIs](/docs/api/server/tools)** - Tool registration and execution
 - **[Memory System APIs](/docs/api/server/memory)** - Episodic and semantic memory management
 - **[Memory Chat APIs](/docs/api/server/memory-chat)** - Memory-aware conversational interface
-- **Health APIs** - System health and status endpoints (coming soon)
-- **LangGraph APIs** - Workflow orchestration (coming soon)
+- **[Health APIs](/docs/api/server/health)** - System health and status endpoints
+- **[LangGraph APIs](/docs/api/server/langgraph)** - Workflow orchestration
 - **MCP APIs** - Model Context Protocol integration (coming soon)
 - **User Management APIs** - User CRUD operations (coming soon)
 

@@ -15,11 +15,16 @@ import { toolExecutionRoutes } from './routes/toolExecutionRoutes'
 import { langGraphRoutes } from './routes/langGraphRoutes'
 import memoryRoutes from './routes/memoryRoutes'
 import memoryChatRoutes from './routes/memoryChatRoutes'
+import intentClassifierRoutes from './routes/intentClassifierRoutes'
+import agentRoutes from './routes/agentRoutes'
 import { errorHandler } from './middleware/errorHandler'
 import { setupSwagger } from './config/swagger'
+import { initializeAgentService } from './controllers/agentController'
+import { ToolRegistry } from 'clear-ai-mcp-basic'
+import { MemoryServiceConfig, CoreKeysAndModels } from 'clear-ai-shared'
 
 // Load environment variables
-dotenv.config({ path: './.env' })
+dotenv.config({ path: './packages/server/.env' })
 
 const app = express()
 const PORT = parseInt(process.env.PORT || '3001', 10)
@@ -50,6 +55,8 @@ app.use('/api/tools', toolExecutionRoutes)
 app.use('/api/langgraph', langGraphRoutes)
 app.use('/api/memory', memoryRoutes)
 app.use('/api/memory-chat', memoryChatRoutes)
+app.use('/api/intent-classifier', intentClassifierRoutes)
+app.use('/api/agent', agentRoutes)
 
 // Error handling middleware
 app.use(errorHandler)
@@ -103,12 +110,86 @@ const startServer = async () => {
     process.exit(1)
   }
 
-  const server = app.listen(PORT, () => {
+  const server = app.listen(PORT, async () => {
     console.log(process.env.LANGFUSE_BASE_URL)
     console.log(`🚀 Server running on port ${PORT} - Hot reload working perfectly!`)
     console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`)
     console.log(`🌐 API URL: http://localhost:${PORT}`)
     console.log(`📚 API Documentation: http://localhost:${PORT}/api-docs`)
+
+    // Initialize agent service automatically
+    try {
+      console.log('🤖 Initializing Agent Service...')
+
+      const memoryConfig: MemoryServiceConfig = {
+        neo4j: {
+          uri: process.env.NEO4J_URI || 'bolt://localhost:7687',
+          username: process.env.NEO4J_USERNAME || 'neo4j',
+          password: process.env.NEO4J_PASSWORD || 'samplepassword',
+          database: process.env.NEO4J_DATABASE || 'neo4j'
+        },
+        pinecone: {
+          apiKey: process.env.PINECONE_API_KEY || '',
+          environment: process.env.PINECONE_ENVIRONMENT || 'clear-ai',
+          indexName: process.env.PINECONE_INDEX_NAME || 'clear-ai-memories'
+        },
+        embedding: {
+          model: process.env.EMBEDDING_MODEL || 'nomic-embed-text',
+          dimensions: parseInt(process.env.EMBEDDING_DIMENSIONS || '768')
+        },
+        semanticExtraction: {
+          enabled: process.env.SEMANTIC_EXTRACTION_ENABLED === 'true',
+          minConfidence: parseFloat(process.env.SEMANTIC_EXTRACTION_MIN_CONFIDENCE || '0.7'),
+          maxConceptsPerMemory: parseInt(process.env.SEMANTIC_EXTRACTION_MAX_CONCEPTS || '3'),
+          enableRelationshipExtraction: process.env.SEMANTIC_EXTRACTION_RELATIONSHIPS === 'true',
+          categories: (process.env.SEMANTIC_EXTRACTION_CATEGORIES || 'AI,Technology,Programming,Science,General').split(','),
+          batchSize: parseInt(process.env.SEMANTIC_EXTRACTION_BATCH_SIZE || '5')
+        }
+      };
+
+      const langchainConfig: CoreKeysAndModels = {
+        openaiApiKey: process.env.OPENAI_API_KEY || '',
+        openaiModel: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
+        mistralApiKey: process.env.MISTRAL_API_KEY || '',
+        mistralModel: process.env.MISTRAL_MODEL || 'mistral-small',
+        groqApiKey: process.env.GROQ_API_KEY || '',
+        groqModel: process.env.GROQ_MODEL || 'llama3-8b-8192',
+        ollamaModel: process.env.OLLAMA_MODEL || 'mistral',
+        ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+        langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+        langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+        langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
+      };
+
+      // Initialize tool registry
+      const toolRegistry = new ToolRegistry();
+
+      await initializeAgentService(memoryConfig, langchainConfig, toolRegistry);
+      console.log('✅ Agent Service initialized successfully');
+
+      // Initialize Memory Service
+      console.log('🧠 Initializing Memory Service...');
+      const { initializeMemoryService } = await import('./controllers/memoryController');
+      await initializeMemoryService(memoryConfig, langchainConfig);
+      console.log('✅ Memory Service initialized successfully');
+
+      // Initialize Semantic Extraction Service
+      if (memoryConfig.semanticExtraction.enabled) {
+        console.log('🔍 Initializing Semantic Extraction Service...');
+        const { MemoryContextService } = await import('@clear-ai/shared');
+        const memoryService = new MemoryContextService(memoryConfig, langchainConfig);
+        await memoryService.initialize();
+        console.log('✅ Semantic Extraction Service initialized successfully');
+        console.log(`   📊 Configuration: ${memoryConfig.semanticExtraction.categories.join(', ')} categories`);
+        console.log(`   🎯 Min confidence: ${memoryConfig.semanticExtraction.minConfidence}`);
+        console.log(`   📦 Batch size: ${memoryConfig.semanticExtraction.batchSize}`);
+      } else {
+        console.log('⚠️  Semantic Extraction Service disabled in configuration');
+      }
+    } catch (error) {
+      console.error('❌ Failed to initialize services:', error);
+      // Don't exit the server, just log the error
+    }
   })
 
   return server
