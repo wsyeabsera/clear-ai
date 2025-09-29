@@ -390,10 +390,25 @@ export class PineconeMemoryService {
     }
 
     try {
-      await this.index.deleteMany({
-        filter: { userId: userId }
+      // First, get all vectors for this user to get their IDs
+      const searchResult = await this.index.query({
+        vector: new Array(768).fill(0), // Dummy vector for metadata-only search
+        filter: { userId: { $eq: userId } },
+        topK: 10000, // Large number to get all
+        includeMetadata: true
       });
-      return true;
+
+      if (searchResult.matches && searchResult.matches.length > 0) {
+        const vectorIds = searchResult.matches.map((match: any) => match.id);
+
+        // Delete vectors by ID
+        await this.index.deleteMany(vectorIds);
+        console.log(`Successfully deleted ${vectorIds.length} semantic memories for user ${userId}`);
+        return true;
+      } else {
+        console.log(`No semantic memories found for user ${userId}`);
+        return true; // No memories to delete is considered successful
+      }
     } catch (error) {
       console.error('Failed to clear user semantic memories:', error);
       return false;
@@ -410,12 +425,24 @@ export class PineconeMemoryService {
 
       // Since existing semantic memories don't have sessionId, we'll clear all memories for this user
       // In a production system, you'd want to be more selective, but for now this ensures clearing works
-      const result = await this.index.deleteMany({
-        filter: {
-          userId: userId
-        }
+
+      // First, get all vectors for this user to get their IDs
+      const searchResult = await this.index.query({
+        vector: new Array(768).fill(0), // Dummy vector for metadata-only search
+        filter: { userId: { $eq: userId } },
+        topK: 10000, // Large number to get all
+        includeMetadata: true
       });
-      console.log(`Delete result:`, result);
+
+      if (searchResult.matches && searchResult.matches.length > 0) {
+        const vectorIds = searchResult.matches.map((match: any) => match.id);
+
+        // Delete vectors by ID
+        const result = await this.index.deleteMany(vectorIds);
+        console.log(`Successfully deleted ${vectorIds.length} semantic memories for user ${userId}, session ${sessionId}`);
+      } else {
+        console.log(`No semantic memories found for user ${userId}, session ${sessionId}`);
+      }
 
       return true;
     } catch (error) {

@@ -1,6 +1,7 @@
 import { EpisodicMemory, SemanticMemory } from '../types/memory';
 import { SimpleLangChainService, CoreKeysAndModels } from './SimpleLangChainService';
 import { RelationshipAnalysisService, DataStructureAnalysis, APIDataInsight } from './RelationshipAnalysisService';
+import { parseLLMJsonResponse } from '../utils';
 
 export interface SemanticConcept {
   id: string;
@@ -167,7 +168,13 @@ Focus on extracting concepts that show deep understanding of:
         }
       });
 
-      const parsed = JSON.parse(response.content);
+      const parseResult = parseLLMJsonResponse(response.content);
+      if (!parseResult.success) {
+        console.error('Failed to parse enhanced concepts JSON:', parseResult.error, 'Attempts:', parseResult.attempts);
+        return [];
+      }
+
+      const parsed = parseResult.data;
       return (parsed.concepts || []).filter((c: any) => c.confidence >= this.config.minConfidence);
     } catch (error) {
       console.error('Failed to extract enhanced concepts:', error);
@@ -290,7 +297,13 @@ Return JSON:
         }
       });
 
-      const parsed = JSON.parse(response.content);
+      const parseResult = parseLLMJsonResponse(response.content);
+      if (!parseResult.success) {
+        console.error('Failed to parse semantic clusters JSON:', parseResult.error, 'Attempts:', parseResult.attempts);
+        return [];
+      }
+
+      const parsed = parseResult.data;
       return parsed.clusters || [];
     } catch (error) {
       console.error('Failed to create semantic clusters:', error);
@@ -376,7 +389,20 @@ Return JSON:
         }
       });
 
-      const parsed = JSON.parse(response.content);
+      const parseResult = parseLLMJsonResponse(response.content);
+      if (!parseResult.success) {
+        console.error('Failed to parse context understanding JSON:', parseResult.error, 'Attempts:', parseResult.attempts);
+        return {
+          query,
+          relevantConcepts: [],
+          relationships: [],
+          patterns: [],
+          insights: [],
+          reasoning: 'Failed to parse context analysis'
+        };
+      }
+
+      const parsed = parseResult.data;
       return {
         query,
         relevantConcepts: parsed.relevantConcepts || [],
@@ -475,7 +501,19 @@ Return JSON:
         }
       });
 
-      const parsed = JSON.parse(response.content);
+      const parseResult = parseLLMJsonResponse(response.content);
+      if (!parseResult.success) {
+        console.error('Failed to parse advanced patterns JSON:', parseResult.error, 'Attempts:', parseResult.attempts);
+        return {
+          structuralPatterns: [],
+          behavioralPatterns: [],
+          dataFlowPatterns: [],
+          relationshipPatterns: [],
+          insights: []
+        };
+      }
+
+      const parsed = parseResult.data;
       return {
         structuralPatterns: parsed.structuralPatterns || [],
         behavioralPatterns: parsed.behavioralPatterns || [],
@@ -566,7 +604,18 @@ Return JSON:
         }
       });
 
-      const parsed = JSON.parse(response.content);
+      const parseResult = parseLLMJsonResponse(response.content);
+      if (!parseResult.success) {
+        console.error('Failed to parse learning insights JSON:', parseResult.error, 'Attempts:', parseResult.attempts);
+        return {
+          learnedConcepts: [],
+          improvedUnderstanding: [],
+          newPatterns: [],
+          recommendations: []
+        };
+      }
+
+      const parsed = parseResult.data;
       return {
         learnedConcepts: parsed.learnedConcepts || [],
         improvedUnderstanding: parsed.improvedUnderstanding || [],

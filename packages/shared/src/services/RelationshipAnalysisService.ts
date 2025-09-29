@@ -1,5 +1,6 @@
 import { EpisodicMemory, SemanticMemory } from '../types/memory';
 import { SimpleLangChainService, CoreKeysAndModels } from './SimpleLangChainService';
+import { parseLLMJsonResponse } from '../utils';
 
 export interface RelationshipPattern {
   id: string;
@@ -177,7 +178,13 @@ Minimum confidence: ${this.config.minConfidence}`;
         }
       });
 
-      const parsed = JSON.parse(response.content);
+      const parseResult = parseLLMJsonResponse(response.content);
+      if (!parseResult.success) {
+        console.error('Failed to parse relationship patterns JSON:', parseResult.error, 'Attempts:', parseResult.attempts);
+        return [];
+      }
+
+      const parsed = parseResult.data;
       return (parsed.patterns || []).filter((p: any) => p.confidence >= this.config.minConfidence);
     } catch (error) {
       console.error('Failed to extract relationship patterns:', error);
@@ -319,7 +326,13 @@ Return JSON:
         }
       });
 
-      const parsed = JSON.parse(response.content);
+      const parseResult = parseLLMJsonResponse(response.content);
+      if (!parseResult.success) {
+        console.error('Failed to parse relationship clusters JSON:', parseResult.error, 'Attempts:', parseResult.attempts);
+        return [];
+      }
+
+      const parsed = parseResult.data;
       return parsed.clusters || [];
     } catch (error) {
       console.error('Failed to create semantic clusters:', error);
@@ -416,7 +429,13 @@ Return JSON:
         }
       });
 
-      const parsed = JSON.parse(response.content);
+      const parseResult = parseLLMJsonResponse(response.content);
+      if (!parseResult.success) {
+        console.error('Failed to parse API insights JSON:', parseResult.error, 'Attempts:', parseResult.attempts);
+        return [];
+      }
+
+      const parsed = parseResult.data;
       return parsed.insights || [];
     } catch (error) {
       console.error('Failed to generate API insights:', error);
@@ -497,7 +516,17 @@ Return JSON:
         }
       });
 
-      const parsed = JSON.parse(response.content);
+      const parseResult = parseLLMJsonResponse(response.content);
+      if (!parseResult.success) {
+        console.error('Failed to parse data structure analysis JSON:', parseResult.error, 'Attempts:', parseResult.attempts);
+        return {
+          commonPatterns: [],
+          dataFlow: [],
+          structuralSimilarities: []
+        };
+      }
+
+      const parsed = parseResult.data;
       return {
         commonPatterns: parsed.commonPatterns || [],
         dataFlow: parsed.dataFlow || [],
