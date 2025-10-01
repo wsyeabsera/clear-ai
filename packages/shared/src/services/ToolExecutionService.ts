@@ -88,7 +88,7 @@ export class ToolExecutionService {
         }
       }
     }
-    
+
     this.registerTool(unknownTool)
   }
 
@@ -115,7 +115,7 @@ export class ToolExecutionService {
       parameters: tool.parameters,
       execute: tool.execute
     }))
-    
+
     this.registerTools(mappedTools)
   }
 
@@ -157,7 +157,7 @@ export class ToolExecutionService {
       // Validate required parameters
       const requiredParams = tool.parameters.required || []
       const missingParams = requiredParams.filter(param => !(param in args))
-      
+
       if (missingParams.length > 0) {
         return {
           success: false,
@@ -169,11 +169,11 @@ export class ToolExecutionService {
 
       // Set up timeout if specified
       let executionPromise = tool.execute(args)
-      
+
       if (options?.timeout) {
         executionPromise = Promise.race([
           executionPromise,
-          new Promise((_, reject) => 
+          new Promise((_, reject) =>
             setTimeout(() => reject(new Error('Tool execution timeout')), options.timeout)
           )
         ])
@@ -226,7 +226,7 @@ export class ToolExecutionService {
     for (const { toolName, args } of toolExecutions) {
       const result = await this.executeTool(toolName, args, options)
       results.push(result)
-      
+
       // Stop execution if a tool fails (optional behavior)
       if (!result.success && options?.metadata?.stopOnError) {
         break
@@ -266,7 +266,7 @@ export class ToolExecutionService {
     options?: ToolExecutionOptions
   ): Promise<ToolExecutionResult> {
     const startTime = Date.now()
-    
+
     try {
       const tool = this.getTool(toolName)
       if (!tool) {
@@ -279,15 +279,15 @@ export class ToolExecutionService {
       }
 
       // Create a prompt to help the LLM determine the correct parameters
-      const systemMessage = `You are a tool parameter extraction assistant. 
+      const systemMessage = `You are a tool parameter extraction assistant.
       Given a tool definition and a user query, extract the appropriate parameters.
-      
+
       Tool: ${tool.name}
       Description: ${tool.description}
       Parameters: ${JSON.stringify(tool.parameters, null, 2)}
-      
+
       User Query: ${userQuery}
-      
+
       Return ONLY a valid JSON object with the extracted parameters. Do not include any other text.`
 
       const response = await this.langchainService.complete(
@@ -380,11 +380,11 @@ export class ToolExecutionService {
     followUpQuestion?: string
   }> {
     const startTime = Date.now()
-    
+
     try {
       // Get available tools for LLM context
       const availableTools = this.getRegisteredTools()
-      
+
       if (availableTools.length === 0) {
         return {
           success: false,
@@ -525,7 +525,7 @@ Return ONLY the JSON object, no other text.`
       // Handle unknown tool case
       if (toolSelection.toolName === 'unknown') {
         const unknownArgs = toolSelection.args || { query: userQuery, reason: 'No specific tool matched' }
-        
+
         // Execute the unknown tool
         const executionResult = await this.executeTool(
           'unknown',

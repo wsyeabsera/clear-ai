@@ -46,12 +46,12 @@ export class SemanticExtractorService {
     llmService: { complete: (prompt: string, options?: any) => Promise<{ content: string }> }
   ): Promise<SemanticExtractionResult> {
     const startTime = Date.now();
-    
+
     try {
       // Process memories in batches to avoid overwhelming the LLM
       const batchSize = 5;
       const batches = this.chunkArray(episodicMemories, batchSize);
-      
+
       const allConcepts: ExtractedConcept[] = [];
       const allRelationships: ExtractedRelationship[] = [];
       let totalConfidence = 0;
@@ -91,7 +91,7 @@ export class SemanticExtractorService {
     relationships: ExtractedRelationship[];
     confidence: number;
   }> {
-    const memoryTexts = episodicMemories.map(memory => 
+    const memoryTexts = episodicMemories.map(memory =>
       `Memory ID: ${memory.id}\n` +
       `Content: ${memory.content}\n` +
       `Context: ${JSON.stringify(memory.context)}\n` +
@@ -101,7 +101,7 @@ export class SemanticExtractorService {
     ).join('\n---\n');
 
     const prompt = this.buildExtractionPrompt(memoryTexts);
-    
+
     try {
       const response = await llmService.complete(prompt, {
         temperature: 0.3,
@@ -154,7 +154,7 @@ Please respond with a JSON object in this exact format:
   "relationships": [
     {
       "sourceConcept": "concept1",
-      "targetConcept": "concept2", 
+      "targetConcept": "concept2",
       "relationshipType": "similar|parent|child|related|opposite|causes|part_of|instance_of",
       "confidence": 0.7,
       "description": "description of the relationship"
@@ -182,13 +182,13 @@ Only include concepts with confidence >= ${this.config.minConfidence}.`;
       }
 
       const parsed = JSON.parse(jsonMatch[0]);
-      
+
       // Validate and filter concepts
       const concepts: ExtractedConcept[] = (parsed.concepts || [])
-        .filter((c: any) => 
-          c.concept && 
-          c.description && 
-          c.category && 
+        .filter((c: any) =>
+          c.concept &&
+          c.description &&
+          c.category &&
           c.confidence >= this.config.minConfidence &&
           this.config.categories.includes(c.category)
         )
@@ -203,9 +203,9 @@ Only include concepts with confidence >= ${this.config.minConfidence}.`;
 
       // Validate and filter relationships
       const relationships: ExtractedRelationship[] = (parsed.relationships || [])
-        .filter((r: any) => 
-          r.sourceConcept && 
-          r.targetConcept && 
+        .filter((r: any) =>
+          r.sourceConcept &&
+          r.targetConcept &&
           r.relationshipType &&
           r.confidence >= this.config.minConfidence
         )
@@ -236,7 +236,7 @@ Only include concepts with confidence >= ${this.config.minConfidence}.`;
    * Convert extracted concepts to semantic memories
    */
   convertToSemanticMemories(
-    extractedConcepts: ExtractedConcept[], 
+    extractedConcepts: ExtractedConcept[],
     userId: string,
     baseVector: number[] = []
   ): Omit<SemanticMemory, 'id' | 'vector'>[] {

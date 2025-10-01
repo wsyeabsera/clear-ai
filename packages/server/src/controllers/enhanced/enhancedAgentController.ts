@@ -190,7 +190,9 @@ export const enhancedAgentController = {
         includeReasoning: options?.includeReasoning !== false,
         previousIntents: options?.previousIntents,
         responseDetailLevel: options?.responseDetailLevel || 'standard',
-        excludeVectors: options?.excludeVectors !== false // Default to true to exclude vectors
+        excludeVectors: options?.excludeVectors !== false, // Default to true to exclude vectors
+        enableContextCompression: options?.enableContextCompression !== false, // Default to true
+        maxTokens: options?.maxTokens || 8000 // Default to 8000 tokens
       };
 
       const result = await agent.executeQuery(query, executionOptions);
@@ -290,7 +292,9 @@ export const enhancedAgentController = {
               userId: 'test-user',
               sessionId: 'test-session',
               includeMemoryContext: true,
-              includeReasoning: true
+              includeReasoning: true,
+              enableContextCompression: true,
+              maxTokens: 8000
             });
 
             return {

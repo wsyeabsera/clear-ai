@@ -86,9 +86,9 @@ export class RelationshipAnalysisService {
    * Analyze relationships in API data from episodic memories
    */
   async analyzeAPIRelationships(memories: EpisodicMemory[]): Promise<DataStructureAnalysis> {
-    const apiMemories = memories.filter(m => 
-      m.content.includes('api') || 
-      m.content.includes('http') || 
+    const apiMemories = memories.filter(m =>
+      m.content.includes('api') ||
+      m.content.includes('http') ||
       m.content.includes('json') ||
       m.metadata.tags?.includes('api_call')
     );
@@ -104,13 +104,13 @@ export class RelationshipAnalysisService {
 
     // Extract API data patterns
     const patterns = await this.extractRelationshipPatterns(apiMemories);
-    
+
     // Build hierarchies
     const hierarchies = this.buildHierarchies(patterns);
-    
+
     // Create semantic clusters
     const semanticClusters = await this.createSemanticClusters(apiMemories, patterns);
-    
+
     // Find cross-references
     const crossReferences = this.findCrossReferences(patterns);
 
@@ -127,7 +127,7 @@ export class RelationshipAnalysisService {
    */
   private async extractRelationshipPatterns(memories: EpisodicMemory[]): Promise<RelationshipPattern[]> {
     const memoryTexts = memories.map(m => m.content).join('\n\n');
-    
+
     const prompt = `Analyze the following API data and extract relationship patterns. Look for:
 1. Hierarchical relationships (parent-child, owner-owned)
 2. Associative relationships (related entities, references)
@@ -145,7 +145,7 @@ Return a JSON object with this structure:
       "id": "pattern_1",
       "type": "hierarchical|associative|temporal|causal|semantic",
       "source": "entity1",
-      "target": "entity2", 
+      "target": "entity2",
       "confidence": 0.8,
       "description": "Brief description of the relationship",
       "metadata": {
@@ -198,14 +198,14 @@ Minimum confidence: ${this.config.minConfidence}`;
   private buildHierarchies(patterns: RelationshipPattern[]): DataStructureAnalysis['hierarchies'] {
     const hierarchies: DataStructureAnalysis['hierarchies'] = [];
     const hierarchicalPatterns = patterns.filter(p => p.type === 'hierarchical');
-    
+
     // Group by root entities
     const rootGroups = new Map<string, RelationshipPattern[]>();
-    
+
     for (const pattern of hierarchicalPatterns) {
       // Determine if this is a root or child relationship
       const isChild = hierarchicalPatterns.some(p => p.target === pattern.source);
-      
+
       if (!isChild) {
         if (!rootGroups.has(pattern.source)) {
           rootGroups.set(pattern.source, []);
@@ -276,7 +276,7 @@ Minimum confidence: ${this.config.minConfidence}`;
    * Create semantic clusters from API data
    */
   private async createSemanticClusters(
-    memories: EpisodicMemory[], 
+    memories: EpisodicMemory[],
     patterns: RelationshipPattern[]
   ): Promise<DataStructureAnalysis['semanticClusters']> {
     if (!this.config.enableSemanticClustering) {
@@ -354,7 +354,7 @@ Return JSON:
       if (!crossRefs.has(pattern.source)) {
         crossRefs.set(pattern.source, []);
       }
-      
+
       crossRefs.get(pattern.source)!.push({
         target: pattern.target,
         relationshipType: pattern.type,
@@ -372,9 +372,9 @@ Return JSON:
    * Generate insights about API data structure
    */
   async generateAPIInsights(memories: EpisodicMemory[]): Promise<APIDataInsight[]> {
-    const apiMemories = memories.filter(m => 
-      m.content.includes('api') || 
-      m.content.includes('http') || 
+    const apiMemories = memories.filter(m =>
+      m.content.includes('api') ||
+      m.content.includes('http') ||
       m.content.includes('json')
     );
 
@@ -383,7 +383,7 @@ Return JSON:
     }
 
     const memoryTexts = apiMemories.map(m => m.content).join('\n\n');
-    
+
     const prompt = `Analyze the following API data and generate insights about the data structure and relationships:
 
 ${memoryTexts}
@@ -460,9 +460,9 @@ Return JSON:
       strength: number;
     }>;
   }> {
-    const apiMemories = memories.filter(m => 
-      m.content.includes('api') || 
-      m.content.includes('http') || 
+    const apiMemories = memories.filter(m =>
+      m.content.includes('api') ||
+      m.content.includes('http') ||
       m.content.includes('json')
     );
 
@@ -475,7 +475,7 @@ Return JSON:
     }
 
     const memoryTexts = apiMemories.map(m => m.content).join('\n\n');
-    
+
     const prompt = `Analyze the following API calls and identify patterns that span across multiple calls:
 
 ${memoryTexts}
@@ -492,7 +492,7 @@ Return JSON:
   "dataFlow": [
     {
       "from": "users",
-      "to": "posts", 
+      "to": "posts",
       "pattern": "user creates posts",
       "confidence": 0.9
     }

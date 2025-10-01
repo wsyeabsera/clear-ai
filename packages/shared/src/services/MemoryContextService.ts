@@ -351,7 +351,7 @@ export class MemoryContextService implements MemoryService {
     } else {
       console.log('Pinecone service not available');
     }
-    
+
     return semanticCleared;
   }
 

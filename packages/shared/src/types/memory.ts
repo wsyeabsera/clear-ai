@@ -282,7 +282,7 @@ export interface WorkingMemoryServiceConfig {
 export interface WorkingMemoryService {
   // Core methods
   getWorkingMemory(userId: string, sessionId: string): Promise<WorkingMemoryContext>;
-  updateWorkingMemory(context: WorkingMemoryContext): Promise<void>;
+  updateWorkingMemory(context: WorkingMemoryContext, userId?: string): Promise<void>;
 
   // Topic and state management
   extractCurrentTopic(memoryContext: MemoryContext): Promise<string>;

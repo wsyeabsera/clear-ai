@@ -33,7 +33,7 @@ export class Neo4jMemoryService {
         CREATE CONSTRAINT episodic_memory_id IF NOT EXISTS
         FOR (m:EpisodicMemory) REQUIRE m.id IS UNIQUE
       `);
-      
+
       await session.run(`
         CREATE CONSTRAINT user_id IF NOT EXISTS
         FOR (u:User) REQUIRE u.id IS UNIQUE
@@ -169,7 +169,7 @@ export class Neo4jMemoryService {
 
       const record = result.records[0];
       const memory = record.get('m').properties;
-      
+
       return {
         id: memory.id,
         userId: memory.userId,
@@ -213,26 +213,26 @@ export class Neo4jMemoryService {
       }
 
       if (query.tags && query.tags.length > 0) {
-        cypher += ` AND ANY(tag IN $tags WHERE tag IN apoc.convert.fromJsonMap(m.metadata).tags)`;
+        cypher += ` AND ANY(tag IN $tags WHERE tag IN m.metadata.tags)`;
         params.tags = query.tags;
       }
 
       if (query.importance) {
-        cypher += ` AND apoc.convert.fromJsonMap(m.metadata).importance >= $minImportance AND apoc.convert.fromJsonMap(m.metadata).importance <= $maxImportance`;
+        cypher += ` AND m.metadata.importance >= $minImportance AND m.metadata.importance <= $maxImportance`;
         params.minImportance = query.importance.min;
         params.maxImportance = query.importance.max;
       }
 
       cypher += ` ORDER BY m.timestamp DESC`;
-      
+
       if (query.limit) {
         cypher += ` LIMIT ${parseInt(query.limit.toString(), 10)}`;
       }
-      
+
       cypher += ` RETURN m`;
 
       const result = await session.run(cypher, params);
-      
+
       return result.records.map(record => {
         const memory = record.get('m').properties;
         return {
@@ -319,16 +319,16 @@ export class Neo4jMemoryService {
       let cypher = `
         MATCH (m:EpisodicMemory {id: $memoryId})-[r:RELATED|NEXT|PREVIOUS]->(related:EpisodicMemory)
       `;
-      
+
       if (relationshipType) {
         cypher += ` WHERE type(r) = $relationshipType`;
       }
 
       cypher += ` RETURN related`;
 
-      const result = await session.run(cypher, { 
-        memoryId, 
-        relationshipType: relationshipType || null 
+      const result = await session.run(cypher, {
+        memoryId,
+        relationshipType: relationshipType || null
       });
 
       return result.records.map(record => {
@@ -386,7 +386,7 @@ export class Neo4jMemoryService {
     try {
       const result = await session.run(`
         MATCH (m:EpisodicMemory {userId: $userId})
-        RETURN 
+        RETURN
           count(m) as count,
           min(m.timestamp) as oldest,
           max(m.timestamp) as newest

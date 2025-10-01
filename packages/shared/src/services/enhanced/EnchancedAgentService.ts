@@ -7,7 +7,9 @@ import {
   MemoryService,
   WorkingMemoryContext,
   WorkingMemoryService,
-  WorkingMemoryServiceConfig
+  WorkingMemoryServiceConfig,
+  ConversationTurn,
+  Interaction
 } from '../../types/memory'
 import {
   IntentClassifierService,
@@ -95,6 +97,11 @@ export interface EnhancedAgentExecutionOptions {
   previousIntents?: QueryIntent[]
   responseDetailLevel?: 'minimal' | 'standard' | 'full'
   excludeVectors?: boolean
+  // Context management options
+  maxTokens?: number
+  enableContextCompression?: boolean
+  contextCompressionThreshold?: number
+  includeContextSummary?: boolean
 }
 
 export interface PendingAction {
@@ -211,6 +218,7 @@ export class EnhancedAgentService {
       // Step 1: Retrieve working memory context FIRST for enhanced conversation management
       let workingMemoryContext: WorkingMemoryContext | undefined
       let memoryContext: MemoryContext | undefined
+      let managedContext: any = undefined
 
       logger.info(`Memory context check: includeMemoryContext=${executionOptions.includeMemoryContext}, userId=${executionOptions.userId}, sessionId=${executionOptions.sessionId}`)
       if (executionOptions.includeMemoryContext !== false) {
@@ -222,6 +230,35 @@ export class EnhancedAgentService {
             executionOptions.sessionId || 'default'
           )
           logger.info(`Retrieved working memory context with topic: ${workingMemoryContext.currentTopic}, goals: ${workingMemoryContext.activeGoals.length}`)
+
+          // Apply context management if available
+          if (this.contextManager && executionOptions.enableContextCompression !== false) {
+            logger.info('Applying context management to working memory')
+            const maxTokens = executionOptions.maxTokens || 8000
+            managedContext = await this.contextManager.manageContext(
+              workingMemoryContext,
+              query,
+              maxTokens,
+              executionOptions.userId,
+              executionOptions.sessionId
+            )
+            // Write detailed context management log to file
+            const fs = require('fs')
+            const path = require('path')
+            const logPath = path.join(process.cwd(), 'context-debug.log')
+            const contextLog = {
+              timestamp: new Date().toISOString(),
+              query: query.substring(0, 100),
+              compressionRatio: managedContext.compressionRatio,
+              tokenUsage: managedContext.tokenUsage,
+              activeContext: managedContext.activeContext ? 'present' : 'missing',
+              summary: managedContext.summary ? 'present' : 'missing',
+              removedItems: managedContext.removedItems ? managedContext.removedItems.length : 0
+            }
+            fs.appendFileSync(logPath, 'CONTEXT_MANAGED: ' + JSON.stringify(contextLog) + '\n')
+
+            logger.info(`Context managed: compression ratio=${managedContext.compressionRatio}, token usage=${managedContext.tokenUsage}`)
+          }
         } else {
           // Fallback to traditional memory context
           logger.info(`Retrieving traditional memory context for userId: ${executionOptions.userId}, sessionId: ${executionOptions.sessionId}`)
@@ -261,7 +298,7 @@ export class EnhancedAgentService {
 
       switch (intent.type) {
         case 'memory_chat':
-          response = await this.handleMemoryChat(query, memoryContext, executionOptions)
+          response = await this.handleMemoryChat(query, memoryContext, executionOptions, managedContext)
           break
 
         case 'tool_execution':
@@ -271,7 +308,7 @@ export class EnhancedAgentService {
           break
 
         case 'hybrid':
-          const hybridResult = await this.handleHybridExecution(query, intent, memoryContext, executionOptions)
+          const hybridResult = await this.handleHybridExecution(query, intent, memoryContext, executionOptions, managedContext)
           response = hybridResult.response
           toolResults = hybridResult.toolResults
           break
@@ -408,7 +445,7 @@ export class EnhancedAgentService {
       const searchResults = await this.memoryService.searchMemories(searchQuery)
 
       // Combine context with search results
-      const combinedContext = {
+      let combinedContext = {
         userId: context.userId,
         sessionId: context.sessionId,
         episodicMemories: [...context.episodicMemories, ...searchResults.episodic.memories],
@@ -419,6 +456,25 @@ export class EnhancedAgentService {
       // Enhanced analysis for API-related queries
       if (this.isAPIQuery(query) || this.hasAPIMemories(combinedContext.episodicMemories)) {
         await this.enhanceContextWithRelationshipAnalysis(combinedContext, query)
+      }
+
+      // Apply context compression if enabled
+      if (options.enableContextCompression && options.maxTokens) {
+        // Write compression trigger log
+        const fs = require('fs')
+        const path = require('path')
+        const logPath = path.join(process.cwd(), 'context-debug.log')
+        const triggerLog = {
+          timestamp: new Date().toISOString(),
+          query: query.substring(0, 100),
+          maxTokens: options.maxTokens,
+          episodicMemoriesCount: combinedContext.episodicMemories.length,
+          semanticMemoriesCount: combinedContext.semanticMemories.length,
+          compressionEnabled: true
+        }
+        fs.appendFileSync(logPath, 'COMPRESSION_TRIGGER: ' + JSON.stringify(triggerLog) + '\n')
+
+        combinedContext = await this.applyContextCompression(combinedContext, query, options.maxTokens)
       }
 
       return combinedContext
@@ -436,6 +492,214 @@ export class EnhancedAgentService {
         }
       }
     }
+  }
+
+  /**
+   * Apply context compression to reduce token usage
+   */
+  private async applyContextCompression(
+    context: MemoryContext,
+    query: string,
+    maxTokens: number
+  ): Promise<MemoryContext> {
+    try {
+      // Calculate current token usage
+      const currentTokens = await this.calculateContextTokenUsage(context)
+
+      // Write detailed compression log to file
+      const compressionLog = {
+        timestamp: new Date().toISOString(),
+        query: query.substring(0, 100),
+        maxTokens,
+        currentTokens,
+        episodicMemoriesCount: context.episodicMemories.length,
+        semanticMemoriesCount: context.semanticMemories.length,
+        needsCompression: currentTokens > maxTokens
+      }
+
+      // Write to compression log file
+      const fs = require('fs')
+      const path = require('path')
+      const logPath = path.join(process.cwd(), 'compression-debug.log')
+      fs.appendFileSync(logPath, JSON.stringify(compressionLog) + '\n')
+
+      if (currentTokens <= maxTokens) {
+        logger.info(`No compression needed: ${currentTokens} tokens <= ${maxTokens} tokens`)
+        return context
+      }
+
+      logger.info(`Applying context compression: ${currentTokens} tokens -> ${maxTokens} tokens`)
+
+      // Sort memories by relevance (simplified scoring)
+      const scoredMemories = context.episodicMemories.map(memory => ({
+        memory,
+        relevance: this.calculateSimpleRelevance(memory.content, query)
+      })).sort((a, b) => b.relevance - a.relevance)
+
+      // Log relevance scores
+      const relevanceLog = {
+        timestamp: new Date().toISOString(),
+        scoredMemories: scoredMemories.map(sm => ({
+          id: sm.memory.id,
+          relevance: sm.relevance,
+          contentLength: sm.memory.content.length,
+          contentPreview: sm.memory.content.substring(0, 50) + '...'
+        }))
+      }
+      fs.appendFileSync(logPath, 'RELEVANCE_SCORES: ' + JSON.stringify(relevanceLog) + '\n')
+
+      // Select most relevant memories within token budget
+      const compressedMemories: EpisodicMemory[] = []
+      let usedTokens = 0
+      const targetTokens = Math.floor(maxTokens * 0.8) // Use 80% of budget for memories
+
+      for (const { memory, relevance } of scoredMemories) {
+        const memoryTokens = await this.calculateTokenUsageForText(memory.content)
+
+        if (usedTokens + memoryTokens <= targetTokens && relevance > 0.3) {
+          compressedMemories.push(memory)
+          usedTokens += memoryTokens
+        }
+      }
+
+      // Log compression results
+      const compressionResult = {
+        timestamp: new Date().toISOString(),
+        originalCount: context.episodicMemories.length,
+        compressedCount: compressedMemories.length,
+        usedTokens,
+        targetTokens,
+        compressionRatio: usedTokens / currentTokens
+      }
+      fs.appendFileSync(logPath, 'COMPRESSION_RESULT: ' + JSON.stringify(compressionResult) + '\n')
+
+      // If we still have too many tokens, compress the remaining memories
+      if (usedTokens > targetTokens) {
+        const finalMemories = await this.compressMemories(compressedMemories, targetTokens)
+        return {
+          ...context,
+          episodicMemories: finalMemories
+        }
+      }
+
+      return {
+        ...context,
+        episodicMemories: compressedMemories
+      }
+    } catch (error) {
+      logger.warn('Failed to apply context compression:', error)
+      return context
+    }
+  }
+
+  /**
+   * Calculate simple relevance score for memory content
+   */
+  private calculateSimpleRelevance(content: string, query: string): number {
+    const queryWords = query.toLowerCase().split(/\s+/)
+    const contentWords = content.toLowerCase().split(/\s+/)
+
+    let matches = 0
+    for (const word of queryWords) {
+      if (contentWords.some(cw => cw.includes(word) || word.includes(cw))) {
+        matches++
+      }
+    }
+
+    return matches / queryWords.length
+  }
+
+  /**
+   * Calculate token usage for memory context
+   */
+  private async calculateContextTokenUsage(context: MemoryContext): Promise<number> {
+    let totalTokens = 0
+    let episodicTokens = 0
+    let semanticTokens = 0
+
+    for (const memory of context.episodicMemories) {
+      const memoryTokens = await this.calculateTokenUsageForText(memory.content)
+      episodicTokens += memoryTokens
+    }
+
+    for (const memory of context.semanticMemories) {
+      const memoryTokens = await this.calculateTokenUsageForText(memory.description)
+      semanticTokens += memoryTokens
+    }
+
+    totalTokens = episodicTokens + semanticTokens
+
+    // Log token calculation details
+    const fs = require('fs')
+    const path = require('path')
+    const logPath = path.join(process.cwd(), 'compression-debug.log')
+    const tokenLog = {
+      timestamp: new Date().toISOString(),
+      episodicMemoriesCount: context.episodicMemories.length,
+      semanticMemoriesCount: context.semanticMemories.length,
+      episodicTokens,
+      semanticTokens,
+      totalTokens
+    }
+    fs.appendFileSync(logPath, 'TOKEN_CALCULATION: ' + JSON.stringify(tokenLog) + '\n')
+
+    return totalTokens
+  }
+
+  /**
+   * Calculate token usage for text (simplified)
+   */
+  private async calculateTokenUsageForText(text: string): Promise<number> {
+    // Simple approximation: 1 token ≈ 4 characters
+    return Math.ceil(text.length / 4)
+  }
+
+  /**
+   * Compress memories to fit within token budget
+   */
+  private async compressMemories(
+    memories: EpisodicMemory[],
+    maxTokens: number
+  ): Promise<EpisodicMemory[]> {
+    if (memories.length === 0) return []
+
+    // If only one memory, truncate it
+    if (memories.length === 1) {
+      const memory = memories[0]
+      const maxChars = maxTokens * 4
+      const truncatedContent = memory.content.length > maxChars
+        ? memory.content.substring(0, maxChars) + '...'
+        : memory.content
+
+      return [{
+        ...memory,
+        content: truncatedContent
+      }]
+    }
+
+    // For multiple memories, create a summary
+    const summaryContent = memories.map(m =>
+      `[${m.timestamp.toISOString()}] ${m.content.substring(0, 200)}...`
+    ).join('\n')
+
+    const summaryMemory: EpisodicMemory = {
+      id: `summary-${Date.now()}`,
+      userId: memories[0]?.userId || 'unknown',
+      sessionId: memories[0]?.sessionId || 'unknown',
+      content: `Summary of ${memories.length} memories:\n${summaryContent}`,
+      timestamp: new Date(),
+      context: {},
+      metadata: {
+        source: 'compression',
+        importance: 0.8,
+        tags: ['summary', 'compressed']
+      },
+      relationships: {
+        related: memories.map(m => m.id)
+      }
+    }
+
+    return [summaryMemory]
   }
 
   /**
@@ -599,9 +863,10 @@ export class EnhancedAgentService {
   private async handleMemoryChat(
     query: string,
     memoryContext: MemoryContext | undefined,
-    options: EnhancedAgentExecutionOptions
+    options: EnhancedAgentExecutionOptions,
+    managedContext?: any
   ): Promise<string> {
-    const systemPrompt = this.buildMemoryChatSystemPrompt(memoryContext)
+    const systemPrompt = this.buildMemoryChatSystemPrompt(memoryContext, managedContext)
 
     const response = await this.langchainService.complete(query, {
       model: options.model || 'openai',
@@ -693,13 +958,14 @@ export class EnhancedAgentService {
     query: string,
     intent: QueryIntent,
     memoryContext: MemoryContext | undefined,
-    options: EnhancedAgentExecutionOptions
+    options: EnhancedAgentExecutionOptions,
+    managedContext?: any
   ): Promise<{ response: string; toolResults: ToolExecutionResult[] }> {
     // First execute tools
     const toolResult = await this.handleToolExecution(query, intent, options)
 
     // Then generate response with both memory context and tool results
-    const systemPrompt = this.buildHybridSystemPrompt(memoryContext, toolResult.toolResults)
+    const systemPrompt = this.buildHybridSystemPrompt(memoryContext, toolResult.toolResults, managedContext)
 
     const response = await this.langchainService.complete(query, {
       model: options.model || 'openai',
@@ -1365,6 +1631,60 @@ Focus on showing deep understanding of the relationships and structure in the AP
 
       logger.info('Successfully stored episodic memory', { memoryId: memory.id })
 
+      // Update working memory with the new interaction
+      if (this.workingMemoryService) {
+        try {
+          // Get current working memory
+          const currentWorkingMemory = await this.workingMemoryService.getWorkingMemory(
+            options.userId,
+            options.sessionId
+          )
+
+          // Add the new conversation turn
+          const newTurn: ConversationTurn = {
+            turnNumber: currentWorkingMemory.conversationHistory.length + 1,
+            userInput: query,
+            assistantResponse: response,
+            timestamp: new Date(),
+            intent: intent.type,
+            confidence: intent.confidence,
+            contextRelevance: 0.8,
+            toolsUsed: [],
+            memoryRetrieved: 0
+          }
+
+          // Create the last interaction
+          const lastInteraction: Interaction = {
+            id: `interaction-${Date.now()}`,
+            timestamp: new Date(),
+            userInput: query,
+            assistantResponse: response,
+            intent: intent.type,
+            confidence: intent.confidence,
+            toolsUsed: [],
+            memoryRetrieved: 0
+          }
+
+          // Update the working memory context
+          const updatedWorkingMemory: WorkingMemoryContext = {
+            ...currentWorkingMemory,
+            conversationHistory: [...currentWorkingMemory.conversationHistory, newTurn],
+            lastInteraction: lastInteraction,
+            contextWindow: {
+              ...currentWorkingMemory.contextWindow,
+              endTime: new Date(),
+              currentTokens: Math.ceil((currentWorkingMemory.contextWindow.currentTokens || 0) + query.length + response.length / 4)
+            }
+          }
+
+          // Update working memory
+          await this.workingMemoryService.updateWorkingMemory(updatedWorkingMemory, options.userId)
+          logger.info('Successfully updated working memory with new conversation turn')
+        } catch (workingMemoryError) {
+          logger.warn('Failed to update working memory:', workingMemoryError)
+        }
+      }
+
       // If it's knowledge-related or API-related, also store as semantic memory (if available)
       if (intent.type === 'knowledge_search' || intent.type === 'hybrid' || isAPIInteraction) {
         try {
@@ -1427,51 +1747,157 @@ Focus on showing deep understanding of the relationships and structure in the AP
   }
 
   // System prompt builders
-  private buildMemoryChatSystemPrompt(memoryContext?: MemoryContext): string {
+  private buildMemoryChatSystemPrompt(memoryContext?: MemoryContext, managedContext?: any): string {
     let prompt = `You are an AI assistant with access to memory. You can remember past conversations and use that context to provide more personalized and relevant responses.
 
 Current memory context:`
 
-    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
-    const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+    // Use managed context if available, otherwise fall back to traditional memory context
+    if (managedContext) {
+      const workingMemory = managedContext.activeContext
 
-    if (hasEpisodicMemories && memoryContext) {
-      prompt += `\n\nRecent conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
-    }
+      // Add conversation topic
+      prompt += `\n\nCurrent Topic: ${workingMemory.currentTopic}`
 
-    if (hasSemanticMemories && memoryContext) {
-      prompt += `\n\nRelevant knowledge:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
-    }
+      // Add conversation state
+      prompt += `\n\nConversation State: ${workingMemory.conversationState.state}`
 
-    if (!hasEpisodicMemories && !hasSemanticMemories) {
-      prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
-      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
+      // Add active goals
+      if (workingMemory.activeGoals.length > 0) {
+        const goalsText = workingMemory.activeGoals
+          .map((goal: any) => `- ${goal.description} (${goal.status})`)
+          .join('\n')
+        prompt += `\n\nActive Goals:\n${goalsText}`
+      }
+
+      // Add user profile
+      const profile = workingMemory.userProfile
+      prompt += `\n\nUser Profile:`
+      prompt += `\n- Communication Style: ${profile.communicationStyle}`
+      prompt += `\n- Formality: ${profile.formality}`
+      prompt += `\n- Response Length: ${profile.responseLength}`
+      if (profile.preferences.length > 0) {
+        prompt += `\n- Preferences: ${profile.preferences.join(', ')}`
+      }
+      if (profile.interests.length > 0) {
+        prompt += `\n- Interests: ${profile.interests.join(', ')}`
+      }
+
+      // Add recent conversation history
+      if (workingMemory.conversationHistory.length > 0) {
+        const recentHistory = workingMemory.conversationHistory
+          .slice(-5) // Last 5 turns
+          .map((turn: any) => `Turn ${turn.turnNumber}: ${turn.userInput} -> ${turn.assistantResponse}`)
+          .join('\n')
+        prompt += `\n\nRecent Conversation:\n${recentHistory}`
+      }
+
+      // Add context summary if available
+      if (managedContext.summary && managedContext.summary.length > 0) {
+        prompt += `\n\nContext Summary (previous conversation context):\n${managedContext.summary}`
+      }
+
+      // Add compression information if context was compressed
+      if (managedContext.compressionRatio < 1.0) {
+        prompt += `\n\nNote: Previous conversation context has been compressed to fit within token limits (${Math.round(managedContext.compressionRatio * 100)}% of original context retained).`
+      }
+
     } else {
-      prompt += `\n\nUse this context to provide helpful, personalized responses. If the user asks about something from memory, reference it naturally.`
+      // Fallback to traditional memory context
+      const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+      const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+
+      if (hasEpisodicMemories && memoryContext) {
+        prompt += `\n\nRecent conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
+      }
+
+      if (hasSemanticMemories && memoryContext) {
+        prompt += `\n\nRelevant knowledge:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
+      }
+
+      if (!hasEpisodicMemories && !hasSemanticMemories) {
+        prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
+        prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
+      } else {
+        prompt += `\n\nUse this context to provide helpful, personalized responses. If the user asks about something from memory, reference it naturally.`
+      }
     }
 
     return prompt
   }
 
-  private buildHybridSystemPrompt(memoryContext?: MemoryContext, toolResults?: ToolExecutionResult[]): string {
+  private buildHybridSystemPrompt(memoryContext?: MemoryContext, toolResults?: ToolExecutionResult[], managedContext?: any): string {
     let prompt = `You are an AI assistant with advanced relationship analysis and semantic understanding capabilities. You can remember past conversations, execute tools, and understand complex relationships in API data.
 
 Memory context:`
 
-    const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
-    const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+    // Use managed context if available, otherwise fall back to traditional memory context
+    if (managedContext) {
+      const workingMemory = managedContext.activeContext
 
-    if (hasEpisodicMemories && memoryContext) {
-      prompt += `\n\nRecent conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
-    }
+      // Add conversation topic
+      prompt += `\n\nCurrent Topic: ${workingMemory.currentTopic}`
 
-    if (hasSemanticMemories && memoryContext) {
-      prompt += `\n\nRelevant knowledge and patterns:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
-    }
+      // Add conversation state
+      prompt += `\n\nConversation State: ${workingMemory.conversationState.state}`
 
-    if (!hasEpisodicMemories && !hasSemanticMemories) {
-      prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
-      prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
+      // Add active goals
+      if (workingMemory.activeGoals.length > 0) {
+        const goalsText = workingMemory.activeGoals
+          .map((goal: any) => `- ${goal.description} (${goal.status})`)
+          .join('\n')
+        prompt += `\n\nActive Goals:\n${goalsText}`
+      }
+
+      // Add user profile
+      const profile = workingMemory.userProfile
+      prompt += `\n\nUser Profile:`
+      prompt += `\n- Communication Style: ${profile.communicationStyle}`
+      prompt += `\n- Formality: ${profile.formality}`
+      prompt += `\n- Response Length: ${profile.responseLength}`
+      if (profile.preferences.length > 0) {
+        prompt += `\n- Preferences: ${profile.preferences.join(', ')}`
+      }
+      if (profile.interests.length > 0) {
+        prompt += `\n- Interests: ${profile.interests.join(', ')}`
+      }
+
+      // Add recent conversation history
+      if (workingMemory.conversationHistory.length > 0) {
+        const recentHistory = workingMemory.conversationHistory
+          .slice(-5) // Last 5 turns
+          .map((turn: any) => `Turn ${turn.turnNumber}: ${turn.userInput} -> ${turn.assistantResponse}`)
+          .join('\n')
+        prompt += `\n\nRecent Conversation:\n${recentHistory}`
+      }
+
+      // Add context summary if available
+      if (managedContext.summary && managedContext.summary.length > 0) {
+        prompt += `\n\nContext Summary (previous conversation context):\n${managedContext.summary}`
+      }
+
+      // Add compression information if context was compressed
+      if (managedContext.compressionRatio < 1.0) {
+        prompt += `\n\nNote: Previous conversation context has been compressed to fit within token limits (${Math.round(managedContext.compressionRatio * 100)}% of original context retained).`
+      }
+
+    } else {
+      // Fallback to traditional memory context
+      const hasEpisodicMemories = (memoryContext?.episodicMemories?.length ?? 0) > 0
+      const hasSemanticMemories = (memoryContext?.semanticMemories?.length ?? 0) > 0
+
+      if (hasEpisodicMemories && memoryContext) {
+        prompt += `\n\nRecent conversations:\n${memoryContext.episodicMemories.map((m: EpisodicMemory) => `- ${m.content}`).join('\n')}`
+      }
+
+      if (hasSemanticMemories && memoryContext) {
+        prompt += `\n\nRelevant knowledge and patterns:\n${memoryContext.semanticMemories.map((m: SemanticMemory) => `- ${m.concept}: ${m.description}`).join('\n')}`
+      }
+
+      if (!hasEpisodicMemories && !hasSemanticMemories) {
+        prompt += `\n\nNo memories found - this appears to be our first conversation or no relevant memories exist for this user.`
+        prompt += `\n\nIMPORTANT: If the user asks about what you remember from past conversations, you must respond that this is your first conversation with them and you don't have any memories to recall. Do not make up or hallucinate any past conversations or memories.`
+      }
     }
 
     if (toolResults?.length) {

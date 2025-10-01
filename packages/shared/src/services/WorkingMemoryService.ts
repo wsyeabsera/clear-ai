@@ -18,7 +18,7 @@ import { SimpleLangChainService } from './SimpleLangChainService'
 
 /**
  * Working Memory Service - The foundation of AgentService v2.0's intelligent conversation management
- * 
+ *
  * This service maintains the current state of conversations, tracks active goals,
  * and provides context for all other services. It acts as the "short-term memory"
  * of the agent, maintaining current conversation topic, active goals, user profile,
@@ -35,11 +35,11 @@ export class WorkingMemoryService implements IWorkingMemoryService {
     cacheHits: number
     activeSessions: Set<string>
   } = {
-    totalRetrievals: 0,
-    totalRetrievalTime: 0,
-    cacheHits: 0,
-    activeSessions: new Set()
-  }
+      totalRetrievals: 0,
+      totalRetrievalTime: 0,
+      cacheHits: 0,
+      activeSessions: new Set()
+    }
 
   constructor(
     memoryService: MemoryService,
@@ -73,9 +73,16 @@ export class WorkingMemoryService implements IWorkingMemoryService {
         }
       }
 
+      // Try to get stored working memory context first
+      const storedContext = await this.getStoredWorkingMemoryContext(userId, sessionId)
+      if (storedContext) {
+        logger.debug('Retrieved working memory context from database', { userId, sessionId })
+        return storedContext
+      }
+
       // Get existing memory context
       const memoryContext = await this.memoryService.getMemoryContext(userId, sessionId)
-      
+
       // Build working memory components
       const currentTopic = await this.extractCurrentTopic(memoryContext)
       const conversationState = await this.determineConversationState(memoryContext)
@@ -85,7 +92,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
       const sessionMetadata = await this.buildSessionMetadata(sessionId)
       const lastInteraction = await this.getLastInteraction(memoryContext)
       const conversationHistory = await this.getConversationHistory(memoryContext)
-      
+
       const workingMemoryContext: WorkingMemoryContext = {
         conversationId: sessionId,
         currentTopic,
@@ -129,22 +136,27 @@ export class WorkingMemoryService implements IWorkingMemoryService {
   /**
    * Update working memory context
    */
-  async updateWorkingMemory(context: WorkingMemoryContext): Promise<void> {
+  async updateWorkingMemory(context: WorkingMemoryContext, userId?: string): Promise<void> {
     try {
       // Update conversation state
       await this.updateConversationState(context)
-      
+
       // Update active goals
       await this.updateActiveGoals(context.activeGoals)
-      
+
       // Update user profile
       await this.updateUserProfile(context.userProfile)
-      
+
       // Store session metadata
       await this.storeSessionMetadata(context.sessionMetadata)
-      
+
       // Update context window
       await this.updateContextWindow(context.contextWindow)
+
+      // Store working memory context in database
+      if (userId) {
+        await this.storeWorkingMemoryContext(context, userId)
+      }
 
       // Update cache
       const cacheKey = `${context.userProfile.preferences.length > 0 ? 'user' : 'anonymous'}-${context.conversationId}`
@@ -176,26 +188,26 @@ export class WorkingMemoryService implements IWorkingMemoryService {
         .slice(-5)
         .map(m => m.content)
         .join(' ')
-      
+
       if (!recentMemories.trim()) {
         return 'general conversation'
       }
-      
+
       // Use LLM to extract topic
       const topicPrompt = `
       Analyze this conversation and extract the main topic in 2-3 words:
-      
+
       Conversation: "${recentMemories}"
-      
+
       Return only the topic, no explanation.
       `
-      
+
       const response = await this.langchainService.complete(topicPrompt, {
         model: this.config.topicExtractionModel,
         temperature: this.config.topicExtractionTemperature,
         maxTokens: 50
       })
-      
+
       return response.content.trim() || 'general conversation'
     } catch (error) {
       logger.warn('Failed to extract topic:', error)
@@ -212,10 +224,10 @@ export class WorkingMemoryService implements IWorkingMemoryService {
     try {
       // Analyze conversation patterns
       const patterns = await this.analyzeConversationPatterns(memoryContext)
-      
+
       // Determine state based on patterns
       let state: ConversationState['state'] = 'active'
-      
+
       if (patterns.hasActiveGoal) {
         state = 'planning'
       } else if (patterns.awaitingResponse) {
@@ -225,7 +237,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
       } else if (patterns.isGreeting) {
         state = 'greeting'
       }
-      
+
       return {
         state,
         topic: await this.extractCurrentTopic(memoryContext),
@@ -257,9 +269,9 @@ export class WorkingMemoryService implements IWorkingMemoryService {
         type: 'semantic',
         limit: 10
       })
-      
+
       const goals: Goal[] = []
-      
+
       for (const memory of goalMemories.semantic.memories) {
         if (memory.metadata.category === 'Goal' && memory.metadata.status !== 'completed') {
           goals.push({
@@ -274,7 +286,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
           })
         }
       }
-      
+
       return goals.sort((a, b) => b.priority - a.priority)
     } catch (error) {
       logger.warn('Failed to extract active goals:', error)
@@ -380,7 +392,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
         type: 'semantic',
         limit: 20
       })
-      
+
       const profile: UserProfile = {
         preferences: [],
         communicationStyle: 'conversational',
@@ -390,7 +402,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
         expertise: [],
         personality: 'helpful'
       }
-      
+
       // Extract preferences from memories
       for (const memory of preferenceMemories.semantic.memories) {
         if (memory.metadata.category === 'Preference') {
@@ -401,7 +413,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
           profile.expertise.push(memory.description)
         }
       }
-      
+
       // Extract communication style
       const styleMemories = await this.memoryService.searchMemories({
         query: 'communication style formality',
@@ -409,7 +421,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
         type: 'semantic',
         limit: 5
       })
-      
+
       for (const memory of styleMemories.semantic.memories) {
         if (memory.metadata.communicationStyle) {
           profile.communicationStyle = memory.metadata.communicationStyle
@@ -418,7 +430,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
           profile.formality = memory.metadata.formality
         }
       }
-      
+
       return profile
     } catch (error) {
       logger.warn('Failed to build user profile:', error)
@@ -467,13 +479,13 @@ export class WorkingMemoryService implements IWorkingMemoryService {
     const now = new Date()
     const startTime = memoryContext.contextWindow.startTime
     const endTime = memoryContext.contextWindow.endTime
-    
+
     // Calculate current token usage (simplified)
     const totalContent = memoryContext.episodicMemories
       .map(m => m.content)
       .join(' ')
     const currentTokens = Math.ceil(totalContent.length / 4) // Rough token estimation
-    
+
     return {
       startTime,
       endTime,
@@ -498,6 +510,111 @@ export class WorkingMemoryService implements IWorkingMemoryService {
   }
 
   /**
+   * Get stored working memory context from database
+   */
+  private async getStoredWorkingMemoryContext(userId: string, sessionId: string): Promise<WorkingMemoryContext | null> {
+    try {
+      // Search for working memory context in episodic memories
+      const memories = await this.memoryService.searchEpisodicMemories({
+        userId,
+        query: 'working_memory',
+        type: 'episodic',
+        filters: {
+          tags: ['working_memory']
+        },
+        limit: 1
+      })
+
+      if (memories.length > 0) {
+        const memory = memories[0]
+        if (memory.content.startsWith('WORKING_MEMORY_CONTEXT: ')) {
+          const contextData = JSON.parse(memory.content.replace('WORKING_MEMORY_CONTEXT: ', ''))
+
+          // Convert date strings back to Date objects
+          if (contextData.contextWindow) {
+            contextData.contextWindow.startTime = new Date(contextData.contextWindow.startTime)
+            contextData.contextWindow.endTime = new Date(contextData.contextWindow.endTime)
+          }
+
+          if (contextData.conversationState && contextData.conversationState.lastInteraction) {
+            contextData.conversationState.lastInteraction = new Date(contextData.conversationState.lastInteraction)
+          }
+
+          if (contextData.sessionMetadata) {
+            contextData.sessionMetadata.startTime = new Date(contextData.sessionMetadata.startTime)
+            contextData.sessionMetadata.lastActivity = new Date(contextData.sessionMetadata.lastActivity)
+          }
+
+          if (contextData.lastInteraction && contextData.lastInteraction.timestamp) {
+            contextData.lastInteraction.timestamp = new Date(contextData.lastInteraction.timestamp)
+          }
+
+          if (contextData.conversationHistory) {
+            contextData.conversationHistory.forEach((turn: any) => {
+              if (turn.timestamp) {
+                turn.timestamp = new Date(turn.timestamp)
+              }
+            })
+          }
+
+          return contextData as WorkingMemoryContext
+        }
+      }
+
+      return null
+    } catch (error) {
+      logger.warn('Failed to get stored working memory context:', error)
+      return null
+    }
+  }
+
+  /**
+   * Store working memory context in database
+   */
+  private async storeWorkingMemoryContext(context: WorkingMemoryContext, userId: string): Promise<void> {
+    try {
+      // Store as a special episodic memory for working memory context
+      const workingMemoryContent = JSON.stringify({
+        conversationId: context.conversationId,
+        currentTopic: context.currentTopic,
+        conversationState: context.conversationState,
+        activeGoals: context.activeGoals,
+        userProfile: context.userProfile,
+        sessionMetadata: context.sessionMetadata,
+        lastInteraction: context.lastInteraction,
+        conversationHistory: context.conversationHistory,
+        contextWindow: context.contextWindow
+      })
+
+      await this.memoryService.storeEpisodicMemory({
+        userId: userId,
+        sessionId: context.sessionMetadata.sessionId,
+        timestamp: new Date(),
+        content: `WORKING_MEMORY_CONTEXT: ${workingMemoryContent}`,
+        context: {
+          type: 'working_memory_context',
+          conversationId: context.conversationId
+        },
+        metadata: {
+          source: 'working_memory_service',
+          importance: 1.0,
+          tags: ['working_memory', 'context', 'conversation_state'],
+          location: 'working_memory_service'
+        },
+        relationships: {}
+      })
+
+      logger.debug('Working memory context stored in database', {
+        conversationId: context.conversationId,
+        userId: userId,
+        sessionId: context.sessionMetadata.sessionId
+      })
+    } catch (error) {
+      logger.warn('Failed to store working memory context in database:', error)
+    }
+  }
+
+  /**
    * Compress context window if needed
    */
   async compressContextWindow(contextWindow: ContextWindow): Promise<ContextWindow> {
@@ -509,7 +626,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
         threshold: this.config.compressionThreshold
       })
     }
-    
+
     return contextWindow
   }
 
@@ -541,7 +658,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
    */
   async getLastInteraction(memoryContext: MemoryContext): Promise<Interaction> {
     const lastMemory = memoryContext.episodicMemories[memoryContext.episodicMemories.length - 1]
-    
+
     if (!lastMemory) {
       return {
         id: 'no-interaction',
@@ -598,7 +715,7 @@ export class WorkingMemoryService implements IWorkingMemoryService {
   async getDebugInfo(userId: string, sessionId: string): Promise<any> {
     const cacheKey = `${userId}-${sessionId}`
     const cached = this.cache.get(cacheKey)
-    
+
     return {
       userId,
       sessionId,
@@ -606,8 +723,8 @@ export class WorkingMemoryService implements IWorkingMemoryService {
       cacheAge: cached ? Date.now() - cached.timestamp : null,
       activeSessions: this.performanceMetrics.activeSessions.size,
       totalRetrievals: this.performanceMetrics.totalRetrievals,
-      averageRetrievalTime: this.performanceMetrics.totalRetrievals > 0 
-        ? this.performanceMetrics.totalRetrievalTime / this.performanceMetrics.totalRetrievals 
+      averageRetrievalTime: this.performanceMetrics.totalRetrievals > 0
+        ? this.performanceMetrics.totalRetrievalTime / this.performanceMetrics.totalRetrievals
         : 0
     }
   }
@@ -621,13 +738,13 @@ export class WorkingMemoryService implements IWorkingMemoryService {
     memoryUsage: number;
     activeSessions: number;
   }> {
-    const cacheHitRate = this.performanceMetrics.totalRetrievals > 0 
-      ? this.performanceMetrics.cacheHits / this.performanceMetrics.totalRetrievals 
+    const cacheHitRate = this.performanceMetrics.totalRetrievals > 0
+      ? this.performanceMetrics.cacheHits / this.performanceMetrics.totalRetrievals
       : 0
 
     return {
-      averageRetrievalTime: this.performanceMetrics.totalRetrievals > 0 
-        ? this.performanceMetrics.totalRetrievalTime / this.performanceMetrics.totalRetrievals 
+      averageRetrievalTime: this.performanceMetrics.totalRetrievals > 0
+        ? this.performanceMetrics.totalRetrievalTime / this.performanceMetrics.totalRetrievals
         : 0,
       cacheHitRate,
       memoryUsage: this.cache.size * 1024, // Rough estimate
@@ -646,29 +763,29 @@ export class WorkingMemoryService implements IWorkingMemoryService {
     relevanceScore: number
   }> {
     const recentMemories = memoryContext.episodicMemories.slice(-3)
-    const hasActiveGoal = recentMemories.some(m => 
-      m.content.toLowerCase().includes('goal') || 
+    const hasActiveGoal = recentMemories.some(m =>
+      m.content.toLowerCase().includes('goal') ||
       m.content.toLowerCase().includes('plan') ||
       m.content.toLowerCase().includes('task')
     )
-    
-    const awaitingResponse = recentMemories.some(m => 
+
+    const awaitingResponse = recentMemories.some(m =>
       m.content.toLowerCase().includes('?') ||
       m.content.toLowerCase().includes('waiting')
     )
-    
-    const hasError = recentMemories.some(m => 
+
+    const hasError = recentMemories.some(m =>
       m.content.toLowerCase().includes('error') ||
       m.content.toLowerCase().includes('failed') ||
       m.content.toLowerCase().includes('problem')
     )
-    
-    const isGreeting = recentMemories.some(m => 
+
+    const isGreeting = recentMemories.some(m =>
       m.content.toLowerCase().includes('hello') ||
       m.content.toLowerCase().includes('hi') ||
       m.content.toLowerCase().includes('greetings')
     )
-    
+
     const relevanceScore = memoryContext.contextWindow.relevanceScore
 
     return {

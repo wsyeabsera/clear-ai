@@ -87,9 +87,9 @@ export class EnhancedSemanticService {
    * Extract enhanced semantic concepts from API data
    */
   async extractEnhancedConcepts(memories: EpisodicMemory[]): Promise<SemanticConcept[]> {
-    const apiMemories = memories.filter(m => 
-      m.content.includes('api') || 
-      m.content.includes('http') || 
+    const apiMemories = memories.filter(m =>
+      m.content.includes('api') ||
+      m.content.includes('http') ||
       m.content.includes('json') ||
       m.metadata.tags?.includes('api_call')
     );
@@ -99,7 +99,7 @@ export class EnhancedSemanticService {
     }
 
     const memoryTexts = apiMemories.map(m => m.content).join('\n\n');
-    
+
     const prompt = `Analyze the following API data and extract enhanced semantic concepts. Focus on:
 
 1. API-specific concepts (resources, endpoints, data structures)
@@ -188,10 +188,10 @@ Focus on extracting concepts that show deep understanding of:
   async buildSemanticNetwork(concepts: SemanticConcept[], memories: EpisodicMemory[]): Promise<SemanticNetwork> {
     // Analyze relationships in the data
     const relationshipAnalysis = await this.relationshipAnalyzer.analyzeAPIRelationships(memories);
-    
+
     // Build relationship network
     const relationships: SemanticNetwork['relationships'] = [];
-    
+
     // Add concept relationships
     for (const concept of concepts) {
       for (const similar of concept.relationships.similar) {
@@ -203,7 +203,7 @@ Focus on extracting concepts that show deep understanding of:
           context: 'semantic similarity'
         });
       }
-      
+
       if (concept.relationships.parent) {
         relationships.push({
           source: concept.concept,
@@ -213,7 +213,7 @@ Focus on extracting concepts that show deep understanding of:
           context: 'hierarchical relationship'
         });
       }
-      
+
       for (const child of concept.relationships.children) {
         relationships.push({
           source: concept.concept,
@@ -223,7 +223,7 @@ Focus on extracting concepts that show deep understanding of:
           context: 'hierarchical relationship'
         });
       }
-      
+
       for (const related of concept.relationships.related) {
         relationships.push({
           source: concept.concept,
@@ -260,11 +260,11 @@ Focus on extracting concepts that show deep understanding of:
    * Create semantic clusters from concepts
    */
   private async createSemanticClusters(
-    concepts: SemanticConcept[], 
+    concepts: SemanticConcept[],
     relationshipAnalysis: DataStructureAnalysis
   ): Promise<SemanticNetwork['clusters']> {
     const conceptNames = concepts.map(c => c.concept);
-    
+
     const prompt = `Group the following semantic concepts into clusters based on their functional and semantic similarity:
 
 Concepts: ${conceptNames.join(', ')}
@@ -315,8 +315,8 @@ Return JSON:
    * Provide contextual understanding of a query
    */
   async understandContext(
-    query: string, 
-    semanticNetwork: SemanticNetwork, 
+    query: string,
+    semanticNetwork: SemanticNetwork,
     memories: EpisodicMemory[]
   ): Promise<ContextualUnderstanding> {
     const prompt = `Given a user query and a semantic network of API concepts, provide deep contextual understanding:
@@ -434,9 +434,9 @@ Return JSON:
     relationshipPatterns: string[];
     insights: string[];
   }> {
-    const apiMemories = memories.filter(m => 
-      m.content.includes('api') || 
-      m.content.includes('http') || 
+    const apiMemories = memories.filter(m =>
+      m.content.includes('api') ||
+      m.content.includes('http') ||
       m.content.includes('json')
     );
 
@@ -451,7 +451,7 @@ Return JSON:
     }
 
     const memoryTexts = apiMemories.map(m => m.content).join('\n\n');
-    
+
     const prompt = `Analyze the following API data for advanced patterns. Look for:
 
 1. Structural Patterns: Common data structures, naming conventions, organization patterns
@@ -542,9 +542,9 @@ Return JSON:
     newPatterns: string[];
     recommendations: string[];
   }> {
-    const apiMemories = memories.filter(m => 
-      m.content.includes('api') || 
-      m.content.includes('http') || 
+    const apiMemories = memories.filter(m =>
+      m.content.includes('api') ||
+      m.content.includes('http') ||
       m.content.includes('json')
     );
 
@@ -559,7 +559,7 @@ Return JSON:
 
     // Sort memories by timestamp to see progression
     const sortedMemories = apiMemories.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
-    
+
     const prompt = `Analyze the progression of API understanding across these interactions. Look for:
 
 1. Concepts that were learned over time
