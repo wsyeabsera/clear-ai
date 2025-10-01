@@ -9,7 +9,10 @@ import {
   IntentClassifierService,
   SimpleLangChainService,
   CoreKeysAndModels,
-  ApiResponse
+  ApiResponse,
+  WorkingMemoryService,
+  WorkingMemoryServiceConfig,
+  ContextManager
 } from 'clear-ai-shared';
 import { ToolRegistry as MCPToolRegistry } from 'clear-ai-mcp-basic';
 import { MemoryContextService } from 'clear-ai-shared';
@@ -31,12 +34,35 @@ export const initializeEnhancedAgentService = async (
     const intentClassifier = new IntentClassifierService(langchainConfig, toolRegistry);
     const langchainService = new SimpleLangChainService(langchainConfig);
 
+    // Create Working Memory Service
+    const workingMemoryConfig: WorkingMemoryServiceConfig = {
+      cacheEnabled: true,
+      cacheTTL: 300000, // 5 minutes
+      maxContextHistory: 50,
+      maxActiveGoals: 10,
+      topicExtractionModel: 'openai',
+      topicExtractionTemperature: 0.3,
+      maxTokens: 8000,
+      compressionThreshold: 0.8
+    };
+
+    const workingMemoryService = new WorkingMemoryService(
+      memoryService,
+      langchainService,
+      workingMemoryConfig
+    );
+
+    // Create Context Manager
+    const contextManager = new ContextManager(langchainService, 8000, 0.8);
+
     // Create agent service config
     const agentConfig: EnhancedAgentServiceConfig = {
       memoryService,
       intentClassifier,
       langchainService,
       toolRegistry: toolRegistry as EnhancedAgentToolRegistry,
+      workingMemoryService,
+      contextManager,
       defaultOptions: {
         includeMemoryContext: true,
         maxMemoryResults: 10,

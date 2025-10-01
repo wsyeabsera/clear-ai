@@ -38,5 +38,12 @@ export {
   EnhancedAgentServiceConfig,
   EnhancedAgentToolRegistry
 } from './enhanced/EnchancedAgentService';
+
+// Export Working Memory Service
+export { WorkingMemoryService } from './WorkingMemoryService';
+
+// Export Context Manager
+export { ContextManager } from './ContextManager';
+
 // Export Memory types
 export * from '../types/memory';

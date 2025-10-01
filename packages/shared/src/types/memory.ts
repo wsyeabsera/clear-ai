@@ -43,6 +43,8 @@ export interface SemanticMemory {
       keywords: string[];
       processingTime: number;
     };
+    // Additional fields for working memory
+    [key: string]: any;
   };
   relationships: {
     similar?: string[]; // IDs of similar concepts
@@ -179,5 +181,144 @@ export interface MemoryService {
     averageConfidence: number;
     conceptsByCategory: Record<string, number>;
     lastExtraction: Date | null;
+  }>;
+}
+
+// Working Memory Service Types
+export interface WorkingMemoryContext {
+  conversationId: string;
+  currentTopic: string;
+  conversationState: ConversationState;
+  activeGoals: Goal[];
+  contextWindow: ContextWindow;
+  userProfile: UserProfile;
+  sessionMetadata: SessionMetadata;
+  lastInteraction: Interaction;
+  conversationHistory: ConversationTurn[];
+}
+
+export interface ConversationState {
+  state: 'greeting' | 'active' | 'planning' | 'waiting' | 'error_recovery';
+  topic: string;
+  activeGoals: Goal[];
+  lastInteraction: Date;
+  contextRelevance: number;
+}
+
+export interface Goal {
+  id: string;
+  description: string;
+  priority: number;
+  status: 'pending' | 'in_progress' | 'completed' | 'cancelled';
+  subgoals: string[];
+  successCriteria: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ContextWindow {
+  startTime: Date;
+  endTime: Date;
+  relevanceScore: number;
+  maxTokens: number;
+  currentTokens: number;
+  compressionRatio: number;
+}
+
+export interface UserProfile {
+  preferences: string[];
+  communicationStyle: 'conversational' | 'formal' | 'technical' | 'casual';
+  formality: 'low' | 'medium' | 'high';
+  responseLength: 'brief' | 'detailed' | 'comprehensive';
+  interests: string[];
+  expertise: string[];
+  personality: 'helpful' | 'analytical' | 'creative' | 'practical';
+}
+
+export interface SessionMetadata {
+  sessionId: string;
+  startTime: Date;
+  lastActivity: Date;
+  totalInteractions: number;
+  averageResponseTime: number;
+  sessionGoals: string[];
+  contextSwitches: number;
+}
+
+export interface Interaction {
+  id: string;
+  timestamp: Date;
+  userInput: string;
+  assistantResponse: string;
+  intent: string;
+  confidence: number;
+  toolsUsed: string[];
+  memoryRetrieved: number;
+}
+
+export interface ConversationTurn {
+  turnNumber: number;
+  timestamp: Date;
+  userInput: string;
+  assistantResponse: string;
+  intent: string;
+  confidence: number;
+  contextRelevance: number;
+  toolsUsed: string[];
+  memoryRetrieved: number;
+}
+
+export interface WorkingMemoryServiceConfig {
+  cacheEnabled: boolean;
+  cacheTTL: number; // in milliseconds
+  maxContextHistory: number;
+  maxActiveGoals: number;
+  topicExtractionModel: string;
+  topicExtractionTemperature: number;
+  maxTokens: number;
+  compressionThreshold: number;
+}
+
+export interface WorkingMemoryService {
+  // Core methods
+  getWorkingMemory(userId: string, sessionId: string): Promise<WorkingMemoryContext>;
+  updateWorkingMemory(context: WorkingMemoryContext): Promise<void>;
+
+  // Topic and state management
+  extractCurrentTopic(memoryContext: MemoryContext): Promise<string>;
+  determineConversationState(memoryContext: MemoryContext): Promise<ConversationState>;
+
+  // Goal management
+  extractActiveGoals(memoryContext: MemoryContext): Promise<Goal[]>;
+  updateActiveGoals(goals: Goal[]): Promise<void>;
+  createGoal(description: string, priority: number, userId: string): Promise<Goal>;
+  updateGoal(goalId: string, updates: Partial<Goal>): Promise<Goal>;
+  completeGoal(goalId: string): Promise<boolean>;
+
+  // User profile management
+  buildUserProfile(userId: string, memoryContext: MemoryContext): Promise<UserProfile>;
+  updateUserProfile(profile: UserProfile): Promise<void>;
+
+  // Context window management
+  buildContextWindow(memoryContext: MemoryContext): Promise<ContextWindow>;
+  updateContextWindow(contextWindow: ContextWindow): Promise<void>;
+  compressContextWindow(contextWindow: ContextWindow): Promise<ContextWindow>;
+
+  // Session management
+  buildSessionMetadata(sessionId: string): Promise<SessionMetadata>;
+  storeSessionMetadata(metadata: SessionMetadata): Promise<void>;
+
+  // Interaction tracking
+  getLastInteraction(memoryContext: MemoryContext): Promise<Interaction>;
+  getConversationHistory(memoryContext: MemoryContext): Promise<ConversationTurn[]>;
+  recordInteraction(interaction: Interaction): Promise<void>;
+
+  // Debug and monitoring
+  getDebugInfo(userId: string, sessionId: string): Promise<any>;
+  getPerformanceMetrics(): Promise<{
+    averageRetrievalTime: number;
+    cacheHitRate: number;
+    memoryUsage: number;
+    activeSessions: number;
   }>;
 }

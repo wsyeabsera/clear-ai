@@ -4,7 +4,10 @@ import {
   MemoryContext,
   EpisodicMemory,
   SemanticMemory,
-  MemoryService
+  MemoryService,
+  WorkingMemoryContext,
+  WorkingMemoryService,
+  WorkingMemoryServiceConfig
 } from '../../types/memory'
 import {
   IntentClassifierService,
@@ -15,6 +18,7 @@ import { SimpleLangChainService } from '../SimpleLangChainService'
 import { ToolExecutionResult } from '../ToolExecutionService'
 import { RelationshipAnalysisService, DataStructureAnalysis, APIDataInsight } from '../RelationshipAnalysisService'
 import { EnhancedSemanticService, SemanticConcept, SemanticNetwork, ContextualUnderstanding } from '../EnhancedSemanticService'
+import { ContextManager } from '../ContextManager'
 
 /**
  * Tool registry interface for EnhancedAgent service
@@ -113,6 +117,8 @@ export interface EnhancedAgentServiceConfig {
   intentClassifier: IntentClassifierService
   langchainService: SimpleLangChainService
   toolRegistry: EnhancedAgentToolRegistry
+  workingMemoryService?: WorkingMemoryService
+  contextManager?: ContextManager
   defaultOptions?: Partial<EnhancedAgentExecutionOptions>
 }
 
@@ -124,6 +130,8 @@ export class EnhancedAgentService {
   private intentClassifier: IntentClassifierService
   private langchainService: SimpleLangChainService
   private toolRegistry: EnhancedAgentToolRegistry
+  private workingMemoryService?: WorkingMemoryService
+  private contextManager?: ContextManager
   private relationshipAnalyzer: RelationshipAnalysisService
   private enhancedSemanticService: EnhancedSemanticService
   private config: EnhancedAgentServiceConfig
@@ -135,6 +143,8 @@ export class EnhancedAgentService {
     this.intentClassifier = config.intentClassifier
     this.langchainService = config.langchainService
     this.toolRegistry = config.toolRegistry
+    this.workingMemoryService = config.workingMemoryService
+    this.contextManager = config.contextManager
 
     // Initialize enhanced services
     this.relationshipAnalyzer = new RelationshipAnalysisService({
@@ -198,18 +208,31 @@ export class EnhancedAgentService {
         ...options
       }
 
-      // Step 1: Retrieve memory context FIRST for hybrid classification
+      // Step 1: Retrieve working memory context FIRST for enhanced conversation management
+      let workingMemoryContext: WorkingMemoryContext | undefined
       let memoryContext: MemoryContext | undefined
+
       logger.info(`Memory context check: includeMemoryContext=${executionOptions.includeMemoryContext}, userId=${executionOptions.userId}, sessionId=${executionOptions.sessionId}`)
       if (executionOptions.includeMemoryContext !== false) {
-        logger.info(`Retrieving memory context for userId: ${executionOptions.userId}, sessionId: ${executionOptions.sessionId}`)
-        memoryContext = await this.retrieveMemoryContext(query, executionOptions)
-        logger.info(`Retrieved memory context with ${memoryContext.episodicMemories.length} episodic and ${memoryContext.semanticMemories.length} semantic memories`)
+        // Use Working Memory Service if available
+        if (this.workingMemoryService) {
+          logger.info(`Retrieving working memory context for userId: ${executionOptions.userId}, sessionId: ${executionOptions.sessionId}`)
+          workingMemoryContext = await this.workingMemoryService.getWorkingMemory(
+            executionOptions.userId || 'anonymous',
+            executionOptions.sessionId || 'default'
+          )
+          logger.info(`Retrieved working memory context with topic: ${workingMemoryContext.currentTopic}, goals: ${workingMemoryContext.activeGoals.length}`)
+        } else {
+          // Fallback to traditional memory context
+          logger.info(`Retrieving traditional memory context for userId: ${executionOptions.userId}, sessionId: ${executionOptions.sessionId}`)
+          memoryContext = await this.retrieveMemoryContext(query, executionOptions)
+          logger.info(`Retrieved memory context with ${memoryContext.episodicMemories.length} episodic and ${memoryContext.semanticMemories.length} semantic memories`)
+        }
       } else {
         logger.info('Memory context retrieval disabled')
       }
 
-      // Step 2: Classify the query intent with memory context
+      // Step 2: Classify the query intent with working memory context
       const intentOptions: IntentClassificationOptions = {
         model: executionOptions.model,
         temperature: executionOptions.temperature,
