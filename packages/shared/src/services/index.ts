@@ -45,5 +45,22 @@ export { WorkingMemoryService } from './WorkingMemoryService';
 // Export Context Manager
 export { ContextManager } from './ContextManager';
 
+// Export Reasoning Engine
+export {
+  ReasoningEngine,
+  ReasoningResult,
+  ThoughtProcess,
+  LogicalConclusion,
+  CausalAnalysis,
+  Analogy,
+  ToolReasoning,
+  ReasoningStep,
+  UncertaintyFactor,
+  ReasoningOptions,
+  WorkingMemoryContext,
+  ReasoningTool,
+  ReasoningToolRegistry
+} from './ReasoningEngine';
+
 // Export Memory types
 export * from '../types/memory';

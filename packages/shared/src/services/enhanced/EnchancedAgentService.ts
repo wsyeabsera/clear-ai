@@ -21,6 +21,7 @@ import { ToolExecutionResult } from '../ToolExecutionService'
 import { RelationshipAnalysisService, DataStructureAnalysis, APIDataInsight } from '../RelationshipAnalysisService'
 import { EnhancedSemanticService, SemanticConcept, SemanticNetwork, ContextualUnderstanding } from '../EnhancedSemanticService'
 import { ContextManager } from '../ContextManager'
+import { ReasoningEngine, ReasoningResult, WorkingMemoryContext as ReasoningWorkingMemoryContext } from '../ReasoningEngine'
 
 /**
  * Tool registry interface for EnhancedAgent service
@@ -43,6 +44,7 @@ export interface EnhancedAgentExecutionResult {
   memoryContext?: MemoryContext
   toolResults?: ToolExecutionResult[]
   reasoning?: string
+  advancedReasoning?: ReasoningResult
   metadata?: {
     executionTime: number
     memoryRetrieved: number
@@ -141,6 +143,7 @@ export class EnhancedAgentService {
   private contextManager?: ContextManager
   private relationshipAnalyzer: RelationshipAnalysisService
   private enhancedSemanticService: EnhancedSemanticService
+  private reasoningEngine: ReasoningEngine
   private config: EnhancedAgentServiceConfig
   private pendingActions: Map<string, PendingAction> = new Map()
 
@@ -160,7 +163,7 @@ export class EnhancedAgentService {
       mistralApiKey: process.env.MISTRAL_API_KEY || '',
       mistralModel: 'mistral-small',
       groqApiKey: process.env.GROQ_API_KEY || '',
-      groqModel: 'llama3-8b-8192',
+      groqModel: 'llama-3.1-8b-instant',
       ollamaModel: 'llama2',
       ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
       langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
@@ -174,13 +177,33 @@ export class EnhancedAgentService {
       mistralApiKey: process.env.MISTRAL_API_KEY || '',
       mistralModel: 'mistral-small',
       groqApiKey: process.env.GROQ_API_KEY || '',
-      groqModel: 'llama3-8b-8192',
+      groqModel: 'llama-3.1-8b-instant',
       ollamaModel: 'llama2',
       ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
       langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
       langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
       langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
     });
+
+    // Initialize reasoning engine
+    this.reasoningEngine = new ReasoningEngine(
+      {
+        openaiApiKey: process.env.OPENAI_API_KEY || '',
+        openaiModel: 'gpt-3.5-turbo',
+        mistralApiKey: process.env.MISTRAL_API_KEY || '',
+        mistralModel: 'mistral-small',
+        groqApiKey: process.env.GROQ_API_KEY || '',
+        groqModel: 'llama-3.1-8b-instant',
+        ollamaModel: 'llama2',
+        ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+        langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+        langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+        langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
+      },
+      this.intentClassifier,
+      this.memoryService as any, // Cast to Neo4jMemoryService
+      this.toolRegistry as any // Cast to ToolRegistry
+    );
   }
 
   /**
@@ -292,7 +315,59 @@ export class EnhancedAgentService {
         logger.info(`Retrieved memory context with ${memoryContext.episodicMemories.length} episodic and ${memoryContext.semanticMemories.length} semantic memories`)
       }
 
-      // Step 4: Execute based on intent type
+      // Step 4: Advanced Reasoning (if enabled)
+      let reasoning: ReasoningResult | undefined
+      if (executionOptions.includeReasoning !== false) {
+        try {
+          logger.info('Performing advanced reasoning...')
+          // Convert working memory context to reasoning context
+          const reasoningContext: ReasoningWorkingMemoryContext = {
+            userId: executionOptions.userId || 'anonymous',
+            sessionId: executionOptions.sessionId || 'default',
+            episodicMemories: memoryContext?.episodicMemories || [],
+            semanticMemories: memoryContext?.semanticMemories || [],
+            contextWindow: {
+              startTime: new Date(Date.now() - 24 * 60 * 60 * 1000), // 24 hours ago
+              endTime: new Date(),
+              relevanceScore: 0.8
+            },
+            model: executionOptions.model,
+            temperature: executionOptions.temperature
+          }
+
+          // Get available tools
+          const availableTools = this.toolRegistry.getAllTools().map(tool => ({
+            name: tool.name,
+            description: tool.description
+          }))
+
+          // Perform reasoning
+          reasoning = await this.reasoningEngine.reason(
+            query,
+            reasoningContext,
+            availableTools,
+            {
+              model: executionOptions.model,
+              temperature: executionOptions.temperature,
+              includeAnalogies: true,
+              includeCausalAnalysis: true,
+              includeToolReasoning: intent.type === 'tool_execution' || intent.type === 'hybrid'
+            }
+          )
+
+          logger.info(`Reasoning completed with confidence: ${reasoning.confidence}`)
+          logger.info(`Thought process steps: ${reasoning.thoughtProcess.steps.length}`)
+          logger.info(`Logical conclusions: ${reasoning.logicalConclusions.length}`)
+          logger.info(`Causal relationships: ${reasoning.causalAnalysis.relationships.length}`)
+          logger.info(`Uncertainty factors: ${reasoning.uncertaintyFactors.length}`)
+
+        } catch (error) {
+          logger.warn('Advanced reasoning failed, continuing without reasoning:', error)
+          reasoning = undefined
+        }
+      }
+
+      // Step 5: Execute based on intent type
       let response: string
       let toolResults: ToolExecutionResult[] = []
 
@@ -374,11 +449,12 @@ export class EnhancedAgentService {
         reasoning: (executionOptions.includeReasoning && responseDetailLevel !== 'minimal')
           ? this.generateReasoning(intent, memoryContext, toolResults)
           : undefined,
+        advancedReasoning: (reasoning && responseDetailLevel !== 'minimal') ? reasoning : undefined,
         metadata: responseDetailLevel === 'minimal' ? undefined : {
           executionTime,
           memoryRetrieved: (memoryContext?.episodicMemories.length || 0) + (memoryContext?.semanticMemories.length || 0),
           toolsExecuted: toolResults.length,
-          confidence: intent.confidence
+          confidence: reasoning?.confidence || intent.confidence
         }
       }
 

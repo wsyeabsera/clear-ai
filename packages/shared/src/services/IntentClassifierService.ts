@@ -120,7 +120,7 @@ export class IntentClassifierService {
 
       // Get classification from LLM
       const response = await this.langchainService.complete(userPrompt, {
-        model: options.model || 'openai',
+        model: options.model,
         temperature: options.temperature || 0.1,
         systemMessage: systemPrompt,
         metadata: {
@@ -177,7 +177,9 @@ Your task is to classify user queries into one of these intent types:
    - System operations
    - Multi-step workflows (sequential tool execution)
    - Follow-up requests for new tool execution (even if referencing previous context)
-   - Examples: "Calculate 5 + 3", "Make an API call to...", "Read this file", "Get the weather", "Get posts for user 1, then get comments for the first post", "now get me all posts of user two"
+   - Space/astronomy data requests (NASA APIs, space pictures, asteroid data, satellite imagery)
+   - Real-time data requests (weather, news, stock prices, etc.)
+   - Examples: "Calculate 5 + 3", "Make an API call to...", "Read this file", "Get the weather", "Show me today's space picture", "Get asteroid data", "Show me satellite imagery of Houston", "Get posts for user 1, then get comments for the first post", "now get me all posts of user two"
 
 3. **hybrid**: Tool execution combined with memory context
    - Tool usage that should consider user preferences or history
@@ -415,6 +417,18 @@ IMPORTANT for hybrid classification:
         detectedTools.push('calculator')
       }
 
+      // NASA API patterns - check for space/astronomy related queries
+      const nasaPatterns = [
+        /\b(space\s+picture|astronomy\s+picture|space\s+image|nasa|space|astronomy|cosmos|universe|galaxy|planet|star|moon|sun)\b/i,
+        /\b(asteroid|meteor|comet|near\s+earth|neo)\b/i,
+        /\b(satellite\s+image|earth\s+imagery|earth\s+view|satellite\s+view)\b/i,
+        /\b(apod|astronomy\s+picture\s+of\s+the\s+day)\b/i,
+        /\b(show\s+me|get\s+me|fetch\s+me|retrieve)\s+(?:today'?s\s+)?(?:space|astronomy|nasa|cosmic)/i,
+        /\b(space|astronomy|nasa|cosmic)\s+(?:picture|image|photo|data|info|information)\b/i
+      ]
+
+      const hasNasaQuery = nasaPatterns.some(pattern => pattern.test(query))
+
       // API call tool - enhanced detection for multi-step scenarios
       const apiPatterns = [
         /\b(api|http|fetch|get|post|call|request|endpoint|url)\b/i,
@@ -428,7 +442,10 @@ IMPORTANT for hybrid classification:
 
       const hasApiCall = apiPatterns.some(pattern => pattern.test(query))
 
-      if (hasApiCall) {
+      // NASA API tool detection
+      if (hasNasaQuery && toolNames.includes('nasa_api')) {
+        detectedTools.push('nasa_api')
+      } else if (hasApiCall) {
         // For multi-step requests, we might need multiple API calls
         if (isMultiStep) {
           // Count potential API calls in the query

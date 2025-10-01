@@ -21,7 +21,7 @@ import { errorHandler } from './middleware/errorHandler'
 import { setupSwagger } from './config/swagger'
 import { initializeAgentService } from './controllers/agentController'
 import { ToolRegistry } from 'clear-ai-mcp-basic'
-import { MemoryServiceConfig, CoreKeysAndModels } from 'clear-ai-shared'
+import { MemoryServiceConfig, CoreKeysAndModels, ReasoningEngine, IntentClassifierService, Neo4jMemoryService } from 'clear-ai-shared'
 import { initializeEnhancedAgentService } from './controllers/enhanced/enhancedAgentController'
 
 // Load environment variables
@@ -154,8 +154,8 @@ const startServer = async () => {
         mistralApiKey: process.env.MISTRAL_API_KEY || '',
         mistralModel: process.env.MISTRAL_MODEL || 'mistral-small',
         groqApiKey: process.env.GROQ_API_KEY || '',
-        groqModel: process.env.GROQ_MODEL || 'llama3-8b-8192',
-        ollamaModel: process.env.OLLAMA_MODEL || 'mistral',
+        groqModel: process.env.GROQ_MODEL || 'llama-3.1-8b-instant',
+        ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
         ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
         langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
         langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',

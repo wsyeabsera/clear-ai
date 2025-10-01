@@ -178,7 +178,7 @@ export class ClearAIApiService {
     excludeVectors?: boolean;
     maxMemoryResults?: number;
   } = {}): Promise<any> {
-    const response = await this.client.post('/api/agent/execute', {
+    const response = await this.client.post('/api/agent/enhanced-execute', {
       query,
       options: {
         userId: options.userId || 'default-user',

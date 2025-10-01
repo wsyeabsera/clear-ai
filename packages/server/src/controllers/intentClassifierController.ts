@@ -38,7 +38,7 @@ export const intentClassifierController = {
         mistralApiKey: process.env.MISTRAL_API_KEY || '',
         mistralModel: 'mistral-small',
         groqApiKey: process.env.GROQ_API_KEY || '',
-        groqModel: 'llama3-8b-8192',
+        groqModel: 'llama-3.1-8b-instant',
         ollamaModel: 'llama2',
         ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
         langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',

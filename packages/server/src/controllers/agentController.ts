@@ -97,7 +97,7 @@ export const agentController = {
         mistralApiKey: process.env.MISTRAL_API_KEY || '',
         mistralModel: process.env.MISTRAL_MODEL || 'mistral-small',
         groqApiKey: process.env.GROQ_API_KEY || '',
-        groqModel: process.env.GROQ_MODEL || 'llama3-8b-8192',
+        groqModel: process.env.GROQ_MODEL || 'llama-3.1-8b-instant',
         ollamaModel: process.env.OLLAMA_MODEL || 'mistral',
         ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
         langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
