@@ -22,6 +22,7 @@ import { setupSwagger } from './config/swagger'
 import { initializeAgentService } from './controllers/agentController'
 import { ToolRegistry } from 'clear-ai-mcp-basic'
 import { MemoryServiceConfig, CoreKeysAndModels } from 'clear-ai-shared'
+import { initializeEnhancedAgentService } from './controllers/enhanced/enhancedAgentController'
 
 // Load environment variables
 dotenv.config({ path: './packages/server/.env' })
@@ -165,6 +166,7 @@ const startServer = async () => {
       const toolRegistry = new ToolRegistry();
 
       await initializeAgentService(memoryConfig, langchainConfig, toolRegistry);
+      await initializeEnhancedAgentService(memoryConfig, langchainConfig, toolRegistry);
       console.log('✅ Agent Service initialized successfully');
 
       // Initialize Memory Service

@@ -31,5 +31,12 @@ export {
   AgentToolRegistry
 } from './AgentService';
 
+export {
+  EnhancedAgentService,
+  EnhancedAgentExecutionResult,
+  EnhancedAgentExecutionOptions,
+  EnhancedAgentServiceConfig,
+  EnhancedAgentToolRegistry
+} from './enhanced/EnchancedAgentService';
 // Export Memory types
 export * from '../types/memory';

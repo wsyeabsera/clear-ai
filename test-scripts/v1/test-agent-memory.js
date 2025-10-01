@@ -1,8 +1,8 @@
-const { AgentService } = require('./dist/shared/services/AgentService');
-const { MemoryContextService } = require('./dist/shared/services/MemoryContextService');
-const { IntentClassifierService } = require('./dist/shared/services/IntentClassifierService');
-const { SimpleLangChainService } = require('./dist/shared/services/SimpleLangChainService');
-const { ToolRegistry } = require('./dist/mcp/tool-registry');
+const { AgentService } = require('../../dist/shared/services/AgentService');
+const { MemoryContextService } = require('../../dist/shared/services/MemoryContextService');
+const { IntentClassifierService } = require('../../dist/shared/services/IntentClassifierService');
+const { SimpleLangChainService } = require('../../dist/shared/services/SimpleLangChainService');
+const { ToolRegistry } = require('../../dist/mcp/tool-registry');
 const dotenv = require('dotenv');
 dotenv.config({path: './packages/server/.env'});
 
