@@ -1,5 +1,5 @@
 import { Tool, ZodTool } from './types';
-import { apiCallTool, jsonReaderTool, fileReaderTool } from './tools';
+import { apiCallTool, jsonReaderTool, fileReaderTool, weatherApiTool, githubApiTool, calculatorTool } from './tools';
 import { convertZodToolToToolSchema } from './schema-utils';
 
 export class ToolRegistry {
@@ -9,6 +9,9 @@ export class ToolRegistry {
     this.registerTool(apiCallTool);
     this.registerTool(jsonReaderTool);
     this.registerTool(fileReaderTool);
+    this.registerTool(weatherApiTool);
+    this.registerTool(githubApiTool);
+    this.registerTool(calculatorTool);
   }
 
   registerTool(tool: ZodTool): void {

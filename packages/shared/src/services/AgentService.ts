@@ -34,6 +34,7 @@ export interface AgentExecutionResult {
   success: boolean
   response: string
   intent: QueryIntent
+  model?: string
   memoryContext?: MemoryContext
   toolResults?: ToolExecutionResult[]
   reasoning?: string
@@ -136,15 +137,19 @@ export class AgentService {
     this.langchainService = config.langchainService
     this.toolRegistry = config.toolRegistry
 
-    // Initialize enhanced services
+    // Initialize enhanced services with the same configuration as the main service
+    const hasValidOpenAI = process.env.OPENAI_API_KEY && !process.env.OPENAI_API_KEY.includes('sk-test');
+    const hasValidMistral = process.env.MISTRAL_API_KEY && process.env.MISTRAL_API_KEY.length > 10;
+    const hasValidGroq = process.env.GROQ_API_KEY && process.env.GROQ_API_KEY.length > 10;
+
     this.relationshipAnalyzer = new RelationshipAnalysisService({
-      openaiApiKey: process.env.OPENAI_API_KEY || '',
+      openaiApiKey: hasValidOpenAI ? (process.env.OPENAI_API_KEY || '') : '',
       openaiModel: 'gpt-3.5-turbo',
-      mistralApiKey: process.env.MISTRAL_API_KEY || '',
+      mistralApiKey: hasValidMistral ? (process.env.MISTRAL_API_KEY || '') : '',
       mistralModel: 'mistral-small',
-      groqApiKey: process.env.GROQ_API_KEY || '',
+      groqApiKey: hasValidGroq ? (process.env.GROQ_API_KEY || '') : '',
       groqModel: 'llama-3.1-8b-instant',
-      ollamaModel: 'llama2',
+      ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
       ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
       langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
       langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
@@ -152,13 +157,13 @@ export class AgentService {
     });
 
     this.enhancedSemanticService = new EnhancedSemanticService({
-      openaiApiKey: process.env.OPENAI_API_KEY || '',
+      openaiApiKey: hasValidOpenAI ? (process.env.OPENAI_API_KEY || '') : '',
       openaiModel: 'gpt-3.5-turbo',
-      mistralApiKey: process.env.MISTRAL_API_KEY || '',
+      mistralApiKey: hasValidMistral ? (process.env.MISTRAL_API_KEY || '') : '',
       mistralModel: 'mistral-small',
-      groqApiKey: process.env.GROQ_API_KEY || '',
+      groqApiKey: hasValidGroq ? (process.env.GROQ_API_KEY || '') : '',
       groqModel: 'llama-3.1-8b-instant',
-      ollamaModel: 'llama2',
+      ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
       ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
       langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
       langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
@@ -309,6 +314,7 @@ export class AgentService {
         success: true,
         response,
         intent,
+        model: executionOptions.model,
         memoryContext: finalMemoryContext as MemoryContext, // Type assertion for compatibility
         toolResults: responseDetailLevel === 'minimal' ? undefined : toolResults,
         reasoning: (executionOptions.includeReasoning && responseDetailLevel !== 'minimal')
@@ -336,6 +342,7 @@ export class AgentService {
           confidence: 0,
           reasoning: 'Error occurred during execution'
         },
+        model: options.model,
         metadata: {
           executionTime: Date.now() - startTime,
           memoryRetrieved: 0,

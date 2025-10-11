@@ -480,11 +480,11 @@ export class WorkingMemoryService implements IWorkingMemoryService {
     const startTime = memoryContext.contextWindow.startTime
     const endTime = memoryContext.contextWindow.endTime
 
-    // Calculate current token usage (simplified)
+    // Calculate current token usage (improved approximation)
     const totalContent = memoryContext.episodicMemories
       .map(m => m.content)
       .join(' ')
-    const currentTokens = Math.ceil(totalContent.length / 4) // Rough token estimation
+    const currentTokens = this.estimateTokenCount(totalContent)
 
     return {
       startTime,
@@ -507,6 +507,34 @@ export class WorkingMemoryService implements IWorkingMemoryService {
       maxTokens: contextWindow.maxTokens,
       compressionRatio: contextWindow.compressionRatio
     })
+  }
+
+  /**
+   * Estimate token count for text (improved approximation)
+   */
+  private estimateTokenCount(text: string): number {
+    // More accurate approximation based on GPT tokenizer behavior:
+    // - English text: ~4 characters per token
+    // - Code/symbols: ~2-3 characters per token
+    // - Punctuation: ~1 character per token
+    // - Average for mixed content: ~3.5 characters per token
+
+    // Count different character types for better estimation
+    const codeChars = (text.match(/[{}[\]();=+\-*/<>!&|]/g) || []).length
+    const punctuationChars = (text.match(/[.,!?;:'"]/g) || []).length
+    const whitespaceChars = (text.match(/\s/g) || []).length
+    const regularChars = text.length - codeChars - punctuationChars - whitespaceChars
+
+    // Weighted token estimation
+    const estimatedTokens = Math.ceil(
+      (regularChars / 4) +           // Regular text: 4 chars/token
+      (codeChars / 2.5) +           // Code/symbols: 2.5 chars/token
+      (punctuationChars / 1.5) +    // Punctuation: 1.5 chars/token
+      (whitespaceChars / 6)         // Whitespace: 6 chars/token
+    )
+
+    // Ensure minimum token count for non-empty text
+    return text.length > 0 ? Math.max(estimatedTokens, 1) : 0
   }
 
   /**

@@ -6,8 +6,8 @@ import {
   ToolRegistry,
   CoreKeysAndModels,
   ApiResponse
-} from 'clear-ai-shared';
-import { ToolRegistry as MCPToolRegistry } from 'clear-ai-mcp-basic';
+} from '@clear-ai/shared';
+import { ToolRegistry as MCPToolRegistry } from '@clear-ai/mcp-basic';
 
 // Global intent classifier instance
 let intentClassifier: IntentClassifierService | null = null;
@@ -92,7 +92,7 @@ export const intentClassifierController = {
 
       const classifier = getIntentClassifier();
       const classificationOptions: IntentClassificationOptions = {
-        model: options?.model || 'openai',
+        model: options?.model || 'ollama',
         temperature: options?.temperature || 0.1,
         includeAvailableTools: options?.includeAvailableTools || true,
         userContext: options?.userContext
@@ -137,7 +137,7 @@ export const intentClassifierController = {
 
       const classifier = getIntentClassifier();
       const classificationOptions: IntentClassificationOptions = {
-        model: options?.model || 'openai',
+        model: options?.model || 'ollama',
         temperature: options?.temperature || 0.1,
         includeAvailableTools: options?.includeAvailableTools || true,
         userContext: options?.userContext

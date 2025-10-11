@@ -62,6 +62,7 @@ export declare class ClearAIApiService {
     completePrompt(prompt: string, options?: {
         model?: string;
         temperature?: number;
+        maxTokens?: number;
     }): Promise<string>;
     /**
      * Get available LLM models
@@ -76,6 +77,7 @@ export declare class ClearAIApiService {
      */
     executeWorkflow(description: string, options?: {
         model?: string;
+        maxTokens?: number;
     }): Promise<WorkflowResult>;
     /**
      * Execute an intelligent agent query
@@ -90,6 +92,7 @@ export declare class ClearAIApiService {
         responseDetailLevel?: 'minimal' | 'standard' | 'full';
         excludeVectors?: boolean;
         maxMemoryResults?: number;
+        maxTokens?: number;
     }): Promise<any>;
     /**
      * Update server URL

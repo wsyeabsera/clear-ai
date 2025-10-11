@@ -23,7 +23,7 @@ export const apiCallTool: ZodTool = {
   description: 'Make HTTP API calls to external services',
   inputSchema: ApiCallSchema,
   outputSchema: ApiCallOutputSchema,
-  execute: async (args) => {
+  execute: async (args: z.infer<typeof ApiCallSchema>) => {
     const { url, method, headers, body, timeout } = ApiCallSchema.parse(args);
     
     try {

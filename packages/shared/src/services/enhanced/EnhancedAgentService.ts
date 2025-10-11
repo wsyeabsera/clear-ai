@@ -22,6 +22,8 @@ import { RelationshipAnalysisService, DataStructureAnalysis, APIDataInsight } fr
 import { EnhancedSemanticService, SemanticConcept, SemanticNetwork, ContextualUnderstanding } from '../EnhancedSemanticService'
 import { ContextManager } from '../ContextManager'
 import { ReasoningEngine, ReasoningResult, WorkingMemoryContext as ReasoningWorkingMemoryContext } from '../ReasoningEngine'
+import { PlanningSystem, ExecutionPlan, PlanningToolRegistry } from '../PlanningSystem'
+import { ExecutionEngine, ExecutionResult } from '../ExecutionEngine'
 
 /**
  * Tool registry interface for EnhancedAgent service
@@ -41,10 +43,13 @@ export interface EnhancedAgentExecutionResult {
   success: boolean
   response: string
   intent: QueryIntent
+  model?: string
   memoryContext?: MemoryContext
   toolResults?: ToolExecutionResult[]
   reasoning?: string
   advancedReasoning?: ReasoningResult
+  executionPlan?: ExecutionPlan
+  executionResult?: ExecutionResult
   metadata?: {
     executionTime: number
     memoryRetrieved: number
@@ -144,6 +149,9 @@ export class EnhancedAgentService {
   private relationshipAnalyzer: RelationshipAnalysisService
   private enhancedSemanticService: EnhancedSemanticService
   private reasoningEngine: ReasoningEngine
+  private planningSystem: PlanningSystem
+  private executionEngine: ExecutionEngine
+  private toolExecutionService: any
   private config: EnhancedAgentServiceConfig
   private pendingActions: Map<string, PendingAction> = new Map()
 
@@ -156,15 +164,19 @@ export class EnhancedAgentService {
     this.workingMemoryService = config.workingMemoryService
     this.contextManager = config.contextManager
 
-    // Initialize enhanced services
+    // Initialize enhanced services with fallback configuration
+    const hasValidOpenAI = process.env.OPENAI_API_KEY && !process.env.OPENAI_API_KEY.includes('sk-test');
+    const hasValidMistral = process.env.MISTRAL_API_KEY && process.env.MISTRAL_API_KEY.length > 10;
+    const hasValidGroq = process.env.GROQ_API_KEY && process.env.GROQ_API_KEY.length > 10;
+
     this.relationshipAnalyzer = new RelationshipAnalysisService({
-      openaiApiKey: process.env.OPENAI_API_KEY || '',
+      openaiApiKey: hasValidOpenAI ? (process.env.OPENAI_API_KEY || '') : '',
       openaiModel: 'gpt-3.5-turbo',
-      mistralApiKey: process.env.MISTRAL_API_KEY || '',
+      mistralApiKey: hasValidMistral ? (process.env.MISTRAL_API_KEY || '') : '',
       mistralModel: 'mistral-small',
-      groqApiKey: process.env.GROQ_API_KEY || '',
+      groqApiKey: hasValidGroq ? (process.env.GROQ_API_KEY || '') : '',
       groqModel: 'llama-3.1-8b-instant',
-      ollamaModel: 'llama2',
+      ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
       ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
       langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
       langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
@@ -172,13 +184,13 @@ export class EnhancedAgentService {
     });
 
     this.enhancedSemanticService = new EnhancedSemanticService({
-      openaiApiKey: process.env.OPENAI_API_KEY || '',
+      openaiApiKey: hasValidOpenAI ? (process.env.OPENAI_API_KEY || '') : '',
       openaiModel: 'gpt-3.5-turbo',
-      mistralApiKey: process.env.MISTRAL_API_KEY || '',
+      mistralApiKey: hasValidMistral ? (process.env.MISTRAL_API_KEY || '') : '',
       mistralModel: 'mistral-small',
-      groqApiKey: process.env.GROQ_API_KEY || '',
+      groqApiKey: hasValidGroq ? (process.env.GROQ_API_KEY || '') : '',
       groqModel: 'llama-3.1-8b-instant',
-      ollamaModel: 'llama2',
+      ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
       ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
       langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
       langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
@@ -188,13 +200,13 @@ export class EnhancedAgentService {
     // Initialize reasoning engine
     this.reasoningEngine = new ReasoningEngine(
       {
-        openaiApiKey: process.env.OPENAI_API_KEY || '',
+        openaiApiKey: hasValidOpenAI ? (process.env.OPENAI_API_KEY || '') : '',
         openaiModel: 'gpt-3.5-turbo',
-        mistralApiKey: process.env.MISTRAL_API_KEY || '',
+        mistralApiKey: hasValidMistral ? (process.env.MISTRAL_API_KEY || '') : '',
         mistralModel: 'mistral-small',
-        groqApiKey: process.env.GROQ_API_KEY || '',
+        groqApiKey: hasValidGroq ? (process.env.GROQ_API_KEY || '') : '',
         groqModel: 'llama-3.1-8b-instant',
-        ollamaModel: 'llama2',
+        ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
         ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
         langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
         langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
@@ -204,6 +216,132 @@ export class EnhancedAgentService {
       this.memoryService as any, // Cast to Neo4jMemoryService
       this.toolRegistry as any // Cast to ToolRegistry
     );
+
+    // Initialize planning system
+    this.planningSystem = new PlanningSystem(
+      {
+        openaiApiKey: hasValidOpenAI ? (process.env.OPENAI_API_KEY || '') : '',
+        openaiModel: 'gpt-3.5-turbo',
+        mistralApiKey: hasValidMistral ? (process.env.MISTRAL_API_KEY || '') : '',
+        mistralModel: 'mistral-small',
+        groqApiKey: hasValidGroq ? (process.env.GROQ_API_KEY || '') : '',
+        groqModel: 'llama-3.1-8b-instant',
+        ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
+        ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+        langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+        langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+        langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
+      },
+      this.toolRegistry as PlanningToolRegistry,
+      this.memoryService as any, // Cast to MemoryContextService
+      this.reasoningEngine,
+      {
+        maxGoals: 10,
+        maxSubgoals: 50,
+        maxActions: 100,
+        maxDuration: 3600000, // 1 hour
+        enableFallbackStrategies: true,
+        enableRiskAssessment: true,
+        planningModel: hasValidOpenAI ? 'openai' : 'ollama', // Fallback to ollama if no OpenAI
+        planningTemperature: 0.2
+      }
+    );
+
+    // Initialize execution engine with tool registry
+    this.toolExecutionService = new (require('../ToolExecutionService').ToolExecutionService)({
+      openaiApiKey: hasValidOpenAI ? (process.env.OPENAI_API_KEY || '') : '',
+      openaiModel: 'gpt-3.5-turbo',
+      mistralApiKey: hasValidMistral ? (process.env.MISTRAL_API_KEY || '') : '',
+      mistralModel: 'mistral-small',
+      groqApiKey: hasValidGroq ? (process.env.GROQ_API_KEY || '') : '',
+      groqModel: 'llama-3.1-8b-instant',
+      ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
+      ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+      langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+      langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+      langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
+    });
+
+    // Register tools from the tool registry
+    const tools = this.toolRegistry.getAllTools();
+    logger.info(`Found ${tools.length} tools in registry: ${tools.map(t => t.name).join(', ')}`);
+
+    const toolDefinitions = tools.map(tool => ({
+      name: tool.name,
+      description: tool.description,
+      parameters: {
+        type: 'object' as const,
+        properties: {},
+        required: []
+      },
+      execute: async (args: any) => {
+        // Use the tool registry's execute method
+        return await (this.toolRegistry as any).executeTool(tool.name, args);
+      }
+    }));
+
+    this.toolExecutionService.registerTools(toolDefinitions);
+    logger.info(`Registered ${toolDefinitions.length} tools for execution engine: ${toolDefinitions.map(t => t.name).join(', ')}`);
+
+    this.executionEngine = new ExecutionEngine(
+      this.toolExecutionService,
+      {
+        openaiApiKey: hasValidOpenAI ? (process.env.OPENAI_API_KEY || '') : '',
+        openaiModel: 'gpt-3.5-turbo',
+        mistralApiKey: hasValidMistral ? (process.env.MISTRAL_API_KEY || '') : '',
+        mistralModel: 'mistral-small',
+        groqApiKey: hasValidGroq ? (process.env.GROQ_API_KEY || '') : '',
+        groqModel: 'llama-3.1-8b-instant',
+        ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
+        ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+        langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
+        langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
+        langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
+      },
+      {
+        maxConcurrentActions: 3,
+        timeoutPerAction: 30000,
+        stopOnFirstFailure: false,
+        retryFailedActions: true,
+        maxRetries: 2,
+        dryRun: false
+      }
+    );
+  }
+
+  /**
+   * Convert Zod schema to JSON schema properties
+   */
+  private convertZodSchemaToJsonSchema(schema: any): Record<string, any> {
+    // Simple conversion - in production you'd use zodToJsonSchema
+    try {
+      if (schema && typeof schema === 'object') {
+        return {
+          type: 'object',
+          properties: schema.shape || {},
+          required: schema.required || []
+        };
+      }
+      return {};
+    } catch (error) {
+      logger.warn('Failed to convert Zod schema:', error);
+      return {};
+    }
+  }
+
+  /**
+   * Get required fields from Zod schema
+   */
+  private getRequiredFields(schema: any): string[] {
+    try {
+      if (schema && schema.required) {
+        return schema.required;
+      }
+      return [];
+    } catch (error) {
+      logger.warn('Failed to get required fields:', error);
+      return [];
+    }
   }
 
   /**
@@ -245,45 +383,56 @@ export class EnhancedAgentService {
 
       logger.info(`Memory context check: includeMemoryContext=${executionOptions.includeMemoryContext}, userId=${executionOptions.userId}, sessionId=${executionOptions.sessionId}`)
       if (executionOptions.includeMemoryContext !== false) {
-        // Use Working Memory Service if available
+        // Use Working Memory Service if available, with fallback to traditional memory context
         if (this.workingMemoryService) {
-          logger.info(`Retrieving working memory context for userId: ${executionOptions.userId}, sessionId: ${executionOptions.sessionId}`)
-          workingMemoryContext = await this.workingMemoryService.getWorkingMemory(
-            executionOptions.userId || 'anonymous',
-            executionOptions.sessionId || 'default'
-          )
-          logger.info(`Retrieved working memory context with topic: ${workingMemoryContext.currentTopic}, goals: ${workingMemoryContext.activeGoals.length}`)
-
-          // Apply context management if available
-          if (this.contextManager && executionOptions.enableContextCompression !== false) {
-            logger.info('Applying context management to working memory')
-            const maxTokens = executionOptions.maxTokens || 8000
-            managedContext = await this.contextManager.manageContext(
-              workingMemoryContext,
-              query,
-              maxTokens,
-              executionOptions.userId,
-              executionOptions.sessionId
+          try {
+            logger.info(`Retrieving working memory context for userId: ${executionOptions.userId}, sessionId: ${executionOptions.sessionId}`)
+            workingMemoryContext = await this.workingMemoryService.getWorkingMemory(
+              executionOptions.userId || 'anonymous',
+              executionOptions.sessionId || 'default'
             )
-            // Write detailed context management log to file
-            const fs = require('fs')
-            const path = require('path')
-            const logPath = path.join(process.cwd(), 'context-debug.log')
-            const contextLog = {
-              timestamp: new Date().toISOString(),
-              query: query.substring(0, 100),
-              compressionRatio: managedContext.compressionRatio,
-              tokenUsage: managedContext.tokenUsage,
-              activeContext: managedContext.activeContext ? 'present' : 'missing',
-              summary: managedContext.summary ? 'present' : 'missing',
-              removedItems: managedContext.removedItems ? managedContext.removedItems.length : 0
-            }
-            fs.appendFileSync(logPath, 'CONTEXT_MANAGED: ' + JSON.stringify(contextLog) + '\n')
+            logger.info(`Retrieved working memory context with topic: ${workingMemoryContext.currentTopic}, goals: ${workingMemoryContext.activeGoals.length}`)
 
-            logger.info(`Context managed: compression ratio=${managedContext.compressionRatio}, token usage=${managedContext.tokenUsage}`)
+            // Apply context management if available
+            if (this.contextManager && executionOptions.enableContextCompression !== false) {
+              logger.info('Applying context management to working memory')
+              const maxTokens = executionOptions.maxTokens || 8000
+              managedContext = await this.contextManager.manageContext(
+                workingMemoryContext,
+                query,
+                maxTokens,
+                executionOptions.userId,
+                executionOptions.sessionId
+              )
+              // Write detailed context management log to file
+              const fs = require('fs')
+              const path = require('path')
+              const logPath = path.join(process.cwd(), 'context-debug.log')
+              const contextLog = {
+                timestamp: new Date().toISOString(),
+                query: query.substring(0, 100),
+                compressionRatio: managedContext.compressionRatio,
+                tokenUsage: managedContext.tokenUsage,
+                activeContext: managedContext.activeContext ? 'present' : 'missing',
+                summary: managedContext.summary ? 'present' : 'missing',
+                removedItems: managedContext.removedItems ? managedContext.removedItems.length : 0
+              }
+              fs.appendFileSync(logPath, 'CONTEXT_MANAGED: ' + JSON.stringify(contextLog) + '\n')
+
+              logger.info(`Context managed: compression ratio=${managedContext.compressionRatio}, token usage=${managedContext.tokenUsage}`)
+            }
+          } catch (error) {
+            logger.warn(`Working memory service failed, falling back to traditional memory context: ${error instanceof Error ? error.message : 'Unknown error'}`)
+            // Fallback to traditional memory context
+            memoryContext = await this.retrieveMemoryContext(query, executionOptions)
+            logger.info(`Retrieved fallback memory context with ${memoryContext.episodicMemories.length} episodic and ${memoryContext.semanticMemories.length} semantic memories`)
           }
         } else {
-          // Fallback to traditional memory context
+          logger.info(`Working memory service not available, using traditional memory context`)
+        }
+        
+        // Always retrieve traditional memory context as fallback or primary method
+        if (!memoryContext) {
           logger.info(`Retrieving traditional memory context for userId: ${executionOptions.userId}, sessionId: ${executionOptions.sessionId}`)
           memoryContext = await this.retrieveMemoryContext(query, executionOptions)
           logger.info(`Retrieved memory context with ${memoryContext.episodicMemories.length} episodic and ${memoryContext.semanticMemories.length} semantic memories`)
@@ -315,9 +464,10 @@ export class EnhancedAgentService {
         logger.info(`Retrieved memory context with ${memoryContext.episodicMemories.length} episodic and ${memoryContext.semanticMemories.length} semantic memories`)
       }
 
-      // Step 4: Advanced Reasoning (if enabled)
+      // Step 4: Advanced Reasoning (if enabled and needed for complex queries)
       let reasoning: ReasoningResult | undefined
-      if (executionOptions.includeReasoning !== false) {
+      if (executionOptions.includeReasoning !== false && 
+          (intent.type === 'tool_execution' || intent.type === 'hybrid' || intent.type === 'knowledge_search')) {
         try {
           logger.info('Performing advanced reasoning...')
           // Convert working memory context to reasoning context
@@ -367,6 +517,101 @@ export class EnhancedAgentService {
         }
       }
 
+      // Step 4.5: Create execution plan if reasoning is available and needed
+      // Only use complex planning for multi-step or complex queries
+      let executionPlan: ExecutionPlan | undefined
+      const isSimpleToolQuery = intent.type === 'tool_execution' && 
+        intent.requiredTools && 
+        intent.requiredTools.length === 1 &&
+        !query.toLowerCase().includes('then') &&
+        !query.toLowerCase().includes('next') &&
+        !query.toLowerCase().includes('after') &&
+        !query.toLowerCase().includes('followed by')
+      
+      logger.info(`Simple tool query check: type=${intent.type}, tools=${intent.requiredTools?.length}, isSimple=${isSimpleToolQuery}`)
+      
+      if (reasoning && executionOptions.includeReasoning !== false && 
+          (intent.type === 'tool_execution' || intent.type === 'hybrid') &&
+          !isSimpleToolQuery) {
+        try {
+          logger.info('Creating execution plan...')
+          // Convert working memory context to reasoning context or create default
+          const planningContext: ReasoningWorkingMemoryContext = workingMemoryContext ? {
+            userId: workingMemoryContext.conversationId || 'anonymous',
+            sessionId: workingMemoryContext.sessionMetadata.sessionId || 'default',
+            episodicMemories: workingMemoryContext.conversationHistory.map(turn => ({
+              id: `turn-${turn.turnNumber}`,
+              timestamp: new Date(turn.timestamp),
+              content: `${turn.userInput}\n${turn.assistantResponse}`,
+              metadata: {
+                source: 'conversation',
+                importance: turn.contextRelevance || 0.5,
+                tags: [turn.intent || 'conversation']
+              }
+            })),
+            semanticMemories: [], // Working memory doesn't have semantic memories
+            contextWindow: {
+              startTime: new Date(workingMemoryContext.contextWindow.startTime),
+              endTime: new Date(workingMemoryContext.contextWindow.endTime),
+              relevanceScore: workingMemoryContext.contextWindow.relevanceScore || 0.8
+            },
+            model: executionOptions.model,
+            temperature: executionOptions.temperature
+          } : {
+            userId: 'anonymous',
+            sessionId: 'default',
+            episodicMemories: [],
+            semanticMemories: [],
+            contextWindow: {
+              startTime: new Date(Date.now() - 24 * 60 * 60 * 1000), // 24 hours ago
+              endTime: new Date(),
+              relevanceScore: 0.8
+            },
+            model: executionOptions.model,
+            temperature: executionOptions.temperature
+          }
+
+          executionPlan = await this.planningSystem.createExecutionPlan(
+            query,
+            intent,
+            planningContext,
+            reasoning
+          )
+          logger.info(`Execution plan created with ${executionPlan.goals.length} goals, ${executionPlan.actions.length} actions`)
+          logger.info(`Success probability: ${executionPlan.successProbability}`)
+          logger.info(`Estimated duration: ${executionPlan.estimatedDuration}ms`)
+
+        } catch (error) {
+          logger.warn('Planning failed, continuing without execution plan:', error)
+          executionPlan = undefined
+        }
+      }
+
+      // Step 4.6: Execute the plan if available and execution is needed
+      let executionResult: ExecutionResult | undefined
+      if (executionPlan && executionOptions.includeReasoning !== false && 
+          (intent.type === 'tool_execution' || intent.type === 'hybrid') &&
+          !isSimpleToolQuery) {
+        try {
+          logger.info('Executing planned actions...')
+          executionResult = await this.executionEngine.executePlan(executionPlan, {
+            maxConcurrentActions: 3,
+            timeoutPerAction: 30000,
+            stopOnFirstFailure: false,
+            retryFailedActions: true,
+            maxRetries: 2,
+            dryRun: false
+          })
+          logger.info(`Execution completed: ${executionResult.success ? 'SUCCESS' : 'FAILED'}`)
+          logger.info(`Completed goals: ${executionResult.completedGoals.length}/${executionPlan.goals.length}`)
+          logger.info(`Total execution time: ${executionResult.totalExecutionTime}ms`)
+
+        } catch (error) {
+          logger.warn('Execution failed, continuing without execution results:', error)
+          executionResult = undefined
+        }
+      }
+
       // Step 5: Execute based on intent type
       let response: string
       let toolResults: ToolExecutionResult[] = []
@@ -377,13 +622,13 @@ export class EnhancedAgentService {
           break
 
         case 'tool_execution':
-          const toolResult = await this.handleToolExecution(query, intent, executionOptions)
+          const toolResult = await this.handleToolExecution(query, intent, executionOptions, isSimpleToolQuery)
           response = toolResult.response
           toolResults = toolResult.toolResults
           break
 
         case 'hybrid':
-          const hybridResult = await this.handleHybridExecution(query, intent, memoryContext, executionOptions, managedContext)
+          const hybridResult = await this.handleHybridExecution(query, intent, memoryContext, executionOptions, managedContext, isSimpleToolQuery)
           response = hybridResult.response
           toolResults = hybridResult.toolResults
           break
@@ -444,12 +689,15 @@ export class EnhancedAgentService {
         success: true,
         response,
         intent,
+        model: executionOptions.model,
         memoryContext: finalMemoryContext as MemoryContext, // Type assertion for compatibility
         toolResults: responseDetailLevel === 'minimal' ? undefined : toolResults,
         reasoning: (executionOptions.includeReasoning && responseDetailLevel !== 'minimal')
           ? this.generateReasoning(intent, memoryContext, toolResults)
           : undefined,
         advancedReasoning: (reasoning && responseDetailLevel !== 'minimal') ? reasoning : undefined,
+        executionPlan: (executionPlan && responseDetailLevel !== 'minimal') ? executionPlan : undefined,
+        executionResult: (executionResult && responseDetailLevel !== 'minimal') ? executionResult : undefined,
         metadata: responseDetailLevel === 'minimal' ? undefined : {
           executionTime,
           memoryRetrieved: (memoryContext?.episodicMemories.length || 0) + (memoryContext?.semanticMemories.length || 0),
@@ -472,6 +720,7 @@ export class EnhancedAgentService {
           confidence: 0,
           reasoning: 'Error occurred during execution'
         },
+        model: options.model,
         metadata: {
           executionTime: Date.now() - startTime,
           memoryRetrieved: 0,
@@ -723,11 +972,31 @@ export class EnhancedAgentService {
   }
 
   /**
-   * Calculate token usage for text (simplified)
+   * Calculate token usage for text (improved approximation)
    */
   private async calculateTokenUsageForText(text: string): Promise<number> {
-    // Simple approximation: 1 token ≈ 4 characters
-    return Math.ceil(text.length / 4)
+    // More accurate approximation based on GPT tokenizer behavior:
+    // - English text: ~4 characters per token
+    // - Code/symbols: ~2-3 characters per token
+    // - Punctuation: ~1 character per token
+    // - Average for mixed content: ~3.5 characters per token
+    
+    // Count different character types for better estimation
+    const codeChars = (text.match(/[{}[\]();=+\-*/<>!&|]/g) || []).length
+    const punctuationChars = (text.match(/[.,!?;:'"]/g) || []).length
+    const whitespaceChars = (text.match(/\s/g) || []).length
+    const regularChars = text.length - codeChars - punctuationChars - whitespaceChars
+    
+    // Weighted token estimation
+    const estimatedTokens = Math.ceil(
+      (regularChars / 4) +           // Regular text: 4 chars/token
+      (codeChars / 2.5) +           // Code/symbols: 2.5 chars/token
+      (punctuationChars / 1.5) +    // Punctuation: 1.5 chars/token
+      (whitespaceChars / 6)         // Whitespace: 6 chars/token
+    )
+    
+    // Ensure minimum token count for non-empty text
+    return text.length > 0 ? Math.max(estimatedTokens, 1) : 0
   }
 
   /**
@@ -945,7 +1214,7 @@ export class EnhancedAgentService {
     const systemPrompt = this.buildMemoryChatSystemPrompt(memoryContext, managedContext)
 
     const response = await this.langchainService.complete(query, {
-      model: options.model || 'openai',
+      model: options.model || 'ollama',
       temperature: options.temperature || 0.7,
       systemMessage: systemPrompt,
       metadata: {
@@ -965,7 +1234,8 @@ export class EnhancedAgentService {
   private async handleToolExecution(
     query: string,
     intent: QueryIntent,
-    options: EnhancedAgentExecutionOptions
+    options: EnhancedAgentExecutionOptions,
+    isSimpleToolQuery: boolean = false
   ): Promise<{ response: string; toolResults: ToolExecutionResult[] }> {
     let toolResults: ToolExecutionResult[] = []
 
@@ -1009,9 +1279,17 @@ export class EnhancedAgentService {
         }
       }
 
-      // Execute required tools - enhanced for multi-step workflows
+      // Execute required tools - use simple execution for simple queries
       if (intent.requiredTools && intent.requiredTools.length > 0) {
-        toolResults = await this.executeToolsWithWorkflowSupport(query, intent.requiredTools, options)
+        if (isSimpleToolQuery && intent.requiredTools.length === 1) {
+          // Use simple direct tool execution for single-tool queries
+          logger.info(`Using simple tool execution for: ${intent.requiredTools[0]}`)
+          toolResults = await this.executeSimpleTool(query, intent.requiredTools[0], options)
+        } else {
+          // Use enhanced workflow support for complex queries
+          logger.info(`Using enhanced workflow execution for ${intent.requiredTools.length} tools`)
+          toolResults = await this.executeToolsWithWorkflowSupport(query, intent.requiredTools, options)
+        }
       }
 
       // Generate response based on tool results
@@ -1028,6 +1306,52 @@ export class EnhancedAgentService {
   }
 
   /**
+   * Execute a single tool with simple direct execution
+   */
+  private async executeSimpleTool(
+    query: string,
+    toolName: string,
+    options: EnhancedAgentExecutionOptions
+  ): Promise<ToolExecutionResult[]> {
+    try {
+      logger.info(`Executing simple tool: ${toolName}`)
+      
+      // Extract tool arguments from the query
+      const toolArgs = await this.extractToolArgs(query, toolName)
+      
+      // Execute the tool directly
+      const result = await this.toolExecutionService.executeTool(toolName, toolArgs, {
+        model: options.model,
+        temperature: options.temperature,
+        maxTokens: options.maxTokens,
+        timeout: 30000
+      })
+      
+      const toolResult: ToolExecutionResult = {
+        success: result.success,
+        toolName,
+        result: result.result,
+        error: result.error,
+        executionTime: result.executionTime || 0,
+        traceId: result.traceId
+      }
+      
+      logger.info(`Simple tool execution completed: ${toolName} (${result.success ? 'SUCCESS' : 'FAILED'})`)
+      return [toolResult]
+      
+    } catch (error) {
+      logger.error(`Simple tool execution failed for ${toolName}:`, error)
+      return [{
+        success: false,
+        toolName,
+        result: null,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        executionTime: 0
+      }]
+    }
+  }
+
+  /**
    * Handle hybrid execution (memory + tools)
    */
   private async handleHybridExecution(
@@ -1035,16 +1359,17 @@ export class EnhancedAgentService {
     intent: QueryIntent,
     memoryContext: MemoryContext | undefined,
     options: EnhancedAgentExecutionOptions,
-    managedContext?: any
+    managedContext?: any,
+    isSimpleToolQuery: boolean = false
   ): Promise<{ response: string; toolResults: ToolExecutionResult[] }> {
     // First execute tools
-    const toolResult = await this.handleToolExecution(query, intent, options)
+    const toolResult = await this.handleToolExecution(query, intent, options, isSimpleToolQuery)
 
     // Then generate response with both memory context and tool results
     const systemPrompt = this.buildHybridSystemPrompt(memoryContext, toolResult.toolResults, managedContext)
 
     const response = await this.langchainService.complete(query, {
-      model: options.model || 'openai',
+      model: options.model || 'ollama',
       temperature: options.temperature || 0.7,
       systemMessage: systemPrompt,
       metadata: {
@@ -1072,7 +1397,7 @@ export class EnhancedAgentService {
     const systemPrompt = this.buildKnowledgeSearchSystemPrompt(memoryContext)
 
     const response = await this.langchainService.complete(query, {
-      model: options.model || 'openai',
+      model: options.model || 'ollama',
       temperature: options.temperature || 0.3,
       systemMessage: systemPrompt,
       metadata: {
@@ -1097,7 +1422,7 @@ export class EnhancedAgentService {
     const systemPrompt = this.buildConversationSystemPrompt(memoryContext)
 
     const response = await this.langchainService.complete(query, {
-      model: options.model || 'openai',
+      model: options.model || 'ollama',
       temperature: options.temperature || 0.8,
       systemMessage: systemPrompt,
       metadata: {
@@ -1194,7 +1519,7 @@ export class EnhancedAgentService {
     const systemPrompt = this.buildUnknownQuerySystemPrompt(memoryContext)
 
     const response = await this.langchainService.complete(query, {
-      model: options.model || 'openai',
+      model: options.model || 'ollama',
       temperature: options.temperature || 0.5,
       systemMessage: systemPrompt,
       metadata: {
@@ -1462,7 +1787,7 @@ Return JSON with arguments only. The URL must be a complete, valid URL starting 
       }
 
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.1,
         metadata: {
           service: 'AgentService',
@@ -1495,7 +1820,7 @@ Return only a JSON object with the extracted arguments. If you cannot extract va
 
 Example: If the tool needs { "operation": "add", "a": 5, "b": 3 } and the query is "add 5 and 3", return {"operation": "add", "a": 5, "b": 3}.`
 
-      // Special handling for API call tool
+      // Special handling for specific tools
       if (toolName === 'api_call') {
         prompt = `Extract arguments for the API call tool from this query: "${query}"
 
@@ -1518,10 +1843,34 @@ MANDATORY: Always use jsonplaceholder.typicode.com as the domain. Never use api.
 Return only a JSON object with the extracted arguments. The URL must be a complete, valid URL starting with https://.
 
 Example: For "get posts for user 2", return {"url": "https://jsonplaceholder.typicode.com/posts?userId=2", "method": "GET"}`
+      } else if (toolName === 'weather_api') {
+        prompt = `Extract arguments for the weather API tool from this query: "${query}"
+
+Tool schema: ${JSON.stringify(toolSchema, null, 2)}
+
+Extract the city name from the query. If no city is mentioned, use "London" as default.
+
+Return only a JSON object with the extracted arguments. Example: {"city": "London", "units": "metric"}.`
+      } else if (toolName === 'github_api') {
+        prompt = `Extract arguments for the GitHub API tool from this query: "${query}"
+
+Tool schema: ${JSON.stringify(toolSchema, null, 2)}
+
+Extract the endpoint and any relevant parameters from the query.
+
+Return only a JSON object with the extracted arguments. Example: {"endpoint": "search/repositories", "query": "react", "perPage": 10}.`
+      } else if (toolName === 'translate_api') {
+        prompt = `Extract arguments for the translate API tool from this query: "${query}"
+
+Tool schema: ${JSON.stringify(toolSchema, null, 2)}
+
+Extract the text to translate and target language from the query.
+
+Return only a JSON object with the extracted arguments. Example: {"text": "Hello world", "targetLanguage": "es"}.`
       }
 
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.1,
         metadata: {
           service: 'AgentService',
@@ -1564,7 +1913,59 @@ Example: For "get posts for user 2", return {"url": "https://jsonplaceholder.typ
       return extractedArgs
     } catch (error) {
       logger.warn(`Failed to extract tool args for ${toolName}:`, error)
-      return {}
+      return this.getDefaultToolParameters(toolName, query)
+    }
+  }
+
+  /**
+   * Get default tool parameters when extraction fails
+   */
+  private getDefaultToolParameters(toolName: string, query: string): Record<string, any> {
+    switch (toolName) {
+      case 'api_call':
+        // Default to JSONPlaceholder API
+        if (query.includes('user') || query.includes('posts')) {
+          return {
+            url: 'https://jsonplaceholder.typicode.com/posts',
+            method: 'GET'
+          }
+        }
+        return {
+          url: 'https://jsonplaceholder.typicode.com/users/1',
+          method: 'GET'
+        }
+      
+      case 'weather_api':
+        // Extract city from query or default to London
+        const cityMatch = query.match(/weather in (\w+)/i) || query.match(/weather for (\w+)/i)
+        return {
+          city: cityMatch ? cityMatch[1] : 'London',
+          units: 'metric'
+        }
+      
+      case 'json_reader':
+        return {
+          jsonString: '{}',
+          path: '$',
+          pretty: true
+        }
+      
+      case 'file_reader':
+        return {
+          path: './README.md',
+          operation: 'read',
+          encoding: 'utf8'
+        }
+      
+      case 'github_api':
+        return {
+          owner: 'microsoft',
+          repo: 'vscode',
+          endpoint: 'repos'
+        }
+      
+      default:
+        return {}
     }
   }
 
@@ -1640,7 +2041,7 @@ Focus on showing deep understanding of the relationships and structure in the AP
     }
 
     const response = await this.langchainService.complete(prompt, {
-      model: options.model || 'openai',
+      model: options.model || 'ollama',
       temperature: options.temperature || 0.7,
       metadata: {
         service: 'AgentService',

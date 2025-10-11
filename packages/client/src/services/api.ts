@@ -56,7 +56,7 @@ export class ClearAIApiService {
   constructor(baseURL: string = 'http://localhost:3001') {
     this.client = axios.create({
       baseURL,
-      timeout: 50000, // 50 seconds timeout
+      timeout: 120000, // 50 seconds timeout
       headers: {
         'Content-Type': 'application/json',
       },
@@ -116,11 +116,13 @@ export class ClearAIApiService {
   async completePrompt(prompt: string, options: {
     model?: string;
     temperature?: number;
+    maxTokens?: number;
   } = {}): Promise<string> {
     const response = await this.client.post('/api/langchain/complete', {
       prompt,
       model: options.model || 'ollama',
       temperature: options.temperature || 0.7,
+      maxTokens: options.maxTokens || 10000,
     });
     const data = response.data as any;
     return data.content || data;
@@ -156,10 +158,12 @@ export class ClearAIApiService {
    */
   async executeWorkflow(description: string, options: {
     model?: string;
+    maxTokens?: number;
   } = {}): Promise<WorkflowResult> {
     const response = await this.client.post('/api/langgraph/execute', {
       description,
       model: options.model || 'ollama',
+      maxTokens: options.maxTokens || 10000,
     });
     return response.data as WorkflowResult;
   }
@@ -177,6 +181,7 @@ export class ClearAIApiService {
     responseDetailLevel?: 'minimal' | 'standard' | 'full';
     excludeVectors?: boolean;
     maxMemoryResults?: number;
+    maxTokens?: number;
   } = {}): Promise<any> {
     const response = await this.client.post('/api/agent/enhanced-execute', {
       query,
@@ -185,11 +190,12 @@ export class ClearAIApiService {
         sessionId: options.sessionId || `session-${Date.now()}`,
         includeMemoryContext: options.includeMemoryContext !== false,
         includeReasoning: options.includeReasoning !== false,
-        model: options.model || 'openai',
+        model: options.model || 'ollama',
         temperature: options.temperature || 0.7,
         responseDetailLevel: options.responseDetailLevel || 'standard',
         excludeVectors: options.excludeVectors !== false, // Default to true
         maxMemoryResults: options.maxMemoryResults || 10,
+        maxTokens: options.maxTokens || 10000, // Default to 10000 tokens
       }
     });
     return response.data;

@@ -46,7 +46,7 @@ export const fileReaderTool: ZodTool = {
   description: 'Read files, list directories, or get file information',
   inputSchema: FileReaderSchema,
   outputSchema: FileReaderOutputSchema,
-  execute: async (args) => {
+  execute: async (args: z.infer<typeof FileReaderSchema>) => {
     const { path, encoding, operation } = FileReaderSchema.parse(args);
     
     try {

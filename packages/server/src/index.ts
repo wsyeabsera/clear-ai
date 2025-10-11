@@ -20,8 +20,8 @@ import agentRoutes from './routes/agentRoutes'
 import { errorHandler } from './middleware/errorHandler'
 import { setupSwagger } from './config/swagger'
 import { initializeAgentService } from './controllers/agentController'
-import { ToolRegistry } from 'clear-ai-mcp-basic'
-import { MemoryServiceConfig, CoreKeysAndModels, ReasoningEngine, IntentClassifierService, Neo4jMemoryService } from 'clear-ai-shared'
+import { ToolRegistry } from '@clear-ai/mcp-basic'
+import { MemoryServiceConfig, CoreKeysAndModels, ReasoningEngine, IntentClassifierService, Neo4jMemoryService } from '@clear-ai/shared'
 import { initializeEnhancedAgentService } from './controllers/enhanced/enhancedAgentController'
 
 // Load environment variables
@@ -148,12 +148,17 @@ const startServer = async () => {
         }
       };
 
+      // Check if API keys are valid (not test keys)
+      const hasValidOpenAI = process.env.OPENAI_API_KEY && !process.env.OPENAI_API_KEY.includes('sk-test');
+      const hasValidMistral = process.env.MISTRAL_API_KEY && process.env.MISTRAL_API_KEY.length > 10;
+      const hasValidGroq = process.env.GROQ_API_KEY && process.env.GROQ_API_KEY.length > 10;
+
       const langchainConfig: CoreKeysAndModels = {
-        openaiApiKey: process.env.OPENAI_API_KEY || '',
+        openaiApiKey: hasValidOpenAI ? (process.env.OPENAI_API_KEY || '') : '',
         openaiModel: process.env.OPENAI_MODEL || 'gpt-3.5-turbo',
-        mistralApiKey: process.env.MISTRAL_API_KEY || '',
+        mistralApiKey: hasValidMistral ? (process.env.MISTRAL_API_KEY || '') : '',
         mistralModel: process.env.MISTRAL_MODEL || 'mistral-small',
-        groqApiKey: process.env.GROQ_API_KEY || '',
+        groqApiKey: hasValidGroq ? (process.env.GROQ_API_KEY || '') : '',
         groqModel: process.env.GROQ_MODEL || 'llama-3.1-8b-instant',
         ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
         ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
@@ -162,8 +167,19 @@ const startServer = async () => {
         langfuseBaseUrl: process.env.LANGFUSE_BASE_URL || 'https://cloud.langfuse.com'
       };
 
+      // Log which models are available
+      console.log('🔑 API Key Status:');
+      console.log(`   OpenAI: ${hasValidOpenAI ? '✅ Valid' : '❌ Invalid/Missing'}`);
+      console.log(`   Mistral: ${hasValidMistral ? '✅ Valid' : '❌ Invalid/Missing'}`);
+      console.log(`   Groq: ${hasValidGroq ? '✅ Valid' : '❌ Invalid/Missing'}`);
+      console.log(`   Ollama: ${process.env.OLLAMA_BASE_URL ? '✅ Available' : '❌ Not configured'}`);
+
       // Initialize tool registry
       const toolRegistry = new ToolRegistry();
+
+      // Initialize MCP controller with the same tool registry
+      const { initializeMcpController } = await import('./controllers/mcpController');
+      initializeMcpController(toolRegistry);
 
       await initializeAgentService(memoryConfig, langchainConfig, toolRegistry);
       await initializeEnhancedAgentService(memoryConfig, langchainConfig, toolRegistry);

@@ -14,7 +14,7 @@ class ClearAIApiService {
     constructor(baseURL = 'http://localhost:3001') {
         this.client = axios_1.default.create({
             baseURL,
-            timeout: 50000, // 50 seconds timeout
+            timeout: 120000, // 50 seconds timeout
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -63,6 +63,7 @@ class ClearAIApiService {
             prompt,
             model: options.model || 'ollama',
             temperature: options.temperature || 0.7,
+            maxTokens: options.maxTokens || 10000,
         });
         const data = response.data;
         return data.content || data;
@@ -93,6 +94,7 @@ class ClearAIApiService {
         const response = await this.client.post('/api/langgraph/execute', {
             description,
             model: options.model || 'ollama',
+            maxTokens: options.maxTokens || 10000,
         });
         return response.data;
     }
@@ -100,18 +102,19 @@ class ClearAIApiService {
      * Execute an intelligent agent query
      */
     async executeAgentQuery(query, options = {}) {
-        const response = await this.client.post('/api/agent/execute', {
+        const response = await this.client.post('/api/agent/enhanced-execute', {
             query,
             options: {
                 userId: options.userId || 'default-user',
                 sessionId: options.sessionId || `session-${Date.now()}`,
                 includeMemoryContext: options.includeMemoryContext !== false,
                 includeReasoning: options.includeReasoning !== false,
-                model: options.model || 'openai',
+                model: options.model || 'ollama',
                 temperature: options.temperature || 0.7,
                 responseDetailLevel: options.responseDetailLevel || 'standard',
                 excludeVectors: options.excludeVectors !== false, // Default to true
                 maxMemoryResults: options.maxMemoryResults || 10,
+                maxTokens: options.maxTokens || 10000, // Default to 10000 tokens
             }
         });
         return response.data;

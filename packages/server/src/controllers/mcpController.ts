@@ -1,7 +1,12 @@
 import { Request, Response } from 'express';
-import { ToolRegistry } from 'clear-ai-mcp-basic';
+import { ToolRegistry } from '@clear-ai/mcp-basic';
 
-const toolRegistry = new ToolRegistry();
+// Global tool registry instance - will be set by the server startup
+let toolRegistry: ToolRegistry;
+
+export const initializeMcpController = (registry: ToolRegistry) => {
+  toolRegistry = registry;
+};
 
 export const mcpController = {
   /**

@@ -15,8 +15,8 @@ const input: CoreKeysAndModels = {
   mistralModel: process.env.MISTRAL_MODEL || '',
   groqApiKey: process.env.GROQ_API_KEY || '',
   groqModel: process.env.GROQ_MODEL || '',
-  ollamaBaseUrl: process.env.OLLAMA_BASE_URL || '',
-  ollamaModel: process.env.OLLAMA_MODEL || '',
+  ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
+  ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
 }
 
 // Export singleton instance

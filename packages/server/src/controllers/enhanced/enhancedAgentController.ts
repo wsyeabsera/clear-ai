@@ -13,9 +13,9 @@ import {
   WorkingMemoryService,
   WorkingMemoryServiceConfig,
   ContextManager
-} from 'clear-ai-shared';
-import { ToolRegistry as MCPToolRegistry } from 'clear-ai-mcp-basic';
-import { MemoryContextService } from 'clear-ai-shared';
+} from '@clear-ai/shared';
+import { ToolRegistry as MCPToolRegistry } from '@clear-ai/mcp-basic';
+import { MemoryContextService } from '@clear-ai/shared';
 
 // Global agent service instance
 let agentService: EnhancedAgentService | null = null;
@@ -40,9 +40,9 @@ export const initializeEnhancedAgentService = async (
       cacheTTL: 300000, // 5 minutes
       maxContextHistory: 50,
       maxActiveGoals: 10,
-      topicExtractionModel: 'openai',
+      topicExtractionModel: 'ollama',
       topicExtractionTemperature: 0.3,
-      maxTokens: 8000,
+      maxTokens: 16000,
       compressionThreshold: 0.8
     };
 
@@ -52,8 +52,8 @@ export const initializeEnhancedAgentService = async (
       workingMemoryConfig
     );
 
-    // Create Context Manager
-    const contextManager = new ContextManager(langchainService, 8000, 0.8);
+    // Create Context Manager with dynamic maxTokens (will be overridden per request)
+    const contextManager = new ContextManager(langchainService, 16000, 0.8);
 
     // Create agent service config
     const agentConfig: EnhancedAgentServiceConfig = {
@@ -66,7 +66,7 @@ export const initializeEnhancedAgentService = async (
       defaultOptions: {
         includeMemoryContext: true,
         maxMemoryResults: 10,
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.7,
         includeReasoning: true
       }
@@ -123,7 +123,7 @@ export const enhancedAgentController = {
         mistralModel: process.env.MISTRAL_MODEL || 'mistral-small',
         groqApiKey: process.env.GROQ_API_KEY || '',
         groqModel: process.env.GROQ_MODEL || 'llama-3.1-8b-instant',
-        ollamaModel: process.env.OLLAMA_MODEL || 'mistral',
+        ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
         ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
         langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
         langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
@@ -185,14 +185,14 @@ export const enhancedAgentController = {
         sessionId: options?.sessionId || `session-${Date.now()}`,
         includeMemoryContext: options?.includeMemoryContext !== false,
         maxMemoryResults: options?.maxMemoryResults || 10,
-        model: options?.model || process.env.DEFAULT_MODEL || 'openai',
+        model: options?.model || 'ollama',
         temperature: options?.temperature || 0.7,
         includeReasoning: options?.includeReasoning !== false,
         previousIntents: options?.previousIntents,
         responseDetailLevel: options?.responseDetailLevel || 'standard',
         excludeVectors: options?.excludeVectors !== false, // Default to true to exclude vectors
         enableContextCompression: options?.enableContextCompression !== false, // Default to true
-        maxTokens: options?.maxTokens || 8000 // Default to 8000 tokens
+        maxTokens: options?.maxTokens || 16000 // Default to 16000 tokens to avoid context overflow
       };
 
       const result = await agent.executeQuery(query, executionOptions);

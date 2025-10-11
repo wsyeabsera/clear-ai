@@ -160,7 +160,7 @@ Focus on extracting concepts that show deep understanding of:
 
     try {
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.3,
         metadata: {
           service: 'EnhancedSemanticService',
@@ -289,7 +289,7 @@ Return JSON:
 
     try {
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.4,
         metadata: {
           service: 'EnhancedSemanticService',
@@ -381,7 +381,7 @@ Return JSON:
 
     try {
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.3,
         metadata: {
           service: 'EnhancedSemanticService',
@@ -493,7 +493,7 @@ Return JSON:
 
     try {
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.3,
         metadata: {
           service: 'EnhancedSemanticService',
@@ -596,7 +596,7 @@ Return JSON:
 
     try {
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.4,
         metadata: {
           service: 'EnhancedSemanticService',

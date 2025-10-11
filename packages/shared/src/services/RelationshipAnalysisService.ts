@@ -170,7 +170,7 @@ Minimum confidence: ${this.config.minConfidence}`;
 
     try {
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.3,
         metadata: {
           service: 'RelationshipAnalysisService',
@@ -318,7 +318,7 @@ Return JSON:
 
     try {
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.4,
         metadata: {
           service: 'RelationshipAnalysisService',
@@ -421,7 +421,7 @@ Return JSON:
 
     try {
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.3,
         metadata: {
           service: 'RelationshipAnalysisService',
@@ -508,7 +508,7 @@ Return JSON:
 
     try {
       const response = await this.langchainService.complete(prompt, {
-        model: 'openai',
+        model: 'ollama',
         temperature: 0.3,
         metadata: {
           service: 'RelationshipAnalysisService',

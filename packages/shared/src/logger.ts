@@ -1,13 +1,13 @@
-import fs from "fs"
-import path from "path"
-import chalkImport from "chalk"
+import * as fs from "fs"
+import * as path from "path"
 
-const chalk = chalkImport ?? {
-  blue: (msg: string) => msg,
-  yellow: (msg: string) => msg,
-  red: (msg: string) => msg,
-  green: (msg: string) => msg,
-  gray: (msg: string) => msg,
+// Simple color functions without external dependencies
+const colors = {
+  blue: (msg: string) => `\x1b[34m${msg}\x1b[0m`,
+  yellow: (msg: string) => `\x1b[33m${msg}\x1b[0m`,
+  red: (msg: string) => `\x1b[31m${msg}\x1b[0m`,
+  green: (msg: string) => `\x1b[32m${msg}\x1b[0m`,
+  gray: (msg: string) => `\x1b[90m${msg}\x1b[0m`,
 }
 
 const LOG_DIR = path.resolve(process.cwd(), "logs")
@@ -38,22 +38,22 @@ function writeToFile(level: string, message: string) {
 export const logger = {
   info: (msg: string, ...args: any[]) => {
     const message = args.length ? `${msg} ${JSON.stringify(args)}` : msg
-    console.log(chalk.blue(`[INFO]`), chalk.gray(getTimestamp()), message)
+    console.log(colors.blue(`[INFO]`), colors.gray(getTimestamp()), message)
     writeToFile("info", message)
   },
   warn: (msg: string, ...args: any[]) => {
     const message = args.length ? `${msg} ${JSON.stringify(args)}` : msg
-    console.warn(chalk.yellow(`[WARN]`), chalk.gray(getTimestamp()), message)
+    console.warn(colors.yellow(`[WARN]`), colors.gray(getTimestamp()), message)
     writeToFile("warn", message)
   },
   error: (msg: string, ...args: any[]) => {
     const message = args.length ? `${msg} ${JSON.stringify(args)}` : msg
-    console.error(chalk.red(`[ERROR]`), chalk.gray(getTimestamp()), message)
+    console.error(colors.red(`[ERROR]`), colors.gray(getTimestamp()), message)
     writeToFile("error", message)
   },
   debug: (msg: string, ...args: any[]) => {
     const message = args.length ? `${msg} ${JSON.stringify(args)}` : msg
-    console.debug(chalk.green(`[DEBUG]`), chalk.gray(getTimestamp()), message)
+    console.debug(colors.green(`[DEBUG]`), colors.gray(getTimestamp()), message)
     writeToFile("debug", message)
   },
 }

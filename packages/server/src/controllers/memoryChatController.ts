@@ -46,7 +46,7 @@ export const memoryChatController = {
         mistralModel: 'mistral-small',
         groqApiKey: process.env.GROQ_API_KEY || '',
         groqModel: 'llama-3.1-8b-instant',
-        ollamaModel: 'llama2',
+        ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
         ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
         langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
         langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',

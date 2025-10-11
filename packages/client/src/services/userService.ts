@@ -1,6 +1,13 @@
-import { User } from '@clear-ai/shared'
+
 import { apiClient } from './api'
 
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 export const userService = {
   async getUsers(): Promise<User[]> {
     const response = await apiClient.client.get('/api/users') as any

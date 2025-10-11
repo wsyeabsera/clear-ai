@@ -1,5 +1,5 @@
 {
-  "name": "clear-ai-mcp-basic",
+  "name": "@clear-ai/mcp-basic",
   "version": "1.1.0",
   "description": "Intelligent MCP Server - Model Context Protocol server with advanced tools and intelligence capabilities",
   "main": "dist/index.js",
@@ -42,7 +42,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "clear-ai-shared": "^1.0.0",
+    "@clear-ai/shared": "file:../shared",
     "@modelcontextprotocol/sdk": "^0.5.0",
     "axios": "^1.6.0",
     "zod": "^3.22.4",

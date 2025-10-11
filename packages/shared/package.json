@@ -1,5 +1,5 @@
 {
-  "name": "clear-ai-shared",
+  "name": "@clear-ai/shared",
   "version": "1.1.0",
   "description": "Advanced AI Intelligence Package - Shared utilities, types, and services for Clear AI with exceptional intelligence capabilities",
   "main": "dist/index.js",
@@ -53,6 +53,7 @@
     "@langchain/ollama": "^0.2.4",
     "@langchain/openai": "^0.6.13",
     "@pinecone-database/pinecone": "^6.1.2",
+    "chalk": "^4.1.2",
     "jsonrepair": "^3.13.1",
     "langchain": "^0.3.34",
     "langfuse": "^3.38.5",

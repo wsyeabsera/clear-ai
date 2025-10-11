@@ -113,7 +113,7 @@ export class PineconeMemoryService {
         throw new Error(`Ollama embedding API error: ${response.status} ${response.statusText}`);
       }
 
-      const data = await response.json();
+      const data = await response.json() as any;
       return data.embedding;
     } catch (error) {
       console.error('Failed to generate embedding with Ollama:', error);

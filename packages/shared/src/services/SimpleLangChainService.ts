@@ -58,7 +58,7 @@ export class SimpleLangChainService {
     console.log('Input:', input)
 
     // OpenAI
-    if (input.openaiApiKey && process.env.OPENAI_API_KEY) {
+    if (input.openaiApiKey && input.openaiApiKey.length > 0) {
       const openai = new ChatOpenAI({
         apiKey: input.openaiApiKey,
         model: input.openaiModel,
@@ -68,7 +68,7 @@ export class SimpleLangChainService {
     }
 
     // Mistral (Cloud API)
-    if (input.mistralApiKey) {
+    if (input.mistralApiKey && input.mistralApiKey.length > 0) {
       const mistral = new ChatMistralAI({
         apiKey: input.mistralApiKey,
         model: input.mistralModel,
@@ -97,7 +97,7 @@ export class SimpleLangChainService {
     }
 
     // Groq
-    if (input.groqApiKey) {
+    if (input.groqApiKey && input.groqApiKey.length > 0) {
       const groq = new ChatGroq({
         apiKey: input.groqApiKey,
         model: input.groqModel,

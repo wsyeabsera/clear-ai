@@ -9,7 +9,7 @@ export const Chat: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'disconnected'>('connecting');
-  const [selectedModel, setSelectedModel] = useState<string>('openai');
+  const [selectedModel, setSelectedModel] = useState<string>('ollama');
   const [isDataManagerOpen, setIsDataManagerOpen] = useState(false);
 
   // Hardcoded user ID as requested
@@ -37,16 +37,18 @@ export const Chat: React.FC = () => {
     setError(null);
 
     try {
-      // Call the advanced agent API endpoint with optimized response
+      // Call the advanced agent API endpoint with all features enabled
       const response = await apiService.executeAgentQuery(message, {
         userId: userId,
         sessionId: sessionId,
         includeMemoryContext: true,
-        includeReasoning: false, // Disable reasoning to reduce response size
+        includeReasoning: true, // Enable reasoning for better responses
         model: selectedModel,
         temperature: 0.7,
-        responseDetailLevel: 'standard', // Use standard detail level
-        excludeVectors: true, // Exclude vectors to reduce token usage
+        responseDetailLevel: 'full', // Use full detail level for comprehensive responses
+        excludeVectors: false, // Include vectors for better context
+        maxMemoryResults: 20, // Increase memory results for better context
+        maxTokens: 10000, // Set max tokens to 10,000
       });
 
       if (response.success) {

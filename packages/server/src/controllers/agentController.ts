@@ -11,9 +11,9 @@ import {
   SimpleLangChainService,
   CoreKeysAndModels,
   ApiResponse
-} from 'clear-ai-shared';
-import { ToolRegistry as MCPToolRegistry } from 'clear-ai-mcp-basic';
-import { MemoryContextService } from 'clear-ai-shared';
+} from '@clear-ai/shared';
+import { ToolRegistry as MCPToolRegistry } from '@clear-ai/mcp-basic';
+import { MemoryContextService } from '@clear-ai/shared';
 
 // Global agent service instance
 let agentService: AgentService | null = null;
@@ -98,7 +98,7 @@ export const agentController = {
         mistralModel: process.env.MISTRAL_MODEL || 'mistral-small',
         groqApiKey: process.env.GROQ_API_KEY || '',
         groqModel: process.env.GROQ_MODEL || 'llama-3.1-8b-instant',
-        ollamaModel: process.env.OLLAMA_MODEL || 'mistral',
+        ollamaModel: process.env.OLLAMA_MODEL || 'mistral:latest',
         ollamaBaseUrl: process.env.OLLAMA_BASE_URL || 'http://localhost:11434',
         langfuseSecretKey: process.env.LANGFUSE_SECRET_KEY || '',
         langfusePublicKey: process.env.LANGFUSE_PUBLIC_KEY || '',
@@ -160,7 +160,7 @@ export const agentController = {
         sessionId: options?.sessionId || `session-${Date.now()}`,
         includeMemoryContext: options?.includeMemoryContext !== false,
         maxMemoryResults: options?.maxMemoryResults || 10,
-        model: options?.model || process.env.DEFAULT_MODEL || 'openai',
+        model: options?.model || process.env.DEFAULT_MODEL || 'ollama',
         temperature: options?.temperature || 0.7,
         includeReasoning: options?.includeReasoning !== false,
         previousIntents: options?.previousIntents,

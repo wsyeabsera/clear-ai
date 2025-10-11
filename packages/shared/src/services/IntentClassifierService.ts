@@ -181,6 +181,14 @@ Your task is to classify user queries into one of these intent types:
    - Real-time data requests (weather, news, stock prices, etc.)
    - Examples: "Calculate 5 + 3", "Make an API call to...", "Read this file", "Get the weather", "Show me today's space picture", "Get asteroid data", "Show me satellite imagery of Houston", "Get posts for user 1, then get comments for the first post", "now get me all posts of user two"
 
+   **IMPORTANT: For specific API tools, use the appropriate tool name:**
+   - Weather queries → use "weather_api" tool
+   - GitHub queries → use "github_api" tool
+   - Translation queries → use "translate_api" tool
+   - Generic API calls → use "api_call" tool
+   - File operations → use "file_reader" tool
+   - JSON processing → use "json_reader" tool
+
 3. **hybrid**: Tool execution combined with memory context
    - Tool usage that should consider user preferences or history
    - Complex workflows that need both memory and tools
@@ -222,10 +230,16 @@ For each query, respond with a JSON object containing:
 IMPORTANT for tool_execution queries:
 - If the query involves multiple sequential steps (using words like "then", "after", "next", "followed by"), include MULTIPLE instances of the same tool in requiredTools
 - For multi-step API calls, include multiple "api_call" tools (one for each step)
-- Examples:
-  * "Get posts for user 1, then get comments for the first post" → requiredTools: ["api_call", "api_call"]
-  * "Calculate 5+3, then multiply by 2" → requiredTools: ["calculator", "calculator"]
-  * "Read file A, then read file B" → requiredTools: ["file_reader", "file_reader"]
+- **CRITICAL: You MUST use the exact specific tool names for each query type. Do NOT use generic "api_call" for specific API tools:**
+- **MANDATORY EXAMPLES - Follow these EXACTLY:**
+  * Weather queries: "Get the weather in London" → requiredTools: ["weather_api"]
+  * GitHub queries: "Search for React repositories on GitHub" → requiredTools: ["github_api"]
+  * Translation queries: "Translate 'Hello' to Spanish" → requiredTools: ["translate_api"]
+  * Generic API calls: "Get posts for user 1, then get comments for the first post" → requiredTools: ["api_call", "api_call"]
+  * File operations: "Read file A, then read file B" → requiredTools: ["file_reader", "file_reader"]
+  * JSON operations: "Parse this JSON data" → requiredTools: ["json_reader"]
+
+**CRITICAL INSTRUCTION: You MUST return the exact tool names in requiredTools. If you mention "weather_api" in your reasoning, you MUST include "weather_api" in requiredTools. If you mention "github_api" in your reasoning, you MUST include "github_api" in requiredTools. If you mention "translate_api" in your reasoning, you MUST include "translate_api" in requiredTools. NEVER use "api_call" for these specific API tools!**
 
 Be precise and consider the user's intent carefully. For tool execution queries that involve significant actions (API calls, file modifications, data changes), set needsConfirmation to true and provide a clear confirmation message.
 
@@ -417,6 +431,34 @@ IMPORTANT for hybrid classification:
         detectedTools.push('calculator')
       }
 
+      // Weather API patterns
+      const weatherPatterns = [
+        /\b(weather|temperature|forecast|climate|rain|snow|sunny|cloudy|windy|humidity)\b/i,
+        /\b(get|show|check|find)\s+(?:the\s+)?weather/i,
+        /\bweather\s+(?:in|for|at)\b/i,
+        /\b(how'?s|what'?s)\s+the\s+weather/i
+      ]
+      const hasWeatherQuery = weatherPatterns.some(pattern => pattern.test(query))
+
+
+      // GitHub API patterns
+      const githubPatterns = [
+        /\b(github|repository|repo|commit|pull\s+request|issue|star|fork)\b/i,
+        /\b(search|find|get)\s+(?:for\s+)?(?:repositories|repos|projects)/i,
+        /\b(github|git)\s+(?:repositories|repos|projects)/i,
+        /\b(show|list|get)\s+(?:me\s+)?(?:repositories|repos|projects)/i
+      ]
+      const hasGithubQuery = githubPatterns.some(pattern => pattern.test(query))
+
+      // Translation API patterns
+      const translationPatterns = [
+        /\b(translate|translation|language)\b/i,
+        /\b(translate|convert)\s+(?:to|from|into)\b/i,
+        /\b(what\s+does|how\s+do\s+you\s+say)\s+.+\s+(?:in|to)\s+\w+/i,
+        /\b(say|speak)\s+.+\s+(?:in|in\s+the\s+language\s+of)\b/i
+      ]
+      const hasTranslationQuery = translationPatterns.some(pattern => pattern.test(query))
+
       // NASA API patterns - check for space/astronomy related queries
       const nasaPatterns = [
         /\b(space\s+picture|astronomy\s+picture|space\s+image|nasa|space|astronomy|cosmos|universe|galaxy|planet|star|moon|sun)\b/i,
@@ -428,6 +470,15 @@ IMPORTANT for hybrid classification:
       ]
 
       const hasNasaQuery = nasaPatterns.some(pattern => pattern.test(query))
+
+      // Add specific API tools based on patterns
+      if (hasWeatherQuery && toolNames.includes('weather_api')) {
+        detectedTools.push('weather_api')
+      } else if (hasGithubQuery && toolNames.includes('github_api')) {
+        detectedTools.push('github_api')
+      } else if (hasTranslationQuery && toolNames.includes('translate_api')) {
+        detectedTools.push('translate_api')
+      }
 
       // API call tool - enhanced detection for multi-step scenarios
       const apiPatterns = [
@@ -445,7 +496,8 @@ IMPORTANT for hybrid classification:
       // NASA API tool detection
       if (hasNasaQuery && toolNames.includes('nasa_api')) {
         detectedTools.push('nasa_api')
-      } else if (hasApiCall) {
+      } else if (hasApiCall && !hasWeatherQuery && !hasGithubQuery && !hasTranslationQuery) {
+        // Only use generic api_call if no specific API tools were detected
         // For multi-step requests, we might need multiple API calls
         if (isMultiStep) {
           // Count potential API calls in the query

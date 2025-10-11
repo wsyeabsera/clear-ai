@@ -13,7 +13,7 @@ export const jsonReaderTool: ZodTool = {
   description: 'Parse and read JSON data with optional path extraction',
   inputSchema: JsonReaderSchema,
   outputSchema: JsonReaderOutputSchema,
-  execute: async (args) => {
+  execute: async (args: z.infer<typeof JsonReaderSchema>) => {
     const { jsonString, path } = JsonReaderSchema.parse(args);
     
     try {
